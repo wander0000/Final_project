@@ -137,7 +137,7 @@ window.onload = function() {
                                 <input type="hidden" id="areano_date">
                                 <input type="hidden" id="theaterno_date">
                                 <input type="hidden" id="movieno_date">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>    
+                                <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>    
                                 <div class="swiper mySwiper">
                                 	<div class="swiper-button-prev"></div>
                                 	<div class="swiper-wrapper">

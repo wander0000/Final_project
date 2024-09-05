@@ -29,4 +29,8 @@ public class ScreentbDTO {
 	
 	//add columns
 	private String movienm;
+	private String theaternm;
+	private String ratingno;
+	private String weekday;
+	private String moviepostimg;
 }
