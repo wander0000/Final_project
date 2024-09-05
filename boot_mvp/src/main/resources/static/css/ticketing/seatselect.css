@@ -488,10 +488,14 @@ ul {
 
 .sitNum 
 {
-    font-size: 20px;
+	width: 12px;
+	margin-right: 40px;
+}
+
+.sitNum > h5 {
+	font-size: 20px;
     color: #fff;
     font-weight: 500;
-    margin-right: 40px;
 }
 
 .sitDiv 
