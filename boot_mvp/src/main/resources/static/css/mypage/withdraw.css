@@ -1,0 +1,225 @@
+
+.mainContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainerContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    margin-top: 40px;
+    width: 1600px;
+}
+
+.menuTitle
+{
+    color: var(--main-color);
+    font-size: 28px;
+	font-weight: 600;
+}   
+
+
+.withdrawContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 0;
+    width: 1600px;
+    height: 600px;
+    box-sizing: border-box;
+    background-color: #1A1B24;
+    color: var(--sub-gray);
+    font-size: 14px;
+    font-weight: 400;
+}
+.maincolor
+{
+    color: var(--main-color);
+}
+.contentTitle
+{
+    display: flex;
+    gap : 0 10px;
+}
+
+.title
+{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.withdrawButton
+{
+    padding: 0 20px;
+    height: 36px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 14px;
+    border-radius: 6px;
+	border: 1px solid #F3B931;
+    background-color: rgba(217, 217, 217, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 팝업 */
+	
+.popUp
+{
+  display: none;
+}
+.popBg 
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:rgba(0,0,0,0.6);
+  /* filter: blur(5px) */
+}
+
+/* 배경 흐림 효과 */
+.blur-background {
+    /* filter: blur(5px); 흐림 정도 설정 */
+    /* pointer-events: none; 블러 처리된 영역 클릭 방지 */
+    /* z-index: 99; */
+}
+
+.popCon
+{
+  display: flex;
+  flex-direction: column;
+  background-color: #1A1B24;
+  /* width: 500px; */
+  /* height: 250px; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  /* box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2); */
+  border-radius: 16px;
+  align-items: center;
+  padding: 32px;
+  /* gap: 40px 0; */
+  /* justify-content: center; */
+}
+.popUp .popH
+{
+  margin-left: auto;
+}
+
+.popUp .popH .icon i
+{
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popConM
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+}
+
+.popH 
+{
+    z-index: 1000;
+}
+
+.popM
+{
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+  margin: 20px 0 40px;
+  
+}
+
+.popM .popTitle
+{
+  font-size: 24px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 400;
+}
+.popM .sub
+{
+  font-size:14px;
+  text-align: center;
+  font-weight:400;
+  color: #99A2B9;
+}
+
+.popB .inputBox
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0 20px;
+  width: 436px;
+  
+}
+.inputCon
+{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #999;
+}
+
+
+.popB .inputBox input
+{
+    border: none;
+    box-sizing: border-box;
+    color: #999;
+    background-color: rgba(217, 217, 217, 0.1);
+}
+
+.popB .inputBox input:last-child
+{
+    border-top: 1px solid #999;
+}
+.sendButton
+{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:0 20px;
+    margin-top: 40px;
+}
+
+.popB button, .popB input
+{
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.popB input
+{
+    padding: 0 20px;
+}
+.popB button
+{
+    background-color: rgba(217, 217, 217, 0.1);
+    border: none;
+    color: #99A2B9;
+    font-size: 14px;
+    border-radius: 3px;
+    /* padding: 10px 20px; */
+}
+.popB button:hover
+{
+    border: 1px solid #F3B931;
+    color: #F3B931
+}

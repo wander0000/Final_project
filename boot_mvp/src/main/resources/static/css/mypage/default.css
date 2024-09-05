@@ -1,0 +1,66 @@
+:root 
+{
+    --main-color : #f3b931;
+    --sub-gray: #99a2b9;
+    --font-black:#111;
+    --background: #0f1015;
+    --hover-black:#13151c;
+    --disabled:rgba(153,162,185,0.3);
+    --input-background-gray:rgba(217,217,217,0.1);
+}
+
+
+* 
+{
+    margin:0;
+    padding:0;
+    list-style:none;
+    font-family: 'Pretendard';
+}
+
+html,body 
+{
+    background-color: #0F1015;
+}
+
+a
+{
+    text-decoration: none;
+	color: rgba(153, 162, 185, 0.3);
+}
+
+ul,li,ol 
+{
+    list-style: none;
+}
+
+table, tr, td, div 
+{
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+
+button, input, select
+{
+    padding: 0 20px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: rgba(217, 217, 217, 0.1);
+    box-sizing: border-box;
+    color: #99A2B9;
+    border: none;
+    font-size: 14px;
+	font-weight: 500;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	outline: none;
+}
+
+
+
+
+

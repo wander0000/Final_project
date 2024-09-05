@@ -1,0 +1,43 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.ScreentbDAO_2">   
+    <select id="selecthdr" resultType="com.boot.DTO.ScreentbDTO">
+		select areano, theaterno, movieno, movienm
+		from
+		(
+			select a.areano, a.theaterno, a.movieno, b.movienm
+			from screentb a
+			inner join movietb b on (a.movieno = b.movieno)
+			group by a.areano, a.theaterno, a.movieno, b.movienm
+		) as a
+		where areano = #{areano} and theaterno = #{theaterno}
+		order by movieno
+    </select>
+    
+    <select id="selecthdrbase" resultType="com.boot.DTO.ScreentbDTO">
+		select movieno, movienm
+		from
+		(
+			select a.movieno, b.movienm
+			from screentb a
+			inner join movietb b on (a.movieno = b.movieno)
+			group by a.movieno, b.movienm
+		) as a
+		order by movieno
+    </select>
+    
+    <select id="selectdtl" resultType="com.boot.DTO.ScreentbDTO">
+    	select areano, theaterno, movieno, movienm, viewday, roomno, starttime, endtime, selecseat, totalseat
+		from
+		(
+			select a.areano, a.theaterno, a.movieno, b.movienm, a.viewday, a.roomno, a.starttime, a.endtime, a.selecseat, a.totalseat
+			from screentb a
+			inner join movietb b on (a.movieno = b.movieno)
+		) as a
+		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday}
+		order by movieno
+    </select>
+    
+</mapper>

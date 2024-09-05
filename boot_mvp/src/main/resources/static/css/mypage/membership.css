@@ -1,0 +1,518 @@
+
+.mainContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainerContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    margin-top: 40px;
+    width: 1600px;
+}
+
+.menuTitle
+{
+    color: var(--main-color);
+    font-size: 28px;
+	font-weight: 600;
+}   
+
+.mainContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    box-sizing: border-box;
+    /* background-color: #1A1B24; */
+    color: var(--sub-gray);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+.tabConDiv {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 56px;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    background-color: #1A1B24;
+    color: #99A2B9;
+}
+
+.tabCon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.tabCon.active {
+    border: 1px solid #F3B931;
+    background-color: rgba(243, 185, 49, 0.2);
+    color: #F3B931;
+}
+
+.tabCon.active:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+.tabCon.active:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+
+
+.contentCon {
+    display: none;
+}
+
+.contentCon.active {
+    display: flex;
+    flex-direction: column;
+    gap : 40px 0;
+}
+
+.membershipList
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:0 40px;
+}
+
+.membershipCard
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap : 20px 0;
+    background-color: #1A1B24;
+    padding: 24px;
+}
+
+.cardTop
+{
+    width: 112px;
+    height: 112px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 20px 0; */
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 0.1);
+}
+
+.cardTop > span
+{
+    width: 35px;
+}
+
+.grade
+{
+    color: #fff;
+}
+
+
+.cardM, .cardB
+{
+    box-sizing: border-box;
+    border-radius: 3px;
+    background-color: rgba(217, 217, 217, 0.1);
+    padding: 24px;
+    width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px 0;
+}
+
+.useGuide
+{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 3px;
+    background-color: #1A1B24;
+    padding: 24px;
+    gap: 20px 0;
+}
+
+.guideCon
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.guideTitle
+{
+    display: flex;
+    gap: 0 10px;
+    color: #fff;
+}
+
+.row1, .row2, .row3
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.row2, .row3
+{
+    border-top:1px solid rgba(217, 217, 217, 0.1);
+}
+.firstColumn
+{
+    width: 70px;
+}
+
+.gridBox
+{
+    width: calc(100% - 70px);
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+
+
+.gradeBtn, .standard, .mileage
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gradeBtn
+{
+    width: 120px;
+    cursor: default;
+    justify-self: center; /* 수평 가운데 정렬 */
+    align-self: center;   /* 수직 가운데 정렬 */
+}
+
+.gradeBtn:nth-child(1) {
+    background-color: rgba(80, 184, 24, 0.2); /* 원래 #50B818 */
+    color:#50B818;
+}
+
+.gradeBtn:nth-child(2) {
+    background-color: rgba(103, 67, 44, 0.2); /* 원래 #67432C */
+    color:#67432C;
+}
+
+.gradeBtn:nth-child(3) {
+    background-color: rgba(203, 206, 207, 0.2); /* 원래 #CBCECF */
+    color:#CBCECF;
+}
+
+.gradeBtn:nth-child(4) {
+    background-color: rgba(243, 185, 49, 0.2); /* 원래 #F3B931 */
+    color:#F3B931;
+}
+
+.cardCon
+{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 0 40px;
+    padding: 24px;
+}
+.cardDetail
+{
+    display: flex;
+    gap: 0 20px;
+    border: none;
+    border-radius: 3px;
+    background-color: #1A1B24;
+    padding: 20px;
+    align-items: center;
+}
+
+.iconBox
+{
+    width: 56px;
+    height: 56px;
+    background-color: rgba(217, 217, 217, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+
+}
+
+.cardTitle
+{
+    font-size: 20px;
+}
+.cardBody
+{
+    font-size: 12px;
+}
+
+.point
+{
+    gap: 20px 0;
+}
+
+
+/* 포인트이용내역 */
+.cardBoxes
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 0 40px;
+}
+.cardBox
+{
+    display: flex;
+    flex-direction: column;
+    background-color: #1A1B24;
+    padding: 20px;
+    gap: 40px 0;
+    border-radius: 3px;
+}
+
+.cardBox.left
+{
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+}
+
+.pointTitle
+{
+    font-size: 16px;
+}
+.pointTotal
+{
+    font-size: 24px;
+    color: #F3B931;
+}
+
+.cardUp
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px 0;
+}
+
+.cardU
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+}
+
+
+
+.cardDown
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px 0;
+}
+.point1, .point2
+{
+    display: flex;
+    justify-content:space-between ;
+    align-items: center;
+    width: 100%;
+    height: 36px;
+    background-color: rgba(217, 217, 217, 0.1);
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.locatiionCon
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.alertBox
+{
+    padding: 10px 20px;
+    background-color: rgba(217, 217, 217, 0.1);
+    border-radius: 6px;
+    color: #F3B931;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: inline-flex;
+
+}
+
+/* 네비게이터 스타일 */
+.navigator {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* 단계 표시 원 스타일 */
+.circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1; /* 선 아래로 가지 않도록 설정 */
+}
+
+.gradeCircle {
+    width: 20px;
+    height: 20px;
+    background-color: #99A2B9; 
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.gradeCircle.active {
+    box-sizing: border-box;
+    border:5px solid #F3B931; /* 첫 번째 원 (Welcome) 색상 */
+}
+
+/* 단계 텍스트 */
+.circle div:last-child {
+    font-size: 12px;
+    color: #cbcecf;
+}
+
+/* 라인 스타일 */
+.line {
+    position: absolute;
+    top: 21%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    width: 650px;
+    background-color: #99A2B9;
+    z-index: 0; /* 원들 아래에 위치하도록 설정 */
+    justify-self: center;
+}
+
+
+
+/* 이용내역 */
+.usegeList
+{
+     display: flex;
+     flex-direction: column;
+     gap: 40px 0;
+}
+
+.filterBtn
+{
+    display: flex;
+    gap : 0 40px;
+}
+
+.leftFilter, .rightFilter
+{
+    display: flex;
+    gap : 0 20px;
+    align-items: center;
+}
+
+filterTitle
+{
+    font-size: 16px;
+}
+
+
+
+.filter:hover, .submitBtn:hover
+{
+    border: 1px solid #F3B931;
+    background-color: rgba(243, 185, 49, 0.2);
+    color: #F3B931;
+}
+
+
+.filter.active
+{
+    border: 1px solid #F3B931;
+    background-color: rgba(243, 185, 49, 0.2);
+    color: #F3B931;
+}
+
+/* 달력커스텀 */
+.customDateWrapper {
+/*    position: relative;*/
+/*    display: inline-block;*/
+}
+
+.endDate, .startDate
+{
+/*     padding-right: 11px; 아이콘 공간 확보 */
+}
+
+.customDateWrapper::after {
+	/*
+   content: '\1F4C5'; /*  달력 아이콘 유니코드 문자 */
+   /* font-size: 16px;
+    color: #F3B931; /* 아이콘 색상 */
+   /* position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* 클릭이 input에 전달되도록 함 */
+	
+}
+
+
+
+.listTable
+{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 3px;
+    background-color: #1A1B24;
+    padding: 0 20px;
+}
+
+.titleRow, .contentRow
+{
+    display: grid;
+    grid-template-columns: 2fr 1fr 6fr 2fr;
+    text-align: center;
+    /* justify-content: center; */
+    align-items: center;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.titleRow
+{
+    font-size: 20px;
+    color: #fff;
+}
+
+.contentRowDe
+{
+    font-size: 20px;
+    color: #99A2B9;
+}
+
+.contentRow
+{
+    border-top: 1px solid rgba(217, 217, 217, 0.1);
+}

@@ -1,0 +1,647 @@
+:root 
+{
+  /* 컬러 모음 */
+  --main-color: #FFA500;
+  --color-black: #111;
+  --color-white: #fff;
+  --color-gray: #787878;
+  --input-gray: #e5e5ec;
+  --button-gray: #f7f7f7;
+  --border-color-gray: #dadada;
+  --font-size32: 32px;
+  --font-size24: 24px;
+  --font-size20: 20px;
+  --font-size16: 16px;
+  --font-size14: 14px;
+  --font-size12: 12px;
+}
+
+/* 헤더  
+header 
+{
+  height: 90px;
+  border-bottom: 1px solid var(--border-color-gray);
+  background-color: #111;
+}
+
+.headerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.headerInner h5.logo 
+{
+  margin-right: 40px;
+  width: 120px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.headerInner ul.menu 
+{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+}
+
+.headerInner ul.menu li, .headerInner ul.rightMenu li 
+{
+  padding: 10px 20px;
+}
+
+.headerInner ul.menu li a, .headerInner ul.rightMenu li a 
+{
+  font-size: var(--input-tab-size);
+  color: var(--color-black);
+  font-weight: 500;
+}
+
+.rightMenu 
+{
+  margin-left: auto;
+  display: flex;
+}
+
+.headerInner ul.rightMenu li:first-child 
+{
+  margin-right: 40px;
+}
+
+헤더 끝 */
+
+
+
+
+/*    섹션    */
+html 
+{
+  background-image: url(../images/logimg.png);
+  background-size: auto; /* 이미지가 div에 꽉 차도록 설정 */
+  background-position: center; /* 이미지를 가운데에 위치 */
+  width: 100%; /* 원하는 너비 설정 */
+  height: 100%;
+
+
+}
+
+body
+{
+  background-color: rgba(0, 0, 0, 0.85); /* 전체 배경을 검은색 85% 투명도로 설정 */
+}
+
+
+
+section 
+{
+  display: flex;
+  justify-content: center;
+  padding-top: 100px; /* Add padding at the top to ensure space for the centered .logbox */
+  padding-bottom: 100px; /* Add padding at the bottom for scrolling */
+}
+
+.wrap 
+{
+  min-height: 100%; /* Example value, increase if needed */
+  display: flex;
+  align-items: flex-start; /* Aligns content at the top */
+}
+
+
+.loginWrap 
+{
+  width: 1920px;
+  height: fit-content;
+}
+
+.logbox 
+{
+  position: relative; /* Changed from absolute to relative positioning */
+  margin: 0 auto; /* Center horizontally within its parent */
+  width: 500px;
+  border-radius: 12px;
+  text-align: center;
+  background-color: rgba(212, 212, 212, 0.05); /* Transparent background */
+  display: flex;
+  justify-content: center;
+}
+
+
+.background-blur 
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(212, 212, 212, 0.01); /* Background color with transparency */
+  backdrop-filter: blur(10px); /* Background blur effect */
+  z-index: -1; /* Places the background behind the content */
+}
+
+.content 
+{
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  padding: 20px; /* Adds padding to content to prevent it from touching the edges */
+}
+
+.log1 
+{
+  margin-top: 20px;
+}
+
+.log1 .hh 
+{
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.nobo
+{
+  margin-left: 16px;
+  margin-right: 4px;
+  font-size: 16px;
+  margin-top: 1%;
+  font-weight: 300;
+  color: #F3B931;
+  /* cursor: default; */
+  user-select: none;
+}
+
+.log2, .log3
+{
+  display: flex;
+  height: 56px;
+
+  font-size: 16px;
+  background-color: rgba(153, 153, 153, 0.2); /* #999999의 20% 투명도 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  border: 1px solid #999999; /* 선 추가 */
+  align-items: center;
+  
+}
+.idpwbox3
+{
+  width: 100%; /* log2 요소의 너비에 맞추기 위해 100%로 설정 */
+  padding-left: 4px;
+  outline: none; /* 클릭 시 테두리 표시 제거 */
+  background-color: rgba(255, 255, 255, 0); /* #999999의 20% 투명도 */
+  border-color: #ffffff00;
+  font-size: 16px;
+
+  caret-color: #ffffff; /* 커서 색상 설정 */
+  color: #ffffff; /* 입력 텍스트 색상 설정 */
+  
+}
+
+.idpwbox3::placeholder
+{
+  color: #999999; /* 플레이스홀더 색상 설정 */
+  opacity: 1; /* 불투명 설정 */
+}
+
+.log3 
+{
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬 */
+  background-color: rgba(153, 153, 153, 0.2); /* 배경색 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  border: 1px solid #999999; /* 기본 테두리 */
+
+}
+
+.idpwbox3 
+{
+  flex: 1; /* 텍스트 입력 필드가 가능한 공간을 모두 차지하도록 설정 */
+  padding-left: 4px;
+  outline: none; /* 클릭 시 테두리 표시 제거 */
+  background-color: transparent; /* 배경색 투명 */
+  border-color: transparent; /* 테두리 색상 제거 */
+  font-size: 16px;
+  color: #ffffff; /* 입력 텍스트 색상 설정 */
+}
+
+
+
+.emaillink ,.oklink
+{
+  margin-left: auto; /* 오른쪽 끝으로 이동 */
+  margin-right: 16px;
+  color: #F3B931; /* 버튼 텍스트 색상 */
+  font-size: 16px; /* 글자 크기 설정 */
+}
+
+
+
+
+
+.log2 
+{
+  margin-top: 40px;
+}
+
+.log4 
+{
+  margin-top: 20px;
+}
+.log3
+{
+  margin-top: 24px;
+}
+
+.logbut 
+{
+  height: 56px;
+  width: 436px;
+  font-size: 16px;
+  background-color: #F3B931;
+  border-radius: 4px;
+  border: none; /* 기본 테두리 제거 */
+  cursor: pointer; /* 커서 모양 변경 */
+}
+
+.bottbox 
+{
+  margin-top: 40px;
+  margin-bottom: 32px;
+}
+
+.bot1, .bot2, .bot3 
+{
+  display: flex;
+  justify-content: center;
+  margin-right: 3%;
+}
+
+.a1, .a2 
+{
+  padding: 0 24px;
+}
+
+.bottbox .a2 
+{
+  border-left: 1px solid var(--color-white); /* 왼쪽 테두리 */
+  border-right: 1px solid var(--color-white); /* 오른쪽 테두리 */
+
+}
+
+.aa1
+{
+
+  text-decoration: none; /* 기본 링크 스타일 */
+  color: #ffffff; /* 기본 텍스트 색상 */
+  font-weight: 30;
+}
+
+
+.gdbox1
+{
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+  text-align: center;
+  align-items: center;
+}
+.gdbox2
+{
+  margin-left: 50px;
+}
+
+
+
+/* 버튼의 공통 스타일 */
+.gender-button {
+  height: 50px;
+  width: 164px;
+  font-size: 16px;
+  border: 1px solid #999999; /* 기본 테두리 추가 */
+  background-color: rgba(153, 153, 153, 0.2); /* 비활성화 상태의 배경색 */
+  cursor: pointer; /* 커서 모양 변경 */
+  color: #999999; /* 비활성화 상태의 텍스트 색상 */
+  border-radius: 4px; /* 기본적으로 적용될 border-radius */
+
+
+}
+
+/* 남자 버튼의 비활성화 상태 스타일 */
+.gender-button.male-button:not(.active) {
+
+  border-radius: 4px 0 0 4px; /* 비활성화 상태에서 왼쪽 모서리 둥글게 */
+}
+
+/* 여자 버튼의 비활성화 상태 스타일 */
+.gender-button.female-button:not(.active) {
+  border-left: none; /* 비활성화 상태에서 왼쪽 보더 제거 */
+  border-radius: 0 4px 4px 0; /* 비활성화 상태에서 오른쪽 모서리 둥글게 */
+}
+
+/* 남자 버튼의 활성화 상태 스타일 */
+.gender-button.active#male {
+  background-color: #F3B931; /* 배경색 변경 */
+  color: #000000; /* 텍스트 색상 변경 */
+  border: none; /* 활성화 상태에서 오른쪽 보더 제거 */
+  border-radius: 4px 0 0 4px; /* 활성화 상태에서 왼쪽 모서리 둥글게 */
+}
+
+/* 여자 버튼의 활성화 상태 스타일 */
+.gender-button.active#female {
+  background-color: #F3B931; /* 배경색 변경 */
+  color: #000000; /* 텍스트 색상 변경 */
+  border: none; /* 활성화 상태에서 왼쪽 보더 제거 */
+  border-radius: 0 4px 4px 0; /* 활성화 상태에서 오른쪽 모서리 둥글게 */
+}
+
+
+
+
+.gdgd2
+{
+  border-top-left-radius: 4px; /* 왼쪽 위 모서리 둥글게 */
+  border-bottom-left-radius: 4px; /* 왼쪽 위 모서리 둥글게 */
+}
+.gdgd3
+{
+  border-top-right-radius: 4px; /* 왼쪽 위 모서리 둥글게 */
+  border-bottom-right-radius: 4px; /* 왼쪽 위 모서리 둥글게 */
+}
+
+
+.gdgd11, .gdgd22
+{
+  font-size: 16px;
+  font-weight: 300;
+  color: #999999;
+}
+.gdgd11
+{
+  margin-top: 1%;
+  margin-right: 1.5%;
+  color: #F3B931;
+}
+
+.agreebox
+{
+  margin-top: 30px;
+}
+
+.agr1
+{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.agr11
+{
+  display: flex;
+  align-items: center;
+}
+.agrh, .agrhh
+{
+  font-size: 16px;
+  font-weight: 300;
+  color: #999999;
+}
+.agrhh
+{
+  color: #ffffff;
+  text-decoration: underline; /* 밑줄 추가 */
+}
+
+.chk, .agrh
+{
+  margin-right: 8px;
+}
+
+/* 숨기기 기본 체크박스 */
+.chk {
+  display: none;
+}
+
+/* 스타일링할 커스텀 체크박스 */
+.chk + label {
+  position: relative;
+  padding-left: 24px; /* 체크박스와 텍스트 사이의 여백 */
+  cursor: pointer;
+  display: inline-flex; /* flexbox로 수직 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  line-height: 16px; /* 라인 높이와 체크박스 크기 일치 */
+}
+
+/* 체크박스의 기본 상태 */
+.chk + label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%; /* 수직 가운데 정렬 */
+  transform: translateY(-50%); /* 수직 중앙 조정 */
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid #999999; /* 테두리 색상 */
+  background: transparent; /* 배경색 투명 */
+  box-sizing: border-box; /* 테두리가 크기에 포함되도록 */
+}
+
+/* 체크박스가 체크된 상태 */
+.chk:checked + label::before {
+  border: none;
+  background: #F3B931; /* 체크된 상태에서의 배경색 */
+}
+
+/* 체크박스가 체크된 상태에서 체크 표시 */
+.chk:checked + label::after {
+  content: ''; /* 체크 표시 */
+  position: absolute;
+  left: 4px;
+  top: 50%; /* 수직 가운데 정렬 */
+  transform: translateY(-50%); /* 수직 중앙 조정 */
+  color: #fff; /* 체크 표시 색상 */
+  font-size: 12px; /* 체크 표시 크기 */
+}
+
+
+
+
+
+
+
+
+
+
+/* 회원가입2 css */
+
+.grh
+{
+  display: flex;
+  justify-content: center;
+  margin-top: 54px;
+
+}
+
+.grgr
+{
+  color: #F3B931;
+  margin-top: .5%;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 300;
+  user-select: none;
+}
+.grhh
+{
+  display: flex;
+
+  font-size: 16px;
+  font-weight: 300;
+  color: #999999;
+}
+
+
+/* .genrebox를 중앙 정렬 및 패딩 추가 */
+.genrebox 
+{
+  display: flex;
+  padding: 20px;
+}
+
+/* 그리드 컨테이너 설정 */
+.genreboxButtons 
+{
+  display: grid;
+  grid-template-columns: repeat(4, 99px); /* 4개의 열 설정 */
+  gap: 12px; /* 항목 사이의 간격 설정 */
+  max-width: 100%; /* 그리드가 부모 요소를 벗어나지 않도록 설정 */
+}
+
+/* 각 체크박스와 레이블의 스타일 */
+.genrebut 
+{
+  display: none; /* 체크박스를 숨기고 */
+}
+
+.genrebutlabel 
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px; /* 높이 설정 */
+  width: 99px;
+  border-radius: 3px; /* 모서리 둥글게 */
+  cursor: pointer; /* 클릭 시 커서 모양 변경 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  background-color: rgba(153, 153, 153, 0.2); /* 비활성화 상태의 배경색 */
+  font-size: 14px;
+  font-weight: 400;
+  color: #99A2B9;
+  user-select: none;
+}
+
+.genrebut:checked + .genrebutlabel 
+{
+  background-color: #F3B931; /* 체크된 상태에서 배경색 변경 */
+  border-color: #F3B931; /* 체크된 상태에서 테두리 색상 변경 */
+  color: #000000; /* 체크된 상태에서 텍스트 색상 변경 */
+  font-weight: 400;
+}
+
+
+
+/* 푸터 
+footer 
+{
+  background-color: #111;
+  padding: 50px 0;
+  height: 320px;
+}
+
+.footerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+}
+
+.footerInner .f_conWrap 
+{
+  width: 50%;
+}
+
+.footerInner .left_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+  margin-top: 20px;
+}
+
+.footerInner .right_conWrap 
+{
+  text-align: right;
+}
+
+.footerInner .right_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+}
+
+.footerInner .right_conWrap h3 
+{
+  font-size: var(--sub-title-size);
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+ 푸터 끝 */
+
+
+
+
+
+/* 특정 요소들의 배경 투명도 유지 (전체 뒷배경 투명도설정) */
+header, footer, .container, section, html
+{
+    background-color: transparent; /* 기본적으로 투명하게 설정 */
+}
+
+.log1, .log2, .log3, .log4, .bottbox
+{
+  filter: none; /* 블러 효과 제거 */
+}
+
+
+/* 컨텐츠를 수평으로 넘지 않도록 설정 */
+.wrap, .loginWrap {
+  overflow-x: hidden; /* 수평 스크롤을 숨김 */
+}
+
+/* 전체 페이지의 overflow-x 숨김 */
+html, body {
+  overflow-x: hidden; /* 페이지에서 수평 스크롤 숨김 */
+}
+
+
+/* Chrome 자동 완성 스타일링 대응 */
+.idpwbox3:-webkit-autofill {
+  background-color: rgba(255, 255, 255, 0) !important; /* 배경색 투명 유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-size 5000s ease-in-out 0s; /* 색상과 글씨 크기 전환 방지 */
+}
+
+/* Chrome 자동 완성 상태에서 포커스, 호버, 활성화 상태 대응 */
+.idpwbox3:-webkit-autofill:focus,
+.idpwbox3:-webkit-autofill:hover,
+.idpwbox3:-webkit-autofill:active {
+  background-color: rgba(255, 255, 255, 0) !important; /* 배경색 투명 유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+}

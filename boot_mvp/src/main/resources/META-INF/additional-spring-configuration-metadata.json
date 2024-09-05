@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "auth-code-expiration-millis",
+    "type": "java.lang.String",
+    "description": "A description for 'auth-code-expiration-millis'"
+  },
+  {
+    "name": "springVersion",
+    "type": "java.lang.String",
+    "description": "A description for 'springVersion'"
+  },
+  {
+    "name": "springVersion",
+    "type": "java.lang.String",
+    "description": "A description for 'springVersion'"
+  }
+]}

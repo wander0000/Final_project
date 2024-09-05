@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.UsertbDAO_3">
+
+    <!-- 모든 사용자 가져오기 -->
+    <select id="getUserList" resultType="com.boot.DTO.UsertbDTO">
+        SELECT *
+        FROM usertb
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="insertUser">
+        INSERT INTO usertb
+            (userid, uuid, ppass, pname, email, phone, birth, gender, certno, adate, mdate)
+        VALUES
+            (#{userid}, UUID(), #{ppass}, #{pname}, #{email}, #{phone}, #{birth}, #{gender}, #{certno}, NOW(), NOW())
+    </insert>
+
+    <!-- 이메일로 사용자 정보 가져오기 -->
+    <select id="getUserByEmail" resultType="com.boot.DTO.UsertbDTO">
+        SELECT *
+        FROM usertb
+        WHERE email = #{email}
+    </select>
+
+    <!-- 사용자 ID로 사용자 정보 가져오기 -->
+    <select id="getUserById" resultType="com.boot.DTO.UsertbDTO">
+        SELECT *
+        FROM usertb
+        WHERE userid = #{userid}
+    </select>
+
+    <!-- 회원정보 수정 -->
+    <update id="updateUser">
+        UPDATE usertb
+        SET ppass = #{ppass},
+            pname = #{pname},
+            email = #{email},
+            phone = #{phone},
+            birth = #{birth},
+            gender = #{gender},
+            certno = #{certno},
+            mdate = CURRENT_TIMESTAMP
+        WHERE userid = #{userid}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteUser">
+        DELETE
+        FROM usertb
+        WHERE userid = #{userid}
+    </delete>
+    
+	<!-- 아이디 중복검사 -->
+	<select id="checkUserIdExists" resultType="int">
+	    SELECT COUNT(*)
+	    FROM usertb
+	    WHERE userid = #{userid}
+	</select>
+    
+
+</mapper>

@@ -1,0 +1,288 @@
+.mainContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainerContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    margin-top: 40px;
+}
+
+.menuTitle
+{
+    color: var(--main-color);
+    font-size: 28px;
+	font-weight: 600;
+}  
+
+
+
+.mainContent
+{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    gap: 0 40px;
+    width: 1600px;
+    /* height: 600px; */
+    box-sizing: border-box;
+    /* background-color: #1A1B24; */
+    color: var(--sub-gray);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.leftCon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 32px;
+    background-color: #1A1B24;
+    position: relative;
+}
+.imgWrap
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px 0;
+}
+
+.imgRegist
+{
+    padding: 0 20px;
+}
+
+.leftCon p
+{
+    font-size: 12px;
+    font-weight: 200;
+    color: #99A2B9;
+    position: absolute;
+    bottom: 32px;
+    width: calc(100% - 64px);
+}
+
+
+
+.rightCon{
+    width: calc(100% - 300px);
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 0 40px;
+}
+
+.rightInfo, .leftInfo
+{
+    display: flex;
+    flex-direction: column;
+    gap: 40px 0;
+}
+
+.infoDetail
+{
+    display: flex;
+    align-items: center;
+    height: 54px;
+    background-color: #1A1B24;
+    padding: 0 20px;
+}
+.infoDetail .th
+{
+    width: 120px;
+    font-weight: 600;
+}
+.infoDetail .td
+{
+    font-weight: 300;
+}
+.infoDetail .modifyBtn
+{
+    margin-left: auto;
+    width: 142px;
+    font-weight: 400;
+}
+
+.contentTitle
+{
+    display: flex;
+    gap : 0 10px;
+}
+
+.title
+{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.withdrawButton
+{
+    padding: 0 20px;
+    height: 36px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 6px;
+	border: 1px solid #F3B931;
+    background-color: rgba(217, 217, 217, 0.1);
+}
+
+
+/* 변경하기 누르면 뜨는 팝업들 */
+
+
+/*팝업전체에 적용되는 css*/
+.popUp
+{
+	display: none;
+}
+
+.popBg 
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:rgba(0,0,0,0.6);
+  /* filter: blur(5px) */
+}
+
+.popCon
+{
+	display: flex; 
+	flex-direction: column;
+	position: fixed; 
+	left: 50%; top: 50%; 
+	transform: translate(-50%, -50%); 
+	padding: 32px; 
+	overflow: hidden; /* 자식 요소가 컨테이너를 넘어가지 않도록 설정 */
+/*	background-color: rgba(212, 212, 212, 0.05);  투명한 배경 */
+	background-color: #1A1B24;
+	border-radius: 16px;
+/*	 filter: blur(5px);*/
+ 	 gap: 20px 0;
+
+}
+
+.popH
+{
+  margin-left: auto;
+  z-index: 1000;
+}
+
+
+.popH .icon i
+{
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popM
+{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px 0;
+  
+}
+
+.popM .popTitle
+{
+  font-size: 24px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 400;
+}
+.popM .popAlert
+{
+  font-size:14px;
+  text-align: center;
+  font-weight:400;
+  color: #99A2B9;
+}
+
+.inputCon
+{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid #999;
+  	width: 400px;
+	gap: 0 20px;
+}
+
+
+
+
+/* Chrome 자동 완성 스타일링 대응 */
+.inputCon input:-webkit-autofill {
+  background-color: rgba(255, 255, 255, 0) !important; /* 배경색  유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-size 5000s ease-in-out 0s; /* 색상과 글씨 크기 전환 방지 */
+}
+
+/* Chrome 자동 완성 상태에서 포커스, 호버, 활성화 상태 대응 */
+.inputCon input:-webkit-autofill:focus,
+.inputCon input:autofill:focus,
+.inputCon input:-webkit-autofill:hover,
+.inputCon input:-webkit-autofill:active {
+ background-color: rgba(217, 217, 217, 0.1) !important; /* 배경색 투명 유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+}
+.sendButton
+{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:0 20px;
+    margin-top: 20px;
+}
+
+.popB button:hover
+{
+    border: 1px solid #F3B931;
+    color: #F3B931
+}
+
+/*이메일변경 팝업*/
+
+.emailPopup
+{
+  display: none;
+}
+
+
+
+
+
+
+/* 배경 흐림 효과 */
+.blur-background {
+    /* filter: blur(5px); 흐림 정도 설정 */
+    /* pointer-events: none; 블러 처리된 영역 클릭 방지 */
+    /* z-index: 99; */
+}
+
+.popB button
+{
+/*    background-color: rgba(217, 217, 217, 0.1);*/
+/*    border: none;*/
+/*    color: #99A2B9;*/
+/*    font-size: 14px;*/
+/*    border-radius: 3px;*/
+    /* padding: 10px 20px; */
+}

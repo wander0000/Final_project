@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "Http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <mapper resource="mybatis/mappers/usertb_3.xml"/>
+        <mapper resource="mybatis/mappers/usertb_4.xml"/>
+        <mapper resource="mybatis/mappers/genre_3.xml"/>
+        <mapper resource="mybatis/mappers/selecgenretb_3.xml"/>
+        
+        <mapper resource="mybatis/mappers/areatb_2.xml"/>
+		<mapper resource="mybatis/mappers/theatertb_2.xml"/>
+		<mapper resource="mybatis/mappers/screentb_2.xml"/>
+		<mapper resource="mybatis/mappers/movietb_2.xml"/>
+    </mappers>
+</configuration>

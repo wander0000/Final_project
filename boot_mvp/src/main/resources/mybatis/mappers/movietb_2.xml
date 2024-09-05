@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.MovietbDAO_2">   
+    <select id="selectAll" resultType="com.boot.DTO.MovietbDTO">
+		select movieno, movienm
+		from movietb2
+		where moviestatus = 1
+    </select>
+    
+    <select id="getTitle" resultType="String">
+    	select movienm
+		from movietb2
+		where movieno = #{movieno}
+    </select>
+</mapper>

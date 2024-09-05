@@ -1,0 +1,417 @@
+:root 
+{
+    --main-color : #f3b931;
+    --sub-gray: #99a2b9;
+    --font-black:#111;
+    --background: #0f1015;
+    --hover-black:#13151c;
+    --disabled:rgba(153,162,185,0.3);
+    --input-background-gray:rgba(217,217,217,0.1);
+}
+
+* 
+{
+    margin:0;
+    padding:0;
+}
+
+a 
+{
+    text-decoration: none;
+    color: #fff;
+}
+
+ul,li,ol 
+{
+    list-style: none;
+    color: #fff;
+}
+
+table,div 
+{
+    box-sizing: border-box;
+}
+
+html,body 
+{
+    background-color: var(--background);
+}
+
+header 
+{
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerInner 
+{
+    min-width: 83.3%;
+    display: flex;    
+    align-items: center;
+    height: 100%;
+}
+
+h5.logo 
+{
+    width: 160px;
+    height: 26px;
+}
+
+h5.logo a 
+{
+    text-decoration: none;
+    color: var(--main-color);
+    font-size: 24px;
+}
+
+.menuList 
+{
+    display: flex;
+    gap: 0 40px;
+}
+
+.rightWrap 
+{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+}
+
+.rightWrap * 
+{
+    height: 36px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: var(--sub-gray);
+    background-color: var(--input-background-gray);
+    border:0;
+    font-weight: 600;
+}
+
+.inputWrap input 
+{
+    padding-left: 12px;
+}
+
+.rightWrap button 
+{
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+section 
+{
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sectionCon 
+{
+    width: 83.3%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px 0;
+}
+
+.tabWrap 
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 60px;
+}
+
+.tab 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--input-background-gray);
+    color: var(--sub-gray);
+    border-left: var(--background) 2px solid;
+    border-bottom: var(--background) 2px solid;
+}
+
+.tab:last-of-type {
+	border-left: none;
+}
+
+.tab.active 
+{
+    background: rgba(243,185,49,0.2);
+    border: 1px solid var(--main-color);
+    
+}
+
+.tab.active a 
+{
+    color: var(--main-color);
+}
+
+.showWrap {
+    width: 83.3%;
+}
+
+.selecWrapshow {
+    display: grid;
+    grid-template-columns: 27.8% 31.2% 41%;
+    height: 60px;
+}
+
+.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f1015;
+    border-right: #000 2px solid;
+}
+
+/* 마지막 .show 요소에서 border-right를 제거 */
+.show:last-of-type {
+    border-right: none;
+}
+
+.show > a {
+    color: var(--sub-gray);
+    font-size: 16px;
+}
+
+.areabox {
+    background: #24252B;
+}
+
+.selectWrap {
+    display: grid;
+    grid-template-columns: 27.8% 31.2% 41%;
+    background: var(--background);
+    justify-content: center;
+}
+
+.areaWrap .movieWrap, .reservedateWrap {
+    height: 60px;
+}
+
+.areaDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* height: 190px; */
+}
+
+.areascroll {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.theaterscroll {
+	height: 533px;
+    overflow-y: auto;
+}
+
+.theaterscroll::-webkit-scrollbar {
+    width: 4px; /* 스크롤바의 너비 */
+}
+
+.theaterscroll::-webkit-scrollbar-track {
+    background: var(--background); /* 스크롤바의 배경색 */
+}
+
+.theaterscroll::-webkit-scrollbar-thumb {
+    background: var(--sub-gray); /* 스크롤바의 색상 */
+}
+
+.theaterscroll::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바에 마우스를 올렸을 때 색상 */
+}
+
+.movieDiv {
+    height: 190px;
+}
+
+.reservedateDiv {
+	height: 190px;
+}
+
+.areanav, .theaternav, .movienav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40px;
+    text-align: center;
+    border-bottom: #0F1015 2px solid;
+}
+
+.reservedatenav {
+    /*
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    */
+    position: relative;
+    height: 70px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+	cursor: pointer;
+}
+
+.item {
+	display: none;
+}
+
+.item em {
+	font-size: 12px;
+	color: var(--sub-gray);
+}
+.item.active {
+	display: block;
+}
+
+.dayno {
+    color: var(--sub-gray);
+    font-size: 20px;
+}
+
+.Div_tab {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 12px;
+    height: 40px;
+}
+
+.Div_tab > a {
+    color: var(--sub-gray);
+}
+
+.Div_tab.active, .Div_tab.active > a {
+    background: var(--main-color);
+    color: var(--font-black);
+}
+
+.arrowPos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow {
+    width: 9.5px;
+    height: 16px;
+    cursor: pointer;
+    border: none;
+    color: var(--sub-gray);
+    background-color: transparent; /* 투명 */
+}
+
+.movieWrap {
+    background: #24252B;
+}
+
+.moviebox {
+	height: 533px;
+    overflow-y: auto;
+}
+
+.moviebox::-webkit-scrollbar {
+    width: 4px; /* 스크롤바의 너비 */
+}
+
+.moviebox::-webkit-scrollbar-track {
+    background: var(--background); /* 스크롤바의 배경색 */
+}
+
+.moviebox::-webkit-scrollbar-thumb {
+    background: var(--sub-gray); /* 스크롤바의 색상 */
+}
+
+.moviebox::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바에 마우스를 올렸을 때 색상 */
+}
+
+.boxtit {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 40px;
+}
+
+.boxtit > img {
+    padding-left: 20px;
+}
+
+.boxtit > a {
+    padding-left: 17px;
+    color: var(--sub-gray);
+}
+
+.boxtit.active, .boxtit.active > a {
+    background: var(--main-color);
+    color: var(--font-black);
+}
+
+.grouptime {
+    display: flex;
+    justify-content: center;
+}
+
+.groupbox {
+    width: 93.7%;
+}
+
+.selectit {
+	display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 32px;
+}
+
+.selectit > a {
+	color: var(--sub-gray);
+    font-size: 14px;
+    font-weight: 400;
+    padding-left: 8px;
+}
+
+.listtime {
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.listtime li > a {
+    display: block;
+    position: relative;
+    height: 33px;
+    padding: 8px 14px 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.listtime li > a dl dd.time {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.listtime li > a dl dd.seat {
+    position: absolute;
+    left: 12px;
+    bottom: 4px;
+    font-size: 12px;
+}
+
+.listtime li > a dl dd.hall {
+    position: absolute;
+    right: 12px;
+    bottom: 4px;
+    font-size: 12px;
+}
