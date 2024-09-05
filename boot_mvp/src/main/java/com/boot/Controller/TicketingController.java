@@ -152,6 +152,12 @@ public class TicketingController {
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
 		log.info("movieinfo: " + screenService.selectmovieinfo(param));
 		
+		ArrayList<String> seat = new ArrayList<>();
+		for(int i = 65; i < 78; i++) {
+			seat.add(((char)i)+"");
+		}
+		log.info("seat: " + seat);
+		model.addAttribute("seatline", seat);
 		return "ticketing/seatselect";
 	}
 }
