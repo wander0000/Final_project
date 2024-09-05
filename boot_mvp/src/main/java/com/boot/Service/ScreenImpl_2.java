@@ -35,4 +35,10 @@ public class ScreenImpl_2 implements ScreenService_2 {
 		ScreentbDAO_2 dao = sqlSession.getMapper(ScreentbDAO_2.class);
 		return dao.selectdtl(param);
 	}
+
+	@Override
+	public ScreentbDTO selectmovieinfo(HashMap<String, String> param) {
+		ScreentbDAO_2 dao = sqlSession.getMapper(ScreentbDAO_2.class);
+		return dao.selectmovieinfo(param);
+	}
 }
