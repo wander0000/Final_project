@@ -20,6 +20,7 @@ public class UsertbDTO {
     private String birth;  // yyyy-mm-dd
     private int gender;  // 1:남 2:여
     private int certno;  // ID or PW 인증번호
+    private String account; //환불계좌 0905연주
     private LocalDateTime adate;  // default: now()
     private LocalDateTime mdate;
 

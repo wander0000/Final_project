@@ -10,12 +10,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails{
 
     private String userid;
+    private String uuid;
     private String username;
     private String ppass;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(String userid, String username, String ppass, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String userid, String uuid, String username, String ppass, Collection<? extends GrantedAuthority> authorities) {
         this.userid = userid;
+        this.uuid = uuid;
         this.username = username;
         this.ppass = ppass;
         this.authorities = authorities;
@@ -60,6 +62,11 @@ public class CustomUserDetails implements UserDetails{
     // 추가로 만든 userId 가져오기 메서드
     public String getUserId() {
         return userid;
+    }
+    
+    // 추가로 만든 userId 가져오기 메서드
+    public String getUuId() {
+    	return uuid;
     }
 
 }

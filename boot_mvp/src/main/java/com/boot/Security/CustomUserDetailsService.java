@@ -34,6 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new CustomUserDetails(
                 user.getUserid(),
+                user.getUuid(),
                 user.getPname(),
                 user.getPpass(),
                 Collections.singletonList(authority)  // 권한 목록
