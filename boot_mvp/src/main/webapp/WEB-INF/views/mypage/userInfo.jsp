@@ -58,11 +58,72 @@
                                 <div class="th">휴대폰번호</div>
                                 <div class="td">010-1111-2222</div>
                                 <button class="modifyBtn" type="submit">휴대폰번호 변경</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+				                                <span class="icon cancel fs24">
+				                                    <i class="fa-solid fa-xmark"></i>
+				                                </span>
+				                            </div>
+											<div class="popM">
+											    <h4 class="popTitle">휴대폰번호 변경</h4>
+											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
+											</div>
+											<div class="popB">
+												<form id="phoneForm" method="Fetch">
+													<div class="inputCon">
+														<!-- CSRF Token -->
+					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+												        <input type="tel" id="phone" name="newphone" required placeholder="변경할 전화번호">
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
                             <div class="infoDetail">
                                 <div class="th">선호장르</div>
                                 <div class="td">드라마, 군사, 미스터리, 전쟁, 로맨스, 분단</div>
                                 <button class="modifyBtn" type="submit">선호장르 변경</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+				                                <span class="icon cancel fs24">
+				                                    <i class="fa-solid fa-xmark"></i>
+				                                </span>
+				                            </div>
+											<div class="popM">
+											    <h4 class="popTitle">선호장르 변경</h4>
+											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
+											</div>
+											<div class="popB">
+												<form id="genreForm" method="Fetch">
+													<!-- CSRF Token -->
+					                                <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+													<div class="buttonCon">
+														<c:forEach var="genre" items="${genres}">
+														    <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genreno}" class="genreBtn" />
+														    <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
+														</c:forEach>
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
                         </div><!-- rightInfo 끝 -->
                         <div class="leftInfo">
@@ -91,14 +152,14 @@
 												        <input type="email" id="email" name="newemail" required placeholder="변경할 이메일">
 											        </div>
 													<div class="sendButton">
-														<button type="cancel" onclick="closePopup()">취소</button>
+														<button type="cancel" class="cancel">취소</button>
 											        	<button type="submit" class="updateBtn">수정</button>
 													</div>
 											    </form>
 											</div>   
-										</div>
-									</div>
-								</div>
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
                             <div class="infoDetail">
                                 <div class="th">비밀번호</div>
