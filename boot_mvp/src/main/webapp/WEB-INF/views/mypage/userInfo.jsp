@@ -45,7 +45,7 @@
                         <p>개인정보가 포함된 이미지 등록은 자제하여 주시기 바랍니다.</p>
                     </div>
                     <div class="rightCon">
-                        <div class="rightInfo">
+                        <div class="leftInfo">
                             <div class="infoDetail">
                                 <div class="th">이름</div>
                                 <div class="td">김영화</div>
@@ -125,12 +125,16 @@
 									</div><!-- popBg 끝 -->
 								</div><!-- popUp 끝 -->
                             </div>
-                        </div><!-- rightInfo 끝 -->
-                        <div class="leftInfo">
-                            <div class="infoDetail">
+                        </div><!-- leftInfo 끝 -->
+                        <div class="rightInfo">
+							<div class="infoDetail">
                                 <div class="th">이메일</div>
                                 <div class="td">moviePick@mail.com</div>
-                                <button class="modifyBtn" type="submit">이메일 변경</button>
+							</div>
+							 <div class="infoDetail">
+                                <div class="th">비밀번호</div>
+                                <div class="td">****************</div>
+                                <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
@@ -141,15 +145,16 @@
 				                                </span>
 				                            </div>
 											<div class="popM">
-											    <h4 class="popTitle">이메일 변경</h4>
-											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
+											    <h4 class="popTitle">비밀번호 변경</h4>
+											    <h5 class="popAlert">변경할 비밀번호를 입력하세요.</h5>
 											</div>
 											<div class="popB">
-												<form id="emailForm" method="Fetch">
+												<form id="ppassForm" method="Fetch">
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-												        <input type="email" id="email" name="newemail" required placeholder="변경할 이메일">
+												        <input type="password" id="ppass" name="newppass" required placeholder="변경할 비밀번호">
+												        <input type="password" id="ppass_check" name="ppass_check" required placeholder="변경할 비밀번호 재입력">
 											        </div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>
@@ -162,26 +167,78 @@
 								</div><!-- popUp 끝 -->
                             </div>
                             <div class="infoDetail">
-                                <div class="th">비밀번호</div>
-                                <div class="td">****************</div>
-                                <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
-                            </div>
-                            <div class="infoDetail">
                                 <div class="th">생년월일</div>
-                                <div class="td">2000-08-27</div>
+                                <div class="td" id="birthday">2000-08-27</div>
                                 <button class="modifyBtn" type="submit">생년월일 변경</button>
-                            </div>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+				                                <span class="icon cancel fs24">
+				                                    <i class="fa-solid fa-xmark"></i>
+				                                </span>
+				                            </div>
+											<div class="popM">
+											    <h4 class="popTitle">생년월일 변경</h4>
+											    <h5 class="popAlert">변경할 생년월일을 입력하세요.</h5>
+											</div>
+											<div class="popB">
+												<form id="birthForm" method="Fetch">
+													<div class="inputCon">
+														<!-- CSRF Token -->
+					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+														<div class="check_font" id="birth_check"></div>
+												        <input type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
+	                        </div>
                             <div class="infoDetail">
                                 <div class="th">환불계좌</div>
                                 <div class="td">환불계좌가 등록되지 않았습니다.</div>
                                 <button class="modifyBtn" type="submit">환불계좌 등록</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+				                                <span class="icon cancel fs24">
+				                                    <i class="fa-solid fa-xmark"></i>
+				                                </span>
+				                            </div>
+											<div class="popM">
+											    <h4 class="popTitle">환불계좌 변경</h4>
+											    <h5 class="popAlert">변경할 환불계좌를 입력하세요.</h5>
+											</div>
+											<div class="popB">
+												<form id="accountForm" method="Fetch">
+													<div class="inputCon">
+														<!-- CSRF Token -->
+					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+												        <input type="text" id="account" name="newaccount" required placeholder="변경할 환불계좌">
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
-                        </div><!-- leftInfo 끝 -->
+                        </div><!-- rightInfo 끝 -->
                     </div><!-- rightCon 끝 -->
-                </div><!-- withdrawContent -->
-
-                
-                </div><!-- mainContainerContent -->
+                </div><!-- mainContent 끝-->
+            </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
     </section>
 </body>

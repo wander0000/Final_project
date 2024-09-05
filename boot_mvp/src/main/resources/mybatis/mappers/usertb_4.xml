@@ -15,7 +15,7 @@
     <!-- 비밀번호 수정 -->
     <update id="updatePassword">
         UPDATE usertb
-        SET phone = #{ppass},
+        SET ppass = #{ppass},
             mdate = CURRENT_TIMESTAMP
         WHERE userid = #{userid}
     </update>
@@ -32,7 +32,7 @@
     <!-- 생년월일 수정 -->
     <update id="updateBirth">
         UPDATE usertb
-        SET phone = #{birth},
+        SET birth = #{birth},
             mdate = CURRENT_TIMESTAMP
         WHERE userid = #{userid}
     </update>
@@ -40,7 +40,7 @@
     <!-- 환불계좌 수정 -->
     <update id="updateAccount">
         UPDATE usertb
-        SET phone = #{account},
+        SET account = #{account},
             mdate = CURRENT_TIMESTAMP
         WHERE userid = #{userid}
     </update>

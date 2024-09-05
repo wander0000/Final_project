@@ -258,13 +258,17 @@
     color: #F3B931
 }
 
-/*이메일변경 팝업*/
-
-.emailPopup
+/*유효성체크*/
+#birth_check
 {
-  display: none;
+	display: none;
 }
-
+.check_font
+{
+	color:#9b4e4e ;
+	padding: 5px 20px;
+	background-color: rgba(217, 217, 217, 0.1);
+}
 
 
 
