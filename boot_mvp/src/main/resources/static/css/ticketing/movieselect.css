@@ -159,7 +159,8 @@ section
 
 .selecWrapshow {
     display: grid;
-    grid-template-columns: 27.8% 31.2% 41%;
+    /* grid-template-columns: 27.8% 31.2% 41%; */
+    grid-template-columns: 28.8% 31.2% 40%;
     height: 60px;
 }
 
@@ -187,7 +188,8 @@ section
 
 .selectWrap {
     display: grid;
-    grid-template-columns: 27.8% 31.2% 41%;
+    /* grid-template-columns: 27.8% 31.2% 41%; */
+    grid-template-columns: 28.8% 31.2% 40%;
     background: var(--background);
     justify-content: center;
 }
@@ -359,6 +361,7 @@ label {
 .grouptime {
     display: flex;
     justify-content: center;
+    padding: 0 20px;
 }
 
 .groupbox {
@@ -383,7 +386,7 @@ label {
 	display: grid;
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
-    gap: 10px;
+    gap: 20px;
     margin-top: 20px;
 }
 
@@ -404,14 +407,14 @@ label {
 
 .listtime li > a dl dd.seat {
     position: absolute;
-    left: 12px;
+    left: 16px;
     bottom: 4px;
     font-size: 12px;
 }
 
 .listtime li > a dl dd.hall {
     position: absolute;
-    right: 12px;
+    right: 16px;
     bottom: 4px;
     font-size: 12px;
 }

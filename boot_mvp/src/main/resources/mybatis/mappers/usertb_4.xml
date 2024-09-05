@@ -12,6 +12,13 @@
         WHERE userid = #{userid}
     </update>
     
+    <!-- 비밀번호 수정 -->
+    <update id="updatePassword">
+        UPDATE usertb
+        SET phone = #{ppass},
+            mdate = CURRENT_TIMESTAMP
+        WHERE userid = #{userid}
+    </update>
     
     <!-- 핸드폰번호 수정 -->
     <update id="updatePhone">
@@ -20,6 +27,33 @@
             mdate = CURRENT_TIMESTAMP
         WHERE userid = #{userid}
     </update>
+    
+    
+    <!-- 생년월일 수정 -->
+    <update id="updateBirth">
+        UPDATE usertb
+        SET phone = #{birth},
+            mdate = CURRENT_TIMESTAMP
+        WHERE userid = #{userid}
+    </update>
+    
+    <!-- 환불계좌 수정 -->
+    <update id="updateAccount">
+        UPDATE usertb
+        SET phone = #{account},
+            mdate = CURRENT_TIMESTAMP
+        WHERE userid = #{userid}
+    </update>
+    
+    <!-- 선호하는 장르 수정(해당유저의 DB는 삭제하고 다시 삽입) -->
+    <insert id="updateSelectGenre">
+	    INSERT INTO selecgenretb (uuid, genreno)
+	    VALUES (#{uuid}, #{genreno})
+	</insert>
+	
+    <delete id="deleteSelectGenre">
+	     delete from selecgenretb where uuid= #{uuid}
+	</delete>
 
    
 
