@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UsertbDTO {
     private String userid;
-    private String uuid;  // 혹시 모르니 중복 확인 후 가입 진행
+    private String uuid;  // 중복 확인 후 가입 진행
     private String ppass;
     private String pname;
     private String email;
@@ -21,6 +21,5 @@ public class UsertbDTO {
     private int gender;  // 1:남 2:여
     private int certno;  // ID or PW 인증번호
     private LocalDateTime adate;  // default: now()
-    private LocalDateTime mdate;
-
+    private LocalDateTime mdate;  // default: now(), update시 현재 시각으로 자동 갱신
 }

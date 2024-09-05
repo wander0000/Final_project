@@ -57,6 +57,16 @@
 	    FROM usertb
 	    WHERE userid = #{userid}
 	</select>
+	
+	
+	
+	<!-- 이메일 중복검사 -->
+	<select id="checkEmailExists" resultType="int">
+	    SELECT COUNT(*)
+	    FROM usertb
+	    WHERE email = #{email}
+	</select>
+
     
 
 </mapper>
