@@ -91,7 +91,7 @@
                                     <button type="button" class="now" data-count="0" id="adult">0</button>
                                     <ul class="num-choice">
                                         <li>
-                                            <button type="button" class="btn on">0</button>
+                                            <button type="button" class="btn">0</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -106,7 +106,7 @@
                                     <button type="button" class="now" data-count="0" id="youth">0</button>
                                     <ul class="num-choice">
                                         <li>
-                                            <button type="button" class="btn on">0</button>
+                                            <button type="button" class="btn">0</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -121,7 +121,7 @@
                                     <button type="button" class="now" data-count="0" id="old">0</button>
                                     <ul class="num-choice">
                                         <li>
-                                            <button type="button" data-count="0" id="old">0</button>
+                                            <button type="button">0</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -151,234 +151,34 @@
                     </h5>
                     <div class="screenWrap">
                         <div class="sitWrap">
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol -->    
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol --> 
-                            <div class="sitCol">
-                                <h5 class="sitNum">A</h5>
-                                <div class="sitDiv">
-                                    <input type="text" class="sit" value="1" disabled>
-                                    <input type="text" class="sit" value="2" disabled>
-                                    <input type="text" class="sit" value="3" disabled>
-                                    <input type="text" class="sit" value="4" disabled>
-                                    <input type="text" class="sit" value="5" disabled>
-                                    <input type="text" class="sit" value="6" disabled>
-                                    <input type="text" class="sit" value="7" disabled>
-                                    <input type="text" class="sit" value="8" disabled>
-                                    <input type="text" class="sit" value="9" disabled>
-                                    <input type="text" class="sit" value="10" disabled>
-                                    <input type="text" class="sit" value="11" disabled>
-                                    <input type="text" class="sit" value="12" disabled>
-                                    <input type="text" class="sit" value="13" disabled>
-                                    <input type="text" class="sit" value="14" disabled>
-                                </div> <!-- sitDiv-->                               
-                            </div>  <!-- sitCol -->                                                                     
+	                        <c:forEach items="${seatline }" var="seat">
+	                            <div class="sitCol">
+	                            	<div class="sitNum">
+	                            		<h5>${seat}</h5>
+	                            	</div>
+	                                <div class="sitDiv">
+	                                	<c:forEach begin="1" end="14" var="num">
+	                                		<input type="text" class="sit" value="${num }" disabled>
+	                                	</c:forEach>
+	                                	<%-- 
+	                                    <input type="text" class="sit" value="1" disabled>
+	                                    <input type="text" class="sit" value="2" disabled>
+	                                    <input type="text" class="sit" value="3" disabled>
+	                                    <input type="text" class="sit" value="4" disabled>
+	                                    <input type="text" class="sit" value="5" disabled>
+	                                    <input type="text" class="sit" value="6" disabled>
+	                                    <input type="text" class="sit" value="7" disabled>
+	                                    <input type="text" class="sit" value="8" disabled>
+	                                    <input type="text" class="sit" value="9" disabled>
+	                                    <input type="text" class="sit" value="10" disabled>
+	                                    <input type="text" class="sit" value="11" disabled>
+	                                    <input type="text" class="sit" value="12" disabled>
+	                                    <input type="text" class="sit" value="13" disabled>
+	                                    <input type="text" class="sit" value="14" disabled>
+	                                    --%>
+	                                </div> <!-- sitDiv-->      
+	                            </div>  <!-- sitCol -->    
+                            </c:forEach>   
                         </div>
                     </div> <!-- screenWrap 끝 -->
                 </div> <!-- screenDiv 끝 -->

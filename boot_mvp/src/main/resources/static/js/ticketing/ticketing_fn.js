@@ -177,23 +177,80 @@ function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime) {
         });
     }
 }
-
+/*
 function down(id) {
-	var button = $("#"+id);
-			
-	var countValue = button.data('count');
-	var newcount = countValue - 1;
+	var $button = $("#" + id);
 	
-	button.data('count', newcount);
-	button.text($button.data('count'));
+	if($button.text() == 0) {
+		return false;
+	}
+	
+    var countValue = $button.data('count');
+    var newCountValue = countValue - 1;
+	
+    $button.data('count', newCountValue);
+    $button.text(newCountValue);
 }
 
 function up(id) {
-	var button = $("#"+id);
-		
-	var countValue = button.data('count');
-	var newcount = countValue + 1;
+	var $button = $("#" + id);
 	
-	button.data('count', newcount);
-	button.text($button.data('count'));
+    var countValue = $button.data('count');
+	alert('countValue: ' + countValue);
+    var newCountValue = countValue + 1;
+	
+    $button.data('count', newCountValue);
+    $button.text(newCountValue);
+}
+*/
+
+function down(id) {
+    var button = document.getElementById(id);
+    
+	if(button.textContent == 0) {
+		return false;
+	}
+	
+	minus();
+    // data-count 값을 가져옵니다.
+    var countValue = parseInt(button.getAttribute('data-count'), 10);
+    var newCountValue = countValue - 1;
+    
+    // data-count 값을 업데이트합니다.
+    button.setAttribute('data-count', newCountValue);
+    
+    // 버튼의 텍스트를 업데이트합니다.
+    button.textContent = newCountValue;
+}
+
+
+function up(id) {
+    var button = document.getElementById(id);
+	if(getTotal() >= 8) {
+		alert('인원은 최대 8명까지 선택 가능합니다.');
+		return false;
+	}
+    plus();
+    // data-count 값을 가져옵니다.
+    var countValue = parseInt(button.getAttribute('data-count'), 10);
+    var newCountValue = countValue + 1;
+    
+    // data-count 값을 업데이트합니다.
+    button.setAttribute('data-count', newCountValue);
+    
+    // 버튼의 텍스트를 업데이트합니다.
+    button.textContent = newCountValue;
+}
+
+let persons = 0;
+function plus() {
+	persons += 1;
+}
+
+function minus() {
+	persons -= 1;
+}
+
+function getTotal() {
+	return persons;
 }
