@@ -57,22 +57,27 @@
                 </div> <!-- tabDiv 끝-->
                 <div class="selectDiv">
                     <div class="movieInfo">
-                        <img src="img/Alien.jpg" alt="">
+                        <img src="${movieinfo.moviepostimg }" alt="">
                             <div class="movieR">
                                 <div class="movieRT">
-                                    <img src="img/grade_15.png" alt="#">
+                                    <img src="${pageContext.request.contextPath}/images/rating/grade_${movieinfo.ratingno }.png" alt="">
                                     <h5 class="movieName">
-                                        <a href="#none">에이리언:로물루스</a>
+                                        <a href="#none">${movieinfo.movienm }</a>
                                     </h5>
                                 </div>
                                 <div class="movieRM">
-                                    <h5 class="movieDate"><a href="#none">24.08.21</a></h5>
-                                    <h5 class="movieDay"><a href="#none">(수)</a></h5>
-                                    <h5 class="movieTime"><a href="#none">&nbsp;| 10:10 ~ 12:44</a></h5>
+                                	<%-- 각각 날짜 변환 --%>
+                                	<fmt:formatDate value="${movieinfo.viewday }" pattern="yy.MM.dd" var="day"/>
+                                	<fmt:formatDate value="${movieinfo.starttime }" pattern="HH:mm" var="start"/>
+                                    <fmt:formatDate value="${movieinfo.endtime }" pattern="HH:mm" var="end"/>
+                                    <%-- 각각 날짜 변환 --%>
+                                    <h5 class="movieDate"><a href="#none">${day }</a></h5>
+                                    <h5 class="movieDay"><a href="#none">(${movieinfo.weekday })</a></h5>
+                                    <h5 class="movieTime"><a href="#none">&nbsp;| ${start } ~ ${end }</a></h5>
                                 </div>
                                 <div class="movieRB">
                                     <h5 class="movieLocation">
-                                        <a href="#none">센텀시티</a>
+                                        <a href="#none">${movieinfo.theaternm }</a>
                                     </h5>
                                 </div>
                             </div> <!-- movieR 끝-->
@@ -80,35 +85,63 @@
                     <div class="selectInfo">
                         <div class="selectWrap adult">
                             <h5 class="title">성인</h5>
-                            <span class="btn_num">
-                                <button type="button" class="btn_mins">-</button>
-                                    <div class="txt_num">0</div>
-                                    <!-- <input type="number" value="0"> -->
-                                <button type="button" class="btn_plus">+</button>
-                            </span>
-                        </div>
-                        <div class="selectWrap student">
-                            <h5 class="title">청소년</h5>
                             <div class="count">
-                                <button type="button" class="down">-</button>
+                                <button type="button" class="down" onclick="down('adult')">-</button>
                                 <div class="number">
-                                    <button type="button" class="now">0</button>
+                                    <button type="button" class="now" data-count="0" id="adult">0</button>
                                     <ul class="num-choice">
                                         <li>
                                             <button type="button" class="btn on">0</button>
                                         </li>
                                     </ul>
                                 </div>
-                                <button type="button" class="up">+</button>
+                                <button type="button" class="up" onclick="up('adult')">+</button>
+                            </div>
+                        </div>
+                        <div class="selectWrap student">
+                            <h5 class="title">청소년</h5>
+                            <div class="count">
+                                <button type="button" class="down" onclick="down('youth')">-</button>
+                                <div class="number">
+                                    <button type="button" class="now" data-count="0" id="youth">0</button>
+                                    <ul class="num-choice">
+                                        <li>
+                                            <button type="button" class="btn on">0</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="up" onclick="up('youth')">+</button>
                             </div>
                         </div>
                         <div class="selectWrap eld">
                             <h5 class="title">경로</h5>
-                            <input type="number">
+                            <div class="count">
+                                <button type="button" class="down" onclick="down('old')">-</button>
+                                <div class="number">
+                                    <button type="button" class="now" data-count="0" id="old">0</button>
+                                    <ul class="num-choice">
+                                        <li>
+                                            <button type="button" data-count="0" id="old">0</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="up" onclick="up('old')">+</button>
+                            </div>
                         </div>
                         <div class="selectWrap disabled">
                             <h5 class="title">장애인</h5>
-                            <input type="number">
+                            <div class="count">
+                                <button type="button" class="down" onclick="down('disable')">-</button>
+                                <div class="number">
+                                    <button type="button" class="now" data-count="0" id="disable">0</button>
+                                    <ul class="num-choice">
+                                        <li>
+                                            <button type="button">0</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="up" onclick="up('disable')">+</button>
+                            </div>
                         </div>
                     </div>
                 </div> <!-- selectDiv 끝-->
@@ -351,23 +384,23 @@
                 </div> <!-- screenDiv 끝 -->
                 <div class="guideWrap">
                     <div class="guide">
-                        <img src="img/ic_seat_type9.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type9.png" alt="">
                         <a href="#none">장애인석</a>
                     </div>
                     <div class="guide">
-                        <img src="img/ic_seat_type11.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type11.png" alt="">
                         <a href="#none">출입구</a>
                     </div>
                     <div class="guide">
-                        <img src="img/ic_seat_type1.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type1.png" alt="">
                         <a href="#none">선택좌석</a>
                     </div>
                     <div class="guide">
-                        <img src="img/ic_seat_type3.png" alt="">
-                        <a href="#none">예매인석</a>
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type3.png" alt="">
+                        <a href="#none">예매완료</a>
                     </div>
                     <div class="guide">
-                        <img src="img/ic_seat_type4.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type4.png" alt="">
                         <a href="#none">선택불가</a>
                     </div>
                 </div><!-- guideWrap end -->

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.boot.DTO.ScreentbDTO;
 import com.boot.Service.AreaService_2;
@@ -125,11 +128,30 @@ public class TicketingController {
 		return respones;
 	}
 	
-	@RequestMapping("/seatselect")
-	public String seatselect(@RequestParam HashMap<String, String> param, Model model) {
-		log.info("@# seatselect");
-		model.addAttribute("param", param);
-		return "ticketing/seatselect";
+	
+	@RequestMapping("/saveSessionParams")
+	@ResponseBody
+	public String saveSessionParams(@RequestParam HashMap<String, String> param, HttpSession session) {
+		log.info("@# saveSessionParams");
+		log.info("@# param: " + param);
+		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
+		session.setAttribute("params", param);
+		session.setMaxInactiveInterval(3600);
+		
+		return "jsonView";
 	}
 	
+	@RequestMapping("/seatselect")
+	public String seatselect(HttpSession session, Model model) {
+		log.info("@# seatselect");
+		// 세션에 등록한 값 사용
+		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("params");
+		log.info("@# param: " + param);
+		
+		//model.addAttribute("param", param);
+		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
+		log.info("movieinfo: " + screenService.selectmovieinfo(param));
+		
+		return "ticketing/seatselect";
+	}
 }
