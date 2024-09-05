@@ -179,7 +179,13 @@ function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime) {
 }
 
 function down(id) {
+	var button = $("#"+id);
+			
+	var countValue = button.data('count');
+	var newcount = countValue - 1;
 	
+	button.data('count', newcount);
+	button.text($button.data('count'));
 }
 
 function up(id) {
