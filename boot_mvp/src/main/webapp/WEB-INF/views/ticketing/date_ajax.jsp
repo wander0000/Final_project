@@ -11,8 +11,11 @@
 	<div class="listtime">
 		<c:forEach items="${detailinfo }" var="info">
 			<li>
-		        <a href="#none" onclick="seatFrom('${info.areano }', '${info.theaterno }', '${info.movieno }', '${info.viewday }','${info.roomno }','${info.starttime }')">
+		        <a href="#none" onclick="seatFrom('${info.areano }', '${info.theaterno }', '${info.movieno }', '${info.viewday }','${info.roomno }','${info.starttime }', '${info.pricetype }')">
 		            <dl>
+		            	<c:if test="${info.pricetype == 1 }">
+		            		<span class="txt ic">조조</span>
+		            	</c:if>
 		                <dd class="time">
 		                	<fmt:formatDate value="${info.starttime }" pattern="hh : mm" var="time"/>
 		                    ${time }

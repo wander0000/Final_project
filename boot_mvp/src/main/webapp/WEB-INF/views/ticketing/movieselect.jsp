@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>예매 - MVP</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ticketing/movieselect.css">
 <script src="${pageContext.request.contextPath}/js/ticketing/ticketing_fn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
@@ -49,7 +49,7 @@ window.onload = function() {
                     <div class="inputWrap">
                         <input type="text" class="search">                    
                     </div>
-                    <button class="login">로그인</button>
+                    <button type="button" class="login">로그인</button>
                 </div>
             </div>            
         </header>
@@ -57,18 +57,18 @@ window.onload = function() {
             <div class="sectionCon">
                 <div class="tabDiv">
                     <div class="tabWrap">
+                        <div class="tab">
+                            <a href="#none">01.상영시간</a>
+                        </div>
+                        <div class="tab">
+                            <a href="#none">02.인원/좌석</a>
+                        </div>
                         <div class="tab active">
-                            <a href="">01.상영시간</a>
+                            <a href="#none">03.결제</a>
                         </div>
                         <div class="tab">
-                            <a href="">02.인원/좌석</a>
+                            <a href="#none">04.결제완료</a>
                         </div>
-                        <div class="tab">
-                            <a href="">03.결제</a>
-                        </div>
-                        <div class="tab">
-                            <a href="">04.결제완료</a>
-                        </div>                    
                     </div>
                 </div> <!-- tabDiv 끝-->
             </div> <!-- sectionCon 끝-->
