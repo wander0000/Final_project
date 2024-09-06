@@ -1,0 +1,380 @@
+:root 
+{
+    --main-color : #f3b931;
+    --sub-gray: #99a2b9;
+    --font-black:#111;
+    --background: #0f1015;
+    --hover-black:#13151c;
+    --disabled:rgba(153,162,185,0.3);
+    --input-background-gray:rgba(217,217,217,0.1);
+}
+
+* 
+{
+    margin:0;
+    padding:0;
+}
+
+a 
+{
+    text-decoration: none;
+    color: #fff;
+}
+
+ul,li,ol 
+{
+    list-style: none;
+    color: #fff;
+}
+
+table,div 
+{
+    box-sizing: border-box;
+}
+
+html,body 
+{
+    background-color: var(--background);
+}
+
+header 
+{
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerInner 
+{
+    min-width: 83.3%;
+    display: flex;    
+    align-items: center;
+    height: 100%;
+}
+
+h5.logo 
+{
+    width: 160px;
+    height: 26px;
+}
+
+h5.logo a 
+{
+    text-decoration: none;
+    color: var(--main-color);
+    font-size: 24px;
+}
+
+.menuList 
+{
+    display: flex;
+    gap: 0 40px;
+}
+
+.rightWrap 
+{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+}
+
+.rightWrap * 
+{
+    height: 36px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: var(--sub-gray);
+    background-color: var(--input-background-gray);
+    border:0;
+    font-weight: 600;
+}
+
+.inputWrap input 
+{
+    padding-left: 12px;
+}
+
+.rightWrap button 
+{
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+section 
+{
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sectionCon 
+{
+    width: 83.3%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px 0;
+}
+
+.tabWrap 
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 60px;
+}
+
+.tab 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--input-background-gray);
+    color: var(--sub-gray);
+    border-left: var(--background) 2px solid;
+    border-bottom: var(--background) 2px solid;
+}
+
+.tab:last-of-list-style { 
+	border-left: none;
+}
+
+.tab.active 
+{
+    background: rgba(243,185,49,0.2);
+    border: 1px solid var(--main-color);
+    
+}
+
+.tab.active a 
+{
+    color: var(--main-color);
+}
+
+.showWrap {
+    width: 83.3%;
+}
+
+.showWrap button {
+    cursor: pointer;
+}
+
+.selecWrapshow {
+    display: grid;
+    grid-template-columns: 27.8% 31.2% 41%;
+    height: 60px;
+}
+
+.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f1015;
+    border-right: #000 2px solid;
+}
+
+/* 마지막 .show 요소에서 border-right를 제거 */
+.show:last-of-type {
+    border-right: none;
+}
+
+.show > a {
+    color: var(--sub-gray);
+    font-size: 16px;
+}
+
+.areabox {
+    background: #24252B;
+}
+
+.showWrap {
+    display: grid;
+    grid-template-columns: 23.1% 41.25% 35.6%;
+    background: var(--background);
+    justify-content: center;
+}
+
+.movieDiv {
+    background: #13151C;
+    border-bottom: #0F1015 2px solid;
+}
+
+.movieinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px 0;
+    height: 820px;
+}
+
+.seatinfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+    padding-left: 15%;
+    height: 130px;
+}
+
+.poster {
+    width: 67.5%;
+    margin-top: 40px;
+}
+
+.poster img {
+    width: 100%;
+}
+
+.mtitle > a{
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--sub-gray);
+}
+
+.infodetail > a, .seatdetail > a {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--sub-gray);
+}
+
+.infodetail > a:nth-child(even) {
+    font-weight: 500;
+}
+
+.seatdetail > a:nth-child(even) {
+    font-weight: 500;
+}
+
+.infodetail, .seatdetail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+}
+
+.discountDiv {
+    height: 950px;
+    background: rgba(217, 217, 217, 0.1);
+    border-right: #0F1015 2px solid;
+}
+
+.couponDiv, .pointDiv {
+    height: 350px;
+    border-bottom: #0F1015 2px solid;
+}
+
+.paymentDiv {
+    height: 246px;
+}
+
+.coupontitle, .pointtitle {
+    padding: 30px 0;
+}
+
+.paymenttitle {
+    padding: 10px 0;
+}
+
+.coupontitle > a, .pointtitle > a, .paymenttitle > a {
+    font-size: 24px;
+    color: var(--sub-gray);
+    padding-left: 32px;
+}
+
+.afont {
+    font-size: 14px;
+    font-weight: 200;
+    margin-left: 45%;
+}
+
+.discountBtn {
+    background-color: var(--main-color);
+    color: var(--font-black);
+    width: 100%;
+    height: 36px;
+    border: 0px;
+    border-radius: 6px;
+}
+
+.finalpay {
+    background: rgba(217, 217, 217, 0.1);
+}
+
+.pay {
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    height: 36px;
+    background: var(--main-color);
+    border: 0px;
+}
+
+.couponarea, .pointarea {
+    display: grid;
+    grid-template-columns: 18.7% 15.9% 65.3%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input {
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+    text-align: right;
+    padding-right: 25px;
+    background: none;
+    border: none;
+    pointer-events: none; /* 클릭 이벤트 제거 */
+}
+
+.paymentbox {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8%;
+    padding: 2% 5%;
+}
+
+.discountLists {
+    height: 710px;
+}
+
+.discountListarea {
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px 0;
+}
+
+.discountList {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 30px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.discountList > a {
+    text-align: left;
+    padding-left: 15%;
+}
+
+.showpay {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background: var(--background);
+    height: 60px;
+    align-items: center;
+    border-bottom: #13151C 2px solid;
+}
+
+.showpay > a {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 15%;
+}
+/* 마지막 .showpay 요소에서 border-bottom을 제거 */
+.showpay:last-of-type {
+    border-bottom: none;
+}
