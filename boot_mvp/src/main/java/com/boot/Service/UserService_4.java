@@ -10,6 +10,9 @@ public interface UserService_4 {
 	 public void updatePhone(UsertbDTO user);
 	 public void updateBirth(UsertbDTO user);
 	 public void updateAccount(UsertbDTO user);
+//	 public String getUuidFromAuthenticatedUser();
+	 
 	 public void updateSelectGenre(String genrenlList);
 	 public void deleteSelectGenre(String uuid);
+	 public String getSelectGenre();
 }
