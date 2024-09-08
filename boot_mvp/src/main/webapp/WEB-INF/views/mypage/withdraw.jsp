@@ -46,15 +46,17 @@
 	               <div class="popUp">
 	                   <div class="popBg">
 	                       <div class="popCon disF flexD">
-	                           <div class="popH mlauto">
-	                               <span class="icon cancel fs24">
-	                                   <i class="fa-solid fa-xmark"></i>
-	                               </span>
-	                           </div>
-	                           <div class="popM">
-	                               <h4 class="popTitle">정말로 탈퇴하시겠습니까?</h5>
-	                               <h5 class="sub">모든 정보가 영구적으로 삭제됩니다.</h5>
-	                           </div>
+								<div class="popH">
+					                <div class="popM">
+					                    <h4 class="popTitle">정말로 탈퇴하시겠습니까?</h4>
+					                    <h5 class="popAlert">모든 정보가 영구적으로 삭제됩니다..</h5>
+					                </div>
+					                <div class="mlauto">
+					                    <span class="icon cancel fs24">
+					                        <i class="fa-solid fa-xmark"></i>
+					                    </span>
+					                </div>
+					            </div> <!-- popH 끝 -->
 	                           <div class="popB">
 	                               <form class="inputBox" method="post" id="withdrawForm">
 	                                   <div class="inputCon">

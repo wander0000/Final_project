@@ -17,6 +17,8 @@ $(document).ready(function()
 	    console.log("click");
 	    // 버튼의 부모 요소 중 .infoDetail을 찾고, 그 안의 .popUp을 선택하여 보여줌
 	    $(this).closest('.infoDetail').find('.popUp').css({"display":"flex"}); 
+		// 팝업이 열릴 때 입력 필드 초기화
+	    $(this).closest('.infoDetail').find('.replace').val('');
 	});
 
 	
@@ -65,6 +67,8 @@ $(document).ready(function()
 	      })
 	      .then(data => {
 	          alert(data); // 성공 메시지 표시
+			  // 해당 infoDetail의 td 태그 내용 업데이트
+	           $(`#${inputId}`).closest('.infoDetail').find('.td').text(newValue);
 	          // 팝업창 닫기
 	          $(`#${inputId}`).closest('.popUp').css({ "display": "none" });
 	      })
@@ -81,7 +85,18 @@ $(document).ready(function()
 
 	  // 휴대폰번호 변경 버튼
 	  $('#phoneForm .updateBtn').click(function () {
-	      updateInfo('phone', '/api/user/phone', 'phone', 'token');
+		event.preventDefault(); // 폼 제출 기본 동작을 막음
+		console.log("휴대폰 수정버튼 클릭")
+					
+		//휴대폰 유효성 검사에 통과했으면 valid
+		if (valid && $.trim($('#phone').val()) !== "") {
+			updateInfo('phone', '/api/user/phone', 'phone', 'token');
+			
+		} else {
+			alert("생년월일 값을 형식에 맞춰 입력해주세요.");
+			$('#phone').focus();
+			return; // 함수 종료
+		}
 	  });
 	
 	  // 비밀번호 변경 버튼
@@ -100,11 +115,26 @@ $(document).ready(function()
 		   }
 	  });
 	  
-		let valid = false; // 유효성 검사 통과 여부 저장하는 변수
+		var valid = false; // 유효성 검사 통과 여부 저장하는 변수
 		// 생년월일 유효성 검사
-		$('#birth').on('input', function () {//입력필드에 입력할 때 마다
+		$('#birth').on('input', function (e) {//입력필드에 입력할 때 마다
 			
-			var dateStr = $(this).val();//현재 입력되고 있는 값
+			// 생년월일 입력 필드에 하이픈 자동 추가
+	  	    let input = e.target.value;
+	  	    
+	  	    // 숫자만 남기기
+	  	    input = input.replace(/\D/g, '');
+
+	  	    // 하이픈 추가
+	  	    if (input.length > 4 && input.length <= 6) {
+	  	        input = input.replace(/(\d{4})(\d+)/, '$1-$2');
+	  	    } else if (input.length > 6) {
+	  	        input = input.replace(/(\d{4})(\d{2})(\d+)/, '$1-$2-$3');
+	  	    }
+				  	    
+	  	    e.target.value = input;//자동으로 하이픈 넣은 값
+			
+			var dateStr = input;//현재 입력되고 있는 값
 		
 			// 정규식을 이용하여 YYYY-MM-DD 형식과 두 자리 월/일 검사
 			var dateFormat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
@@ -166,8 +196,8 @@ $(document).ready(function()
 			event.preventDefault(); // 폼 제출 기본 동작을 막음
 			console.log("생년월일수정버튼 클릭")
 			
-			//생년월일 유효성 검사에 통과했으면 birthJ
-			if (valid || ($('#newbirth').val() !== null && $('#newbirth').val() !== "")) {
+			//생년월일 유효성 검사에 통과했으면 valid
+			if (valid && $.trim($('#birth').val()) !== "") {
 	     		updateInfo('birth', '/api/user/birth', 'birth', 'token');
 				
 			} else {
@@ -184,8 +214,10 @@ $(document).ready(function()
 	  });
 	  
 	  
-	  // 휴대폰 번호 입력 필드에 하이픈 자동 추가
-	     document.getElementById('phoneInput').addEventListener('input', function(e) {
+	  
+	  
+	  // 휴대폰 번호 입력 필드에 하이픈 자동 추가, 휴대폰번호 유효성검사
+	     document.getElementById('phone').addEventListener('input', function(e) {
 	         let input = e.target.value;
 	         
 	         // 숫자만 남기기
@@ -199,26 +231,104 @@ $(document).ready(function()
 	         }
 	         
 	         e.target.value = input;
+			 // 휴대전화 유효성 검사 
+			var dateStr = input;
+			console.log(dateStr);
+
+			// 정규식을 이용하여 YYYY-MM-DD 형식과 두 자리 월/일 검사
+			var dateFormat = /^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$/;
+
+			if (dateFormat.test(dateStr)) {   //올바른 형식인지 확인
+				valid = true;
+				$('#tel_check').css('display', 'none'); // 유효하면 메시지를 숨김
+			} else {
+				$('#tel_check').text('휴대폰번호를 010-1111-2222 형식으로 입력해주세요.');
+				$('#tel_check').css({ "display": "flex"});
+				valid = false;
+			}
+					
 	     });
+		 
+		 
+	 
+		// 선택장르 수정 버튼
+		$('#genreForm .updateBtn').click(function () {
+			event.preventDefault(); // 폼 제출 기본 동작을 막음
+			console.log("선택장르 수정버튼 클릭")
+				
+			var selectedGenres = $('input[name="genres"]:checked').length;
+			
+			// 3개 미만일 경우 경고 메시지를 띄우고 폼 제출을 막음
+			if (selectedGenres < 3) {
+				alert('최소 3개의 장르를 선택해 주세요.');
+				event.preventDefault(); // 폼 제출 방지
+			} else {
+				updateSelectedGenres();//input창 값업데이트 하기
+				$(this).parents('.popUp').css({"display":"none"}); 
+//				updateInfo('genre', '/api/user/genre', 'genre', 'token');//fetch 실행
+			}
+		          
+		});
+			
+		
+		 
+		 // 체크박스 클릭 시 이벤트
+//		  $('.genrebut').on('change', function() {
+//		      updateSelectedGenres();
+//		  });
+
+		 
+				 
+		 // 선택된 장르 업데이트
+	    function updateSelectedGenres() {
+	        // 선택된 체크박스들
+	        let selectedGenres = [];
+	        let selectedGenreTexts = [];
+
+	        $('.genrebut:checked').each(function() {
+	            selectedGenres.push($(this).val()); // value 값 가져오기
+	            selectedGenreTexts.push($(`label[for="${$(this).attr('id')}"]`).text()); // label 텍스트 가져오기
+	        });
+
+	        // 콤마로 연결된 문자열로 변환
+	        let genreTextString = selectedGenreTexts.join(',');
+	        let genreValueString = selectedGenres.join(',');
+
+	        // div에 텍스트 실시간 업데이트
+	        $('#selectedGenresText').text(genreTextString);
+			
+			// AJAX 요청 (fetch 사용)
+			fetch('/api/user/genre', {
+			          method: "POST",
+			          headers: {
+			              "Content-Type": "application/json",
+			              "X-CSRF-TOKEN": $('#token').val()
+			          },
+			          body: JSON.stringify({ genre: genreValueString }) // JSON 형식으로 전송
+			      })
+			      .then(response => {
+			          if (response.ok) {
+			              return response.text();
+			          } else {
+			              throw new Error(`선호장르 변경에 실패했습니다.`);
+			          }
+			      })
+			      .then(data => {
+			          alert(data); // 성공 메시지 표시
+			          // 팝업창 닫기
+			         $(this).parents('.popUp').css({"display":"none"}); 
+					 // 화면에 환불계좌 표시
+					$('#refundAccountDisplay').text(refundAccount);
+			      })
+			      .catch(error => {
+			          console.error("에러 발생:", error);
+			          alert(error.message);
+			      });
+			
+			
+	    }
+		 
 	     
 	     
-	  // 생년월일 입력 필드에 하이픈 자동 추가
-	  	document.getElementById('birthInput').addEventListener('input', function(e) {
-	  	    let input = e.target.value;
-	  	    
-	  	    // 숫자만 남기기
-	  	    input = input.replace(/\D/g, '');
-
-	  	    // 하이픈 추가
-	  	    if (input.length > 4 && input.length <= 6) {
-	  	        input = input.replace(/(\d{4})(\d+)/, '$1-$2');
-	  	    } else if (input.length > 6) {
-	  	        input = input.replace(/(\d{4})(\d{2})(\d+)/, '$1-$2-$3');
-	  	    }
-	  	    
-	  	    e.target.value = input;
-	  	});
-	
-
 
 });// document ready 끝

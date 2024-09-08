@@ -48,35 +48,38 @@
                         <div class="leftInfo">
                             <div class="infoDetail">
                                 <div class="th">이름</div>
-                                <div class="td">김영화</div>
+                                <div class="td">${user.pname}</div>
                             </div>
                             <div class="infoDetail">
                                 <div class="th">아이디</div>
-                                <div class="td">MVP202408</div>
+                                <div class="td">${user.userid}</div>
                             </div>
                             <div class="infoDetail">
                                 <div class="th">휴대폰번호</div>
-                                <div class="td">010-1111-2222</div>
+                                <div class="td">${user.phone}</div>
                                 <button class="modifyBtn" type="submit">휴대폰번호 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
 										<div class="popCon">
 											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">휴대폰번호 변경</h4>
-											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
-											</div>
+								                <div class="popM">
+								                    <h4 class="popTitle">휴대폰번호 변경</h4>
+								                    <h5 class="popAlert">변경할 내용 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
 											<div class="popB">
 												<form id="phoneForm" method="Fetch">
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-												        <input type="tel" id="phone" name="newphone" required placeholder="변경할 전화번호">
+														<div class="check_font" id="tel_check"></div>
+												        <input class="replace" type="tel" id="phone" name="newphone" required placeholder="변경할 전화번호">
 											        </div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>
@@ -90,31 +93,41 @@
                             </div>
                             <div class="infoDetail">
                                 <div class="th">선호장르</div>
-                                <div class="td">드라마, 군사, 미스터리, 전쟁, 로맨스, 분단</div>
+                                <div class="td" id="selectedGenresText">${genreList}</div>
+							    <input type="hidden" id="selectedGenresValue" />
                                 <button class="modifyBtn" type="submit">선호장르 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
 										<div class="popCon">
 											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">선호장르 변경</h4>
-											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
-											</div>
+								                <div class="popM">
+								                    <h4 class="popTitle">선호장르 변경</h4>
+								                    <h5 class="popAlert">변경할 선호장르를 선택하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
 											<div class="popB">
 												<form id="genreForm" method="Fetch">
 													<!-- CSRF Token -->
 					                                <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-													<div class="buttonCon">
-														<c:forEach var="genre" items="${genres}">
-														    <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genreno}" class="genreBtn" />
-														    <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
-														</c:forEach>
-											        </div>
+													<div class="genrebox">
+													    <c:set var="selectedGenres" value="${fn:split(genreList, ',')}" />
+													    <div class="genreboxButtons">
+													        <c:forEach var="genre" items="${genres}">
+													            <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genreno}" class="genrebut"
+													                <c:if test="${fn:contains(genreList, genre.genrenm)}">
+													                    checked="checked"
+													                </c:if>
+													            />
+													            <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
+													        </c:forEach>
+													    </div>
+													</div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>
 											        	<button type="submit" class="updateBtn">수정</button>
@@ -129,25 +142,27 @@
                         <div class="rightInfo">
 							<div class="infoDetail">
                                 <div class="th">이메일</div>
-                                <div class="td">moviePick@mail.com</div>
+                                <div class="td">${user.email}</div>
 							</div>
 							 <div class="infoDetail">
                                 <div class="th">비밀번호</div>
-                                <div class="td">****************</div>
+                                <div class="td">${user.ppass}</div>
                                 <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
 										<div class="popCon">
 											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">비밀번호 변경</h4>
-											    <h5 class="popAlert">변경할 비밀번호를 입력하세요.</h5>
-											</div>
+								                <div class="popM">
+								                    <h4 class="popTitle">비밀번호 변경</h4>
+								                    <h5 class="popAlert">변경할 비밀번호를 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
 											<div class="popB">
 												<form id="ppassForm" method="Fetch">
 													<div class="inputCon">
@@ -168,56 +183,67 @@
                             </div>
                             <div class="infoDetail">
                                 <div class="th">생년월일</div>
-                                <div class="td" id="birthday">2000-08-27</div>
+                                <div class="td" id="birthday">${user.birth}</div>
                                 <button class="modifyBtn" type="submit">생년월일 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
-									<div class="popBg">
-										<div class="popCon">
-											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">생년월일 변경</h4>
-											    <h5 class="popAlert">변경할 생년월일을 입력하세요.</h5>
-											</div>
-											<div class="popB">
-												<form id="birthForm" method="Fetch">
-													<div class="inputCon">
-														<!-- CSRF Token -->
-					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-														<div class="check_font" id="birth_check"></div>
-												        <input type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
-											        </div>
-													<div class="sendButton">
-														<button type="cancel" class="cancel">취소</button>
-											        	<button type="submit" class="updateBtn">수정</button>
-													</div>
-											    </form>
-											</div>   
-										</div><!-- popCon 끝 -->
-									</div><!-- popBg 끝 -->
+								    <div class="popBg">
+								        <div class="popCon">
+								            <div class="popH">
+								                <div class="popM">
+								                    <h4 class="popTitle">생년월일 변경</h4>
+								                    <h5 class="popAlert">변경할 생년월일을 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
+								            <div class="popB">
+								                <form id="birthForm" method="Fetch">
+								                    <div class="inputCon">
+								                        <!-- CSRF Token -->
+								                        <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}" />
+								                        <div class="check_font" id="birth_check"></div>
+								                        <input type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
+								                    </div>
+								                    <div class="sendButton">
+								                        <button type="cancel" class="cancel">취소</button>
+								                        <button type="submit" class="updateBtn">수정</button>
+								                    </div>
+								                </form>
+								            </div>   
+								        </div><!-- popCon 끝 -->
+								    </div><!-- popBg 끝 -->
 								</div><!-- popUp 끝 -->
 	                        </div>
                             <div class="infoDetail">
                                 <div class="th">환불계좌</div>
-                                <div class="td">환불계좌가 등록되지 않았습니다.</div>
+								<c:choose>
+									<c:when test="${empty user.account}">
+		                                <div class="td">환불계좌가 등록되지 않았습니다.</div>
+									</c:when>
+									<c:otherwise>
+		                                <div class="td">${user.account}</div>
+									</c:otherwise>
+								</c:choose>		
                                 <button class="modifyBtn" type="submit">환불계좌 등록</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
 										<div class="popCon">
 											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">환불계좌 변경</h4>
-											    <h5 class="popAlert">변경할 환불계좌를 입력하세요.</h5>
-											</div>
+								                <div class="popM">
+								                    <h4 class="popTitle">환불계좌 변경</h4>
+								                    <h5 class="popAlert">변경할 환불계좌를 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
 											<div class="popB">
 												<form id="accountForm" method="Fetch">
 													<div class="inputCon">

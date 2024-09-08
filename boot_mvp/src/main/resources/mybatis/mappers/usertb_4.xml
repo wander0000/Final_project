@@ -45,16 +45,7 @@
         WHERE userid = #{userid}
     </update>
     
-    <!-- 선호하는 장르 수정(해당유저의 DB는 삭제하고 다시 삽입) -->
-    <insert id="updateSelectGenre">
-	    INSERT INTO selecgenretb (uuid, genreno)
-	    VALUES (#{uuid}, #{genreno})
-	</insert>
-	
-    <delete id="deleteSelectGenre">
-	     delete from selecgenretb where uuid= #{uuid}
-	</delete>
-
+  
    
 
 </mapper>

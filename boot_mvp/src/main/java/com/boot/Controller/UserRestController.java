@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Service.LoginService;
 import com.boot.Service.UserService_4;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,6 @@ public class UserRestController {
 	
 	@Autowired
 	private UserService_4 userService;
-	
 	
 		
 	// 이메일 수정
@@ -77,12 +78,12 @@ public class UserRestController {
     }
     
     // 선호장르 수정
-    @PatchMapping("/genre")
+    @PostMapping("/genre")
     public ResponseEntity<String> updateSelectGenre(@RequestBody HashMap<String, String> param) {
     	log.info("@# updateSelectGenre로 접근");
 
-		// JSON에서 "genreList"라는 key로 넘어온 값을 처리
-		String genreList = param.get("genreList");
+		// JSON에서 "genre"라는 key로 넘어온 값을 처리
+		String genreList = param.get("genre");
 		
 		// 서비스에 전달
 		userService.updateSelectGenre(genreList);

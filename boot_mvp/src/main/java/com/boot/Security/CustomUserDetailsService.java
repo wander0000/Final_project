@@ -1,6 +1,8 @@
 package com.boot.Security;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,6 +42,19 @@ public class CustomUserDetailsService implements UserDetailsService {
                 Collections.singletonList(authority)  // 권한 목록
         );
     }
+    
+    public String getUuidFromAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userDetails.getUuId();  // uuid 값을 가져옴
+        } else {
+            // 인증되지 않은 사용자이거나, 사용자 정보가 CustomUserDetails가 아닌 경우
+            throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
+        }
+    }
 
+    
+    
 }
 
