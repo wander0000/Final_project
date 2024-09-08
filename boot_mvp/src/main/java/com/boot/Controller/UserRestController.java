@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +28,23 @@ public class UserRestController {
 	@Autowired
 	private UserService_4 userService;
 	
+	@Autowired
+	private  LoginService loginservice;
+	
+	
+	@DeleteMapping
+	public ResponseEntity<String> deleteUser() {
+		String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (id != null) {
+		loginservice.deleteUser(id);
+		}
+		SecurityContextHolder.clearContext();
 		
+		return ResponseEntity.ok("회원 정보가 성공적으로 삭제되었습니다.");
+	}
+	
+	
+			
 	// 이메일 수정
     @PatchMapping("/email")
 //    public ResponseEntity<String> updateEmail(@RequestBody UsertbDTO user, Authentication authentication) {

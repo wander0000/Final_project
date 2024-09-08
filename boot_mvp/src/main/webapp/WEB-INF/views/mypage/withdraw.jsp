@@ -60,8 +60,10 @@
 	                           <div class="popB">
 	                               <form class="inputBox" method="post" id="withdrawForm">
 	                                   <div class="inputCon">
-	                                       <input type="text" name="id" id="id" value required placeholder="아이디">
-	                                       <input type="text" name="password" id="password" autocomplete="off" value required placeholder="비밀번호">
+										   <!-- CSRF Token -->
+	                                       <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>
+										   <div class="check_font" id="del_check"></div>  
+										   <input type="text" id="confirmationText" required placeholder="모든 정보가 영구적으로 삭제됨을 확인했습니다." />
 	                                   </div>
 	                                   <div class="sendButton">
 	                                       <button class="submit" type="submit">예</button>
