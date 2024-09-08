@@ -228,6 +228,12 @@ function up(id) {
     plus(); //전체 인원 += 1
 	setCnt(getTotal()); //선택 가능 좌석 업데이트
 	resetSit();
+	
+	if(id == 'disable') {
+		remove_disabled();
+		show_disabled()
+	}
+	
 	$("#calc").text("총 합계 0원");
     // data-count 값을 가져옵니다.
     var countValue = parseInt(button.getAttribute('data-count'), 10);
@@ -244,6 +250,7 @@ function up(id) {
 let persons = 0;
 let seatcnt = 0;
 let arr = [];
+let disabled = ['A1','A2','A3','A4'];
 // 좌석 선택에 사용할 전역 변수
 function plus() {
 	persons += 1;
@@ -268,18 +275,43 @@ function setCnt(value) {
 function getCnt() {
 	return seatcnt;
 }
+/* 장애인 석 관련 클래스 처리 로직 */
+function make_disabled() { //장애인 전용(빨간색) 좌석 클래스 추가
+	for(var i = 0; i < disabled.length; i++) {
+		$("#"+disabled[i]).addClass("disabled");
+	}
+}
+function remove_disabled() { //장애인 전용(빨간색) 좌석 클래스 제거
+	for(var i = 0; i < disabled.length; i++) {
+		$("#"+disabled[i]).removeClass("disabled");
+	}
+}
+function show_disabled() {
+	for(var i = 0; i < disabled.length; i++) {
+		$("#"+disabled[i]).addClass("showdisabled");
+	}
+}
+function show_disabled_remove() {
+	for(var i = 0; i < disabled.length; i++) {
+		$("#"+disabled[i]).removeClass("showdisabled");
+	}
+}
+/* 장애인 석 관련 클래스 처리 로직 */
 function resetSit() {
 	//좌석 초기화//
 	var seat = $(".sit");
 	seat.removeClass('select'); // css 클래스 삭제
 	seat.removeClass('unselect');
+	make_disabled(); // 장애인석 표시(빨간 영역) 클래스 추가
 	arr = []; //배열 초기화
 	$("#next").val('N');
 	//좌석 초기화//
 }
 
-function updateSeatSelection() {
+function updateSeatSelection() { //모든 좌석 선택 시 다른 좌석 선택 막음
     var seats = $(".sit");
+	remove_disabled(); //장애인석 표시(빨간 영역) 클래스 제거
+	show_disabled_remove(); //활성화된 장애인석 표시 제거
     seats.each(function() {
         var $this = $(this);
         if (!$this.hasClass('select')) {
@@ -288,8 +320,9 @@ function updateSeatSelection() {
     });
 }
 
-function updateSeat() {
+function updateSeat() { // 선택 좌석 취소 시, 다시 활성화
 	var seats = $(".sit");
+	make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
 	seats.each(function() {
         var $this = $(this);
         if ($this.hasClass('unselect')) {

@@ -10,6 +10,11 @@
 <script src="${pageContext.request.contextPath}/js/ticketing/ticketing_fn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 </head>
+<script>
+	$(document).ready(function() {
+		make_disabled();
+	});
+</script>
 <body>
 	<div class="container">
         <header class="header">
