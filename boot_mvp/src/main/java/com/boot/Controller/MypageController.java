@@ -32,8 +32,6 @@ public class MypageController {
 	@Autowired
 	private GenreService genreservice;
 	
-	
-	
 		
 	
 	@RequestMapping("mypage")//마이페이지 메인으로

@@ -17,42 +17,65 @@ $(document).ready(function()
     */
     $("button.withdrawButton").on("click",function(e){
         e.preventDefault();
-        // 배경을 흐리게 처리하고, 오버레이 추가
-//        $(".section").addClass("blur-background");
         $(this).parents().siblings(".popUp").show();
         
 
         $(".popUp .submit").on("click",function(e){
-            e.preventDefault();
-            console.log("탈퇴팝업 예 누름");
+			e.preventDefault();
 
-           
-            if(!id){
-                alert("아이디를 입력해주세요.");
-            }else if(!password){
-                alert("비밀번호를 입력해주세요.");
-            }else{
-				// AJAX 요청을 회원정보를 삭제(회원id는 서버에서 토큰을 통해 인증된 사용자를 확인 할 수 있으므로 body에 data를 보낼 필욥 없음)
-				$.ajax({
-				    url: url,
-				    method: "DELETE",
-				    headers: {
-				        "X-CSRF-TOKEN": csrfToken
-				    },
-				    success: function(data) {
-				        alert(data);
-				        $(this).parents('.popUp').css({"display":"none"}); 
-				    },
-				    error: function(xhr, status, error) {
-				        console.error("에러 발생:", error);
-				        alert(`회원정보 삭제에 실패했습니다: ${error}`);
-				    }
-				});// AJAX 끝
-				
-            }
+			// 사용자가 입력한 값 확인
+			const confirmationText = $('#confirmationText').val().trim();
+			const requiredText = "모든 정보가 영구적으로 삭제됨을 확인했습니다.";
+
+			// 입력된 값이 정확한지 확인
+			if (confirmationText !== requiredText) {
+			    alert("정확한 문장을 입력해주세요.");
+			    $('#confirmationText').focus();
+			    return;
+			}
+
+			// 문장이 정확하면 사용자 정보 삭제 요청 (REST 방식)
+			$.ajax({
+			    url: "/api/user", // 사용자 삭제 REST API 경로
+			    method: "DELETE",
+			    headers: {
+			        "X-CSRF-TOKEN": $('#token').val() // CSRF 토큰 헤더에 추가
+			    },
+			    success: function(response) {
+			        alert("회원 정보가 성공적으로 삭제되었습니다.");
+			        window.location.href = "/login"; // 탈퇴 후 로그인페이지로
+			    },
+			    error: function(error) {
+			        console.error("에러 발생:", error);
+			        alert("회원정보 삭제에 실패했습니다.");
+			    }
+			});
 
         }); //.popUp .submit  클릭 끝
     });//button.withdrawButton 클릭 끝
+	
+	
+	// 입력값 유효성 검사
+	const requiredText = "모든 정보가 영구적으로 삭제됨을 확인했습니다.";
+    const submitBtn = $('#submitBtn');
+	
+    $('#confirmationText').on('input', function() {
+        const inputValue = $(this).val().trim();
+        
+        if (inputValue === requiredText) {
+            // 문장이 정확하면 에러 메시지 숨기고 버튼 활성화
+           $('#del_check').css('display', 'none'); // 유효하면 메시지를 숨김
+            submitBtn.prop('disabled', false);
+        } else {
+            // 문장이 정확하지 않으면 에러 메시지 보여주고 버튼 비활성화
+           $('#del_check').text('"모든 정보가 영구적으로 삭제됨을 확인했습니다."를 입력하세요');
+           $('#del_check').css('display', 'flex');
+            submitBtn.prop('disabled', true);
+        }
+    });
+	
+	
+	
     /*
         2024-09-01 서연주
         회원탈퇴 POPUP > 닫기
