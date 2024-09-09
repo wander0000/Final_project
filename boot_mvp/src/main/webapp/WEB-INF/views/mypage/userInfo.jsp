@@ -146,7 +146,7 @@
 							</div>
 							 <div class="infoDetail">
                                 <div class="th">비밀번호</div>
-                                <div class="td">${user.ppass}</div>
+                                <div class="td" id="pwValue">${user.ppass}</div>
                                 <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
@@ -168,8 +168,8 @@
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-												        <input type="password" id="ppass" name="newppass" required placeholder="변경할 비밀번호">
-												        <input type="password" id="ppass_check" name="ppass_check" required placeholder="변경할 비밀번호 재입력">
+												        <input class="replace" type="password" id="ppass" name="newppass" required placeholder="변경할 비밀번호">
+												        <input class="replace" type="password" id="ppass_check" name="ppass_check" required placeholder="변경할 비밀번호 재입력">
 											        </div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>
@@ -206,7 +206,7 @@
 								                        <!-- CSRF Token -->
 								                        <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}" />
 								                        <div class="check_font" id="birth_check"></div>
-								                        <input type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
+								                        <input class="replace" type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
 								                    </div>
 								                    <div class="sendButton">
 								                        <button type="cancel" class="cancel">취소</button>
@@ -249,7 +249,7 @@
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-												        <input type="text" id="account" name="newaccount" required placeholder="변경할 환불계좌">
+												        <input class="replace" type="text" id="account" name="newaccount" required placeholder="변경할 환불계좌">
 											        </div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>

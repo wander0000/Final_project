@@ -1,15 +1,6 @@
 $(document).ready(function()
 {
-    /*
-        2024-09-01 서연주 
-        서브메뉴 눌렀을 때 메뉴 활성화 : active
-    */
-    $('.subHeader ul li').click(function(){
-        $(this).addClass('active');
-        $('.navMenu ul li').not(this).removeClass('active');
-    });
-
-
+ 
     /*
         2024-09-01 서연주 
          탭 메뉴 활성화 : active
