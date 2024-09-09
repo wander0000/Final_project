@@ -68,7 +68,13 @@ $(document).ready(function()
 	      .then(data => {
 	          alert(data); // 성공 메시지 표시
 			  // 해당 infoDetail의 td 태그 내용 업데이트
-	           $(`#${inputId}`).closest('.infoDetail').find('.td').text(newValue);
+		     if (type === 'ppass') {
+		         // 비밀번호의 경우 비밀번호를 숨김
+		         $(`#${inputId}`).closest('.infoDetail').find('.td').text(''); // 비밀번호는 표시안함
+		     } else {
+		         // 비밀번호가 아닌 경우에는 실제 값을 업데이트
+		         $(`#${inputId}`).closest('.infoDetail').find('.td').text(newValue);
+		     }
 	          // 팝업창 닫기
 	          $(`#${inputId}`).closest('.popUp').css({ "display": "none" });
 	      })
@@ -114,6 +120,7 @@ $(document).ready(function()
 		       updateInfo('ppass', '/api/user/password', 'ppass', 'token');
 		   }
 	  });
+	  
 	  
 		var valid = false; // 유효성 검사 통과 여부 저장하는 변수
 		// 생년월일 유효성 검사
@@ -271,14 +278,19 @@ $(document).ready(function()
 		});
 			
 		
+		//선택된 장르 글자수 표시 제한
+		$('#selectedGenresText').each(function() {
+	        var length = 25; //표시할 글자 수 정하기
+	    
+	        $(this).each(function()
+	        {
+	            if($(this).text().length >= length)
+	            {
+	                $(this).text($(this).text().substr(0, length) + '...');	//지정한 글자수 이후 표시할 텍스트 '...'
+	            }
+	        });
+	    });
 		 
-		 // 체크박스 클릭 시 이벤트
-//		  $('.genrebut').on('change', function() {
-//		      updateSelectedGenres();
-//		  });
-
-		 
-				 
 		 // 선택된 장르 업데이트
 	    function updateSelectedGenres() {
 	        // 선택된 체크박스들
@@ -291,11 +303,23 @@ $(document).ready(function()
 	        });
 
 	        // 콤마로 연결된 문자열로 변환
-	        let genreTextString = selectedGenreTexts.join(',');
-	        let genreValueString = selectedGenres.join(',');
+	        let genreTextString = selectedGenreTexts.join(', ');//장르이름배열(화면에 표시)
+	        let genreValueString = selectedGenres.join(',');//장르번호배열(서버단에 넘기는 값)
 
-	        // div에 텍스트 실시간 업데이트
+	        // div에 텍스트 실시간 업데이트(글자수 제한:나머지 ...표시)
+			
 	        $('#selectedGenresText').text(genreTextString);
+		    $('#selectedGenresText').each(function() {
+		        var length = 25; //표시할 글자 수 정하기
+		    
+		        $(this).each(function()
+		        {
+		            if($(this).text().length >= length)
+		            {
+		                $(this).text($(this).text().substr(0, length) + '...');	//지정한 글자수 이후 표시할 텍스트 '...'
+		            }
+		        });
+		    });
 			
 			// AJAX 요청 (fetch 사용)
 			fetch('/api/user/genre', {
@@ -317,8 +341,6 @@ $(document).ready(function()
 			          alert(data); // 성공 메시지 표시
 			          // 팝업창 닫기
 			         $(this).parents('.popUp').css({"display":"none"}); 
-					 // 화면에 환불계좌 표시
-					$('#refundAccountDisplay').text(refundAccount);
 			      })
 			      .catch(error => {
 			          console.error("에러 발생:", error);
