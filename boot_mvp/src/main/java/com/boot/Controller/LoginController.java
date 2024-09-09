@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
+import com.boot.Security.CustomUserDetails;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.SelecGenretbService;
@@ -164,8 +165,12 @@ public class LoginController {
 
 
     @PostMapping("/delete")
-    public String withdraw(HttpSession session) {
-        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String withdraw() {
+//        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String id = user.getUserId();  // 사용자 ID 가져오기
+    	
+
         if (id != null) {
             loginservice.deleteUser(id);
         }
@@ -198,7 +203,9 @@ public class LoginController {
     
     @GetMapping("/update")
     public String editPage(Model model) {
-        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String id = user.getUserId();  // 사용자 ID 가져오기
         UsertbDTO userdto = loginservice.getUserById(id);
         model.addAttribute("user", userdto);
         return "login/editPage";
@@ -206,7 +213,9 @@ public class LoginController {
 
     @PostMapping("/update")
     public String edit(UsertbDTO userdto) {
-        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String id = user.getUserId();  // 사용자 ID 가져오기
         userdto.setUserid(id);
         loginservice.updateUser(userdto);
         return "redirect:/";
