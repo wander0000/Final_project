@@ -1,3 +1,7 @@
+function getCsrfToken() {
+    return $("#csrf").val();
+}
+
 function kakaopay(){
 	var IMP = window.IMP;
 	IMP.init('imp81407155'); // 포트원 계정 상점 고유 ID
@@ -14,6 +18,7 @@ function kakaopay(){
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	},function(data){
+		console.log("data: " + JSON.stringify(data));
 		if(data.success){
 			var msg = "결제 완료";
             msg += '고유ID : ' + data.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
@@ -23,14 +28,16 @@ function kakaopay(){
             
             $.ajax({
             	type : 'post',
-            	url : '/paySuccess',
-            	data : {"ID" : data.buyer_email, "amount" : data.paid_amount},
+            	url : '/ticketing/reserve',
+            	//data : {"ID" : data.buyer_email, "amount" : data.paid_amount},
+				headers: {
+					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+				},
             });
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
-		alert(msg);
 		document.location.href="/ticketing/paycompleted";
 	});
 }
