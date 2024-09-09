@@ -173,6 +173,7 @@ public class TicketingController {
 		params.put("youth", param.get("youth")); //청소년 숫자
 		params.put("old", param.get("old")); //경로 숫자
 		params.put("disable", param.get("disable")); //장애인 숫자
+		params.put("seats", param.get("seats"));
 		
 		session.setAttribute("params", params);
 		session.setMaxInactiveInterval(3600);
@@ -192,7 +193,10 @@ public class TicketingController {
 		model.addAttribute("youth", params.get("youth"));
 		model.addAttribute("old", params.get("old"));
 		model.addAttribute("disable", params.get("disable"));
+		model.addAttribute("seats", params.get("seats"));
+		model.addAttribute("calc", params.get("calc"));
 		
+		//이후 컨트롤러 작업은 PayContoller에서 진행
 		return "ticketing/payment"; 
 	}
 }

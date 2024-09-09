@@ -46,10 +46,10 @@
                         <div class="tab">
                             <a href="#none">01.상영시간</a>
                         </div>
-                        <div class="tab">
+                        <div class="tab active">
                             <a href="#none">02.인원/좌석</a>
                         </div>
-                        <div class="tab active">
+                        <div class="tab">
                             <a href="#none">03.결제</a>
                         </div>
                         <div class="tab">

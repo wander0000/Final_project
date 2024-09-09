@@ -21,7 +21,7 @@
 		</div>
 		<table>
 			<tr>
-				<td><a href="#" onclick="kakaopay()"><img src="/resources/img/user/iconKakao.svg"></a></td>
+				<td><a href="none" onclick="kakaopay()"><img src="/resources/img/user/iconKakao.svg"></a></td>
 				<td></td>
 			</tr>
 			<tr>

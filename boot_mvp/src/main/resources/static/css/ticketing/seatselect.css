@@ -518,6 +518,17 @@ ul {
     cursor: pointer;
 }
 
+.sit.disabled {
+	background: rgb(255, 36, 62);
+	color: rgb(255, 36, 62);
+	pointer-events: none; /* 클릭 이벤트를 무시 */
+}
+
+.sit.showdisabled {
+	background: rgb(66 118 82);
+	color: var(--sub-gray);
+}
+
 .sit.select {
 	background: var(--main-color);
 	color: var(--font-black);
@@ -533,17 +544,6 @@ ul {
 	background: var(--sub-gray);
 	color: var(--sub-gray);
 	pointer-events: none; /* 클릭 이벤트를 무시 */
-}
-
-.sit.disabled {
-	background: rgb(255, 36, 62);
-	color: rgb(255, 36, 62);
-	pointer-events: none; /* 클릭 이벤트를 무시 */
-}
-
-.sit.showdisabled {
-	background: rgb(66 118 82);
-	color: var(--sub-gray);
 }
 
 .sit:nth-child(4), .sit:nth-child(10) 
