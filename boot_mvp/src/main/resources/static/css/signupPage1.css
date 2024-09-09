@@ -649,3 +649,22 @@ html, body {
   overflow-y: auto;
   padding-top: 20px;
 }
+
+
+
+
+/* 뒤로가기 아이콘 스타일 */
+.back-icon {
+    position: absolute;
+    top: 20px; /* 위에서 20px */
+    left: 20px; /* 왼쪽에서 20px */
+    font-size: 24px; /* 아이콘 크기 */
+    color: #ffffff; /* 아이콘 색상 */
+    cursor: pointer; /* 커서 모양 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+
+.back-icon:hover {
+    color: #F3B931; /* 호버 시 색상 변경 */
+}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,12 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
-import com.boot.Service.EmailService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.SelecGenretbService;
@@ -162,21 +161,7 @@ public class LoginController {
         return "redirect:/login";
     }
 
-    @GetMapping("/update")
-    public String editPage(Model model) {
-        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UsertbDTO userdto = loginservice.getUserById(id);
-        model.addAttribute("user", userdto);
-        return "login/editPage";
-    }
 
-    @PostMapping("/update")
-    public String edit(UsertbDTO userdto) {
-        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userdto.setUserid(id);
-        loginservice.updateUser(userdto);
-        return "redirect:/";
-    }
 
     @PostMapping("/delete")
     public String withdraw(HttpSession session) {
@@ -209,6 +194,84 @@ public class LoginController {
     }
 
     
+    // 아이디 찾기
+    
+    @GetMapping("/update")
+    public String editPage(Model model) {
+        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UsertbDTO userdto = loginservice.getUserById(id);
+        model.addAttribute("user", userdto);
+        return "login/editPage";
+    }
+
+    @PostMapping("/update")
+    public String edit(UsertbDTO userdto) {
+        String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userdto.setUserid(id);
+        loginservice.updateUser(userdto);
+        return "redirect:/";
+    }
+    
+    @RequestMapping("/findIdPage")
+    public String userController() {
+        return "/login/findIdPage";
+    }
+
+    @GetMapping("/userid")
+    public ResponseEntity<String> getUserIdByNameAndEmail(@RequestParam String pname, @RequestParam String email) {
+        String userId = loginservice.getUserIdByNameAndEmail(pname, email);
+        if (userId != null) {
+            return ResponseEntity.ok(userId); // 아이디가 존재하면 반환
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 아이디가 없으면 404 반환
+        }
+    }
+    
+    
+    
+    
+//    // 비밀번호 찾기 폼 페이지
+//    @GetMapping("/find-password")
+//    public String findPasswordPage() {
+//        return "login/findPasswordPage"; // 비밀번호 찾기 페이지로 이동
+//    }
+//
+//    // 이메일 존재 여부 확인 후, 인증번호 전송 페이지로 리다이렉트
+//    @PostMapping("/find-password")
+//    public String findPassword(@RequestParam String email, Model model) {
+//        boolean emailExists = loginService.checkEmailExists(email);
+//
+//        if (emailExists) {
+//            model.addAttribute("email", email); // 인증번호 전송 후 페이지로 이동
+//            return "redirect:/email/send-verification-code"; 
+//        } else {
+//            model.addAttribute("error", "이메일을 다시 확인해주세요.");
+//            return "login/findPasswordPage";
+//        }
+//    }
+//
+//    // 비밀번호 재설정 폼 페이지
+//    @GetMapping("/reset-password")
+//    public String resetPasswordPage(@RequestParam String email, Model model) {
+//        model.addAttribute("email", email);
+//        return "login/resetPasswordPage"; // 비밀번호 재설정 폼 페이지
+//    }
+//
+//    // 비밀번호 재설정 처리
+//    @PostMapping("/reset-password")
+//    public String resetPassword(@RequestParam String email, 
+//                                @RequestParam String newPassword, 
+//                                @RequestParam String confirmPassword, 
+//                                Model model) {
+//        if (!newPassword.equals(confirmPassword)) {
+//            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+//            return "login/resetPasswordPage";
+//        }
+//
+//        // 비밀번호 암호화 후 업데이트
+//        loginservice.updatePassword(email, newPassword);
+//        return "redirect:/login"; // 비밀번호 재설정 후 로그인 페이지로 이동
+//    }
     
     
     

@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", "/checkUserId", "/send-verification-code", "/verify-code", "/email/check-email").permitAll() // 로그인 및 회원가입 페이지는 인증 없이 접근 허용
+                .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", "/checkUserId", "/send-verification-code", "/verify-code", "/email/check-email", "/findIdPage", "/userid", "/login/userid").permitAll() // 로그인 및 회원가입 페이지는 인증 없이 접근 허용
                 .anyRequest().authenticated() // 나머지 페이지는 인증된 사용자만 접근 허용
             .and()
             .formLogin()
