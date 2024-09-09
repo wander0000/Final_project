@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.UsertbDTO;
+import com.boot.Security.CustomUserDetails;
 import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
@@ -75,8 +76,10 @@ public class MypageController {
 		log.info("@# Mypage userInfo");	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		    if (!(auth instanceof AnonymousAuthenticationToken)) {
+		    	CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+	        	String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
 		        String id = auth.getName(); // 로그인된 사용자의 ID 가져오기
-		        UsertbDTO userdto = loginservice.getUserById(id);
+		        UsertbDTO userdto = loginservice.getUserById(loginedUserId);
 		        userdto.setPpass(null); // 비밀번호는 숨김
 		        model.addAttribute("user", userdto);
 		        
