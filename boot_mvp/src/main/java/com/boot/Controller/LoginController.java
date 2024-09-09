@@ -52,8 +52,9 @@ public class LoginController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            String id = auth.getName(); // 로그인된 사용자의 ID 가져오기
-            UsertbDTO userdto = loginservice.getUserById(id);
+        	CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+        	String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
+            UsertbDTO userdto = loginservice.getUserById(loginedUserId);
             userdto.setPpass(null); // 비밀번호는 숨김
             model.addAttribute("user", userdto);
         }
