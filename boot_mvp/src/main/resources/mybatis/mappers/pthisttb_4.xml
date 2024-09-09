@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.PtHisttbDAO_4">
+    
+     <!-- 포인트 이력 테이블 조회 -->
+    <select id="getUserMileage" resultType="MileageDTO">
+        SELECT * FROM pthisttb where uuid=#{uuid}
+    </select>
+    
+    
+    <!-- 포인트적립 또는 포인트 사용 -->
+    <insert id="updatePtHis" parameterType="PthistDTO">
+		INSERT INTO pthisttb (pthistno, description, kind, recqt, issqt, uuid)
+		SELECT CONCAT(
+		           'pt', 
+		           DATE_FORMAT(NOW(), '%y%m%d'),
+		           '-',
+		           LPAD(
+		               IFNULL(
+		                   (SELECT COUNT(*) + 1 
+		                    FROM pthisttb
+		                    WHERE DATE(trndt) = CURDATE()), 1
+		               ), 4, '0') 
+		       ),
+		       #{description},  
+		       #{kind},       
+		       #{recqt},          
+		       #{issqt},          
+		       #{uuid}
+		;
+    </insert>
+    
+</mapper>

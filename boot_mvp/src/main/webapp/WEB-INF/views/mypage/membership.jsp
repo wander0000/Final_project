@@ -230,11 +230,11 @@
                                     </div>
                                     <div class="cardDown">
                                         <div class="point1">
-                                            <div>적립예정</div>
+                                            <div>총 적립</div>
                                             <div>100P</div>
                                         </div>                             
                                         <div class="point2">
-                                            <div>당월 소멸예정</div>
+                                            <div>총 사용</div>
                                             <div>- P</div>
                                         </div>                             
                                     </div>
@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="cardDown">
                                         <div class="point1">
-                                            <div>매표</div>
+                                            <div>당월 적립</div>
                                             <div>100M</div>
                                         </div>                             
                                         <div class="point2">
