@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.PointDAO_4">
+    
+    <!-- 포인트 테이블 조회 -->
+    <select id="getUserPoint" resultType="PointDTO">
+        SELECT * FROM point where uuid=#{uuid}
+    </select>
+    
+    <!-- 회원가입시 최초의 포인트 데이터 생성 -->
+    <insert id="insertPoint">
+		INSERT INTO point (uuid, onhqt, recqt, issqt)
+		SELECT uuid,
+		       (SUM(recqt) - SUM(issqt)) AS current_onhqt, 
+		       SUM(recqt) AS total_recqt,                  
+		       SUM(issqt) AS total_issqt                   
+		FROM pthisttb
+		WHERE uuid = #{uuid}
+		GROUP BY uuid;
+    </insert>
+    
+    <!-- 포인트이력발생시 uuid를 통해 pthisttb를 참조하여 업데이트 -->
+    <update id="updatePoint">
+		UPDATE point p
+		JOIN (
+		    SELECT uuid,
+		           SUM(recqt) AS total_recqt,
+		           SUM(issqt) AS total_issqt,
+		           (SUM(recqt) - SUM(issqt)) AS current_onhqt
+		    FROM pthisttb
+		    WHERE uuid = #{uuid}
+		    GROUP BY uuid
+		) AS hist ON p.uuid = hist.uuid
+		SET p.recqt = hist.total_recqt, 
+		    p.issqt = hist.total_issqt, 
+		    p.onhqt = hist.current_onhqt,
+			p.mdate = now(); 
+    </update>
+    
+</mapper>
