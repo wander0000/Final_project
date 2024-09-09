@@ -242,23 +242,38 @@
                                 <div class="cardBox alignCnt">
                                     <div class="cardUp">
                                         <div class="pointTitle">멤버십 누적 마일리지</div>                             
-                                        <div class="pointTotal">2000 M</div>
+                                        <div class="pointTotal">${membership.mileage.onhqt} M</div>
                                     </div>
                                     <div class="cardDown">
                                         <div class="point1">
                                             <div>당월 적립</div>
-                                            <div>100M</div>
+                                            <div>${membership.mileage.recqt} M</div>
                                         </div>                             
-                                        <div class="point2">
-                                            <div>승급까지 남은 포인트</div>
-                                            <div>5800M</div>
-                                        </div>                             
+										<div class="point2">
+										    <div>승급까지 남은 포인트</div>
+										    <div>
+										        <c:choose>
+										            <c:when test="${membership.grade == 'Welcome'}">
+										                ${7800 - membership.mileage.onhqt} M
+										            </c:when>
+										            <c:when test="${membership.grade == 'VIP'}">
+										                ${9600 - membership.mileage.onhqt} M
+										            </c:when>
+										            <c:when test="${membership.grade == 'MVP'}">
+										                ${12000 - membership.mileage.onhqt} M
+										            </c:when>
+										            <c:otherwise>
+										                - M
+										            </c:otherwise>
+										        </c:choose>
+										    </div>
+										</div>
                                     </div>
                                 </div><!-- cardDetail 끝 -->
                                 <div class="cardBox">
                                     <div class="cardU">
                                         <div class="pointTitle">현재 등급</div>                             
-                                        <div class="pointTotal">Welcome</div>
+                                        <div class="pointTotal">${membership.grade}</div>
                                     </div>
                                     <div class="locatiionCon">
                                         <div class="alertBox">다음 Friend등급까지 5800M 남았어요!</div>                                  
