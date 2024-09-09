@@ -7,11 +7,11 @@
 <meta charset="UTF-8">
 <title>예매 - MVP</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ticketing/payment.css">
-<script src="${pageContext.request.contextPath}/js/ticketing/ticketing_fn.js"></script>
+<script src="${pageContext.request.contextPath}/js/ticketing/pay_fn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 </head>
 <body>
-<form>
+<form method="post" action="">
 	<div class="container">
         <header class="header">
             <div class="headerInner">
@@ -92,7 +92,7 @@
                     <div class="seatinfo">
                         <div class="seatdetail">
                             <a href="#none">좌석</a>
-                            <a href="#none">J7, J8</a>
+                            <a href="#none">${seats }</a>
                         </div>
                     </div>
                 </div> <!-- movieDiv end -->
@@ -127,8 +127,8 @@
                             <a href="#none">최종 결제</a>
                         </div>
                         <div class="paymentbox">
-                            <button type="button" class="discountBtn">신용 카드</button>
-                            <button type="button" class="discountBtn">신용 카드</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('kakao')">카카오 페이</button>
+                            <button type="button" class="discountBtn">토스 페이</button>
                             <button type="button" class="discountBtn">신용 카드</button>
                             <button type="button" class="discountBtn">신용 카드</button>
                         </div>
@@ -154,7 +154,9 @@
                     <div class="totalpay">
                         <div class="showpay">
                             <a href="#none">상품금액</a>
-                            <input type="text" id="p_pay" value="28,000 원" readonly>
+                            <input type="hidden" id="calc" name="calc" value="${calc }">
+                            <fmt:formatNumber value="${calc }" type="number" var="p_pay" groupingUsed="true"/>
+                            <input type="text" id="p_pay" value="${p_pay }원" readonly>
                         </div>
                         <div class="showpay">
                             <a href="#none">할인금액</a>
@@ -162,10 +164,14 @@
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
-                            <input type="text" id="t_pay" value="28,000 원" readonly>
+                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }">
+                            <fmt:formatNumber value="${calc }" type="number" var="t_pay" groupingUsed="true"/>
+                            <input type="text" id="t_pay" value="${t_pay }원" readonly>
                         </div>
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="button" class="pay">결제하기</button>
+                        <div id="paybutton">
+                        	<button type="button" class="pay" onclick="dis_pay_button()">결제하기</button>
+                        </div>
                     </div>
                 </div> <!-- finalpay-->
             </div> <!-- showWrap end -->
