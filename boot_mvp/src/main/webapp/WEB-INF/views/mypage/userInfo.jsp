@@ -45,82 +45,226 @@
                         <p>개인정보가 포함된 이미지 등록은 자제하여 주시기 바랍니다.</p>
                     </div>
                     <div class="rightCon">
-                        <div class="rightInfo">
+                        <div class="leftInfo">
                             <div class="infoDetail">
                                 <div class="th">이름</div>
-                                <div class="td">김영화</div>
+                                <div class="td">${user.pname}</div>
                             </div>
                             <div class="infoDetail">
                                 <div class="th">아이디</div>
-                                <div class="td">MVP202408</div>
+                                <div class="td">${user.userid}</div>
                             </div>
                             <div class="infoDetail">
                                 <div class="th">휴대폰번호</div>
-                                <div class="td">010-1111-2222</div>
+                                <div class="td">${user.phone}</div>
                                 <button class="modifyBtn" type="submit">휴대폰번호 변경</button>
-                            </div>
-                            <div class="infoDetail">
-                                <div class="th">선호장르</div>
-                                <div class="td">드라마, 군사, 미스터리, 전쟁, 로맨스, 분단</div>
-                                <button class="modifyBtn" type="submit">선호장르 변경</button>
-                            </div>
-                        </div><!-- rightInfo 끝 -->
-                        <div class="leftInfo">
-                            <div class="infoDetail">
-                                <div class="th">이메일</div>
-                                <div class="td">moviePick@mail.com</div>
-                                <button class="modifyBtn" type="submit">이메일 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
 										<div class="popCon">
 											<div class="popH">
-				                                <span class="icon cancel fs24">
-				                                    <i class="fa-solid fa-xmark"></i>
-				                                </span>
-				                            </div>
-											<div class="popM">
-											    <h4 class="popTitle">이메일 변경</h4>
-											    <h5 class="popAlert">변경하려는 내용을 입력하세요.</h5>
-											</div>
+								                <div class="popM">
+								                    <h4 class="popTitle">휴대폰번호 변경</h4>
+								                    <h5 class="popAlert">변경할 내용 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
 											<div class="popB">
-												<form id="emailForm" method="Fetch">
+												<form id="phoneForm" method="Fetch">
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-												        <input type="email" id="email" name="newemail" required placeholder="변경할 이메일">
+														<div class="check_font" id="tel_check"></div>
+												        <input class="replace" type="tel" id="phone" name="newphone" required placeholder="변경할 전화번호">
 											        </div>
 													<div class="sendButton">
-														<button type="cancel" onclick="closePopup()">취소</button>
+														<button type="cancel" class="cancel">취소</button>
 											        	<button type="submit" class="updateBtn">수정</button>
 													</div>
 											    </form>
 											</div>   
-										</div>
-									</div>
-								</div>
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
                             <div class="infoDetail">
+                                <div class="th">선호장르</div>
+                                <div class="td" id="selectedGenresText">${genreList}</div>
+							    <input type="hidden" id="selectedGenresValue" />
+                                <button class="modifyBtn" type="submit">선호장르 변경</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+								                <div class="popM">
+								                    <h4 class="popTitle">선호장르 변경</h4>
+								                    <h5 class="popAlert">변경할 선호장르를 선택하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
+											<div class="popB">
+												<form id="genreForm" method="Fetch">
+													<!-- CSRF Token -->
+					                                <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+													<div class="genrebox">
+													    <c:set var="selectedGenres" value="${fn:split(genreList, ',')}" />
+													    <div class="genreboxButtons">
+													        <c:forEach var="genre" items="${genres}">
+													            <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genreno}" class="genrebut"
+													                <c:if test="${fn:contains(genreList, genre.genrenm)}">
+													                    checked="checked"
+													                </c:if>
+													            />
+													            <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
+													        </c:forEach>
+													    </div>
+													</div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
+                            </div>
+                        </div><!-- leftInfo 끝 -->
+                        <div class="rightInfo">
+							<div class="infoDetail">
+                                <div class="th">이메일</div>
+                                <div class="td">${user.email}</div>
+							</div>
+							 <div class="infoDetail">
                                 <div class="th">비밀번호</div>
-                                <div class="td">****************</div>
+                                <div class="td" id="pwValue">${user.ppass}</div>
                                 <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+								                <div class="popM">
+								                    <h4 class="popTitle">비밀번호 변경</h4>
+								                    <h5 class="popAlert">변경할 비밀번호를 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
+											<div class="popB">
+												<form id="ppassForm" method="Fetch">
+													<div class="inputCon">
+														<!-- CSRF Token -->
+					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+												        <input class="replace" type="password" id="ppass" name="newppass" required placeholder="변경할 비밀번호">
+												        <input class="replace" type="password" id="ppass_check" name="ppass_check" required placeholder="변경할 비밀번호 재입력">
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
                             <div class="infoDetail">
                                 <div class="th">생년월일</div>
-                                <div class="td">2000-08-27</div>
+                                <div class="td" id="birthday">${user.birth}</div>
                                 <button class="modifyBtn" type="submit">생년월일 변경</button>
-                            </div>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+								    <div class="popBg">
+								        <div class="popCon">
+								            <div class="popH">
+								                <div class="popM">
+								                    <h4 class="popTitle">생년월일 변경</h4>
+								                    <h5 class="popAlert">변경할 생년월일을 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
+								            <div class="popB">
+								                <form id="birthForm" method="Fetch">
+								                    <div class="inputCon">
+								                        <!-- CSRF Token -->
+								                        <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}" />
+								                        <div class="check_font" id="birth_check"></div>
+								                        <input class="replace" type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
+								                    </div>
+								                    <div class="sendButton">
+								                        <button type="cancel" class="cancel">취소</button>
+								                        <button type="submit" class="updateBtn">수정</button>
+								                    </div>
+								                </form>
+								            </div>   
+								        </div><!-- popCon 끝 -->
+								    </div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
+	                        </div>
                             <div class="infoDetail">
                                 <div class="th">환불계좌</div>
-                                <div class="td">환불계좌가 등록되지 않았습니다.</div>
+								<c:choose>
+									<c:when test="${empty user.account}">
+		                                <div class="td">환불계좌가 등록되지 않았습니다.</div>
+									</c:when>
+									<c:otherwise>
+		                                <div class="td">${user.account}</div>
+									</c:otherwise>
+								</c:choose>		
                                 <button class="modifyBtn" type="submit">환불계좌 등록</button>
+								<!-- 팝업창 (숨겨진 상태로 시작) -->
+								<div class="popUp">
+									<div class="popBg">
+										<div class="popCon">
+											<div class="popH">
+								                <div class="popM">
+								                    <h4 class="popTitle">환불계좌 변경</h4>
+								                    <h5 class="popAlert">변경할 환불계좌를 입력하세요.</h5>
+								                </div>
+								                <div class="mlauto">
+								                    <span class="icon cancel fs24">
+								                        <i class="fa-solid fa-xmark"></i>
+								                    </span>
+								                </div>
+								            </div> <!-- popH 끝 -->
+											<div class="popB">
+												<form id="accountForm" method="Fetch">
+													<div class="inputCon">
+														<!-- CSRF Token -->
+					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
+												        <input class="replace" type="text" id="account" name="newaccount" required placeholder="변경할 환불계좌">
+											        </div>
+													<div class="sendButton">
+														<button type="cancel" class="cancel">취소</button>
+											        	<button type="submit" class="updateBtn">수정</button>
+													</div>
+											    </form>
+											</div>   
+										</div><!-- popCon 끝 -->
+									</div><!-- popBg 끝 -->
+								</div><!-- popUp 끝 -->
                             </div>
-                        </div><!-- leftInfo 끝 -->
+                        </div><!-- rightInfo 끝 -->
                     </div><!-- rightCon 끝 -->
-                </div><!-- withdrawContent -->
-
-                
-                </div><!-- mainContainerContent -->
+                </div><!-- mainContent 끝-->
+            </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
     </section>
 </body>

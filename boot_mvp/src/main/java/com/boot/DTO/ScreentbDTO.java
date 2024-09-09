@@ -14,6 +14,7 @@ public class ScreentbDTO {
 	private int roomno;
 	private Timestamp starttime;
 	private Timestamp endtime;
+	private int pricetype;
 	private int selecseat;
 	private int totalseat;
 	private int adate;
@@ -33,4 +34,5 @@ public class ScreentbDTO {
 	private String ratingno;
 	private String weekday;
 	private String moviepostimg;
+	private int nowprice;
 }

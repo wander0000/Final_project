@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
+import com.boot.Service.EmailService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.SelecGenretbService;
@@ -188,19 +190,26 @@ public class LoginController {
     
 
 
-    @RestController
-    @RequestMapping("/checkUserId")
-    public class UserController {
-
-
-
-        @PostMapping
-        public ResponseEntity<Map<String, Boolean>> checkUserId(@RequestParam String userid) {
-            boolean exists = loginservice.checkUserIdExists(userid);
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("exists", exists);
-            return ResponseEntity.ok(response);
-        }
+    @GetMapping("/checkUserId")
+    @ResponseBody
+    public Map<String, Object> checkUserId(@RequestParam String userid) {
+        boolean userExists = loginservice.checkUserIdExists(userid); // 아이디 존재 여부를 체크하는 서비스 메소드
+        Map<String, Object> response = new HashMap<>();
+        response.put("userExists", userExists);
+        return response;
     }
+
+    @GetMapping("/email/check-email")
+    @ResponseBody
+    public Map<String, Object> checkEmail(@RequestParam String email) {
+        boolean emailExists = loginservice.checkEmailExists(email); // 이메일 존재 여부를 체크하는 서비스 메소드
+        Map<String, Object> response = new HashMap<>();
+        response.put("emailExists", emailExists);
+        return response;
+    }
+
+    
+    
+    
     
 }

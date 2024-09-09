@@ -390,6 +390,19 @@ label {
     margin-top: 20px;
 }
 
+.txt.ic {
+	background: url('../../images/rating/time_sun.png');
+}
+
+.txt.ic {
+	position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 12px;
+    height: 12px;
+    text-indent:-9999em;
+}
+
 .listtime li > a {
     display: block;
     position: relative;

@@ -80,23 +80,24 @@
        2024-09-01 서연주 
        선택한 메뉴 색상변경(클래스에 active추가)
    */
-   // 모든 링크를 선택합니다.
-   const links = document.querySelectorAll('.submenu a');
+	// 모든 링크를 선택합니다.
+	const links = document.querySelectorAll('.submenu a');
 
-   // 각 링크에 클릭 이벤트를 추가합니다.
-   links.forEach(link => {
-       link.addEventListener('click', function(event) {
-           // 기본 링크 동작을 방지합니다.
-           event.preventDefault();
-           
-           // 현재 활성화된 항목의 active 클래스를 제거합니다.
-           document.querySelector('.submenu.active')?.classList.remove('active');
-           
-           // 클릭된 링크의 부모 <li>에 active 클래스를 추가합니다.
-           this.parentElement.classList.add('active');
-           
-           // 원래의 링크 이동을 수행하고 싶다면, 아래 주석을 해제하세요.
-			 window.location.href = this.href;
-       });
-   });
+	// 페이지 로드 시 현재 URL과 일치하는 링크에 active 클래스 추가
+	window.addEventListener('DOMContentLoaded', () => {
+		
+    	//const currentPath = window.location.pathname; //여기까지하면 'mypage/coupon'
+		// '/mypage/' 이후의 경로만 가져오기
+		const currentPath = window.location.pathname.substring('/mypage/'.length);
+		console.log(currentPath)
+      
+    	links.forEach(link => {
+        	if (link.getAttribute('href') === currentPath) {
+            	link.classList.add('active');
+        	}
+    	});
+	});
+
+	// 각 링크에 클릭 이벤트를 추가합니다.
+	
 </script>

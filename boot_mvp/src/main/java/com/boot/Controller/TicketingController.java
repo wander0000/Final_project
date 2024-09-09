@@ -128,7 +128,6 @@ public class TicketingController {
 		return respones;
 	}
 	
-	
 	@RequestMapping("/saveSessionParams")
 	@ResponseBody
 	public String saveSessionParams(@RequestParam HashMap<String, String> param, HttpSession session) {
@@ -152,6 +151,48 @@ public class TicketingController {
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
 		log.info("movieinfo: " + screenService.selectmovieinfo(param));
 		
+		ArrayList<String> seat = new ArrayList<>();
+		for(int i = 65; i < 78; i++) {
+			seat.add(((char)i)+"");
+		}
+		log.info("seat: " + seat);
+		model.addAttribute("seatline", seat);
 		return "ticketing/seatselect";
+	}
+	
+	@RequestMapping("/saveSessionParamsMore")
+	@ResponseBody
+	public String saveSessionParamsMore(@RequestParam HashMap<String, String> param, HttpSession session) {
+		log.info("@# saveSessionParamsMore");
+		log.info("@# param: " + param);
+		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		
+		params.put("calc", param.get("calc")); // 총 가격
+		params.put("adult", param.get("adult")); //성인 숫자
+		params.put("youth", param.get("youth")); //청소년 숫자
+		params.put("old", param.get("old")); //경로 숫자
+		params.put("disable", param.get("disable")); //장애인 숫자
+		
+		session.setAttribute("params", params);
+		session.setMaxInactiveInterval(3600);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping("/payment")
+	public String payment(@RequestParam HashMap<String, String> param, HttpSession session, Model model) {
+		log.info("@# payment");
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		log.info("@# params: " + params);
+		
+		model.addAttribute("movieinfo", screenService.selectmovieinfo(params));
+		
+		model.addAttribute("adult", params.get("adult"));
+		model.addAttribute("youth", params.get("youth"));
+		model.addAttribute("old", params.get("old"));
+		model.addAttribute("disable", params.get("disable"));
+		
+		return "ticketing/payment"; 
 	}
 }

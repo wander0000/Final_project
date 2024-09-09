@@ -112,47 +112,46 @@
   /* gap: 40px 0; */
   /* justify-content: center; */
 }
-.popUp .popH
+
+.popH
+{
+	display: flex;
+	gap: 0 20px;
+	width: 100%;
+	margin-bottom: 20px;
+	
+}
+
+.mlauto 
 {
   margin-left: auto;
 }
 
-.popUp .popH .icon i
+.popH .icon i
 {
   font-size: 20px;
   color: #fff;
   cursor: pointer;
 }
 
-.popConM
-{
-    display: flex;
-    flex-direction: column;
-    gap: 20px 0;
-}
 
-.popH 
-{
-    z-index: 1000;
-}
 
 .popM
 {
-  display: flex;
-  flex-direction: column;
-  gap: 20px 0;
-  margin: 20px 0 40px;
-  
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px 0;
 }
 
-.popM .popTitle
+.popTitle
 {
   font-size: 24px;
   text-align: center;
   color: #ffffff;
   font-weight: 400;
 }
-.popM .sub
+.popAlert
 {
   font-size:14px;
   text-align: center;
@@ -174,23 +173,19 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border-radius: 3px;
-    border: 1px solid #999;
+	gap: 10px 0;
 }
 
 
-.popB .inputBox input
+.popB .inputBox input 
 {
-    border: none;
-    box-sizing: border-box;
-    color: #999;
-    background-color: rgba(217, 217, 217, 0.1);
+	box-sizing: border-box;
+	border-radius: 6px;
+	border: 1px solid #999;
+	width: 100%;
 }
 
-.popB .inputBox input:last-child
-{
-    border-top: 1px solid #999;
-}
+
 .sendButton
 {
     display: grid;
@@ -222,4 +217,17 @@
 {
     border: 1px solid #F3B931;
     color: #F3B931
+}
+
+
+/*유효성체크*/
+#del_check
+{
+	display: none;
+}
+.check_font
+{
+	color:#9b4e4e ;
+	padding: 5px 20px;
+	background-color: rgba(217, 217, 217, 0.1);
 }

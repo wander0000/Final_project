@@ -1,8 +1,21 @@
 package com.boot.Controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.boot.DTO.GenreDTO;
+import com.boot.DTO.UsertbDTO;
+import com.boot.Security.CustomUserDetailsService;
+import com.boot.Service.GenreService;
+import com.boot.Service.LoginService;
+import com.boot.Service.UserService_4;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,8 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MypageController {
 	
-//	@Autowired
-//	private UserImageUploadService uploadService;
+	@Autowired
+	private UserService_4 userService;
+
+	@Autowired
+	private LoginService loginservice;
+	
+	@Autowired
+	private GenreService genreservice;
+	
 		
 	
 	@RequestMapping("mypage")//마이페이지 메인으로
@@ -52,7 +72,20 @@ public class MypageController {
 	
 	@RequestMapping("mypage/userInfo")//마이페이지 회원정보으로
 	public String userInfo(Model model) {
-		log.info("@# Mypage userInfo");		
+		log.info("@# Mypage userInfo");	
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		    if (!(auth instanceof AnonymousAuthenticationToken)) {
+		        String id = auth.getName(); // 로그인된 사용자의 ID 가져오기
+		        UsertbDTO userdto = loginservice.getUserById(id);
+		        userdto.setPpass(null); // 비밀번호는 숨김
+		        model.addAttribute("user", userdto);
+		        
+		        String genreList = userService.getSelectGenre();
+		        model.addAttribute("genreList", genreList);//선호장르 정보 담기
+		        
+		        List<GenreDTO> genres = genreservice.getAllGenres();
+		        model.addAttribute("genres", genres);//장르참조테이블 정보 담기
+		    }
 		
 		return "mypage/userInfo";
 	}
