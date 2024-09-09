@@ -44,4 +44,9 @@
 			m.mdate = now(); 
     </update>
     
+     <!-- 회원탈퇴시 마일리지삭제 -->
+    <delete id="deleteMileage">
+		delete from mileage where uuid =#{uuid}
+    </delete>
+    
 </mapper>

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service("UserService_4")
 @Slf4j
-public class UserImpl_4 implements UserService_4 {
+public class UserServiceImpl_4 implements UserService_4 {
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -35,7 +35,6 @@ public class UserImpl_4 implements UserService_4 {
 	
 
 	@Override
-//	@Transactional  // 트랜잭션이 적용된 메서드
 	public void updateEmail(UsertbDTO user) {
 		log.info("updateEmail 서비스임플");
 		

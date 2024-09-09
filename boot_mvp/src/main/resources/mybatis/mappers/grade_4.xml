@@ -31,4 +31,9 @@
 		              END
     </update>
     
+      <!-- 회원탈퇴시 grade 삭제  -->
+    <delete id="deleteGrade">
+		delete from gardetb where uuid =#{uuid}
+    </delete>
+    
 </mapper>
