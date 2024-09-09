@@ -65,4 +65,9 @@ public class LoginServiceImpl implements LoginService {
     public boolean checkEmailExists(String email) {
         return userdao.checkEmailExists(email) > 0;
     }
+
+    @Override
+    public String getUserIdByNameAndEmail(String pname, String email) {
+        return userdao.getUserIdByNameAndEmail(pname, email);
+    }
 }

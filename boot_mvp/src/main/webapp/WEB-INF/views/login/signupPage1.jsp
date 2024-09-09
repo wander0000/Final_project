@@ -24,6 +24,12 @@
 <body>
     <div class="logimg">
         <div class="container"></div>
+		
+		<!-- 뒤로가기 버튼 추가 -->
+		<a href="javascript:history.back()" class="back-icon">
+		    <i class="fa fa-arrow-left"></i>
+		</a>
+		
         <section>
             <div class="wrap">
                 <div class="loginWrap">

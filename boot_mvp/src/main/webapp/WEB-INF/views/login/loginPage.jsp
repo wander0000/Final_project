@@ -52,10 +52,10 @@
                             <div class="bottbox">
                                 <div class="bot1">
                                     <div class="a1">
-                                        <a href="#" class="aa1">아이디 찾기</a>
+                                        <a href="findIdPage" class="aa1">아이디 찾기</a>
                                     </div>
                                     <div class="a2">
-                                        <a href="#" class="aa1">비밀번호 재설정</a>
+                                        <a href="findPwPage" class="aa1">비밀번호 재설정</a>
                                     </div>
                                     <div class="a1">
                                         <a href="${pageContext.request.contextPath}/signup" class="aa1">회원가입</a>
