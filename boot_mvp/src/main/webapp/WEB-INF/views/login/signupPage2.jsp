@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-				<!-- 2 회원가입 완료 -->
+				<!-- 22 회원가입 완료 -->
 				<div class="loginWrap2">
 				    <div class="logbox">
 				        <div class="background-blur"></div>
