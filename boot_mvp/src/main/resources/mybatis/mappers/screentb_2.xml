@@ -59,7 +59,12 @@
 			from screentb a
 			inner join theatertb b on (a.areano = b.areano and a.theaterno = b.theaterno)
 			inner join movietb2 c on (a.movieno = c.movieno)
-) as a
+		) as a
 		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
     </select>
+
+    <update id="Seat_deduction">
+    	update screentb set selecseat = selecseat - #{len}
+    	where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
+    </update>
 </mapper>

@@ -13,6 +13,8 @@ public class ReservetbDTO {
 	private int theaterno;
 	private int movieno;
 	private Date viewday;
+	private int roomno;
+	private Timestamp starttime;
 	private int tmember;
 	private int tprice;
 	private Timestamp adate;

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 $(document).ready(function() {
     // 로그인 하러가기 버튼 클릭 시 /login으로 이동
     $('#loginButton').on('click', function() {
-        window.location.href = "${pageContext.request.contextPath}/login";
+        window.location.href = "/login";
     });
 
     // 폼 제출 시 장르 선택 확인 및 섹션 전환
@@ -43,7 +43,7 @@ $(document).ready(function() {
             // 기본 폼 제출이 발생하고 나서 페이지 리프레시 대신 섹션을 전환하고 싶다면 AJAX를 사용해야 함.
             $.ajax({
                 type: 'POST',
-                url: "${pageContext.request.contextPath}/signup/step2",
+                url: "/signup/step2",
                 data: $('form').serialize(), // 폼 데이터를 직렬화하여 전송
                 success: function(response) {
                     // 서버 응답이 성공적이면 섹션을 전환

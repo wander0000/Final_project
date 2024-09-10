@@ -4,7 +4,7 @@
 
 <mapper namespace="com.boot.DAO.ReservetbDAO_2">   
     <insert id="insertReserve">
-		insert into reservetb (uuid, reservenum, areano, theaterno, movieno, viewday, tmember, tprice)
-				values (#{uuid}, #{reservenum}, #{areano}, #{theaterno}, #{movieno}, #{viewday}, #{tmember}, #{tprice})
+		insert into reservetb (uuid, reservenum, areano, theaterno, movieno, viewday, roomno, starttime, tmember, tprice)
+				values (#{uuid}, #{reservenum}, #{areano}, #{theaterno}, #{movieno}, #{viewday}, #{roomno}, #{starttime}, #{tmember}, #{tprice})
     </insert>
 </mapper>

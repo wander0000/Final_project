@@ -12,4 +12,5 @@ public interface ScreenService_2 {
 	public ArrayList<ScreentbDTO> selecthdrbase();
 	public ArrayList<ScreentbDTO> selectdtl(HashMap<String, String> param);
 	public ScreentbDTO selectmovieinfo(HashMap<String, String> param);
+	public void Seat_deduction(HashMap<String, String> param);
 }
