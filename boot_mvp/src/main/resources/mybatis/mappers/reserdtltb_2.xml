@@ -9,8 +9,8 @@
     		from reserdtltb
     		where uuid = #{uuid} and reservenum = #{reservenum}
     	</selectKey>
-		insert into reserdtltb (uuid, reservenum, reserveno, areano, theaterno, movieno, viewday, priceno, price, seat)
-				values (#{uuid}, #{reservenum}, #{reserveno}, #{areano}, #{theaterno}, #{movieno}, #{viewday}, #{priceno}, #{price}, #{seat})
+		insert into reserdtltb (uuid, reservenum, reserveno, areano, theaterno, movieno, roomno, viewday, starttime, priceno, price, seat)
+				values (#{uuid}, #{reservenum}, #{reserveno}, #{areano}, #{theaterno}, #{movieno}, #{roomno}, #{viewday}, #{starttime}, #{priceno}, #{price}, #{seat})
     </insert>
 </mapper>
 

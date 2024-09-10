@@ -160,7 +160,7 @@ public class TicketingController {
 		}
 		log.info("seat: " + seat);
 		
-		model.addAttribute("seatline", seat);
+		model.addAttribute("seatline", seat); //전제 좌석
 		model.addAttribute("prices", priceService.selectprice(param));
 		return "ticketing/seatselect";
 	}

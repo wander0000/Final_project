@@ -1,13 +1,12 @@
 package com.boot.DTO;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import lombok.Data;
 
 @Data
 public class MovietbDTO {
-	private int movieno;
+	private String movieno;
 	private String movienm;
 	private String movieen;
 	private String directorno;
