@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.boot.DTO.ScreentbDTO;
 import com.boot.Service.AreaService_2;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.PricetbService_2;
 import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
 
@@ -43,6 +44,9 @@ public class TicketingController {
 	
 	@Autowired
 	private MovieService_2 movieService;
+	
+	@Autowired
+	private PricetbService_2 priceService;
 	
 	@RequestMapping("/movieselect")
 	public String Ticketing(Model model) {
@@ -149,14 +153,15 @@ public class TicketingController {
 		
 		//model.addAttribute("param", param);
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
-		log.info("movieinfo: " + screenService.selectmovieinfo(param));
 		
 		ArrayList<String> seat = new ArrayList<>();
 		for(int i = 65; i < 78; i++) {
 			seat.add(((char)i)+"");
 		}
 		log.info("seat: " + seat);
+		
 		model.addAttribute("seatline", seat);
+		model.addAttribute("prices", priceService.selectprice(param));
 		return "ticketing/seatselect";
 	}
 	

@@ -13,5 +13,8 @@
 		<mapper resource="mybatis/mappers/theatertb_2.xml"/>
 		<mapper resource="mybatis/mappers/screentb_2.xml"/>
 		<mapper resource="mybatis/mappers/movietb_2.xml"/>
+		<mapper resource="mybatis/mappers/reservetb_2.xml"/>
+		<mapper resource="mybatis/mappers/reserdtltb_2.xml"/>
+		<mapper resource="mybatis/mappers/pricetb_2.xml"/>
     </mappers>
 </configuration>

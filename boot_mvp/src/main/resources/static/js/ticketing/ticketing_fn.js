@@ -411,8 +411,25 @@ function default_calc() {
 }
 
 function calc() {
-	var price = $("#price").val()
-	var money = persons * price;
+	var price0 = $("#price0").val();
+	var price1 = $("#price1").val();
+	var price2 = $("#price2").val();
+	var price3 = $("#price3").val();
+	
+	var persons0 = $("#adult").data('count');
+	var persons1= $("#youth").data('count');
+	var persons2 = $("#old").data('count');
+	var persons3 = $("#disable").data('count');
+	
+	// 가격과 인원 수 배열
+	var prices = [price0, price1, price2, price3];
+	var persons = [persons0, persons1, persons2, persons3];
+	
+	var money = 0;
+	for(var i = 0; i < 4; i++) {
+		money += prices[i] * persons[i];
+	}
+	
 	$("#calc").val(money);
 	$("#calcshow").text("총 합계 "+comma(money)+"원");
 	$("#next").val('Y');
