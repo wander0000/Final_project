@@ -96,6 +96,7 @@ public class MypageController {
 												@RequestParam("endDate") Timestamp endDate,
 												@RequestParam("page") int page,
 										        @RequestParam("pageSize") int pageSize) {
+		log.info("@# Mypage getPointHistoryBetween(ajax로 접근)");
 		int offset = (page - 1) * pageSize;
         List<PthistDTO> historyList = memService.getPointHistoryBetween(startDate, endDate, pageSize, offset);
         int totalCount = memService.getTotalCountBetween(startDate, endDate);  // 전체 데이터 개수
