@@ -1,6 +1,7 @@
 package com.boot.Service;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -85,21 +86,27 @@ public class MembershipServiceImpl implements MembershipService {
 	        // 1. 사용자 grade 조회
 	    	GradeDAO_4 dao = sqlSession.getMapper(GradeDAO_4.class);
 			String grade = dao.getUserGrade(uuid); 
+			log.info("getMembership 서비스임플 getUserGrade=>"+grade);
+			
 
 	        // 2. 포인트 이력조회
 			PtHisttbDAO_4 dao2 = sqlSession.getMapper(PtHisttbDAO_4.class);
-			List<PthistDTO> pthist = dao2.getUserPtHis(uuid);
+			List<PthistDTO> pthist = dao2.getUserPtHis(uuid, 30, 5,0);//기본 30일간 내력조회
+			log.info("getMembership 서비스임플 getUserPtHis=>"+pthist);
 
 	        // 3. 사용자 point 조회 
 	        PointDAO_4 dao3 = sqlSession.getMapper(PointDAO_4.class);
 	        PointDTO point =dao3.getUserPoint(uuid); 
+	        log.info("getMembership 서비스임플 getUserPoint=>"+point);
 
 	        // 4. 사용자 mileage 조회 
 	        MileageDAO_4 dao4 = sqlSession.getMapper(MileageDAO_4.class);
-	        MileageDTO mileage = dao4.getUserMileage(uuid);
+	        MileageDTO mileage = dao4.getMileage(uuid);
+	        log.info("getMembership 서비스임플 getMileage=>"+mileage);
 	        
 	        // 5. 조회한 정보 멤버십DTO에 담에 반환하기
 	        MembershipDTO result = new MembershipDTO(grade,pthist,point,mileage);
+	        log.info("getMembership 서비스임플 멤버십 조회 result=>"+result);
 	        return result;
 	        
 
@@ -135,7 +142,7 @@ public class MembershipServiceImpl implements MembershipService {
 
 	        // 2. 포인트 이력조회
 			PtHisttbDAO_4 dao2 = sqlSession.getMapper(PtHisttbDAO_4.class);
-			List<PthistDTO> pthist = dao2.getUserPtHis(uuid);
+			List<PthistDTO> pthist = dao2.getUserPtHis(uuid, 30, 5, 0);//기본 30일간 내력조회(1페이지 5개목록)
 
 	        // 3. 사용자 point 조회 
 	        PointDAO_4 dao3 = sqlSession.getMapper(PointDAO_4.class);
@@ -143,7 +150,7 @@ public class MembershipServiceImpl implements MembershipService {
 
 	        // 4. 사용자 mileage 조회 
 	        MileageDAO_4 dao4 = sqlSession.getMapper(MileageDAO_4.class);
-	        MileageDTO mileage = dao4.getUserMileage(uuid);
+	        MileageDTO mileage = dao4.getMileage(uuid);
 	        
 	        // 5. 조회한 정보 멤버십DTO에 담에 반환하기
 	        MembershipDTO result = new MembershipDTO(grade,pthist,point,mileage);
@@ -195,6 +202,114 @@ public class MembershipServiceImpl implements MembershipService {
 	        throw new RuntimeException("포인트 업데이트 중 문제가 발생했습니다.", e);
 	    }
 	}
+
+
+	@Override
+	public List<PthistDTO> getPointHistoryForDays(int days, int pageSize,int offset) {//포인트 이력 목록조회(필터링:기간별)
+		log.info("getPointHistoryForDays 서비스임플");
+		
+		// 1. 로그인 여부 확인
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+	        throw new RuntimeException("로그인된 사용자가 없습니다.");
+	    }
+	    
+	    // 2. 로그인된 사용자 정보 가져오기
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+
+	    try { 
+			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
+			return dao.getUserPtHis(uuid,days,pageSize,offset);
+			
+	    } catch (Exception e) {
+	        log.error("예외 발생: ", e);
+	        throw new RuntimeException("포인트 이력조회 중 문제가 발생했습니다.", e);
+	    }
+	}
+
+	
+	@Override
+	public int getTotalCountFiltered(int days) {//포인트 이력 목록 갯수(필터링:기간별)
+		log.info("getTotalCountFiltered 서비스임플");
+		
+		// 1. 로그인 여부 확인
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+	        throw new RuntimeException("로그인된 사용자가 없습니다.");
+	    }
+	    
+	    // 2. 로그인된 사용자 정보 가져오기
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+
+	    try { 
+			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
+			return dao.getTotalCountFiltered(uuid,days);
+			
+	    } catch (Exception e) {
+	        log.error("예외 발생: ", e);
+	        throw new RuntimeException("포인트 이력조회 중 문제가 발생했습니다.", e);
+	    }
+		
+	}
+
+	@Override
+	public List<PthistDTO> getPointHistoryBetween(Timestamp startDate, Timestamp endDate, int pageSize,int offset) {//포인트 이력 목록조회(필터링:특정기간)
+		log.info("getPointHistoryBetween 서비스임플");
+		
+		// 1. 로그인 여부 확인
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+	        throw new RuntimeException("로그인된 사용자가 없습니다.");
+	    }
+	    
+	    // 2. 로그인된 사용자 정보 가져오기
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+
+	    try { 
+			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
+			return dao.getUserPtHisBetween(uuid,startDate,endDate,pageSize,offset);
+			
+	    } catch (Exception e) {
+	        log.error("예외 발생: ", e);
+	        throw new RuntimeException("포인트 이력조회 중 문제가 발생했습니다.", e);
+	    }
+	}
+
+
+	@Override
+	public int getTotalCountBetween(Timestamp startDate, Timestamp endDate) {
+	log.info("getTotalCountFiltered 서비스임플");
+		
+		// 1. 로그인 여부 확인
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+	        throw new RuntimeException("로그인된 사용자가 없습니다.");
+	    }
+	    
+	    // 2. 로그인된 사용자 정보 가져오기
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+
+	    try { 
+			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
+			return dao.getTotalCountBetween(uuid,startDate,endDate);
+			
+	    } catch (Exception e) {
+	        log.error("예외 발생: ", e);
+	        throw new RuntimeException("포인트 이력조회 중 문제가 발생했습니다.", e);
+	    }
+		
+	}
+
+
+	
 	
 
 

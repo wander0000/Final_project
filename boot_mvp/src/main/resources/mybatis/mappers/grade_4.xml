@@ -4,18 +4,18 @@
     
     <!-- 사용자 등급 조회 -->
     <select id="getUserGrade">
-        SELECT grade FROM gardetb where uuid=#{uuid}
+        SELECT grade FROM gradetb where uuid=#{uuid}
     </select>
     
     <!-- 회원가입시 사용자 grade 생성 - default Welcome-->
     <insert id="insertGrade">
-		INSERT INTO gardetb (uuid, current_year) 
+		INSERT INTO gradetb (uuid, current_year) 
 		VALUES (#{uuid}, YEAR(NOW()))
     </insert>
     
     <!-- 마일리지테이블 참조하여 어느포인트 이상이면 업데이트, 어떤 로직으로 할지 고민중 -->
     <update id="updateGrade">
-		UPDATE gardetb g
+		UPDATE gradetb g
 		JOIN (
 		    SELECT uuid,
 		           onhqt
@@ -23,17 +23,17 @@
 		    WHERE uuid = #{uuid}
 		    GROUP BY uuid
 		) AS mile ON g.uuid = mile.uuid
-		SET g.garde = CASE 
+		SET g.grade = CASE 
 		                 WHEN mile.onhqt >= 12000 THEN 'MVP'  
 		                 WHEN mile.onhqt >= 9600 THEN 'VIP'    
 		                 WHEN mile.onhqt >= 7800 THEN 'Friend' 
-		                 ELSE g.garde                          
+		                 ELSE g.grade                          
 		              END
     </update>
     
       <!-- 회원탈퇴시 grade 삭제  -->
     <delete id="deleteGrade">
-		delete from gardetb where uuid =#{uuid}
+		delete from gradetb where uuid =#{uuid}
     </delete>
     
 </mapper>

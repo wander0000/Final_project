@@ -3,7 +3,7 @@
 <mapper namespace="com.boot.DAO.PointDAO_4">
     
     <!-- 포인트 테이블 조회 -->
-    <select id="getUserPoint" resultType="PointDTO">
+    <select id="getUserPoint" resultType="com.boot.DTO.PointDTO">
         SELECT * FROM point where uuid=#{uuid}
     </select>
     

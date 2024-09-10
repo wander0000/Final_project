@@ -34,6 +34,7 @@
     color: var(--sub-gray);
     font-size: 14px;
     font-weight: 400;
+	margin-bottom: 40px;
 }
 
 
@@ -354,6 +355,8 @@
     margin-bottom: 20px;
     font-size: 14px;
     display: inline-flex;
+	width: 300px;
+	justify-content: center;
 
 }
 
@@ -448,11 +451,19 @@ filterTitle
 
 .filter.active
 {
-    border: 1px solid #F3B931;
-    background-color: rgba(243, 185, 49, 0.2);
-    color: #F3B931;
+	color: #111;
+	background-color:  #F3B931;
+	border: none;
 }
 
+
+
+.customDateWrapper
+{
+	display: flex;
+	align-items: center;
+	gap: 0 5px;
+}
 /* 달력커스텀 */
 .customDateWrapper {
 /*    position: relative;*/
@@ -515,4 +526,37 @@ filterTitle
 .contentRow
 {
     border-top: 1px solid rgba(217, 217, 217, 0.1);
+}
+
+
+/*페이징 버튼*/
+
+.pagination
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 8px;
+}
+
+.pageBtn
+{
+	padding: 10px;
+	width: 24px !important;
+	height: 24px !important;
+	box-sizing: border-box;
+	background-color:  #1A1B24;
+}
+
+.pageBtn:hover
+{
+    border: 1px solid #F3B931;
+    background-color: rgba(243, 185, 49, 0.2);
+    color: #F3B931;
+}
+
+.pageBtn.active {
+    color: #111;
+    background-color: #F3B931;
+    border: none;
 }
