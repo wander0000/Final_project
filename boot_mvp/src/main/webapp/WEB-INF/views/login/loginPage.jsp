@@ -16,7 +16,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css"/>
     <!-- import js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/js/loginPage.js"></script>  
+
 </head>
 <body>
 
@@ -71,3 +71,7 @@
     </div> <!-- logimg 끝-->
 </body>
 </html>
+<script>
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/js/loginPage.js"></script>  

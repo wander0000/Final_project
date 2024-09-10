@@ -10,29 +10,37 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", "/checkUserId", "/send-verification-code", "/verify-code", "/email/check-email", "/findIdPage", "/userid", "/login/userid").permitAll() // 로그인 및 회원가입 페이지는 인증 없이 접근 허용
-                .anyRequest().authenticated() // 나머지 페이지는 인증된 사용자만 접근 허용
-            .and()
-            .formLogin()
-                .loginPage("/login") // 로그인 페이지 설정
-                .loginProcessingUrl("/auth") // 로그인 폼 제출 URL
-                .usernameParameter("userid") // 로그인 ID 파라미터 이름
-                .passwordParameter("ppass") // 로그인 비밀번호 파라미터 이름
-                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL
-            .and()
-            .logout()
-                .logoutUrl("/logout") // 로그아웃 URL
-                .logoutSuccessUrl("/") // 로그아웃 성공 시 리디렉션 URL
-            .and()
-            .sessionManagement()
-                .sessionFixation().migrateSession(); // 세션 고정 공격 방지
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http
+	        .authorizeRequests()
+	            .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", 
+	                    "/checkUserId", "/verify-code", 
+	                    "/findIdPage", "/userid", // 여기서 /userid 추가
+	                    "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
+	            .permitAll()  // 인증 없이 접근 가능하게 설정
+	        .anyRequest().authenticated()
+	        .and()
+	        .csrf()
+	            .ignoringAntMatchers("/email/**") // 필요에 따라 CSRF 무시할 경로 설정
+	        .and()
+	        .formLogin()
+	            .loginPage("/login")
+	            .loginProcessingUrl("/auth")
+	            .usernameParameter("userid")
+	            .passwordParameter("ppass")
+	            .defaultSuccessUrl("/")
+	        .and()
+	        .logout()
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/")
+	        .and()
+	        .sessionManagement()
+	            .sessionFixation().none();
 
-        return http.build();
-    }
+	    return http.build();
+	}
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -70,4 +70,17 @@ public class LoginServiceImpl implements LoginService {
     public String getUserIdByNameAndEmail(String pname, String email) {
         return userdao.getUserIdByNameAndEmail(pname, email);
     }
+    
+    @Override
+    public void updatePassword(String email, String newPassword) {
+        // 비밀번호를 암호화합니다.
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // DAO를 통해 비밀번호를 업데이트합니다.
+        userdao.updatePasswordByEmail(email, encodedPassword);
+    }
+    
+
+    
+    
 }

@@ -200,7 +200,7 @@ public class LoginController {
     }
 
     
-    // 아이디 찾기
+
     
     @GetMapping("/update")
     public String editPage(Model model) {
@@ -222,12 +222,16 @@ public class LoginController {
         return "redirect:/";
     }
     
+    
+    
+    // 아이디 찾기
+    
     @RequestMapping("/findIdPage")
     public String userController() {
         return "/login/findIdPage";
     }
 
-    @GetMapping("/userid")
+    @RequestMapping("/userid")
     public ResponseEntity<String> getUserIdByNameAndEmail(@RequestParam String pname, @RequestParam String email) {
         String userId = loginservice.getUserIdByNameAndEmail(pname, email);
         if (userId != null) {
@@ -240,49 +244,63 @@ public class LoginController {
     
     
     
-//    // 비밀번호 찾기 폼 페이지
-//    @GetMapping("/find-password")
-//    public String findPasswordPage() {
-//        return "login/findPasswordPage"; // 비밀번호 찾기 페이지로 이동
-//    }
-//
-//    // 이메일 존재 여부 확인 후, 인증번호 전송 페이지로 리다이렉트
-//    @PostMapping("/find-password")
-//    public String findPassword(@RequestParam String email, Model model) {
-//        boolean emailExists = loginService.checkEmailExists(email);
-//
-//        if (emailExists) {
-//            model.addAttribute("email", email); // 인증번호 전송 후 페이지로 이동
-//            return "redirect:/email/send-verification-code"; 
-//        } else {
-//            model.addAttribute("error", "이메일을 다시 확인해주세요.");
-//            return "login/findPasswordPage";
-//        }
-//    }
-//
-//    // 비밀번호 재설정 폼 페이지
-//    @GetMapping("/reset-password")
-//    public String resetPasswordPage(@RequestParam String email, Model model) {
-//        model.addAttribute("email", email);
-//        return "login/resetPasswordPage"; // 비밀번호 재설정 폼 페이지
-//    }
-//
-//    // 비밀번호 재설정 처리
-//    @PostMapping("/reset-password")
-//    public String resetPassword(@RequestParam String email, 
-//                                @RequestParam String newPassword, 
-//                                @RequestParam String confirmPassword, 
-//                                Model model) {
-//        if (!newPassword.equals(confirmPassword)) {
-//            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-//            return "login/resetPasswordPage";
-//        }
-//
-//        // 비밀번호 암호화 후 업데이트
-//        loginservice.updatePassword(email, newPassword);
-//        return "redirect:/login"; // 비밀번호 재설정 후 로그인 페이지로 이동
-//    }
+    
+    // 비밀번호 찾기
+    
+    // 비밀번호 재설정 폼 페이지로 이동
+    @RequestMapping("/findPwPage")
+    public String findPasswordPage() {
+        return "login/findPwPage"; // 비밀번호 재설정 폼 페이지로 이동
+    }
     
     
+
+
+    @RequestMapping("/findPassword")
+    @ResponseBody
+    public Map<String, Object> findPassword(@RequestParam String email) {
+        boolean emailExists = loginservice.checkEmailExists(email); // 이메일 존재 여부 확인
+        Map<String, Object> response = new HashMap<>();
+
+        if (emailExists) {
+            // 이메일로 인증번호 전송 (EmailController의 인증번호 전송 메서드 호출)
+            response.put("status", "success");
+            response.put("message", "인증번호가 이메일로 전송되었습니다.");
+            response.put("email", email);
+        } else {
+            response.put("status", "error");
+            response.put("message", "이메일을 다시 확인해주세요.");
+        }
+
+        return response;
+    }
+
+
+    
+    // 비밀번호 재설정 폼 페이지로 이동
+    @RequestMapping("/resetPwPage")
+    public String resetPasswordPage(@RequestParam String email, Model model) {
+        model.addAttribute("email", email);
+        return "login/resetPwPage"; // 비밀번호 재설정 폼 페이지로 이동
+    }
+
+    // 비밀번호 재설정 처리
+    @RequestMapping("/resetPassword")
+    public String resetPassword(@RequestParam String email,
+                                @RequestParam String newPassword,
+                                @RequestParam String confirmPassword,
+                                Model model) {
+        // 비밀번호 일치 여부 확인
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+            return "login/resetPwPage";
+        }
+
+        // 비밀번호 업데이트
+        loginservice.updatePassword(email, newPassword);
+
+        // 성공 시 로그인 페이지로 리다이렉트
+        return "redirect:/login";
+    }
     
 }
