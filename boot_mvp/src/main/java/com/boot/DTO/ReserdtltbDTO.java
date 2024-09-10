@@ -6,7 +6,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class Reserdtltb {
+public class ReserdtltbDTO {
 	private String uuid;
 	private String reservenum;
 	private int reserveno;

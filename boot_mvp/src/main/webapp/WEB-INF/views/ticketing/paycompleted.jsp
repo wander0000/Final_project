@@ -96,8 +96,8 @@
                     <a href="#none" class="atext">해당 영화의 결제가 완료 되었습니다.</a>
                 </div>
                 <div class="buttonDiv">
-                    <button class="movebtn">메인 화면</button>
-                    <button class="movebtn">다른 영화 살펴보기</button>
+                    <button type="button" class="movebtn">메인 화면</button>
+                    <button type="button" class="movebtn">다른 영화 살펴보기</button>
                 </div>
             </div> <!-- showWrap end -->
         </section>

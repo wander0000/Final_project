@@ -42,7 +42,7 @@
     
     <select id="selectmovieinfo" resultType="com.boot.DTO.ScreentbDTO">
     	select areano, theaterno, theaternm, movieno, movienm, ratingno, 
-			   viewday, weekday, roomno, pricetype, nowprice, starttime, endtime, moviepostimg
+			   viewday, weekday, roomno, pricetype, starttime, endtime, moviepostimg
 		from
 		(
 			select a.areano, a.theaterno, b.theaternm, a.movieno, c.movienm, c.ratingno, a.viewday, 
@@ -55,20 +55,11 @@
 						WHEN 6 THEN '금'
 						WHEN 7 THEN '토'
 					END AS weekday,
-					a.roomno, a.pricetype, d.nowprice, a.starttime, a.endtime, c.moviepostimg
+					a.roomno, a.pricetype, a.starttime, a.endtime, c.moviepostimg
 			from screentb a
 			inner join theatertb b on (a.areano = b.areano and a.theaterno = b.theaterno)
 			inner join movietb2 c on (a.movieno = c.movieno)
-		    inner join (
-		    	select pricetype, nowprice
-				from
-				(
-					select substr(pricetype, 1, 1) as pricetype, nowprice
-					from pricetb
-				) as a
-				group by pricetype, nowprice
-		    ) d on (a.pricetype = substr(d.pricetype, 1, 1))
-		) as a
+) as a
 		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
     </select>
 </mapper>

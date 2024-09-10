@@ -1,5 +1,7 @@
 package com.boot.Service;
 
-public interface ReserdtltbService_2 {
+import java.util.HashMap;
 
+public interface ReserdtltbService_2 {
+	public void insertReserdtl(HashMap<String, String> param);
 }

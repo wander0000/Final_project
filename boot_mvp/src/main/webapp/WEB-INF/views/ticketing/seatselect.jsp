@@ -195,7 +195,9 @@
                     </div>
                 </div><!-- guideWrap end -->
                 <div class="botWrap">
-                	<input type="hidden" id="price" value="${movieinfo.nowprice }">
+                	<c:forEach items="${prices }" var="price" varStatus="status">
+                		<input type="hidden" id="price${status.index}" value="${price }">
+                	</c:forEach>
                 	<input type="hidden" id="calc" name="calc">
                 	<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <a href="#none" id="calcshow">총 합계 0원</a>
