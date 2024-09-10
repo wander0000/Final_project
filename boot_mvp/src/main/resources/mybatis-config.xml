@@ -16,6 +16,8 @@
 		<mapper resource="mybatis/mappers/mileage_4.xml"/>
 		<mapper resource="mybatis/mappers/point_4.xml"/>
 		<mapper resource="mybatis/mappers/pthisttb_4.xml"/>
-		
+		<mapper resource="mybatis/mappers/reservetb_2.xml"/>
+		<mapper resource="mybatis/mappers/reserdtltb_2.xml"/>
+		<mapper resource="mybatis/mappers/pricetb_2.xml"/>
     </mappers>
 </configuration>

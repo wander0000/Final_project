@@ -41,4 +41,10 @@ public class ScreenImpl_2 implements ScreenService_2 {
 		ScreentbDAO_2 dao = sqlSession.getMapper(ScreentbDAO_2.class);
 		return dao.selectmovieinfo(param);
 	}
+
+	@Override
+	public void Seat_deduction(HashMap<String, String> param) {
+		ScreentbDAO_2 dao = sqlSession.getMapper(ScreentbDAO_2.class);
+		dao.Seat_deduction(param);
+	}
 }

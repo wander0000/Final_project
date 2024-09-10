@@ -15,7 +15,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css"/>
     <!-- import js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/js/findIdPage.js"></script>
+
   
 </head>
 
@@ -64,7 +64,7 @@
                                 <p id="resultMessage"></p>
                             </div>
                             <div class="log4">
-                                <input type="button" value="확인" class="logbut" id="closeModalButton">
+                                <input type="button" value="확인" class="logbut2" id="closeModalButton">
                             </div>
                         </div>
                     </div>
@@ -73,64 +73,11 @@
         </section> <!--section 끝 -->
     </div> <!-- logimg 끝-->
 
-	<script>
-		$(document).ready(function() {
-		    // CSRF 토큰을 HTML 메타 태그로 삽입하고, Ajax 요청 시 함께 사용
-		    const csrfToken = $("meta[name='_csrf']").attr("content");
-
-		    // 확인 버튼 클릭 시 서버로 요청
-		    $('#checkIdButton').on('click', function() {
-		        var name = $('#name').val();
-		        var email = $('#email').val();
-
-		        $.ajax({
-		            url: "${pageContext.request.contextPath}/userid",
-		            type: "GET",
-		            data: { pname: name, email: email },
-		            beforeSend: function(xhr) {
-		                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);  // CSRF 토큰 추가
-		            },
-		            success: function(response) {
-		                // 성공적인 응답일 때
-		                $('#resultTitle').html('회원님의 아이디는<br>' + response + ' 입니다');
-		                $('#loginWrap').hide();  // 폼 섹션 숨기기
-		                $('#resultWrap').show();  // 결과 섹션 표시
-		                // 버튼의 텍스트를 '로그인 하러가기'로 변경
-		                $('#closeModalButton').val('로그인 하러가기');
-		                // 버튼 클릭 시 /login 페이지로 이동
-		                $('#closeModalButton').off('click').on('click', function() {
-		                    window.location.href = "${pageContext.request.contextPath}/login";
-		                });
-		            },
-		            error: function(xhr) {
-		                if (xhr.status === 404) {
-		                    // 일치하는 아이디가 없을 때
-		                    $('#resultTitle').text('일치하는 아이디가 없습니다');
-		                    $('#loginWrap').hide();  // 폼 섹션 숨기기
-		                    $('#resultWrap').show();  // 결과 섹션 표시
-		                    // 버튼의 텍스트를 '확인'으로 설정
-		                    $('#closeModalButton').val('확인');
-		                    // 팝업 닫기 버튼 동작 설정
-		                    $('#closeModalButton').off('click').on('click', function() {
-		                        $('#resultWrap').hide();
-		                        $('#loginWrap').show();  // 폼 섹션 다시 표시
-		                    });
-		                } else {
-		                    alert('오류가 발생했습니다. 다시 시도해 주세요.');
-		                }
-		            }
-		        });
-		    });
-
-		    // 팝업 닫기 버튼 기본 동작
-		    $('#closeModalButton').on('click', function() {
-		        $('#resultWrap').hide();
-		        $('#loginWrap').show();  // 폼 섹션 다시 표시
-		    });
-		});
-
-	</script>
 
 </body>
 
 </html>
+<script>
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/js/findIdPage.js"></script>

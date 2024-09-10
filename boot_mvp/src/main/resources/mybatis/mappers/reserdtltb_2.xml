@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.ReserdtltbDAO_2">   
+    <insert id="insertReserdtl">
+    	<selectKey keyProperty="reserveno" order="BEFORE" resultType="int">
+    		select ifnull(max(reserveno), 0) + 1 as reserveno
+    		from reserdtltb
+    		where uuid = #{uuid} and reservenum = #{reservenum}
+    	</selectKey>
+		insert into reserdtltb (uuid, reservenum, reserveno, areano, theaterno, movieno, roomno, viewday, starttime, priceno, price, seat)
+				values (#{uuid}, #{reservenum}, #{reserveno}, #{areano}, #{theaterno}, #{movieno}, #{roomno}, #{viewday}, #{starttime}, #{priceno}, #{price}, #{seat})
+    </insert>
+</mapper>
+
+
+

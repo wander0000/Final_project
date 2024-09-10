@@ -122,7 +122,7 @@ section
 {
   width: 1920px;
   height: fit-content;
-  padding: 16%;
+  padding: 12%;
 }
 
 .logbox 
@@ -513,7 +513,9 @@ section
   font-size: 16px;
   font-weight: 300;
   user-select: none;
+  margin-right: 10px;
 }
+
 .grhh
 {
   display: flex;

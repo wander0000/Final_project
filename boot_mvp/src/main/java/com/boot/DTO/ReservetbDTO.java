@@ -6,14 +6,15 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class Reserdtltb {
+public class ReservetbDTO {
 	private String uuid;
 	private String reservenum;
-	private int reserveno;
 	private int areano;
 	private int theaterno;
 	private int movieno;
 	private Date viewday;
+	private int roomno;
+	private Timestamp starttime;
 	private int tmember;
 	private int tprice;
 	private Timestamp adate;

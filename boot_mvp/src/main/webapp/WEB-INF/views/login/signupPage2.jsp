@@ -15,7 +15,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css"/>
     <!-- import js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="js/index.js"></script>
+
 
 
 </head>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-				<!-- 2 회원가입 완료 -->
+				<!-- 22 회원가입 완료 -->
 				<div class="loginWrap2">
 				    <div class="logbox">
 				        <div class="background-blur"></div>
@@ -75,41 +75,7 @@
     </div>
 </body>
 </html>
-
-
 <script>
-    $(document).ready(function() {
-        // 로그인 하러가기 버튼 클릭 시 /login으로 이동
-        $('#loginButton').on('click', function() {
-            window.location.href = "${pageContext.request.contextPath}/login";
-        });
-
-        // 폼 제출 시 장르 선택 확인 및 섹션 전환
-        $('form').on('submit', function(event) {
-            var selectedGenres = $('input[name="genres"]:checked').length;
-
-            // 3개 미만일 경우 경고 메시지를 띄우고 폼 제출을 막음
-            if (selectedGenres < 3) {
-                alert('최소 3개의 장르를 선택해 주세요.');
-                event.preventDefault(); // 폼 제출 방지
-            } else {
-                // 폼이 유효하면 폼을 전송
-                // 기본 폼 제출이 발생하고 나서 페이지 리프레시 대신 섹션을 전환하고 싶다면 AJAX를 사용해야 함.
-                $.ajax({
-                    type: 'POST',
-                    url: "${pageContext.request.contextPath}/signup/step2",
-                    data: $('form').serialize(), // 폼 데이터를 직렬화하여 전송
-                    success: function(response) {
-                        // 서버 응답이 성공적이면 섹션을 전환
-                        $('.loginWrap').hide(); // 첫 번째 장르 선택 섹션 숨기기
-                        $('.loginWrap2').show(); // 두 번째 회원가입 완료 섹션 표시
-                    },
-                    error: function(error) {
-                        alert('폼 제출에 실패했습니다. 다시 시도해 주세요.');
-                    }
-                });
-                event.preventDefault(); // 기본 폼 제출을 방지하고 AJAX로 제출
-            }
-        });
-    });
+    const contextPath = '${pageContext.request.contextPath}';
 </script>
+<script src="${pageContext.request.contextPath}/js/signupPage2.js"></script>
