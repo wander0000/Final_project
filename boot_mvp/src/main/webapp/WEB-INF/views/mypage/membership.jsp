@@ -226,16 +226,34 @@
                                 <div class="cardBox left">
                                     <div class="cardUp">
                                         <div class="pointTitle">사용가능 포인트</div>                             
-                                        <div class="pointTotal">8000 P</div>
+                                        <div class="pointTotal">${membership.point.onhqt} P</div>
                                     </div>
                                     <div class="cardDown">
                                         <div class="point1">
                                             <div>총 적립</div>
-                                            <div>100P</div>
+											<div>
+												<c:choose>
+										            <c:when test="${empty membership.point.recqt}">
+										               - P
+										            </c:when>
+										            <c:otherwise>
+										               ${membership.point.recqt} P
+										            </c:otherwise>
+										        </c:choose>
+											</div>
                                         </div>                             
                                         <div class="point2">
                                             <div>총 사용</div>
-                                            <div>- P</div>
+											<div>
+												<c:choose>
+										            <c:when test="${empty membership.point.issqt}">
+										               - P
+										            </c:when>
+										            <c:otherwise>
+										               ${membership.point.issqt} P
+										            </c:otherwise>
+										        </c:choose>
+											</div>
                                         </div>                             
                                     </div>
                                 </div><!-- cardDetail 끝 -->
@@ -247,7 +265,16 @@
                                     <div class="cardDown">
                                         <div class="point1">
                                             <div>당월 적립</div>
-                                            <div>${membership.mileage.recqt} M</div>
+                                            <div>
+												<c:choose>
+										            <c:when test="${empty membership.mileage.recqt}">
+										               - M
+										            </c:when>
+										            <c:otherwise>
+										               ${membership.mileage.recqt} M
+										            </c:otherwise>
+										        </c:choose>
+											</div>
                                         </div>                             
 										<div class="point2">
 										    <div>승급까지 남은 포인트</div>
@@ -256,14 +283,14 @@
 										            <c:when test="${membership.grade == 'Welcome'}">
 										                ${7800 - membership.mileage.onhqt} M
 										            </c:when>
-										            <c:when test="${membership.grade == 'VIP'}">
+										            <c:when test="${membership.grade == 'Friend'}">
 										                ${9600 - membership.mileage.onhqt} M
 										            </c:when>
-										            <c:when test="${membership.grade == 'MVP'}">
+										            <c:when test="${membership.grade == 'VIP'}">
 										                ${12000 - membership.mileage.onhqt} M
 										            </c:when>
 										            <c:otherwise>
-										                - M
+										            	- M  
 										            </c:otherwise>
 										        </c:choose>
 										    </div>
@@ -276,26 +303,41 @@
                                         <div class="pointTotal">${membership.grade}</div>
                                     </div>
                                     <div class="locatiionCon">
-                                        <div class="alertBox">다음 Friend등급까지 5800M 남았어요!</div>                                  
-                                        <div class="navigator">
-                                            <div class="circle">
-                                                <div class="gradeCircle active"></div>
-                                                <div>Welcome</div>
-                                            </div>
-                                            <div class="circle">
-                                                <div class="gradeCircle"></div>
-                                                <div>Friend</div>
-                                            </div>
-                                            <div class="circle">
-                                                <div class="gradeCircle"></div>
-                                                <div>VIP</div>
-                                            </div>
-                                            <div class="circle">
-                                                <div class="gradeCircle"></div>
-                                                <div>MVP</div>
-                                            </div>
-                                            <div class="line"></div>
-                                        </div>                             
+                                        <div class="alertBox">
+											<c:choose>
+									            <c:when test="${membership.grade == 'Welcome'}">
+									            	다음 Friend 등급까지 ${7800 - membership.mileage.onhqt}M 남았어요!
+									            </c:when>
+									            <c:when test="${membership.grade == 'Friend'}">
+									            	다음 VI P등급까지 ${9600 - membership.mileage.onhqt}M 남았어요!
+									            </c:when>
+									            <c:when test="${membership.grade == 'VIP'}">
+									            	다음 MVP 등급까지${12000 - membership.mileage.onhqt}M 남았어요!
+									            </c:when>
+									            <c:otherwise>
+									            	연 12000M를 획득하시면 MVP등급이 유지됩니다.  
+									            </c:otherwise>
+									        </c:choose>
+										</div>                                  
+										<div class="navigator">
+										    <div class="circle">
+										        <div class="gradeCircle ${membership.grade == 'Welcome' ? 'active' : ''}"></div>
+										        <div>Welcome</div>
+										    </div>
+										    <div class="circle">
+										        <div class="gradeCircle ${membership.grade == 'Friend' ? 'active' : ''}"></div>
+										        <div>Friend</div>
+										    </div>
+										    <div class="circle">
+										        <div class="gradeCircle ${membership.grade == 'VIP' ? 'active' : ''}"></div>
+										        <div>VIP</div>
+										    </div>
+										    <div class="circle">
+										        <div class="gradeCircle ${membership.grade == 'MVP' ? 'active' : ''}"></div>
+										        <div>MVP</div>
+										    </div>
+										    <div class="line"></div>
+										</div>                            
                                     </div>
                                 </div><!-- cardDetail 끝 -->
                             </div><!-- cardBox 끝 -->
@@ -303,20 +345,21 @@
                                 <div class="filterBtn">
                                     <div class="leftFilter">
                                         <div class="filterTitle">기간별 조회</div>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">15일</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">1개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">2개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">3개월</button>
+										<button class="filter" data-days="15">15일</button>
+									   	<button class="filter" data-days="30">1개월</button>
+									   	<button class="filter" data-days="60">2개월</button>
+									   	<button class="filter" data-days="90">3개월</button>
                                     </div>
                                     <div class="rightFilter">
                                         <div class="customDateWrapper">
+											<label for="startDate">시작일:</label>
                                             <input class="startDate" type="date">
                                         </div>
-                                        <div>~</div>
                                         <div class="customDateWrapper">
+											<label for="endDate">종료일:</label>
                                             <input class="endDate" type="date">
                                         </div>
-                                        <button class="submitBtn" type="submit">조회</button>
+                                        <button class="submitBtn">조회</button>
                                     </div><!-- rightFilter 끝 -->
                                 </div>
                                 <div class="listTable">
@@ -326,19 +369,13 @@
                                         <div class="conTitle">내용</div>
                                         <div class="conTitle">포인트</div>
                                     </div>
-                                    <div class="contentRow">
-                                        <div class="contentRowDe">2024-08-27</div>
-                                        <div class="contentRowDe">사용</div>
-                                        <div class="contentRowDe">주중 관람권 구매(pt-240827-0001)</div>
-                                        <div class="contentRowDe">3000 P</div>
-                                    </div><!-- contentRow 끝 -->
-                                    <div class="contentRow">
-                                        <div class="contentRowDe">2024-08-24</div>
-                                        <div class="contentRowDe">적립</div>
-                                        <div class="contentRowDe">출석이벤트 만근(pt-240824-9999)</div>
-                                        <div class="contentRowDe">5000 P</div>
-                                    </div><!-- contentRow 끝 -->
+									<div id="pointHistoryContent">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+									</div>
                                 </div><!-- listTable 끝 -->
+								<div id="pagination" class="pagination">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+								</div>
                             </div><!-- usegeList 끝 -->
 
 

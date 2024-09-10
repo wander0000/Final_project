@@ -8,11 +8,14 @@
         <mapper resource="mybatis/mappers/genre_3.xml"/>
         <mapper resource="mybatis/mappers/selecgenretb_3.xml"/>
         <mapper resource="mybatis/mappers/selecgenretb_4.xml"/>
-        
         <mapper resource="mybatis/mappers/areatb_2.xml"/>
 		<mapper resource="mybatis/mappers/theatertb_2.xml"/>
 		<mapper resource="mybatis/mappers/screentb_2.xml"/>
 		<mapper resource="mybatis/mappers/movietb_2.xml"/>
+		<mapper resource="mybatis/mappers/grade_4.xml"/>
+		<mapper resource="mybatis/mappers/mileage_4.xml"/>
+		<mapper resource="mybatis/mappers/point_4.xml"/>
+		<mapper resource="mybatis/mappers/pthisttb_4.xml"/>
 		<mapper resource="mybatis/mappers/reservetb_2.xml"/>
 		<mapper resource="mybatis/mappers/reserdtltb_2.xml"/>
 		<mapper resource="mybatis/mappers/pricetb_2.xml"/>
