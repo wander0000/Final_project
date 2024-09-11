@@ -25,6 +25,7 @@
 	<script src="${pageContext.request.contextPath}/js/mypage/ticket.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/header.jsp" %>
     <section class="section">
        <%@ include file="mypageHeader.jsp" %>
         <div class="mainContainer">
@@ -173,5 +174,6 @@
             </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
     </section>
+	<%@ include file="/WEB-INF/views/footer.jsp" %>
 </body>
 </html>
