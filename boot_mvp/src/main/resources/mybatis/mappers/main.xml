@@ -1,0 +1,107 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.MovieDAO">  
+ 
+    <!-- TMDB 영화 삽입-->    
+    <insert id="insertMovie" parameterType="list">
+        INSERT INTO movietb (movieno, movienm, movieen, moviebackimg, moviepostimg, 
+        movieyoutube, steelcut, releaseday,intro,ratingno, directornm, actor, genre, times)
+        VALUES
+        <foreach collection="list" item="movie" separator=",">
+            (#{movie.movieno}, #{movie.movienm}, #{movie.movieen},#{movie.moviebackimg}, #{movie.moviepostimg}, #{movie.movieyoutube}, 
+            #{movie.steelcut},#{movie.releaseday},#{movie.intro},#{movie.ratingno},#{movie.directornm},#{movie.actor}, #{movie.genre},
+            #{movie.times})
+        </foreach>
+    </insert>  
+    
+    <!-- 박스오피스 영화 삽입-->
+    <insert id="insertBoxOffice" parameterType="list">
+        INSERT INTO boxofficetb (movieno, movienm, directornm, releaseday,ratingno, 
+        times, intro, moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor, salesAcc,
+        audiAcc, ranking, status, typeNm, showType
+        )
+        VALUES
+        <foreach collection="list" item="movie" separator=",">
+            (#{movie.movieno}, #{movie.movienm}, #{movie.directornm}, #{movie.releaseday},#{movie.ratingno}, #{movie.times},
+            #{movie.intro}, #{movie.moviebackimg}, #{movie.moviepostimg}, #{movie.movieyoutube}, #{movie.steelcut}, 
+            #{movie.genre}, #{movie.actor}, #{movie.salesAcc}, #{movie.audiAcc}, #{movie.ranking}, #{movie.status},
+            #{movie.typeNm}, #{movie.showType}
+            )
+        </foreach>
+    </insert>   
+	
+    <!-- 중복 체크 -->
+    <select id="existsById" parameterType="String" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM movietb
+        WHERE movieno = #{movieId}
+    </select> 
+    
+    <!-- 메인 박스오피스 -->
+    <select id="BoxOfficeList" resultType="com.boot.DTO.BoxOfficeDTO">
+	    SELECT 
+		movieno, movienm, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, ratingno, times, intro, moviebackimg, moviepostimg, movieyoutube, steelcut,
+		genre, actor, salesAcc, audiAcc, ranking, status, typeNm, showType
+		from boxofficetb
+		order by ranking        
+    </select> 
+    
+    <!-- TMDB 영화  리스트-->
+    <select id="MovieList" resultType="com.boot.DTO.MovietbDTO">
+	    SELECT 
+		movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
+		moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor
+		from boxofficetb
+		order by ranking        
+    </select>
+    
+    <!-- 현재 상영중인 영화 -->
+    <select id="MoviePlayingList" resultType="com.boot.DTO.MovietbDTO">
+    	<![CDATA[
+		    SELECT
+		    movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
+			moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor
+			FROM movietb
+			WHERE intro IS NOT NULL
+			  AND moviebackimg != ''
+			  AND moviepostimg != ''
+			  AND intro != ''
+			  AND releaseday <= NOW()
+			ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), releaseday)) desc
+			LIMIT 20  
+		]]>   
+    </select> 
+    
+    <!-- 상영예정 영화 -->
+    <select id="MovieUpcomingList" resultType="com.boot.DTO.MovietbDTO">
+    	<![CDATA[
+		    SELECT
+		    movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
+			moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor		    
+			FROM movietb
+			
+			WHERE intro IS NOT NULL 
+		      AND moviebackimg != ''
+			  AND moviepostimg != ''
+			  AND intro != ''
+			  AND releaseday >= NOW()
+			ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), releaseday)) ASC
+			LIMIT 20 
+		]]>   
+    </select> 
+    
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
