@@ -192,7 +192,7 @@ $(document).ready(function()
 	          var endDate = $('.endDate').val();
 
 	          if (startDate && endDate) {
-	              loadPointHistoryBetween(startDate, endDate);
+	              loadPointHistoryBetween(startDate, endDate, 1,5);
 	          } else {
 	              alert("시작일과 종료일을 선택해주세요.");
 	          }
