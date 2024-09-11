@@ -1,15 +1,14 @@
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard.woff') format('woff');
-    font-style: normal;
-}
-
 * 
 {
     margin:0;
     padding:0;
     list-style:none;
     font-family: 'Pretendard';
+}
+
+html,body 
+{
+    background-color: #0F1015;
 }
 
 a
@@ -22,8 +21,14 @@ ul,li,ol
     list-style: none;
 }
 
-table, tr, td 
+table, tr, td, div 
 {
     box-sizing: border-box;
     border-collapse: collapse;
+}
+
+.active
+{
+    background: rgba(243,185,49,0.2) !important; 
+    color: #F3B931 !important;
 }

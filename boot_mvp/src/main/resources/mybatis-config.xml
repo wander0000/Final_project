@@ -19,5 +19,7 @@
 		<mapper resource="mybatis/mappers/reservetb_2.xml"/>
 		<mapper resource="mybatis/mappers/reserdtltb_2.xml"/>
 		<mapper resource="mybatis/mappers/pricetb_2.xml"/>
+		<mapper resource="mybatis/mappers/main.xml"/>
+		<mapper resource="mybatis/mappers/movie.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,202 @@
+:root 
+{
+    --maincolor: #f3b931;
+    --subcolor: #99A2b9;
+    --subcolor2: #1a1b24;
+    --background:#0f1015;
+    --hoverblack: #13151c;
+    --disabled: rgba(153,162,185,0.3);
+    --input: rgba(217,217,217,0.1);
+    --fs12: 0.6px;
+    --fs14: 0.8vw;
+    --fs16: 1vw;
+    --fs18: 1.35vw;
+    --fs20: 1.4vw;
+    --fs24: 1.45vw;
+    --fs28: 1.5vw;
+    --fs36: 2vw;
+	--rank: 2.8vw;
+}
+
+section 
+{
+    margin-top: 170px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+	margin-bottom: 120px;
+}
+
+
+/* --------------movieList 시작--------------- */
+
+.movieList
+{
+	min-width: 1600px!important;
+	width: 90%!important;      
+}
+
+.tabWrap 
+{
+    display: flex;
+    align-items: center;
+	margin-bottom: 40px;
+}
+
+.status
+{
+    display: flex;
+    align-items: center;
+    gap: 0 28px;
+}
+
+.tab 
+{
+    color: var(--disabled);
+    font-size: var(--fs28);
+    font-weight: 600; 
+	cursor: pointer;
+}
+
+.tab.active 
+{
+    background: none!important;
+}
+
+.tab.active 
+{
+    color: var(--maincolor);
+}
+
+.more  
+{
+    margin-left: auto;
+}
+
+.more a 
+{
+    text-decoration: underline;
+    color: #fff;
+    font-size: var(--fs16);
+    font-weight: 200;
+}
+
+.ranking .rankingCon 
+{
+	display: none;
+	grid-template-columns: repeat(4, 1fr);
+    gap: 100px 40px;  
+}
+
+.ranking .rankingCon.on 
+{
+	display: grid;
+}
+
+.movieDiv 
+{
+	background: var(--hoverblack);
+	/*height: 480px;*/
+}
+
+.movieDiv img 
+{
+	/*height:300px;*/
+	height: 20vw;
+	/*transition-duration: 0.7s;*/
+}
+
+
+.movieDiv, .movieDiv img 
+{
+	border-radius: 13px;
+}
+
+.movieDiv img  
+{
+    width: 100%;
+	height: 30vw;
+	object-fit: cover;
+	object-position: bottom;
+}
+
+.movieInfoDetail 
+{
+	display: flex;
+    align-items: center;
+    gap: 0 20px;
+}
+
+.rank 
+{
+	font-size: 2.8vw;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--maincolor);
+}
+
+.movieInfo 
+{
+	padding: 24px;
+    height: calc(100% - 30vw);
+}
+
+.movienm 
+{
+	font-size:var(--fs24);
+	color: #fff;
+	font-weight: 600;
+}
+
+.option 
+{
+	margin-top: 12px;
+	display: flex;
+	align-items: center;
+	gap: 0 12px;	
+}
+
+.releaseday 
+{
+	font-size: var(--fs14);
+	color: var(--subcolor);
+	font-weight: 200;	
+}
+
+.difference 
+{
+	border-radius: 24px;
+	font-size: var(--fs14);
+	font-weight: 400;
+}
+
+.difference.active 
+{
+	background: none!important;
+}
+
+.buttonWrap 
+{
+	margin-top: 40px;
+	display: flex;
+	gap: 0 20px;	
+}
+
+.buttonWrap button 
+{
+	height: 2vw;
+    padding: 0 1vw;
+	border-radius: 3px;
+	cursor: pointer;
+	border:0;
+	background:var(--disabled);
+	color: var(--subcolor);
+	font-size: var(--fs14);
+	font-weight: 300;
+}
+
+
+
+
+
