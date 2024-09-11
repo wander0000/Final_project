@@ -70,7 +70,7 @@ public class PayController {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			
-			HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+			HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 			log.info("@# params: " + params);
 			CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
 			String uuid = userDetails.getUuId();
@@ -146,7 +146,7 @@ public class PayController {
 		log.info("@# paycompleted");
 		
 		// 세션에 등록한 값 사용
-		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("movieInfo");
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
 		
 		model.addAttribute("adult", param.get("adult"));
