@@ -1,5 +1,6 @@
 package com.boot.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.GenreDTO;
+import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Service.BoxOfficeService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
+import com.boot.Service.MembershipService;
+import com.boot.Service.MovieService;
 import com.boot.Service.SelecGenretbService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,21 +50,57 @@ public class LoginController {
 
     @Autowired
     private SelecGenretbService selecgenretbService;
+    
+    @Autowired
+    private MembershipService memService;
+    
+    @Autowired
+	private MovieService movieService;
+	
+	@Autowired
+	private BoxOfficeService boxofficeService;
 
     @Autowired
     private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
 
     @GetMapping("/")
     public String home(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-        	CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-        	String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
-            UsertbDTO userdto = loginservice.getUserById(loginedUserId);
-            userdto.setPpass(null); // 비밀번호는 숨김
-            model.addAttribute("user", userdto);
-        }
-        return "login/homePage";
+	ArrayList<BoxOfficeDTO> boxDTO = boxofficeService.BoxOfficeList();
+		              
+        
+		ArrayList<MovietbDTO> moviePlayingList = movieService.MoviePlayingList();
+		ArrayList<MovietbDTO> movieUpcomingList = movieService.MovieUpcomingList();	
+		
+		// 날짜 차이 계산을 유틸리티 클래스로 변경
+        movieUpcomingList.forEach(movieUpcoming -> 
+        {
+            Long diffInDays = DateUtils.calculateDaysDifference(movieUpcoming.getOpenday());
+            if (diffInDays != null) 
+            {
+                movieUpcoming.setDaysDifference(diffInDays);
+                log.info("@#@#@# diffInDays==>" + diffInDays);
+            }
+        });		  
+		
+		model.addAttribute("boxOffice", boxDTO);
+		model.addAttribute("moviePlayingList", moviePlayingList);
+		model.addAttribute("movieUpcomingList", movieUpcomingList);
+		
+		// 24.09.11 연주 - 로그인 한 유저이면 userid,grade(멤버십등금)정보 넣어보내기
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 	
+		if (!(auth instanceof AnonymousAuthenticationToken)) {//
+			CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 정보 가져오기
+			String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
+			log.info("사용자 ID=================>"+userDetails.getUserId());
+		    model.addAttribute("userid", loginedUserId);
+		    
+		    String grade = memService.getGrade();
+		    model.addAttribute("grade", grade);
+		}
+		// --------------24.09.11 연주 끝 ------------------------------------------
+
+		return "main";
     }
 
     @GetMapping("/userList")

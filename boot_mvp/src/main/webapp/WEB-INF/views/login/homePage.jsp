@@ -52,14 +52,14 @@
 </head>
 <body>
     <div class="container">
-        <h2>${user.pname}님의 회원 정보</h2>
+        <h2>${user.username}님의 회원 정보</h2>
 
-        <p>아이디: ${user.userid}</p>
-        <p>이름: ${user.pname}</p>
+        <p>아이디: ${user.userId}</p>
+        <p>이름: ${user.username}</p>
         <p>이메일: ${user.email}</p>
         <p>전화번호: ${user.phone}</p>
         <p>생일: ${user.birth}</p>
-<!--        <p>성별: ${user.gender == 1 ? '남성' : '여성'}</p>-->
+        <p>성별: ${user.gender == 1 ? '남성' : '여성'}</p>
         <p>가입 일자: ${user.adate}</p>
         <p>수정 일자: ${user.mdate}</p>
 

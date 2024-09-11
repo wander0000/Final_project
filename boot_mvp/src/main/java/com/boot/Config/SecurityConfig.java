@@ -14,7 +14,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeRequests()
-	            .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", 
+	            .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**","/main","/movie/**", 
 	                    "/checkUserId", "/verify-code", 
 	                    "/findIdPage", "/userid", // 여기서 /userid 추가
 	                    "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
@@ -29,11 +29,11 @@ public class SecurityConfig {
 	            .loginProcessingUrl("/auth")
 	            .usernameParameter("userid")
 	            .passwordParameter("ppass")
-	            .defaultSuccessUrl("/")
+	            .defaultSuccessUrl("/main")
 	        .and()
 	        .logout()
 	            .logoutUrl("/logout")
-	            .logoutSuccessUrl("/")
+	            .logoutSuccessUrl("/main")
 	        .and()
 	        .sessionManagement()
 	            .sessionFixation().none();

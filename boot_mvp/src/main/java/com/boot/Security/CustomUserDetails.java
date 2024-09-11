@@ -66,9 +66,13 @@ public class CustomUserDetails implements UserDetails{
         return userid;
     }
     
-    // 추가로 만든 userId 가져오기 메서드
+    // 추가로 만든 uuId 가져오기 메서드
     public String getUuId() {
     	return uuid;
+    }
+    // 추가로 만든 email 가져오기 메서드
+    public String getEmail() {
+    	return email;
     }
 
 }
