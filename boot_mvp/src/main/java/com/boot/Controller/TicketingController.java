@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,21 +12,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.boot.DTO.ScreentbDTO;
+import com.boot.DTO.ReserdtltbDTO;
 import com.boot.Service.AreaService_2;
 import com.boot.Service.MovieService_2;
 import com.boot.Service.PricetbService_2;
+import com.boot.Service.ReserdtltbService_2;
 import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
@@ -47,6 +47,9 @@ public class TicketingController {
 	
 	@Autowired
 	private PricetbService_2 priceService;
+	
+	@Autowired
+	private ReserdtltbService_2 reserdtlService;
 	
 	@RequestMapping("/movieselect")
 	public String Ticketing(Model model) {
@@ -155,12 +158,29 @@ public class TicketingController {
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
 		
 		ArrayList<String> seat = new ArrayList<>();
-		for(int i = 65; i < 78; i++) {
+		for(int i = 65; i < 78; i++) { //A부터 M까지
 			seat.add(((char)i)+"");
 		}
 		log.info("seat: " + seat);
 		
+		/* 선택된 좌석 유무 확인 */
+		int cnt = reserdtlService.selected_count(param);
+		Map<String, Integer> seats = new LinkedHashMap<>(); // LinkedHashMap 삽입 순서 유지
+
+		for(int i = 65; i < 78; i++) { //A부터 M까지
+			for(int j = 1; j < 15; j++)
+			seats.put(((char)i)+j+"", 0);
+		}
+		
+		if(cnt > 0) {
+			ArrayList<ReserdtltbDTO> reserdtl = reserdtlService.selected_seat(param);
+			for(int i = 0; i < cnt; i++) {
+				seats.put(reserdtl.get(i).getSeat(), 1);
+			}
+		}
+		/* 선택된 좌석 유무 확인 */
 		model.addAttribute("seatline", seat); //전제 좌석
+		model.addAttribute("seats", seats); //선택 유뮤 좌석 표시
 		model.addAttribute("prices", priceService.selectprice(param));
 		return "ticketing/seatselect";
 	}

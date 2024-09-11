@@ -163,7 +163,17 @@
 	                            	</div>
 	                                <div class="sitDiv">
 	                                	<c:forEach begin="1" end="14" var="num">
-	                                		<a href="#none" class="sit" id="${seat}${num}" data-seatnum="${seat}${num}" onclick="select_seat('${seat}${num}')">${num }</a>
+                							<c:set var="seatId" value="${seat}${num}" /> <!-- 좌석 ID 생성 -->
+                							<c:choose>
+                								<c:when test="${seats[seatId] == 1}"> <!-- 다른 사람이 선택된 좌석 -->
+                									<div class="diagonal-background">${num}</div>
+                									<%-- <a href="#none" class="sit" id="${seatId}" data-seatnum="${seatId}" onclick="">${num }</a> --%>
+                								</c:when>
+                								<c:otherwise> <!-- 잔여 좌석 -->
+                									<a href="#none" class="sit" id="${seatId}" data-seatnum="${seatId}" onclick="select_seat('${seatId}')">${num }</a>
+                								</c:otherwise>
+                							</c:choose>
+	                                		
 	                                		<%-- <input type="text" class="sit" value="${num }" disabled> --%>
 	                                	</c:forEach>
 	                                </div> <!-- sitDiv-->      
@@ -186,11 +196,11 @@
                         <a href="#none">선택좌석</a>
                     </div>
                     <div class="guide">
-                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type4.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type5.png" alt="">
                         <a href="#none">예매완료</a>
                     </div>
                     <div class="guide">
-                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type1.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type4.png" alt="">
                         <a href="#none">선택불가</a>
                     </div>
                 </div><!-- guideWrap end -->
