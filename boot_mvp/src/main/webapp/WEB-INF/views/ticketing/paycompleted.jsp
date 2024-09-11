@@ -11,30 +11,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 </head>
 <body>
-<form method="post" action="">
+<form method="post" name="paycomform" action="/main">
 	<div class="container">
-        <header class="header">
-            <div class="headerInner">
-                <h5 class="logo">
-                    <a href="#none">
-                        MVP
-                    </a>
-                </h5>
-                <ul class="menuList">
-                    <li class="menu">메뉴1</li>
-                    <li class="menu">메뉴2</li>
-                    <li class="menu">메뉴3</li>
-                    <li class="menu">메뉴4</li>
-                    <li class="menu">메뉴5</li>
-                </ul>
-                <div class="rightWrap">
-                    <div class="inputWrap">
-                        <input type="text" class="search">
-                    </div>
-                    <button class="login">로그인</button>
-                </div>
-            </div>
-        </header>
+        <jsp:include page="../header.jsp"/>
         <section class="section">
             <div class="sectionCon">
                 <div class="tabDiv">
@@ -96,12 +75,14 @@
                     <a href="#none" class="atext">해당 영화의 결제가 완료 되었습니다.</a>
                 </div>
                 <div class="buttonDiv">
-                    <button type="button" class="movebtn">메인 화면</button>
-                    <button type="button" class="movebtn">다른 영화 살펴보기</button>
+                	<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="button" class="movebtn" onclick="move_form('/main')">메인 화면</button>
+                    <button type="button" class="movebtn" onclick="move_form('/ticketing/movieselect')">다른 영화 살펴보기</button>
                 </div>
             </div> <!-- showWrap end -->
         </section>
     </div>
+    <jsp:include page="../footer.jsp"/>
 </form>
 </body>
 </html>

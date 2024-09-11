@@ -22,7 +22,7 @@ public class SecurityConfig {
 	        .anyRequest().authenticated()
 	        .and()
 	        .csrf()
-	            .ignoringAntMatchers("/email/**") // 필요에 따라 CSRF 무시할 경로 설정
+	            .ignoringAntMatchers("/email/**") // 필요에 따라 CSRF 무시할 경로 설정  // 이메일인증은 로그인이 되어있지않은 상태이기때문에 예외처리함
 	        .and()
 	        .formLogin()
 	            .loginPage("/login")

@@ -310,6 +310,7 @@ function settype(id, gubun) {
 		selecttype[num] -= 1;
 	}
 }
+
 /* 장애인 석 관련 클래스 처리 로직 */
 function make_disabled() { //장애인 전용(빨간색) 좌석 클래스 추가
 	for(var i = 0; i < disabled.length; i++) {
@@ -337,7 +338,8 @@ function resetSit() {
 	//좌석 초기화//
 	var seat = $(".sit");
 	seat.removeClass('select'); // css 클래스 삭제
-	seat.removeClass('unselect');
+	seat.removeClass("diagonal-background"); //seat.removeClass('unselect');
+	
 	
 	if(select_seat[3] == 0)
 		make_disabled(); // 장애인석 표시(빨간 영역) 클래스 추가
@@ -354,7 +356,7 @@ function updateSeatSelection() { //모든 좌석 선택 시 다른 좌석 선택
     seats.each(function() {
         var $this = $(this);
         if (!$this.hasClass('select')) {
-            $this.addClass('unselect');
+            $this.addClass('diagonal-background'); //$this.addClass('unselect');
         }
     });
 }
@@ -364,8 +366,13 @@ function updateSeat() { // 선택 좌석 취소 시, 다시 활성화
 	
 	seats.each(function() {
         var $this = $(this);
+		/*
         if ($this.hasClass('unselect')) {
             $this.removeClass('unselect');
+        }
+		*/
+		if ($this.hasClass('diagonal-background')) {
+            $this.removeClass('diagonal-background');
         }
     });
 
@@ -393,7 +400,6 @@ function select_seat(id) {
         return;
     }
 	
-	//selected_seat(id);
 	alink.addClass('select');
 		
 	select(); //선택 가능 좌석 -= 1
@@ -480,4 +486,9 @@ function payment() {
             }
         });
     }
+}
+
+function move_form(actions) {
+	document.paycomform.action = actions;
+	paycomform.submit();
 }
