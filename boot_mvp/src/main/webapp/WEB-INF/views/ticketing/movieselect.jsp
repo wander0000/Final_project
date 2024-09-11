@@ -31,28 +31,7 @@ window.onload = function() {
 </script>
 <body>
 	<div class="container">
-        <header class="header">
-            <div class="headerInner">
-                <h5 class="logo">
-                    <a href="#">
-                        MVP
-                    </a>
-                </h5>
-                <ul class="menuList">
-                    <li class="menu">메뉴1</li>
-                    <li class="menu">메뉴2</li>
-                    <li class="menu">메뉴3</li>
-                    <li class="menu">메뉴4</li>
-                    <li class="menu">메뉴5</li>
-                </ul>
-                <div class="rightWrap">
-                    <div class="inputWrap">
-                        <input type="text" class="search">                    
-                    </div>
-                    <button type="button" class="login">로그인</button>
-                </div>
-            </div>            
-        </header>
+	<%@ include file="../header.jsp" %>
         <section class="section">
             <div class="sectionCon">
                 <div class="tabDiv">
@@ -177,6 +156,7 @@ window.onload = function() {
             </div> <!-- showWrap -->
         </section>
     </div>
+    <%@ include file="../footer.jsp" %>	
 </body>
 <script>    
 var swiper = new Swiper(".mySwiper",     

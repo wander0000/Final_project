@@ -52,8 +52,12 @@ public class TicketingController {
 	private ReserdtltbService_2 reserdtlService;
 	
 	@RequestMapping("/movieselect")
-	public String Ticketing(Model model) {
+	public String Ticketing(HttpSession session, Model model) {
 		log.info("ticketing");
+		
+		//세션 초기화
+		if(session.getAttribute("movieInfo") != null)
+			session.setAttribute("movieInfo", "");
 		
 		model.addAttribute("area", areaservice.selectAll());
 		model.addAttribute("date", areaservice.datedual(""));
@@ -126,7 +130,7 @@ public class TicketingController {
 	public @ResponseBody Map<String, Object> datetxtparma(@RequestParam(value = "viewday") String viewday) {
 		log.info("@# datetxtparam");
 		Map<String, Object> respones = new HashMap<>();
-		log.info("dates: " + viewday);
+
 		String txt = areaservice.datedual(viewday).get(0).getTxt();
 		log.info("txt: " + txt);
 		log.info("@# txt: " + txt);
@@ -141,7 +145,7 @@ public class TicketingController {
 		log.info("@# saveSessionParams");
 		log.info("@# param: " + param);
 		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
-		session.setAttribute("params", param);
+		session.setAttribute("movieInfo", param);
 		session.setMaxInactiveInterval(3600);
 		
 		return "jsonView";
@@ -151,7 +155,7 @@ public class TicketingController {
 	public String seatselect(HttpSession session, Model model) {
 		log.info("@# seatselect");
 		// 세션에 등록한 값 사용
-		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# param: " + param);
 		
 		//model.addAttribute("param", param);
@@ -191,7 +195,7 @@ public class TicketingController {
 		log.info("@# saveSessionParamsMore");
 		log.info("@# param: " + param);
 		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
-		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		
 		params.put("calc", param.get("calc")); // 총 가격
 		params.put("adult", param.get("adult")); //성인 숫자
@@ -209,7 +213,7 @@ public class TicketingController {
 	@RequestMapping("/payment")
 	public String payment(@RequestParam HashMap<String, String> param, HttpSession session, Model model) {
 		log.info("@# payment");
-		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# params: " + params);
 		
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(params));

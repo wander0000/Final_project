@@ -487,3 +487,8 @@ function payment() {
         });
     }
 }
+
+function move_form(actions) {
+	document.paycomform.action = actions;
+	paycomform.submit();
+}
