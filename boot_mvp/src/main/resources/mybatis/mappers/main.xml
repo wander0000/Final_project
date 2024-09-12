@@ -90,9 +90,15 @@
 			ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), releaseday)) ASC
 			LIMIT 20 
 		]]>   
-    </select> 
+    </select>     
     
-    
+    <!-- 상영예정 영화 -->
+    <select id="selectUserGenre" resultType="com.boot.DTO.SelecGenretbDTO">    	
+	    SELECT 
+	    uuid, genrenm 
+	    from selectgenretb
+	    where uuid= #{uuid}		 
+    </select>    
 </mapper>
 
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.LikeDAO">       
+        
+    <!-- 좋아요 입력-->
+    <insert id="insertLike">
+		INSERT INTO liketb (uuid, movieno) 
+		VALUES (#{uuid}, #{movieno})
+    </insert>
+    
+    <!-- 좋아요 삭제  -->
+    <delete id="deleteLike">
+		delete from liketb where uuid =#{uuid} AND movieno = #{movieno}
+    </delete>
+    
+    <!-- 좋아요 유무 -->
+    <select id="isLike" resultType="int">
+        SELECT count(*) FROM liketb where movieno = #{movieno} and uuid =#{uuid}
+    </select>
+    
+    <!-- 좋아요 갯수 -->
+    <select id="numLike" resultType="int">
+        SELECT count(*) FROM liketb where movieno = #{movieno}
+    </select>
+
+         
+</mapper>

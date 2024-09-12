@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.ReviewDAO">       
+
+    <select id="selectReview">
+        SELECT r.uuid, r.movieno, r.star, r.review, u.userid
+        FROM reviewtb r
+        INNER JOIN usertb u ON r.uuid=u.uuid
+        where movieno = #{movieno}
+        ORDER BY uuid DESC
+    </select>
+    
+    <select id="selectReviewPaging">
+        SELECT r.uuid, r.movieno, r.star, r.review, u.userid
+        FROM reviewtb r
+        INNER JOIN usertb u ON r.uuid=u.uuid
+        where movieno = #{movieno}
+        ORDER by uuid DESC
+        LIMIT #{limit} OFFSET #{offset}
+        
+    </select>
+        
+    <!-- 리뷰 입력-->
+    <insert id="insertReview">
+		INSERT INTO reviewtb (uuid, movieno, star, review) 
+		VALUES (#{uuid}, #{movieno}, #{star}, #{review})
+    </insert>
+    
+    <!-- 리뷰 수정 -->
+    <update id="updateReview">
+		UPDATE reviewtb 
+		set star= #{star}, review= #{review}
+		where uuid =#{uuid} AND movieno = #{movieno}
+    </update>
+    
+    <!-- 리뷰 삭제  -->
+    <delete id="deleteReview">
+		delete from reviewtb where uuid =#{uuid} AND movieno = #{movieno}
+    </delete>
+    
+    <!-- 해당계정 댓글 유무 -->
+    <select id="findMovieno" resultType="int">
+        SELECT count(*) FROM reviewtb where movieno = #{movieno} and uuid =#{uuid}
+    </select>
+    
+    <!-- 영화 리뷰 갯수 카운팅-->
+    <select id="countReview" resultType="int">
+        SELECT count(*) FROM reviewtb where movieno = #{movieno}
+    </select> 
+     
+    <!-- 영화 평점 총점 카운팅-->
+    <select id="countstar" resultType="Integer">
+        SELECT sum(star) FROM reviewtb where movieno = #{movieno}
+    </select> 
+         
+</mapper>
