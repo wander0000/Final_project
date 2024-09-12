@@ -5,7 +5,10 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Getter;
 
+
+@Getter
 //보안 인증 정보의 중앙화, 코드의 재사용성과 일관성, 캐싱 및 성능향상(을 위해 custom
 public class CustomUserDetails implements UserDetails{
 
@@ -14,14 +17,16 @@ public class CustomUserDetails implements UserDetails{
     private String username;
     private String ppass;
     private String email;
+    private String phone;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(String userid, String uuid, String username, String ppass, String email, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String userid, String uuid, String username, String ppass, String email, String phone, Collection<? extends GrantedAuthority> authorities) {
         this.userid = userid;
         this.uuid = uuid;
         this.username = username;
         this.ppass = ppass;
         this.email = email;
+        this.phone = phone;
         this.authorities = authorities;
     }
 
