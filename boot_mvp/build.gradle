@@ -44,6 +44,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'net.nurigo:sdk:4.2.7'
 }
 
 tasks.named('test') {

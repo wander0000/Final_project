@@ -159,6 +159,12 @@
 </html>
 
 <script>
+	//페이지가 완전히 로드된 후 실행되는 함수
+	window.onload = function() 
+	{
+
+	};		
+	
 	const tabs = document.querySelectorAll('.tab');
 	const rankingCons = document.querySelectorAll('.rankingCon');
 	

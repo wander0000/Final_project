@@ -309,6 +309,25 @@ public class MembershipServiceImpl implements MembershipService {
 	}
 
 
+	@Override
+	public String getGrade() {//멤버십 등급 조회
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+
+	    try {
+	        // 1. 사용자 grade 조회
+	    	GradeDAO_4 dao = sqlSession.getMapper(GradeDAO_4.class);
+			String grade = dao.getUserGrade(uuid); 
+			log.info("getMembership 서비스임플 getUserGrade=>"+grade);
+			return grade;
+	    } catch (Exception e) {
+	        log.error("예외 발생: ", e);
+	        throw new RuntimeException("포인트 이력조회 중 문제가 발생했습니다.", e);
+	    }
+		
+	}
+
+
 	
 	
 

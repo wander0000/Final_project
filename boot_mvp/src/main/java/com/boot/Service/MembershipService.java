@@ -11,6 +11,8 @@ public interface MembershipService {
 	public void insertMembership(String uuid);
 	//멤버십 조회(등급, 포인트, 마일리지)
 	public MembershipDTO getMembership();
+	//등급 조회
+	public String getGrade();
 	//포인트 업데이트(포인트이력이 생기면 등급, 포인트, 마일리지이 함께 변동됨)
 	public void updateMembership();
 	//포인트 삭제(탈퇴할 때 등급, 포인트, 마일리지 함께 삭제)

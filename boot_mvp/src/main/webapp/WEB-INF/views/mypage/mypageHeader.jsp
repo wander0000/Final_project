@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyMVP_쿠폰/할인권</title>
+    <title>MyMVP</title>
     <link rel="stylesheet" type="text/css" href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'>  
     <!-- google font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -29,17 +29,27 @@
 	    display: flex;
 	    flex-direction: column;
 	    gap: 0 40px;
+		margin-top: 90px;
+		margin-bottom: 120px;
 	}
 	.subHeader 
 	{
+		background: #1A1B24;
+		border-bottom: 1px solid #1A1B24;
+    /*	osition: fixed;*/
+		top: 90px;
 	    height: 40px;
-	    display: flex;
-	    /* justify-content: center; */
-	    align-items: center;
-	    /* padding: 0 20px; */
-	    box-sizing: border-box;
-	    max-width:1600px;
-	    
+		width:100%
+	}
+	
+	.headerSubInner
+	{
+		display: flex;
+		align-items: center;
+		min-width: 1600px !important;
+		width: 90% !important;
+		justify-content: start;
+		margin-left: 131px;
 	}
 
 	.submenuList 
@@ -49,7 +59,11 @@
 	    color: rgba(153, 162, 185, 0.3);
 	    font-size: 16px;
 	    font-weight: 600;
-	    margin-left: 299px; 
+	    margin-left: 131px;; 
+		color: #99A2B9;
+		font-size: 16px;
+		font-weight: 400;
+		cursor: pointer;
 	}
 
 
@@ -63,14 +77,16 @@
 <body>
     
         <div class="subHeader">
-            <ul class="submenuList">
-                <li class="submenu"><a href="ticket">예매관리</a></li>
-                <li class="submenu"><a href="membership">멤버십</a></li>
-                <li class="submenu"><a href="movieStory">무비스토리</a></li>
-                <li class="submenu"><a href="coupon">쿠폰/할인권</a></li>
-                <li class="submenu"><a href="userInfo">회원정보</a></li>
-                <li class="submenu"><a href="withdraw">회원탈퇴</a></li>
-            </ul>
+			<div class="headerSubInner">
+	            <ul class="submenuList">
+	                <li class="submenu"><a href="ticket">예매관리</a></li>
+	                <li class="submenu"><a href="membership">멤버십</a></li>
+	                <li class="submenu"><a href="movieStory">무비스토리</a></li>
+	                <li class="submenu"><a href="coupon">쿠폰/할인권</a></li>
+	                <li class="submenu"><a href="userInfo">회원정보</a></li>
+	                <li class="submenu"><a href="withdraw">회원탈퇴</a></li>
+	            </ul>
+			</div>
         </div>
 </body>
 </html>
