@@ -21,5 +21,7 @@
 		<mapper resource="mybatis/mappers/pricetb_2.xml"/>
 		<mapper resource="mybatis/mappers/main.xml"/>
 		<mapper resource="mybatis/mappers/movie.xml"/>
+		<mapper resource="mybatis/mappers/review.xml"/>
+		<mapper resource="mybatis/mappers/like.xml"/>
     </mappers>
 </configuration>
