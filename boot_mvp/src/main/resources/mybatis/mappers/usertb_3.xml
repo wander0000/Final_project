@@ -88,6 +88,13 @@
             mdate = CURRENT_TIMESTAMP
         WHERE email = #{email}
     </update>
+    
+    <!-- UUID 중복 확인 -->
+	<select id="existsByUuid2" resultType="boolean" parameterType="String">
+	    SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END
+	    FROM usertb
+	    WHERE uuid = #{uuid}
+	</select>
 
 
 </mapper>

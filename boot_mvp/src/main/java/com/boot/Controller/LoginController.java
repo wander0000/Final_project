@@ -14,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.GenreDTO;
+import com.boot.DTO.OauthtbDTO;
 import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
@@ -32,8 +36,12 @@ import com.boot.Security.CustomUserDetails;
 import com.boot.Service.BoxOfficeService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
+
+import com.boot.Service.OauthtbService;
+
 import com.boot.Service.MembershipService;
 import com.boot.Service.MovieService;
+
 import com.boot.Service.SelecGenretbService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +52,9 @@ public class LoginController {
 
     @Autowired
     private LoginService loginservice;
+    
+    @Autowired
+    private OauthtbService oauthtbService;
 
     @Autowired
     private GenreService genreservice;
@@ -62,9 +73,162 @@ public class LoginController {
 
     @Autowired
     private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
+    
+    
+    
+//    public void checkPrincipalType() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (auth instanceof OAuth2AuthenticationToken) {
+//            // OAuth2 로그인 사용자 처리
+//            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) auth;
+//
+//            // OAuth2 공급자 정보 가져오기
+//            String registrationId = oauthToken.getAuthorizedClientRegistrationId();  // 공급자 ID (google, naver 등)
+//            System.out.println("OAuth2 로그인 사용자가 로그인했습니다. 공급자: " + registrationId);
+//            
+//            OAuth2User oauthUser = (OAuth2User) principal;
+//            String name = oauthUser.getAttribute("name");
+//            System.out.println("사용자 이름: " + name);
+//            
+//            // 공급자에 따라 추가 처리
+//            if ("google".equals(registrationId)) {
+//                System.out.println("구글로 로그인했습니다.");
+//            } else if ("naver".equals(registrationId)) {
+//                System.out.println("네이버로 로그인했습니다.");
+//            } else if ("facebook".equals(registrationId)) {
+//                System.out.println("페이스북으로 로그인했습니다.");
+//            }
+//        } else if (principal instanceof UserDetails) {
+//            // 폼 로그인 사용자 처리
+//            UserDetails userDetails = (UserDetails) principal;
+//            System.out.println("폼 로그인 사용자가 로그인했습니다.");
+//            System.out.println("아이디: " + userDetails.getUsername());
+//        }
+//    }
+    
+    
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public String home(Model model) {
+      //  @@@@@@@@@@@@ 이 부분 삭제 x 0919,20 추석끝나고 같이 얘기해요 지금은 주석처리하고 써도댐// 
+//       <<<<<<< login
+//         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+//         if (!(auth instanceof AnonymousAuthenticationToken)) {
+//             Object principal = auth.getPrincipal();
+            
+//             if (auth instanceof OAuth2AuthenticationToken) {
+//                 OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) auth;
+//                 String registrationId = oauthToken.getAuthorizedClientRegistrationId();  // OAuth2 공급자 ID
+//                 OAuth2User oauth2User = (OAuth2User) principal;
+//                 String oauthUserId = oauth2User.getAttribute("sub");  // OAuth2 고유 ID, 제공자에 따라 다를 수 있음
+//                 String email = null;
+                
+//                 // 공급자별 사용자 고유 ID와 이메일 확인
+//                 if ("google".equals(registrationId)) {
+//                     oauthUserId = oauth2User.getAttribute("sub");
+//                     email = oauth2User.getAttribute("email");  // 구글 이메일 정보
+//                 } else if ("naver".equals(registrationId)) {
+//                     oauthUserId = oauth2User.getAttribute("id");
+//                     email = oauth2User.getAttribute("email");  // 네이버 이메일 정보
+//                 } else if ("facebook".equals(registrationId)) {
+//                     oauthUserId = oauth2User.getAttribute("id");
+//                     email = oauth2User.getAttribute("email");  // 페이스북 이메일 정보
+//                 }
+//                 log.info("오스2 유저아이디: {}", oauthUserId);
+//                 log.info("오스2 프로바이더: {}", registrationId);
+//                 log.info("오스2 이메일: {}", email);
+
+//                 // 기존 회원 여부를 확인
+//                 boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
+
+//                 if (isExistingUser) {
+//                     model.addAttribute("name", oauth2User.getAttribute("name"));
+//                     model.addAttribute("provider", registrationId);
+//                     return "login/homePage";  // 기존 회원
+//                 } else {
+//                     // 신규 회원일 경우 필요한 정보들(model에 추가)
+//                     model.addAttribute("oauthUserId", oauthUserId);
+//                     model.addAttribute("registrationId", registrationId);
+//                     model.addAttribute("email", email);  // 이메일도 추가
+//                     return "login/oauthSignup1";  // 신규 회원은 회원가입 페이지로 이동
+//                 }
+//             } else if (principal instanceof UserDetails) {
+//                 // 폼 로그인 사용자 처리
+//                 UserDetails userDetails = (UserDetails) principal;
+//                 String username = userDetails.getUsername();
+//                 model.addAttribute("username", username);
+//                 return "login/homePage";
+//             }
+//         }
+//         return "login/homePage";  // 인증되지 않은 사용자면 로그인 페이지로 이동
+//     }
+
+//     // 그냥 홈페이지로 이동하는 매핑
+//     @GetMapping("/login/homePage")
+//     public String homePage() {
+//         return "/login/homePage";  // homePage.jsp 파일로 이동 (뷰 리졸버에서 prefix, suffix 설정에 따라 경로가 결정됨)
+//     }
+
+    
+// //    // oauth 회원가입페이지이동
+// //    @GetMapping("/oauthSignup1")
+// //    public String oauthSignup(Model model) {
+// //        return "/login/oauthSignup1";
+// //    }
+    
+//     // oauth 추가 회원가입 1
+//     @PostMapping("/oauthSignupSubmit1")
+//     public String oauthSignupSubmit1(
+//             @RequestParam("userid") String userid,
+//             @RequestParam("pname") String pname,
+//             @RequestParam("phone") String phone,
+//             @RequestParam("birth") String birth,
+//             @RequestParam("gender") int gender,
+//             @RequestParam("email") String email,
+//             @RequestParam("oauthUserId") String oauthUserId,
+//             @RequestParam("registrationId") String registrationId,
+//             HttpSession session) {
+
+//         // OauthtbDTO 객체에 값 설정
+//         OauthtbDTO oauthtbDTO = new OauthtbDTO();
+//         oauthtbDTO.setUserid(userid);
+//         oauthtbDTO.setPname(pname);
+//         oauthtbDTO.setPhone(phone);
+//         oauthtbDTO.setBirth(birth);
+//         oauthtbDTO.setGender(gender);
+//         oauthtbDTO.setOauthuniq(oauthUserId);
+//         oauthtbDTO.setOauthdiff(registrationId);
+//         oauthtbDTO.setEmail(email);
+
+// //        // 서비스 호출하여 DB에 회원 정보 저장
+// //        oauthtbService.oauthInsertUser(oauthtbDTO);
+//         session.setAttribute("signupUser", oauthtbDTO);
+
+//         // 저장 성공 시 홈 페이지로 리다이렉트
+//         return "redirect:/oauthSignupSubmit2";  // 홈 페이지로 리다이렉트 (예시)
+//     }
+    
+    
+//     // oauth 추가 회원가입 2 
+//     @GetMapping("/oauthSignupSubmit2")
+//     public String oauthSignupSubmit2Page(HttpSession session, Model model) {
+//     	OauthtbDTO oauthtbDTO = (OauthtbDTO) session.getAttribute("signupUser");
+//         if (oauthtbDTO == null) {
+//             return "redirect:/oauthSignupSubmit1";
+//         }
+
+//         List<GenreDTO> genres = genreservice.getAllGenres();
+//         model.addAttribute("genres", genres);
+//         model.addAttribute("user", oauthtbDTO);
+//         log.info("oauthSignupSubmit2Page oauth 회원 정보: {}", oauthtbDTO);
+//         return "login/oauthSignup2";
+ //  @@@@@@@@@@@@ 이 부분 삭제 x 0919,20 추석끝나고 같이 얘기해요 지금은 주석처리하고 써도댐// 
+      
+      
+
 	ArrayList<BoxOfficeDTO> boxDTO = boxofficeService.BoxOfficeList();
 		              
         
@@ -101,8 +265,57 @@ public class LoginController {
 		// --------------24.09.11 연주 끝 ------------------------------------------
 
 		return "main";
-    }
 
+    }
+    
+    
+    
+    @PostMapping("/oauthSignupSubmit2")
+    public String oauthSignupSubmit2(@RequestParam(value = "genres", required = false) List<String> genres, HttpSession session) {
+    	OauthtbDTO oauthtbDTO = (OauthtbDTO) session.getAttribute("signupUser");
+    	
+    	log.info("선택된 장르: {}", genres);
+        log.info("oauthSignupSubmit2버트 oauth 회원 정보: {}", oauthtbDTO);
+        
+        
+        if (oauthtbDTO == null) {
+            return "redirect:/oauthSignupSubmit1";
+        }
+
+        try {
+            // 회원 정보 저장
+            oauthtbService.oauthInsertUser(oauthtbDTO);
+
+            // 회원 정보 삽입 후 uuid 확인
+            OauthtbDTO savedUser = oauthtbService.oauthGetUserById(oauthtbDTO.getUserid());
+            log.info("savedUser 저장되냐 "+savedUser);
+            if (savedUser != null) {
+                // 장르 정보 저장
+                if (genres != null && !genres.isEmpty()) {
+                    for (String genrenm : genres) {
+                        selecgenretbService.oauthtbinsertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genrenm));  // uuid로 수정
+                    }
+                }
+            } else {
+                return "redirect:/oauthSignupSubmit2?error_code=-99"; // 사용자 정보 확인 오류
+            }
+
+            session.removeAttribute("signupUser");
+        } catch (DuplicateKeyException e) {
+            return "redirect:/oauthSignupSubmit2?error_code=-3"; // 사용자 ID 중복
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/oauthSignupSubmit2?error_code=-90"; // 기타 오류
+        }
+
+        return "redirect:/login/homePage";
+    }
+    
+
+    
+    
+
+    // 전체 유저리스트 (이거 안씀)
     @GetMapping("/userList")
     public String getUserList(Model model) {
         List<UsertbDTO> userlist = loginservice.getUserList();
@@ -110,6 +323,7 @@ public class LoginController {
         return "login/userListPage";
     }
 
+    // 로그인페이지
     @GetMapping("/login")
     public String loginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -119,6 +333,8 @@ public class LoginController {
         return "redirect:/";
     }
 
+    
+    // usertb 회원가입페이지 이동 (권한없으면 가입가능)
     @GetMapping("/signup")
     public String signupPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -128,6 +344,7 @@ public class LoginController {
         return "redirect:/";
     }
 
+    // user 회원가입 1
     @PostMapping("/signup/step1")
     public String signupStep1(@RequestParam String pname,
                               @RequestParam String email,
@@ -156,6 +373,7 @@ public class LoginController {
         return "redirect:/signup/step2";
     }
 
+    // user 회원가입 2
     @GetMapping("/signup/step2")
     public String signupStep2Page(HttpSession session, Model model) {
     	UsertbDTO userdto = (UsertbDTO) session.getAttribute("signupUser");
@@ -171,7 +389,7 @@ public class LoginController {
     }
 
     @PostMapping("/signup/step2")
-    public String signupStep2(@RequestParam(value = "genres", required = false) List<Integer> genres, HttpSession session) {
+    public String signupStep2(@RequestParam(value = "genres", required = false) List<String> genres, HttpSession session) {
     	UsertbDTO userdto = (UsertbDTO) session.getAttribute("signupUser");
         if (userdto == null) {
             return "redirect:/signup";
@@ -186,8 +404,8 @@ public class LoginController {
             if (savedUser != null) {
                 // 장르 정보 저장
                 if (genres != null && !genres.isEmpty()) {
-                    for (Integer genreno : genres) {
-                        selecgenretbService.insertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genreno));  // uuid로 수정
+                    for (String genrenm : genres) {
+                        selecgenretbService.usertbinsertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genrenm));  // uuid로 수정
                     }
                 }
             } else {
@@ -222,7 +440,7 @@ public class LoginController {
     }
     
 
-
+    // usertb 아이디 중복확인
     @GetMapping("/checkUserId")
     @ResponseBody
     public Map<String, Object> checkUserId(@RequestParam String userid) {
@@ -231,6 +449,19 @@ public class LoginController {
         response.put("userExists", userExists);
         return response;
     }
+    
+    // oauthtb 아이디 중복확인
+    @GetMapping("/oauthCheckUserid")
+    @ResponseBody
+    public Map<String, Object> oauthCheckUserid(@RequestParam String userid) {
+        // ID 중복 체크 결과를 int로 받아서 boolean으로 변환
+        boolean userExists = oauthtbService.oauthCheckUserid(userid) > 0;
+        Map<String, Object> response = new HashMap<>();
+        response.put("userExists", userExists);
+        return response;
+    }
+
+    
 
     @GetMapping("/email/check-email")
     @ResponseBody
