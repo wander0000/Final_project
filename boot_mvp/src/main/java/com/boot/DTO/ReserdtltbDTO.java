@@ -12,7 +12,7 @@ public class ReserdtltbDTO {
 	private int reserveno;
 	private int areano;
 	private int theaterno;
-	private int movieno;
+	private String movieno;
 	private Date viewday;
 	private int roomno;
 	private Timestamp starttime;
