@@ -9,4 +9,10 @@
 		where areano = #{areano}
 		order by theaterno
 	</select>
+	
+	<select id="gettheaternm" resultType="String">
+		select theaternm
+		from theatertb
+		where areano = #{areano} and theaterno = #{theaterno}
+	</select>
 </mapper>
