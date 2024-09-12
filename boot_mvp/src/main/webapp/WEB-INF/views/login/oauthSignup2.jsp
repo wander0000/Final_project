@@ -33,24 +33,25 @@
                             <div class="log1">
                                 <h5 class="hh">회원가입</h5>
                             </div>
-                            <form action="${pageContext.request.contextPath}/signup/step2" method="post">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                <div class="grh">
-                                    <h5 class="grgr">*</h5>
-                                    <h5 class="grhh">회원님이 좋아하는 장르를 선택해주세요! (3개 이상)</h5>
-                                </div>
-                                <div class="genrebox">
-                                    <div class="genreboxButtons">
-                                        <c:forEach var="genre" items="${genres}">
-                                            <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genrenm}" class="genrebut" />
-                                            <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                                <div class="log4">
-                                    <input type="submit" value="가입하기" class="logbut">
-                                </div>
-                            </form>
+							<form action="${pageContext.request.contextPath}/oauthSignupSubmit2" method="post">
+							    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							    <div class="grh">
+							        <h5 class="grgr">*</h5>
+							        <h5 class="grhh">회원님이 좋아하는 장르를 선택해주세요! (3개 이상)</h5>
+							    </div>
+							    <div class="genrebox">
+							        <div class="genreboxButtons">
+							            <c:forEach var="genre" items="${genres}">
+							                <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genrenm}" class="genrebut" />
+							                <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
+							            </c:forEach>
+							        </div>
+							    </div>
+							    <div class="log4">
+							        <input type="submit" value="가입하기" class="logbut">
+							    </div>
+							</form>
+
                         </div>
                     </div>
                 </div>
@@ -78,4 +79,4 @@
 <script>
     const contextPath = '${pageContext.request.contextPath}';
 </script>
-<script src="${pageContext.request.contextPath}/js/signupPage2.js"></script>
+<script src="${pageContext.request.contextPath}/js/oauthSignup2.js"></script>

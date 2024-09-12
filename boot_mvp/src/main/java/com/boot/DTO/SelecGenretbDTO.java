@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SelecGenretbDTO {
     private String uuid;
-    private int genreno;
+    private String genrenm;
 }

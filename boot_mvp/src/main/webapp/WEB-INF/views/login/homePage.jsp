@@ -54,7 +54,8 @@
     <div class="container">
         <h2>${user.pname}님의 회원 정보</h2>
 
-        <p>아이디: ${user.userid}</p>
+        <p>아이디: ${name}</p>
+        <p>아이디: ${username}</p>
         <p>이름: ${user.pname}</p>
         <p>이메일: ${user.email}</p>
         <p>전화번호: ${user.phone}</p>

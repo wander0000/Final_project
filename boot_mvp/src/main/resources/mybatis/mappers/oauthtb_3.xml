@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.OauthtbDAO_3">
+
+    <!-- 회원가입 -->
+	<insert id="oauthInsertUser" parameterType="com.boot.DTO.OauthtbDTO">
+	    INSERT INTO oauthtb (oauthdiff, oauthuniq, userid, uuid, pname, email, phone, birth, gender, adate, mdate)
+	    VALUES (#{oauthdiff}, #{oauthuniq}, #{userid}, #{uuid}, #{pname}, #{email}, #{phone}, #{birth}, #{gender}, NOW(), NOW())
+	</insert>
+
+	<!-- 아이디 중복검사 (회원가입) -->
+	<select id="oauthCheckUserid" resultType="int">
+	    SELECT COUNT(*)
+	    FROM oauthtb
+	    WHERE userid = #{userid};
+	</select>
+	
+	<!-- UUID 중복 확인 -->
+	<select id="existsByUuid" resultType="boolean" parameterType="String">
+	    SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END
+	    FROM oauthtb
+	    WHERE uuid = #{uuid}
+	</select>
+
+	<!-- OAuth 사용자ID + 제공자를 확인하여 기존회원여부 확인 (기존회원이 아닐 시 추가정보입력페이지 이동) -->
+	<select id="oauthCheckNewUser" resultType="boolean" parameterType="map">
+	    SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END
+	    FROM oauthtb
+	    WHERE oauthuniq = #{oauthUserId}
+	    AND oauthdiff = #{registrationId}
+	</select>
+
+
+    <!-- 사용자 ID로 사용자 정보 가져오기 -->
+    <select id="oauthGetUserById" resultType="com.boot.DTO.OauthtbDTO">
+        SELECT * FROM oauthtb
+        WHERE userid = #{userid}
+    </select>
+    
+    
+</mapper>

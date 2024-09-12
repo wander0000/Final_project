@@ -7,7 +7,8 @@ import com.boot.DTO.SelecGenretbDTO;
 @Service
 public interface SelecGenretbService {
 
-    void insertUserGenre(SelecGenretbDTO selecgenretbDTO);
+    void oauthtbinsertUserGenre(SelecGenretbDTO selecgenretbDTO);
+    void usertbinsertUserGenre(SelecGenretbDTO selecgenretbDTO);
 
     // You can add more methods here if needed
 }

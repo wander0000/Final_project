@@ -15,4 +15,7 @@ public interface LoginService {
     boolean checkEmailExists(String email); // 이메일 중복 체크 메소드
     String getUserIdByNameAndEmail(String pname, String email);  // 아이디 찾기
     void updatePassword(String email, String newPassword);
+    
+    // UUID 중복 체크 메서드 추가
+    boolean existsByUuid2(String uuid);  // UUID 중복 체크 메소드
 }
