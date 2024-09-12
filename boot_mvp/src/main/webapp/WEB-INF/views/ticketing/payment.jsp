@@ -19,10 +19,10 @@
                 <div class="tabDiv">
                     <div class="tabWrap">
                         <div class="tab">
-                            <a href="#none">01.상영시간</a>
+                            <a href="/ticketing/movieselect">01.상영시간</a>
                         </div>
                         <div class="tab">
-                            <a href="#none">02.인원/좌석</a>
+                            <a href="/ticketing/seatselect">02.인원/좌석</a>
                         </div>
                         <div class="tab active">
                             <a href="#none">03.결제</a>

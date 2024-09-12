@@ -10,11 +10,13 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.DTO.ReserdtltbDTO;
@@ -26,6 +28,8 @@ import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 
 @Controller
@@ -158,6 +162,11 @@ public class TicketingController {
 		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# param: " + param);
 		
+		// movieInfo가 없을 경우 예외 발생
+	    if (param == null || param.isEmpty()) {
+	        throw new IllegalArgumentException("Movie information is missing in session.");
+	    }
+		
 		//model.addAttribute("param", param);
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
 		
@@ -211,7 +220,7 @@ public class TicketingController {
 	}
 	
 	@RequestMapping("/payment")
-	public String payment(@RequestParam HashMap<String, String> param, HttpSession session, Model model) {
+	public String payment(HttpSession session, Model model) {
 		log.info("@# payment");
 		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# params: " + params);
@@ -226,6 +235,12 @@ public class TicketingController {
 		model.addAttribute("calc", params.get("calc"));
 		
 		//이후 컨트롤러 작업은 PayContoller에서 진행
-		return "ticketing/payment"; 
+		return "ticketing/payment";
+	}
+	
+	@RequestMapping("/ticketerrer")
+	public String ticketing_error() {
+		log.info("ticketing_error");
+		return "ticketing/ticketerrer";
 	}
 }

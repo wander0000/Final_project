@@ -235,17 +235,17 @@ function up(id) {
     plus(); //전체 인원 += 1
 	settype(id, 'up'); //타입별 인원 +=1;
 	setCnt(getTotal()); //선택 가능 좌석 업데이트
-	
+	resetSit(); //좌석 상태 초기화
+
 	if(selecttype[3] == 0) {
 		make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
 	} else if(selecttype[3] > 0) {
 		remove_disabled(); //장애인 전용(빨간색) 좌석 클래스 제거 
 		show_disabled(); //장애인석 표시(초록색 영역) 클래스 추가
 	}
+	
 	default_calc(); //계산한 합계 초기화
-	resetSit(); //좌석 상태 초기화
-
-	$("#calc").text("총 합계 0원");
+	
     // data-count 값을 가져옵니다.
     var countValue = parseInt(button.getAttribute('data-count'), 10);
     var newCountValue = countValue + 1;
@@ -422,10 +422,11 @@ function calc() {
 	var price2 = $("#price2").val();
 	var price3 = $("#price3").val();
 	
-	var persons0 = $("#adult").data('count');
-	var persons1= $("#youth").data('count');
-	var persons2 = $("#old").data('count');
-	var persons3 = $("#disable").data('count');
+	// 변경된 갑을 읽어야 하기에 .data('count')가 아닌 attr('data-count')로 직접 접근하여 값을 가져옴
+	var persons0 = $("#adult").attr('data-count'); //$("#adult").data('count');
+	var persons1= $("#youth").attr('data-count'); //$("#youth").data('count');
+	var persons2 = $("#old").attr('data-count'); //$("#old").data('count');
+	var persons3 = $("#disable").attr('data-count'); //$("#disable").data('count');
 	
 	// 가격과 인원 수 배열
 	var prices = [price0, price1, price2, price3];
