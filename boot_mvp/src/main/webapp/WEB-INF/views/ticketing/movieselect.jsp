@@ -98,7 +98,7 @@ window.onload = function() {
                             	<!-- movie_ajax.jsp 호출 영역 -->
                             	<c:forEach items="${movie }" var="movie">
                                		<div class="boxtit">
-								        <img src="${pageContext.request.contextPath}/images/rating/grade_15.png" alt="">
+								        <img src="${pageContext.request.contextPath}/images/rating/grade_${movie.ratingno }.png" alt="">
 								        <a href="#none" onclick="movies();">${movie.movienm }</a>
 									</div>
                                	</c:forEach>

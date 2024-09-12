@@ -2,13 +2,51 @@ function getCsrfToken() {
     return $("#csrf").val();
 }
 
-function kakaopay(){
+function creatNum() {
+	// 현재 날짜와 시간 객체 생성
+	var now = new Date();
+	
+	// 날짜 및 시간 포맷팅
+	var formatter1 = (date) => {
+	    var month = date.getMonth() + 1; // 월 (0-11), 1을 더해줌
+	    var day = date.getDate(); // 일 (1-31)
+	    return `${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+	};
+	
+	var formatter2 = (date) => {
+	    var hours = date.getHours(); // 시 (0-23)
+	    var minutes = date.getMinutes(); // 분 (0-59)
+	    return `${hours.toString().padStart(2, '0')}${minutes.toString().padStart(2, '0')}`;
+	};
+	
+	var reservenum_1 = formatter1(now); // MMdd 포맷
+	var reservenum_2 = formatter2(now); // HHmm 포맷
+	
+	// 밀리초 단위의 현재 시간
+	var millis = Date.now(); // 현재 시간의 밀리초
+	var millisStr = millis.toString(); // 밀리초를 문자열로 변환
+	var num_3 = millisStr.slice(-4); // 문자열의 마지막 4자리 추출
+	
+	// 임의의 숫자를 생성
+	var reservenum_4 = parseInt(reservenum_1) + parseInt(reservenum_2) + millis;
+	var num_4 = reservenum_4.toString().slice(-3); // 문자열의 마지막 3자리 추출
+	
+	// 예매 번호 생성
+	var reservenum = `${reservenum_1}-${reservenum_2}-${num_3}-${num_4}`;
+	
+	return reservenum; 
+}
+
+
+function kakaopay() {
+	//console.log(reservenum);
+	var reservenum = creatNum();
 	var IMP = window.IMP;
 	IMP.init('imp81407155'); // 포트원 계정 상점 고유 ID
 	IMP.request_pay({		
 		pg : 'kakaopay.TC0ONETIME',
 		pay_method : 'card',
-		merchant_uid : 'movie_ticket_' + new Date().getTime(),   //주문번호
+		merchant_uid : 'movie_ticket_' + reservenum,   //주문번호
 		name : 'MVP',                                  //상품명
 		amount : $('#t_calc').val(),                    //가격
 		//customer_uid : buyer_name + new Date().getTime(),  //해당 파라미터값이 있어야 빌링 키 발급 시도
@@ -29,7 +67,7 @@ function kakaopay(){
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	//data : {"ID" : data.buyer_email, "amount" : data.paid_amount},
+            	data : { "reservenum" : reservenum },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},
@@ -43,12 +81,13 @@ function kakaopay(){
 }
 
 function tosspay(){
+	var reservenum = creatNum();
 	var IMP = window.IMP;
 	IMP.init('imp81407155');
 	IMP.request_pay({		
 		pg : 'tosspay_v2.tosstest', //pg : 'uplus.tlgdacomxpay',
 		pay_method : 'tosspay',
-		merchant_uid : 'movie_ticket_' + new Date().getTime(),   //주문번호
+		merchant_uid : 'movie_ticket_' +reservenum,   //주문번호
 		name : 'MVP',                                  //상품명
 		amount : $('#t_calc').val(),                 //가격
 		//m_redirect_url: "/ticketing/paycompleted", //모바일에서 결제 완료 후 리다이렉트될 경로
@@ -70,7 +109,7 @@ function tosspay(){
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	//data : {"ID" : data.buyer_email, "amount" : data.paid_amount},
+            	data : { "reservenum" : reservenum },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},

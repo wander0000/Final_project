@@ -17,7 +17,7 @@
 	<input type="hidden" id="theaterno_m" value="${theaterno }">
 	<c:forEach items="${movie }" var="movie">
 		<div class="boxtit">
-	        <img src="${pageContext.request.contextPath}/images/rating/grade_15.png" alt="">
+	        <img src="${pageContext.request.contextPath}/images/rating/grade_${movie.ratingno }.png" alt="">
 	        <a href="#none" onclick="movieevent('${movie.movieno}', '${movie.movienm }');">${movie.movienm }</a>
 		</div>
 	</c:forEach>

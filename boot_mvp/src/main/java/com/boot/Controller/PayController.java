@@ -93,7 +93,7 @@ public class PayController {
 		log.info("@# reserve");
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			
+			log.info("@# param: " + param);
 			HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 			log.info("@# params: " + params);
 			CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
@@ -101,6 +101,7 @@ public class PayController {
 			params.put("uuid", uuid);
 	
 			/* 예매 번호 */
+			/*
 			Date now = new Date();
 			SimpleDateFormat formatter1 = new SimpleDateFormat("MMdd");
 			SimpleDateFormat formatter2 = new SimpleDateFormat("HHmm");
@@ -115,8 +116,9 @@ public class PayController {
 			
 			String reservenum = reservenum_1 + "-" + reservenum_2 + "-" + num_3 + "-" + num_4;
 			params.put("reservenum", reservenum);
+			*/
 			/* 예매 번호 */
-			
+			params.put("reservenum", param.get("reservenum"));
 			/* reservetb */
 			// tmember = 성인 + 청소년 + 경로 + 장애인
 			int tmember = Integer.parseInt(params.get("adult")) + Integer.parseInt(params.get("youth")) + Integer.parseInt(params.get("old")) + Integer.parseInt(params.get("disable"));
