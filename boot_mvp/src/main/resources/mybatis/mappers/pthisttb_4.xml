@@ -31,7 +31,7 @@
          ORDER BY trndt DESC
       </if>
       <if test='(days == "90")'>
-      	 AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+      	 AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND now()
          ORDER BY trndt DESC
       </if>
    </sql>

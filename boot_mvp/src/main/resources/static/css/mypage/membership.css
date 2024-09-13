@@ -511,6 +511,16 @@ filterTitle
     box-sizing: border-box;
 }
 
+.noContent
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	font-size: 20px;
+    font-weight: 200;
+}
+
 .titleRow
 {
     font-size: 20px;

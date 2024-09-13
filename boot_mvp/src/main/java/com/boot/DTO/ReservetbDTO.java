@@ -1,7 +1,7 @@
 package com.boot.DTO;
 
-import java.security.Timestamp;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class ReservetbDTO {
 	private Timestamp adate;
 	private Timestamp mdate;
 	private String movienm;
-	private String fldab;
+	private String status;
 	private String fldac;
 	private String fldad;
 	private int fldna;

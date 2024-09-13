@@ -97,9 +97,15 @@ $(document).ready(function()
 	  var currentPage = 1;  // 현재 페이지
 	  var totalPages = 0;   // 총 페이지 수
 	  var pageGroupSize = 5;  // 페이지 버튼 그룹 크기
+	  var loadMethod = '';  // 어느 함수로 로드되었는지 저장
+	  var loadParams = {};  // 함수의 인자를 저장
 
 	  // 기간별 데이터 조회
 	  function loadPointHistory(days, page, pageSize) {
+		  //페이징을 위한 인자 저장
+		  loadMethod = 'period';  // loadTicketList 함수로 로드
+		  loadParams = { days, page, pageSize };  // 인자 저장
+		  
 	      currentPage = page;  // 현재 페이지를 저장
 	      $.ajax({
 	          url: '/filterPtHis',
@@ -112,16 +118,21 @@ $(document).ready(function()
 	              totalPages = Math.ceil(totalCount / pageSize);  // 총 페이지 수 계산
 	              
 	              if (historyList.length === 0 || historyList === null) {
-	                  content = '<div class="contentRow">조회된 목록이 없습니다.</div>';
+	                  content = '<div class="noContent">조회된 목록이 없습니다.</div>';
 	              } else {
 	                  $.each(historyList, function(index, dto) {
 	                      var date = new Date(dto.trndt);
-	                      var formattedDate = date.toLocaleString('ko-KR', {
-	                          year: 'numeric', month: '2-digit', day: '2-digit',
-	                          hour: '2-digit', minute: '2-digit', second: '2-digit'
-	                      });
+						  var formattedDate = date.toLocaleDateString('ko-KR', {
+						      year: 'numeric', month: '2-digit', day: '2-digit'
+						  }).replace(/\./g, '-').replace(/-\s/g, '-').slice(0, -1);  // 날짜 부분에서 점을 하이픈으로 대체
+
+						  var formattedTime = date.toLocaleTimeString('ko-KR', {
+						      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false  // 24시간 형식 사용
+						  });
+
+						  var finalFormattedDateTime = formattedDate + ' ' + formattedTime;  // 날짜와 시간을 공백으로 연결
 	                      content += '<div class="contentRow">';
-	                      content += '<div class="contentRowDe">' + formattedDate + '</div>';
+	                      content += '<div class="contentRowDe">' + finalFormattedDateTime + '</div>';
 	                      content += '<div class="contentRowDe">' + dto.kind + '</div>';
 	                      content += '<div class="contentRowDe">' + dto.description + ' (' + dto.pthistno + ')</div>';
 	                      content += '<div class="contentRowDe">' + (dto.kind === '적립' ? dto.recqt : dto.issqt) + ' P</div>';
@@ -165,24 +176,42 @@ $(document).ready(function()
 	      
 	      $('#pagination').html(pagination);  // 동적으로 태그 추가
 	  }
-
+	  loadParams = { startDate, endDate, page, pageSize };  // 인자 저장
 	  // 이전 그룹으로 이동
-	  $(document).on('click', '.prev-btn', function() {
-	      var prevPage = Math.max(1, currentPage - pageGroupSize);  // 이전 그룹의 첫 페이지로 이동
-	      loadPointHistory('30', prevPage, 5);  // 페이지 데이터 재로드
-	  });
+	    $(document).on('click', '.prev-btn', function() {
+	        var prevPage = Math.max(1, loadParams.page - pageGroupSize);  // 이전 페이지 계산
+	        loadParams.page = prevPage;  // 페이지 업데이트
 
-	  // 다음 그룹으로 이동
-	  $(document).on('click', '.next-btn', function() {
-	      var nextPage = Math.min(totalPages, currentPage + pageGroupSize);  // 다음 그룹의 첫 페이지로 이동
-	      loadPointHistory('30', nextPage, 5);  // 페이지 데이터 재로드
-	  });
+	        if (loadMethod === 'monthly') {
+	            loadPointHistoryBetween(loadParams.startDate, loadParams.endDate, prevPage, loadParams.pageSize);
+	        } else if (loadMethod === 'period') {
+	            loadPointHistory(loadParams.days, prevPage, loadParams.pageSize);
+	        }
+	    });
 
-	  // 페이지 버튼 클릭 시
-	  $(document).on('click', '.pageBtn', function() {
-	      var page = $(this).data('page');  // 클릭한 페이지 번호
-	      loadPointHistory('30', page, 5);  // 클릭된 페이지 번호로 다시 데이터 로드
-	  });
+	    // 다음 그룹으로 이동
+	    $(document).on('click', '.next-btn', function() {
+	        var nextPage = Math.min(totalPages, loadParams.page + pageGroupSize);  // 다음 페이지 계산
+	        loadParams.page = nextPage;  // 페이지 업데이트
+
+	        if (loadMethod === 'monthly') {
+	            loadPointHistoryBetween(loadParams.startDate, loadParams.endDate, nextPage, loadParams.pageSize);
+	        } else if (loadMethod === 'period') {
+	            loadPointHistory(loadParams.days, nextPage, loadParams.pageSize);
+	        }
+	    });
+
+	    // 페이지 버튼 클릭 시
+	    $(document).on('click', '.pageBtn', function() {
+	        var page = $(this).data('page');  // 클릭한 페이지 번호
+	        loadParams.page = page;  // 페이지 업데이트
+
+	        if (loadMethod === 'monthly') {
+	            loadPointHistoryBetween(loadParams.startDate, loadParams.endDate, page, loadParams.pageSize);
+	        } else if (loadMethod === 'period') {
+	            loadPointHistory(loadParams.days, page, loadParams.pageSize);
+	        }
+	    });
 	  
 	  
 	  
@@ -199,6 +228,11 @@ $(document).ready(function()
 	      });
 
 		  function loadPointHistoryBetween(startDate, endDate, page, pageSize) {
+			  //페이징을 위한 인자 저장
+			  loadMethod = 'monthly';  // monthly 함수로 로드
+			  loadParams = { startDate, endDate, page, pageSize };  // 인자 저장
+			  // 모든 filtern 버튼에서 active 클래스 제거
+			  $('.filter').removeClass('active');
 		      // AJAX 요청
 		      $.ajax({
 		          url: '/filterPtHisBetween',  // 서버의 엔드포인트
@@ -211,17 +245,22 @@ $(document).ready(function()
 
 		              // 응답이 비어 있거나 null인 경우 처리
 		              if (historyList.length === 0 || historyList === null) {
-		                  content = '<div class="contentRow">해당 기간에 조회된 내용이 없습니다.</div>';
+		                  content = '<div class="noContent">해당 기간에 조회된 내용이 없습니다.</div>';
 		              } else {
 		                  // 응답받은 데이터를 테이블에 업데이트
 		                  $.each(historyList, function(index, dto) {
 		                      var date = new Date(dto.trndt);
-		                      var formattedDate = date.toLocaleString('ko-KR', {
-		                          year: 'numeric', month: '2-digit', day: '2-digit',
-		                          hour: '2-digit', minute: '2-digit', second: '2-digit'
-		                      });
+							  var formattedDate = date.toLocaleDateString('ko-KR', {
+				  			      year: 'numeric', month: '2-digit', day: '2-digit'
+				  			  }).replace(/\./g, '-').replace(/-\s/g, '-').slice(0, -1);  // 날짜 부분에서 점을 하이픈으로 대체
+	
+				  			  var formattedTime = date.toLocaleTimeString('ko-KR', {
+				  			      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false  // 24시간 형식 사용
+				  			  });
+	
+				  			  var finalFormattedDateTime = formattedDate + ' ' + formattedTime;  // 날짜와 시간을 공백으로 연결
 		                      content += '<div class="contentRow">';
-		                      content += '<div class="contentRowDe">' + formattedDate + '</div>';
+		                      content += '<div class="contentRowDe">' + finalFormattedDateTime + '</div>';
 		                      content += '<div class="contentRowDe">' + dto.kind + '</div>';
 		                      content += '<div class="contentRowDe">' + dto.description + ' (' + dto.pthistno + ')</div>';
 		                      if (dto.kind === '적립') {
