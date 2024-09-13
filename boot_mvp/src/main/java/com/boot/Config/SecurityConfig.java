@@ -1,5 +1,6 @@
 package com.boot.Config;
 
+import com.boot.Security.CustomLogoutHandler;
 import com.boot.Service.CustomOAuth2UserService;
 import com.boot.Service.OauthtbService;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +46,8 @@ public class SecurityConfig {
 	        .logout()
 	            .logoutUrl("/logout")
 	            .logoutSuccessUrl("/main")
+	            .addLogoutHandler(new CustomLogoutHandler()) // 선택한 영화 정보 (세션) 삭제
+	            .invalidateHttpSession(true) // 세션 무효화
 	        .and()
 	        .sessionManagement()
 	            .sessionFixation().none();
