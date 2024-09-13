@@ -147,10 +147,14 @@
     background-color: #1A1B24;
 }
 
-.contentRowBookList
+.noContent
 {
 	display: flex;
-	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	font-size: 20px;
+    font-weight: 200;
 }
 
 .titleRowBook, .contentRowBook
@@ -209,4 +213,36 @@
     display: flex;
     gap: 0 10px;
     color: #fff;
+}
+
+/*페이징 버튼*/
+
+.pagination
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 8px;
+}
+
+.pageBtn
+{
+	padding: 10px;
+	width: 24px !important;
+	height: 24px !important;
+	box-sizing: border-box;
+	background-color:  #1A1B24;
+}
+
+.pageBtn:hover
+{
+    border: 1px solid #F3B931;
+    background-color: rgba(243, 185, 49, 0.2);
+    color: #F3B931;
+}
+
+.pageBtn.active {
+    color: #111;
+    background-color: #F3B931;
+    border: none;
 }

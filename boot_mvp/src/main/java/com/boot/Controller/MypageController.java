@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -82,22 +83,48 @@ public class MypageController {
 	        return result;
 	}
 	
-	@GetMapping("/loadMonthlyTicketList")//특정기간 포인트 이력조회(ajax로 접근)
+	@GetMapping("/loadMonthlyTicketList")//특정기간 예매내역 조회(ajax로 접근)
 	@ResponseBody
-	public Map<String, Object> loadMonthlyTicketList(@RequestParam("year") int year,
+	public Map<String, Object> loadMonthlyTicketList(@RequestParam("keyword") String keyword,
+												@RequestParam("year") int year,
 												@RequestParam("month") int month,
 												@RequestParam("page") int page,
 										        @RequestParam("pageSize") int pageSize) {
 		log.info("@# Mypage loadMonthlyTicketList로 접근");
 		int offset = (page - 1) * pageSize;
-        List<ReservetbDTO> ticketList = ticketService.getTicketListForMonthly(year, month, pageSize, offset);
-        int totalCount = ticketService.getTotalCountMonthly(year, month);  // 전체 데이터 개수
+        List<ReservetbDTO> ticketList = ticketService.getTicketListForMonthly(keyword, year, month, pageSize, offset);
+        int totalCount = ticketService.getTotalCountMonthly(keyword, year, month);  // 전체 데이터 개수
 
         Map<String, Object> result = new HashMap<>();
         result.put("ticketList", ticketList);
         result.put("totalCount", totalCount);  // 전체 개수를 반환
         return result;
 	}
+	
+	
+	@GetMapping("/loadCanceledTicketList")//취소한 예매내역 조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadCanceledTicketList() {
+		log.info("@# Mypage loadCanceledTicketList로 접근");
+        List<ReservetbDTO> ticketList = ticketService.getTicketListCanceled();
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("ticketList", ticketList);
+        return result;
+	}
+	
+	
+	@RequestMapping("/cancelTicket")//예매 취소
+	public ResponseEntity<String> cancelTicket(@RequestParam String reservenum) {
+		log.info("@# Mypage cancelTicket");		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {//익명의 사용자가 아니라면
+			
+			ticketService.deleteTicket(reservenum);
+		}
+		return ResponseEntity.ok("예매내역이 성공적으로 취소되었습니다.");
+	}
+	
 	
 	@RequestMapping("mypage/membership")//마이페이지 멤버십로
 	public String membership(Model model) {
@@ -130,11 +157,23 @@ public class MypageController {
 	
 	@GetMapping("/filterPtHisBetween")//특정기간 포인트 이력조회(ajax로 접근)
 	@ResponseBody
-	public Map<String, Object> getPointHistoryBetween(@RequestParam("startDate") Timestamp startDate,
-												@RequestParam("endDate") Timestamp endDate,
+	public Map<String, Object> getPointHistoryBetween(@RequestParam("startDate") String startDateStr,
+												@RequestParam("endDate")  String endDateStr,
 												@RequestParam("page") int page,
 										        @RequestParam("pageSize") int pageSize) {
 		log.info("@# Mypage getPointHistoryBetween_ajax로 접근");
+		
+		// 시간 정보가 없을 경우 기본 시간 추가
+	    if (!startDateStr.contains(" ")) {
+	        startDateStr += " 00:00:00";
+	    }
+	    if (!endDateStr.contains(" ")) {
+	        endDateStr += " 23:59:59";  // 끝날짜는 하루 끝 시간으로 설정
+	    }
+	    
+	    Timestamp startDate = Timestamp.valueOf(startDateStr);
+	    Timestamp endDate = Timestamp.valueOf(endDateStr);
+	    
 		int offset = (page - 1) * pageSize;
         List<PthistDTO> historyList = memService.getPointHistoryBetween(startDate, endDate, pageSize, offset);
         int totalCount = memService.getTotalCountBetween(startDate, endDate);  // 전체 데이터 개수

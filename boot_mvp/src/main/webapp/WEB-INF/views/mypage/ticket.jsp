@@ -53,18 +53,18 @@
                                     </div>
                                     <div class="rightFilter">
                                         <div class="filterTitle">월별 조회</div>
-                                        <select id="orderBy" name="orderBy" class="custom-select" onchange="switchTab(this.value);">
+                                        <select id="orderBy" name="orderBy" class="custom-select">
                                             <option disabled selected>선택</option>
-                                            <option>예매일</option>
-                                            <option>상영일</option>
+                                            <option value="예매일">예매일</option>
+                                            <option value="상영일">상영일</option>
                                             <!-- <option value="bookingday" <c:if test="${pageMaker.cri.orderBy == 'bookingday'}">selected='selected'</c:if>>예매일</option> -->
                                             <!-- <option value="showingday" <c:if test="${pageMaker.cri.orderBy == 'showingday'}">selected='selected'</c:if>>상영일</option> -->
                                         </select>
-                                        <select id="yearSelect" name="year" class="custom-select" onchange="updateFilter();">
+                                        <select id="yearSelect" name="year" class="custom-select">
                                             <option disabled selected>연도</option>
-                                            <!-- JavaScript로 동적으로 옵션 추가 예정 -->
+                                            <!-- JavaScript로 동적으로 옵션 추가 예정 --> 
                                         </select>
-                                        <select id="monthSelect" name="month" class="custom-select" onchange="updateFilter();">
+                                        <select id="monthSelect" name="month" class="custom-select">
                                             <option disabled selected>월</option>
                                             <option value="1">1월</option>
                                             <option value="2">2월</option>
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="contentRowBookList" id="ticketListContent">
 										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
-                                    </div><!-- contentRowBook 끝 -->
+                                    </div><!-- contentRowBookList 끝 -->
                                 </div><!-- listTable 끝 -->
 								<div id="pagination" class="pagination">
 									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
@@ -132,12 +132,10 @@
                                         <div class="conTitle">상영일시</div>
                                         <div class="conTitle">취소금액</div>
                                     </div>
-                                    <div class="contentRowCancel">
-                                        <div class="couponCon">2024-08-23 14:22:33</div>
-                                        <div class="couponCon">행복의 나라</div>
-                                        <div class="couponCon">2024-08-27 16:00</div>
-                                        <div class="couponCon">22,000</div>
-                                    </div>
+									<div id="cancelticketList">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+									</div>
+                                   
                                 </div><!-- listTable 끝 -->
                             </div><!-- couponList 끝 -->
                             <div class="useGuide">
