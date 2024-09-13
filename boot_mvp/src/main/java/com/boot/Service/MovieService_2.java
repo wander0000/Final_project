@@ -7,5 +7,5 @@ import com.boot.DTO.MovietbDTO;
 
 public interface MovieService_2 {
 	public ArrayList<MovietbDTO> selectAll();
-	public String getTitle(HashMap<String, String> param);
+	public MovietbDTO getTitleRating(HashMap<String, String> param);
 }
