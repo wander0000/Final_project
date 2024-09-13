@@ -1,14 +1,25 @@
 package com.boot.Config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.boot.Service.CustomOAuth2UserService;
+import com.boot.Service.OauthtbService;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 @Configuration
 public class SecurityConfig {
+
+
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OauthtbService oauthtbService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,8 +53,11 @@ public class SecurityConfig {
 	}
 
 
+
+
+    // PasswordEncoder 빈을 등록
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // BCryptPasswordEncoder 빈 등록
+        return new BCryptPasswordEncoder();  // BCryptPasswordEncoder 사용
     }
 }

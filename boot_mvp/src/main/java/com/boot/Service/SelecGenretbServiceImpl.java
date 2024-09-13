@@ -11,10 +11,17 @@ public class SelecGenretbServiceImpl implements SelecGenretbService{
     @Autowired
     private SelecGenretbDAO_3 selecgenretbDAO;
     
-    @Override
-    public void insertUserGenre(SelecGenretbDTO selecgenretbDTO) {
-        selecgenretbDAO.insertUserGenre(selecgenretbDTO);
-    }
+
+
+	@Override
+	public void oauthtbinsertUserGenre(SelecGenretbDTO selecgenretbDTO) {
+        selecgenretbDAO.oauthtbinsertUserGenre(selecgenretbDTO);
+	}
+
+	@Override
+	public void usertbinsertUserGenre(SelecGenretbDTO selecgenretbDTO) {
+        selecgenretbDAO.usertbinsertUserGenre(selecgenretbDTO);
+	}
 
     // 추가적인 서비스 메서드를 여기서 정의할 수 있습니다.
 }
