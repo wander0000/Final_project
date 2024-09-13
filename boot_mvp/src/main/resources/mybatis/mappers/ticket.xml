@@ -1,0 +1,76 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "Https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.TicketDAO">   
+      
+    <!-- 예매내역 목록 조회(기간별)-->  
+    <select id="getTicketListForDays" resultType="com.boot.DTO.ReservetbDTO">
+    	SELECT r.*, m.movienm
+		FROM reservetb r
+		JOIN movietb m ON r.movieno = m.movieno
+		WHERE r.uuid = #{uuid} AND r.status='예매'
+		<include refid="days"></include>
+		<include refid="pagenation"></include>
+    </select>
+    
+    <!-- 예매내역 목록의 갯수(기간별)-->
+    <select id="getTotalCountForDays">
+        SELECT COUNT(*) 
+        FROM reservetb r
+		WHERE uuid = #{uuid} AND status='예매'
+        <include refid="days"></include>
+    </select>
+    
+    <!--  정렬 로직: 기간별 15일,1개월,2개월, 3개월 -->
+	<sql id="days">
+      <if test="(days == '15')">
+        AND r.starttime BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND now()
+        ORDER BY r.starttime DESC
+      </if>
+      <if test="(days == '30') or days == null or days == ''">
+         AND r.starttime BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND now()
+         ORDER BY r.starttime DESC
+      </if>
+      <if test='(days == "60")'>
+         AND r.starttime BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+         ORDER BY r.starttime DESC
+      </if>
+      <if test='(days == "90")'>
+      	 AND r.starttime BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+         ORDER BY r.starttime DESC
+      </if>
+   </sql>
+   
+   <sql id="pagenation">
+   		LIMIT #{pageSize} OFFSET #{offset}
+   </sql>
+   
+   
+   
+    <!-- 예매내역 목록 조회(특정연월)-->  
+    <select id="getTicketListForMonthly" resultType="com.boot.DTO.ReservetbDTO">
+		SELECT r.*, m.movienm
+		FROM reservetb r
+		JOIN movietb m ON r.movieno = m.movieno
+		WHERE r.uuid = #{uuid} AND r.status='예매'
+		AND YEAR(r.starttime) = #{year}
+		AND MONTH(r.starttime) = #{month}
+		ORDER BY r.starttime DESC
+    </select>
+
+   
+    <!-- 예매내역 목록의 갯수(특정연월)-->
+    <select id="getTotalCountMonthly">
+        SELECT COUNT(*) 
+		FROM reservetb 
+		WHERE uid = #{uuid} AND status='예매'
+		AND YEAR(r.starttime) = #{year}
+		AND MONTH(r.starttime) = #{month}
+		ORDER BY starttime DESC
+    </select>
+   
+</mapper>
+
+
+

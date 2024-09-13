@@ -23,5 +23,6 @@
 		<mapper resource="mybatis/mappers/movie.xml"/>
 		<mapper resource="mybatis/mappers/review.xml"/>
 		<mapper resource="mybatis/mappers/like.xml"/>
+		<mapper resource="mybatis/mappers/ticket.xml"/>
     </mappers>
 </configuration>

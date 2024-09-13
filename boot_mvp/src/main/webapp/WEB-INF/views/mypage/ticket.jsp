@@ -46,11 +46,10 @@
                                 <div class="filterBtn">
                                     <div class="leftFilter">
                                         <div class="filterTitle">기간별 조회</div>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">15일</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">1개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">2개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">3개월</button>
-                                        
+											<button class="filter" data-days="15">15일</button>
+										   	<button class="filter" data-days="30">1개월</button>
+										   	<button class="filter" data-days="60">2개월</button>
+										   	<button class="filter" data-days="90">3개월</button>
                                     </div>
                                     <div class="rightFilter">
                                         <div class="filterTitle">월별 조회</div>
@@ -93,22 +92,13 @@
                                         <div class="conTitle">상태</div>
                                         <div class="conTitle">입장권QR</div>
                                     </div>
-                                    <div class="contentRowBook">
-                                        <div class="ticketCon">0807-1644-0213-266</div>
-                                        <div class="ticketCon">행복의 나라</div>
-                                        <div class="ticketCon">~2024-08-27 16:00</div>
-                                        <div class="ticketCon">2</div>
-                                        <div class="ticketCon">2024-08-27 15:40 </div>
-                                        <div class="ticketCon">
-                                            <button class="submitTab" value="cancel_status" type="submit">취소가능</button>
-                                        </div>
-                                        <div class="ticketCon">
-                                            <button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>
-                                        </div>
-                                     
-
-                                    </div><!-- contentRow 끝 -->
+                                    <div class="contentRowBookList" id="ticketListContent">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+                                    </div><!-- contentRowBook 끝 -->
                                 </div><!-- listTable 끝 -->
+								<div id="pagination" class="pagination">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+								</div>
                             </div><!-- bookingList 끝 -->
                             <div class="useGuide">
                                 <div class="guideTitle">

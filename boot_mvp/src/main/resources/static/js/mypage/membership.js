@@ -96,7 +96,7 @@ $(document).ready(function()
 
 	  var currentPage = 1;  // 현재 페이지
 	  var totalPages = 0;   // 총 페이지 수
-	  var pageGroupSize = 7;  // 페이지 버튼 그룹 크기
+	  var pageGroupSize = 5;  // 페이지 버튼 그룹 크기
 
 	  // 기간별 데이터 조회
 	  function loadPointHistory(days, page, pageSize) {
