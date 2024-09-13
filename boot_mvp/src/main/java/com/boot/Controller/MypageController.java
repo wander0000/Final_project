@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MembershipDTO;
 import com.boot.DTO.PthistDTO;
+import com.boot.DTO.ReservetbDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.MembershipService;
+import com.boot.Service.TicketService;
 import com.boot.Service.UserService_4;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +48,9 @@ public class MypageController {
 	@Autowired
 	private MembershipService memService;
 	
+	@Autowired
+	private TicketService ticketService;
+	
 	
 	@RequestMapping("mypage")//마이페이지 메인으로
 	public String mypage(Model model) {
@@ -59,6 +64,39 @@ public class MypageController {
 		log.info("@# Mypage ticket");		
 		
 		return "mypage/ticket";
+	}
+	
+	@GetMapping("/loadTicketList")//기간별 포인트 예매내역조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadTicketList(@RequestParam("days") int days, 
+											@RequestParam("page") int page,
+									        @RequestParam("pageSize") int pageSize) {
+		
+		  	int offset = (page - 1) * pageSize;//offset은 건너뛸 row의 갯수이기 때문에 1페이지 일때는 0, 2페이지 있을 때 페이지크기*1 
+	        List<ReservetbDTO> ticketList = ticketService.getTicketListForDays(days, pageSize, offset);
+	        int totalCount = ticketService.getTotalCountForDays(days);  // 전체 데이터 개수 조회
+
+	        Map<String, Object> result = new HashMap<>();
+	        result.put("ticketList", ticketList);
+	        result.put("totalCount", totalCount);  // 전체 개수를 추가하여 반환
+	        return result;
+	}
+	
+	@GetMapping("/loadMonthlyTicketList")//특정기간 포인트 이력조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadMonthlyTicketList(@RequestParam("year") int year,
+												@RequestParam("month") int month,
+												@RequestParam("page") int page,
+										        @RequestParam("pageSize") int pageSize) {
+		log.info("@# Mypage loadMonthlyTicketList로 접근");
+		int offset = (page - 1) * pageSize;
+        List<ReservetbDTO> ticketList = ticketService.getTicketListForMonthly(year, month, pageSize, offset);
+        int totalCount = ticketService.getTotalCountMonthly(year, month);  // 전체 데이터 개수
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("ticketList", ticketList);
+        result.put("totalCount", totalCount);  // 전체 개수를 반환
+        return result;
 	}
 	
 	@RequestMapping("mypage/membership")//마이페이지 멤버십로

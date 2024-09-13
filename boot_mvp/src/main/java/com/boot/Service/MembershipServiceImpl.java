@@ -284,7 +284,7 @@ public class MembershipServiceImpl implements MembershipService {
 
 	@Override
 	public int getTotalCountBetween(Timestamp startDate, Timestamp endDate) {
-	log.info("getTotalCountFiltered 서비스임플");
+		log.info("getTotalCountFiltered 서비스임플");
 		
 		// 1. 로그인 여부 확인
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

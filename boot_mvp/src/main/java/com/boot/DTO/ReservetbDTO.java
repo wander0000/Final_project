@@ -19,7 +19,7 @@ public class ReservetbDTO {
 	private int tprice;
 	private Timestamp adate;
 	private Timestamp mdate;
-	private String fldaa;
+	private String movienm;
 	private String fldab;
 	private String fldac;
 	private String fldad;

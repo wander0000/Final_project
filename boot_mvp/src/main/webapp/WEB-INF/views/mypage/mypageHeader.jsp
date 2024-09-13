@@ -59,7 +59,7 @@
 	    color: rgba(153, 162, 185, 0.3);
 	    font-size: 16px;
 	    font-weight: 600;
-	    margin-left: 131px;; 
+	/*    margin-left: 131px;-*/
 		color: #99A2B9;
 		font-size: 16px;
 		font-weight: 400;
@@ -88,6 +88,7 @@
 	            </ul>
 			</div>
         </div>
+		
 </body>
 </html>
 <script>
