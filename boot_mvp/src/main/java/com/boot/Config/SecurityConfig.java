@@ -3,6 +3,9 @@ package com.boot.Config;
 import com.boot.Security.CustomLogoutHandler;
 import com.boot.Service.CustomOAuth2UserService;
 import com.boot.Service.OauthtbService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +31,8 @@ public class SecurityConfig {
 	        .authorizeRequests()
 	            .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**","/main","/movie/**", 
 	                    "/checkUserId", "/verify-code", 
+	                    "/ticketing/logincheck", "/ticketing/movieselect", "/ticketing/theatershow", "/ticketing/movieshow",
+	                    "/ticketing/dateshow", "/ticketing/datetxt", "/ticketing/datetxtparam", "/ticketing/saveSessionParams",
 	                    "/findIdPage", "/userid", // 여기서 /userid 추가
 	                    "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
 	            .permitAll()  // 인증 없이 접근 가능하게 설정
@@ -42,6 +47,13 @@ public class SecurityConfig {
 	            .usernameParameter("userid")
 	            .passwordParameter("ppass")
 	            .defaultSuccessUrl("/main")
+	            .successHandler((request, response, authentication) -> {
+	                String redirectUrl = request.getParameter("redirect");
+	                if (redirectUrl == null || redirectUrl.isEmpty()) {
+	                    redirectUrl = "/main"; // 기본 리디렉션 URL
+	                }
+	                response.sendRedirect(redirectUrl);
+	            })
 	        .and()
 	        .logout()
 	            .logoutUrl("/logout")
