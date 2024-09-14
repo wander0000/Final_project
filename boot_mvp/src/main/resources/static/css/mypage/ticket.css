@@ -145,6 +145,7 @@
     border: none;
     border-radius: 3px;
     background-color: #1A1B24;
+	padding: 0 20px;
 }
 
 .noContent
@@ -169,6 +170,17 @@
     box-sizing: border-box;
 }
 
+.contentRowBook, .contentRowCancel
+{
+    border-top: 1px solid rgba(217, 217, 217, 0.1);
+}
+
+.contentRowBook button
+{
+    height: 40px;
+}
+
+
 .titleRowCancel, .contentRowCancel
 {
     display: grid;
@@ -188,7 +200,7 @@
 
 .titleRowBook, .titleRowCancel
 {
-    border-bottom:1px solid  rgba(217, 217, 217, 0.1);;
+    border-bottom:1px solid  rgba(217, 217, 217, 0.1);
 }
 
 .contentRowBook, .contentRowCancel
