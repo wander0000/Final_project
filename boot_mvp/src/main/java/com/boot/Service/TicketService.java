@@ -2,8 +2,6 @@ package com.boot.Service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.boot.DTO.ReservetbDTO;
 
 public interface TicketService {

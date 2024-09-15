@@ -14,10 +14,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.boot.DTO.CouponDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MembershipDTO;
 import com.boot.DTO.PthistDTO;
@@ -25,6 +29,7 @@ import com.boot.DTO.ReservetbDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Security.CustomUserDetailsService;
+import com.boot.Service.CouponService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.MembershipService;
@@ -51,6 +56,9 @@ public class MypageController {
 	
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private CouponService couponService;
 	
 	
 	@RequestMapping("mypage")//마이페이지 메인으로
@@ -197,6 +205,55 @@ public class MypageController {
 		log.info("@# Mypage coupon");		
 		
 		return "mypage/coupon";
+	}
+	
+	
+	@GetMapping("/getCouponList")//기간별 포인트 이력조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> getcouponList(@RequestParam("type") String type, 
+											@RequestParam("acrec") String acrec, 
+											@RequestParam("page") int page,
+									        @RequestParam("pageSize") int pageSize) {
+		
+		  	int offset = (page - 1) * pageSize;//offset은 건너뛸 row의 갯수이기 때문에 1페이지 일때는 0, 2페이지 있을 때 페이지크기*1 
+	        List<CouponDTO> couponList = couponService.getCouponList(pageSize, offset,type,acrec);
+	        int totalCount = couponService.getTotalCountCoupon(type,acrec);  // 전체 데이터 개수 조회
+
+	        Map<String, Object> result = new HashMap<>();
+	        result.put("couponList", couponList);
+	        result.put("totalCount", totalCount);  // 전체 개수를 추가하여 반환
+	        return result;
+	}
+	
+//	@PostMapping("/generateCoupon")
+//	@ResponseBody
+//	public ResponseEntity<String> generateCoupon(@RequestParam String couponno, RedirectAttributes redirectAttributes) {
+//	    log.info("@# Mypage generateCoupon, 쿠폰 번호: " + couponno);
+//
+//	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//	    if (!(auth instanceof AnonymousAuthenticationToken)) {
+//	        couponService.generateCoupon(couponno);
+//	        redirectAttributes.addFlashAttribute("message", "쿠폰이 성공적으로 등록되었습니다.");
+//	    }
+//	    return ResponseEntity.ok("쿠폰이 성공적으로 등록되었습니다.");
+//	}
+
+	
+	@PostMapping("/generateCoupon")
+	@ResponseBody
+	public ResponseEntity<String> generateCoupon(@RequestParam String couponno) {
+	    log.info("@# Mypage generateCoupon, 쿠폰 번호: " + couponno);
+
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (!(auth instanceof AnonymousAuthenticationToken)) {
+	        try {
+	            couponService.generateCoupon(couponno);
+	            return ResponseEntity.ok("쿠폰이 성공적으로 등록되었습니다.");
+	        } catch (Exception e) {
+	            return ResponseEntity.badRequest().body(e.getMessage());
+	        }
+	    }
+	    return ResponseEntity.badRequest().body("인증되지 않은 사용자입니다.");
 	}
 	
 	@RequestMapping("mypage/userInfo")//마이페이지 회원정보으로
