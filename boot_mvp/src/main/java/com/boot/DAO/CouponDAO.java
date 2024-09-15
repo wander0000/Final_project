@@ -21,5 +21,6 @@ public interface CouponDAO {
 	public void generateCoupon(@Param("couponno") String couponno, @Param("uuid") String uuid);
 	// 쿠폰 상태확인 (A:사용가능, D:사용완료,N:마등록)
 	public String checkCouponRegistered(@Param("couponno") String couponno);
-	// 쿠폰이 이미 등록되어 있는지 확인);
+	// 방금 등록된 쿠폰번호 조회하기(쿠폰 등록 후 같은 트랜젝션 안에서 실행해야)
+	public String selectLastCoupon(@Param("uuid") String uuid);
 }

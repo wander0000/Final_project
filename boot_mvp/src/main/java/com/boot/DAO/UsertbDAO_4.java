@@ -16,6 +16,7 @@ public interface UsertbDAO_4 {
 	 public void updateBirth(@Param("birth") String birth, @Param("userid") String userid);
 	 public void updateAccount(@Param("account") String account, @Param("userid") String userid);
 	 public List<UsertbDTO> getUsersWithTodayBirthday();//오늘 생일자 유저 목록
+	 public String getUserPhoneNumber(String uuid);//uuid로 phone 조회
 }
 
 

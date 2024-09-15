@@ -157,6 +157,15 @@ public class UserServiceImpl_4 implements UserService_4 {
 		dao.deleteSelectGenre(uuid);
 	}
 
+	@Override
+	public String getUserPhoneNumber(String uuid) {
+		log.info("getUserPhoneNumber 서비스임플");
+		log.info("getUserPhoneNumber uuid========>"+uuid);
+		UsertbDAO_4 dao = sqlSession.getMapper(UsertbDAO_4.class);
+		
+		return dao.getUserPhoneNumber(uuid);
+	}
+
 
 	
 	
