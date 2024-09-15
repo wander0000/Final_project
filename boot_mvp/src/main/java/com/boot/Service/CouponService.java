@@ -13,5 +13,6 @@ public interface CouponService {
 	public int getTotalCountCoupon(String type, String acrec);
 	//미등록 쿠폰 사용가능으로
 	public void generateCoupon(String couponno);
-
+	// 쿠폰 발급 > 쿠폰번호 반환
+    public String issueCoupon(CouponDTO coupon);
 }

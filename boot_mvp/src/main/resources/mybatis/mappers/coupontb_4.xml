@@ -60,7 +60,7 @@
    
    
     
-    <!-- 쿠폰등록-->
+    <!-- 쿠폰등록  -->
     <insert id="insertCoupon" parameterType="com.boot.DTO.CouponDTO">
 		INSERT INTO coupontb (couponno, endDate, reason, refno, uuid, acrec)
 		SELECT CONCAT(
@@ -82,7 +82,17 @@
     </insert>
     
     
-    <!-- 쿠폰등록-->
+    <!-- 쿠폰 등록한 직후 방금 등록된 쿠폰번호 조회(같은 트랜젝션안에서 실행되어야 함)  -->
+    <select id="selectLastCoupon" resultType="string">
+	    SELECT couponno 
+	    FROM coupontb
+	    WHERE uuid = #{uuid}
+	    ORDER BY adate DESC
+	    LIMIT 1;
+	</select>
+    
+    
+    <!-- 쿠폰 미등록->사용가능으로 등록-->
     <update id="generateCoupon">
 		update coupontb set acrec='A' where couponno = #{couponno} and uuid=#{uuid};
     </update>

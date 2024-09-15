@@ -37,6 +37,8 @@ import com.boot.Service.TicketService;
 import com.boot.Service.UserService_4;
 
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Controller
 @Slf4j
@@ -59,6 +61,9 @@ public class MypageController {
 	
 	@Autowired
 	private CouponService couponService;
+	
+	/* sms 전송을 위한 세팅 */
+	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCS5XV1C37RNDO0E", "IRLCQO4R6VDFOA0PTSOVFK2GACU3MQCP", "https://api.coolsms.co.kr");
 	
 	
 	@RequestMapping("mypage")//마이페이지 메인으로

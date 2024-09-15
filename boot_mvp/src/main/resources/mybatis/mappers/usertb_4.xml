@@ -52,6 +52,9 @@
 		WHERE DATE_FORMAT(birth, '%m-%d') = DATE_FORMAT(CURDATE(), '%m-%d');
     </select>
   
-   
+   <!-- 유저의 전화번호를 가져오는 쿼리 -->
+	<select id="getUserPhoneNumber" parameterType="String" resultType="String">
+	    SELECT phone FROM usertb WHERE uuid= #{uuid}
+	</select>
 
 </mapper>

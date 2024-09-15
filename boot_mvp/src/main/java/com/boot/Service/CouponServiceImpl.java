@@ -93,7 +93,7 @@ public class CouponServiceImpl implements CouponService {
 
         // 사용자 정보 가져오기
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+        String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
 
         // DAO 연결
         CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
@@ -116,6 +116,21 @@ public class CouponServiceImpl implements CouponService {
             }
         }
     }
+
+    
+    @Transactional
+	@Override
+	// 쿠폰을 발행해 DB에 등록하고 쿠폰번호를 반환
+	public String issueCoupon(CouponDTO coupon) {
+		  try {
+			  CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
+			  dao.insertCoupon(coupon);
+			  return dao.selectLastCoupon(coupon.getCouponno());
+          } catch (Exception e) {
+             e.getStackTrace();
+          }
+		return null;
+	}
     
     
     
