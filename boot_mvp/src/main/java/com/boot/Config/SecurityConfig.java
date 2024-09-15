@@ -22,8 +22,8 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 public class SecurityConfig {
 
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final OauthtbService oauthtbService;
+//    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final OauthtbService oauthtbService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
