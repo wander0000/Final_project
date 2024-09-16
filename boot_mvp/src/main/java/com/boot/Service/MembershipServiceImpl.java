@@ -64,7 +64,7 @@ public class MembershipServiceImpl implements MembershipService {
 	        throw new RuntimeException("회원가입 중 문제가 발생했습니다.", e);
 	    }
 	}
-
+	
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -121,8 +121,9 @@ public class MembershipServiceImpl implements MembershipService {
 
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)  // 체크된 예외(SQLException, IOException 등)에서도 롤백되도록 설정
 	public void updateMembership() {//포인트 업데이트(포인트이력이 생기면 등급, 포인트, 마일리지이 함께 변동됨)
-		log.info("updateMembership 서비스임플");
+		log.info("updateMembership 멤버십서비스임플");
 		
 		// 1. 로그인 여부 확인
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -136,25 +137,26 @@ public class MembershipServiceImpl implements MembershipService {
     	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
 
 	    try {
-	        // 1. 사용자 grade 조회
-	    	GradeDAO_4 dao = sqlSession.getMapper(GradeDAO_4.class);
-			String grade = dao.getUserGrade(uuid); 
-
-	        // 2. 포인트 이력조회
+	    	// 1. 포인트 적립(pthisttb에 정보 삽입)
 			PtHisttbDAO_4 dao2 = sqlSession.getMapper(PtHisttbDAO_4.class);
-			List<PthistDTO> pthist = dao2.getUserPtHis(uuid, 30, 5, 0);//기본 30일간 내력조회(1페이지 5개목록)
+			PthistDTO dto = new PthistDTO();
+			dto.setDescription("출석이벤트 포인트적립"); 
+			dto.setKind("적립"); 
+			dto.setRecqt(10); // 출석 포인트
+			dto.setUuid(uuid); 
+			dao2.updatePtHis(dto); 
+			
+			// 3. 사용자 point 업데이트
+			PointDAO_4 dao3 = sqlSession.getMapper(PointDAO_4.class);
+			dao3.updatePoint(uuid); 
+			
+			// 4. 사용자 mileage 업데이트 
+			MileageDAO_4 dao4 = sqlSession.getMapper(MileageDAO_4.class);
+			dao4.updateMileage(uuid);
 
-	        // 3. 사용자 point 조회 
-	        PointDAO_4 dao3 = sqlSession.getMapper(PointDAO_4.class);
-	        PointDTO point =dao3.getUserPoint(uuid); 
-
-	        // 4. 사용자 mileage 조회 
-	        MileageDAO_4 dao4 = sqlSession.getMapper(MileageDAO_4.class);
-	        MileageDTO mileage = dao4.getMileage(uuid);
-	        
-	        // 5. 조회한 정보 멤버십DTO에 담에 반환하기
-	        MembershipDTO result = new MembershipDTO(grade,pthist,point,mileage);
-	        
+	        // 2. 등급 업데이트
+			GradeDAO_4 dao = sqlSession.getMapper(GradeDAO_4.class);
+			dao.updateGrade(uuid);
 
 	    } catch (Exception e) {
 	        log.error("예외 발생: ", e);

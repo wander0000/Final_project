@@ -26,5 +26,6 @@
 		<mapper resource="mybatis/mappers/like.xml"/>
 		<mapper resource="mybatis/mappers/ticket.xml"/>
 		<mapper resource="mybatis/mappers/coupontb_4.xml"/>
+		<mapper resource="mybatis/mappers/attendance.xml"/>
     </mappers>
 </configuration>

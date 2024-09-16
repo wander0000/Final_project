@@ -1,5 +1,6 @@
 package com.boot.Config;
 
+import com.boot.Security.CustomLoginSuccessHandler;
 import com.boot.Security.CustomLogoutHandler;
 import com.boot.Service.CustomOAuth2UserService;
 import com.boot.Service.OauthtbService;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,6 +26,10 @@ public class SecurityConfig {
 
 //    private final CustomOAuth2UserService customOAuth2UserService;
 //    private final OauthtbService oauthtbService;
+	
+	
+	@Autowired
+	private CustomLoginSuccessHandler customLoginSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,13 +53,14 @@ public class SecurityConfig {
 	            .usernameParameter("userid")
 	            .passwordParameter("ppass")
 	            .defaultSuccessUrl("/main")
-	            .successHandler((request, response, authentication) -> {
-	                String redirectUrl = request.getParameter("redirect");
-	                if (redirectUrl == null || redirectUrl.isEmpty()) {
-	                    redirectUrl = "/main"; // 기본 리디렉션 URL
-	                }
-	                response.sendRedirect(redirectUrl);
-	            })
+//	            .successHandler((request, response, authentication) -> {
+//	                String redirectUrl = request.getParameter("redirect");
+//	                if (redirectUrl == null || redirectUrl.isEmpty()) {
+//	                    redirectUrl = "/main"; // 기본 리디렉션 URL
+//	                }
+//	                response.sendRedirect(redirectUrl);
+//	            })
+	            .successHandler(customLoginSuccessHandler)//로그인 시 출석포인트 지급하기 위해 custum
 	        .and()
 	        .logout()
 	            .logoutUrl("/logout")

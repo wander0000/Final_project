@@ -25,6 +25,5 @@ public interface MembershipService {
 	public List<PthistDTO> getPointHistoryBetween(Timestamp startDate, Timestamp endDate, int pageSize,int offset);
 	//포인트 이력 목록 count(필터링:기간별)
 	public int getTotalCountBetween(Timestamp startDate, Timestamp endDate);
-	
 
 }

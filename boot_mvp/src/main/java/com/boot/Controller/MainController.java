@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.MovietbDTO;
 import com.boot.Security.CustomUserDetails;
-import com.boot.Service.AttendencdService;
+import com.boot.Service.AttendenceService;
 import com.boot.Service.BoxOfficeService;
 import com.boot.Service.MembershipService;
 import com.boot.Service.MovieService;
@@ -34,14 +34,11 @@ public class MainController {
 	private BoxOfficeService boxofficeService;
 	
 	@Autowired
-	private AttendencdService attendService;
+	private AttendenceService attendService;
 	
 	@RequestMapping("/main")
 	public String main(Model model) 
 	{
-		// 24.09.15. 연주 - 로그인시 출석포인트 지급(여러번 와도 중복등록은 안됨)
-		attendService.checkAttendance();
-		
 		ArrayList<BoxOfficeDTO> boxDTO = boxofficeService.BoxOfficeList();
 		              
         
