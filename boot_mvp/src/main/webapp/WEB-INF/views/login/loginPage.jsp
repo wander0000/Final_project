@@ -16,7 +16,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css"/>
     <!-- import js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/js/loginPage.js"></script>  
+
 </head>
 <body>
 
@@ -39,7 +39,7 @@
                                 <form action="/auth" method="post">
 									<!-- CSRF Token -->
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>                                    
-									
+									<input type="hidden" name="redirect" value="${param.redirect}"/>
                                     <input type="text" name="userid" placeholder="아이디" class="idpwbox1" required>
                             </div>
                             <div class="log3">
@@ -52,16 +52,19 @@
                             <div class="bottbox">
                                 <div class="bot1">
                                     <div class="a1">
-                                        <a href="#" class="aa1">아이디 찾기</a>
+                                        <a href="findIdPage" class="aa1">아이디 찾기</a>
                                     </div>
                                     <div class="a2">
-                                        <a href="#" class="aa1">비밀번호 재설정</a>
+                                        <a href="findPwPage" class="aa1">비밀번호 재설정</a>
                                     </div>
                                     <div class="a1">
                                         <a href="${pageContext.request.contextPath}/signup" class="aa1">회원가입</a>
                                     </div>
                                 </div>
                             </div>
+	                                    <div class="a1">
+	                                        <a href="/oauth2/authorization/naver">네이버로 로그인</a>
+	                                    </div>
                         </div>
                     </div>
 
@@ -71,3 +74,7 @@
     </div> <!-- logimg 끝-->
 </body>
 </html>
+<script>
+    const contextPath = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/js/loginPage.js"></script>  

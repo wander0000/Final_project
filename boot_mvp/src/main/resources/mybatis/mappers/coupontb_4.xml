@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.CouponDAO">
+    
+     <!-- 쿠폰/할인권 목록조회-->
+    <select id="getCouponList" resultType="com.boot.DTO.CouponDTO">
+        SELECT c.*, r.*
+        FROM coupontb c
+		JOIN couponreftb r ON c.refno = r.refno
+		WHERE c.uuid = #{uuid}
+        <include refid="type"></include>
+        <include refid="acrec"></include>
+        <include refid="pagenation"></include>
+    </select>
+    
+     <!-- 쿠폰/할인권 목록의 갯수 -->
+    <select id="getTotalCountCoupon">
+        SELECT COUNT(*) 
+        FROM coupontb c
+        JOIN couponreftb r ON c.refno = r.refno
+        where uuid=#{uuid}
+        <include refid="type"></include>
+        <include refid="acrec"></include>
+    </select>
+    
+	<sql id="type">
+	    <if test="type != null and type != ''">
+	        <choose>
+	            <when test="type == 'C'.toString()"><!-- 쿠폰 -->
+	                AND r.type = 'C'
+	            </when>
+	            <when test="type == 'D'.toString()"><!-- 할인권 -->
+	                AND r.type = 'D'
+	            </when>
+	        </choose>
+	    </if>
+	</sql>
+	
+	<sql id="acrec">
+	    <if test="acrec != null and acrec != ''">
+	        <choose>
+	            <when test="acrec == 'A'.toString()"><!-- 사용가능 -->
+	                AND c.acrec = 'A'
+	                ORDER BY c.endDate
+	            </when>
+	            <when test="acrec == 'D'.toString()"><!-- 사용완료 -->
+	                AND c.acrec = 'D'
+	                ORDER BY c.endDate
+	            </when>
+	        </choose>
+	    </if>
+	</sql>
+	
+   
+   
+   <sql id="pagenation">
+   		LIMIT #{pageSize} OFFSET #{offset}
+   </sql>
+  
+   
+   
+    
+    <!-- 쿠폰등록  -->
+    <insert id="insertCoupon" parameterType="com.boot.DTO.CouponDTO">
+		INSERT INTO coupontb (couponno, endDate, reason, refno, uuid, acrec)
+		SELECT CONCAT(
+	           #{type}, 
+	           DATE_FORMAT(NOW(), '%y%m%d'), 
+	           '-',
+	           LPAD(
+	               IFNULL(
+	                   (SELECT COUNT(*) + 1 
+	                    FROM coupontb
+	                    WHERE DATE(adate) = CURDATE()), 1
+	               ), 4, '0') 
+		       ),
+		       DATE_SUB(CURDATE(), INTERVAL #{period} DAY), 
+		       #{reason},       
+		       #{refno},          
+		       #{uuid},
+		       #{acrec}
+    </insert>
+    
+    
+    <!-- 쿠폰 등록한 직후 방금 등록된 쿠폰번호 조회(같은 트랜젝션안에서 실행되어야 함)  -->
+    <select id="selectLastCoupon" resultType="string">
+	    SELECT couponno 
+	    FROM coupontb
+	    WHERE uuid = #{uuid}
+	    ORDER BY adate DESC
+	    LIMIT 1;
+	</select>
+    
+    
+    <!-- 쿠폰 미등록->사용가능으로 등록-->
+    <update id="generateCoupon">
+		update coupontb set acrec='A' where couponno = #{couponno} and uuid=#{uuid};
+    </update>
+    
+    
+    
+     <!-- 쿠폰이 이미 등록되어 있는지 확인 -->
+    <select id="checkCouponRegistered">
+        SELECT acrec 
+        FROM coupontb 
+        where couponno=#{couponno}
+    </select>
+    
+</mapper>

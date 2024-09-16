@@ -24,5 +24,11 @@ public class TheaterImpl_2 implements TheaterService_2 {
 		
 		return dao.theater(param);
 	}
+
+	@Override
+	public String gettheaternm(HashMap<String, String> param) {
+		TheatertbDAO_2 dao = sqlSession.getMapper(TheatertbDAO_2.class);
+		return dao.gettheaternm(param);
+	}
 	
 }

@@ -108,7 +108,6 @@ function movieevent(movieno, movienm) {
 			'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 		},
 		success: function(result) {
-			console.log(result);
 			allDivs.forEach(function(div) {
 		        div.classList.remove('active');
 		    });
@@ -175,6 +174,24 @@ function date_event(viewday) {
 	});
 }
 
+function checkLoginStatus(callback) {
+    $.ajax({
+        type: 'get',
+        url: '/ticketing/logincheck',
+		headers: {
+			'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+		},
+		dataType: 'json', // 응답이 JSON 형식일 것으로 기대		
+        success: function(isLoggedIn) {
+            callback(isLoggedIn);
+        },
+        error: function(xhr, status, error) {
+            console.error("로그인 상태 확인 실패:", status, error);
+            callback(false);
+        }
+    });
+}
+
 function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime, pricetype) {
     if (confirm("해당 시간으로 하시겠습니까?")) {
         $.ajax({
@@ -186,7 +203,16 @@ function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime, pricet
 			},
             success: function(response) {
                 console.log('서버 응답:', response);
-				window.location.href = "/ticketing/seatselect";
+				// 세션에 먼저 저장 후 로그인 여부 확인
+				checkLoginStatus(function(isLoggedIn) {
+					if(isLoggedIn) {
+						window.location.href = "/ticketing/seatselect";
+					} else {
+						alert("로그인이 필요합니다.\n로그인 화면으로 이동합니다.");
+						var currentUrl = "/ticketing/seatselect";
+		                window.location.href = "/login?redirect=" + encodeURIComponent(currentUrl);
+					}
+				});
             },
             error: function(xhr, status, error) {
                 // 오류가 발생했을 때 처리할 내용
@@ -204,9 +230,16 @@ function down(id) {
 	}
 	
 	minus(); //총 인원 -= 1
+	settype(id, 'down'); //타입별 인원 -=1;
 	setCnt(getTotal()); //선택 가능 좌석 업데이트
 	resetSit();
-	$("#calc").text("총 합계 0원");
+	
+	if(selecttype[3] == 0)
+		make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
+	else if(selecttype[3] > 0)
+		show_disabled(); ////장애인석 표시(초록색 영역) 클래스 추가
+	
+	default_calc(); //계산한 합계 초기화
 	
     // data-count 값을 가져옵니다.
     var countValue = parseInt(button.getAttribute('data-count'), 10);
@@ -226,15 +259,19 @@ function up(id) {
 		return false;
 	}
     plus(); //전체 인원 += 1
+	settype(id, 'up'); //타입별 인원 +=1;
 	setCnt(getTotal()); //선택 가능 좌석 업데이트
-	resetSit();
-	
-	if(id == 'disable') {
-		remove_disabled();
-		show_disabled()
+	resetSit(); //좌석 상태 초기화
+
+	if(selecttype[3] == 0) {
+		make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
+	} else if(selecttype[3] > 0) {
+		remove_disabled(); //장애인 전용(빨간색) 좌석 클래스 제거 
+		show_disabled(); //장애인석 표시(초록색 영역) 클래스 추가
 	}
 	
-	$("#calc").text("총 합계 0원");
+	default_calc(); //계산한 합계 초기화
+	
     // data-count 값을 가져옵니다.
     var countValue = parseInt(button.getAttribute('data-count'), 10);
     var newCountValue = countValue + 1;
@@ -249,8 +286,9 @@ function up(id) {
 // 좌석 선택에 사용할 전역 변수
 let persons = 0;
 let seatcnt = 0;
-let arr = [];
+let selectseat = [];
 let disabled = ['A1','A2','A3','A4'];
+let selecttype = [0,0,0,0]; //타입별 좌석 인원 //성인, 청소년, 경로 장애인
 // 좌석 선택에 사용할 전역 변수
 function plus() {
 	persons += 1;
@@ -275,10 +313,35 @@ function setCnt(value) {
 function getCnt() {
 	return seatcnt;
 }
+function settype(id, gubun) {
+	var num = 0;
+	switch(id) {
+		case 'adult':
+			num = 0;
+			break;
+		case 'youth':
+			num = 1;
+			break;
+		case 'old':
+			num = 2;
+			break;
+		case 'disable':
+			num = 3;
+			break;
+	}
+	
+	if(gubun == 'up') {
+		selecttype[num] += 1;
+	} else {
+		selecttype[num] -= 1;
+	}
+}
+
 /* 장애인 석 관련 클래스 처리 로직 */
 function make_disabled() { //장애인 전용(빨간색) 좌석 클래스 추가
 	for(var i = 0; i < disabled.length; i++) {
 		$("#"+disabled[i]).addClass("disabled");
+		$("#"+disabled[i]).removeClass("showdisabled");
 	}
 }
 function remove_disabled() { //장애인 전용(빨간색) 좌석 클래스 제거
@@ -286,12 +349,12 @@ function remove_disabled() { //장애인 전용(빨간색) 좌석 클래스 제�
 		$("#"+disabled[i]).removeClass("disabled");
 	}
 }
-function show_disabled() {
+function show_disabled() { //장애인 전용(초록색) 좌석 클래스 추가 
 	for(var i = 0; i < disabled.length; i++) {
 		$("#"+disabled[i]).addClass("showdisabled");
 	}
 }
-function show_disabled_remove() {
+function show_disabled_remove() { //장애인 전용(초록색) 좌석 클래스 제거
 	for(var i = 0; i < disabled.length; i++) {
 		$("#"+disabled[i]).removeClass("showdisabled");
 	}
@@ -301,9 +364,13 @@ function resetSit() {
 	//좌석 초기화//
 	var seat = $(".sit");
 	seat.removeClass('select'); // css 클래스 삭제
-	seat.removeClass('unselect');
-	make_disabled(); // 장애인석 표시(빨간 영역) 클래스 추가
-	arr = []; //배열 초기화
+	seat.removeClass("diagonal-background"); //seat.removeClass('unselect');
+	
+	
+	if(select_seat[3] == 0)
+		make_disabled(); // 장애인석 표시(빨간 영역) 클래스 추가
+	
+	selectseat = []; //배열 초기화
 	$("#next").val('N');
 	//좌석 초기화//
 }
@@ -315,20 +382,30 @@ function updateSeatSelection() { //모든 좌석 선택 시 다른 좌석 선택
     seats.each(function() {
         var $this = $(this);
         if (!$this.hasClass('select')) {
-            $this.addClass('unselect');
+            $this.addClass('diagonal-background'); //$this.addClass('unselect');
         }
     });
 }
 
 function updateSeat() { // 선택 좌석 취소 시, 다시 활성화
 	var seats = $(".sit");
-	make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
+	
 	seats.each(function() {
         var $this = $(this);
+		/*
         if ($this.hasClass('unselect')) {
             $this.removeClass('unselect');
         }
+		*/
+		if ($this.hasClass('diagonal-background')) {
+            $this.removeClass('diagonal-background');
+        }
     });
+
+	if(selecttype[3] == 0)
+		make_disabled(); //장애인석 표시(빨간 영역) 클래스 추가
+	else if(selecttype[3] > 0)
+		show_disabled(); ////장애인석 표시(초록색 영역) 클래스 추가
 }
 
 function select_seat(id) {
@@ -340,10 +417,10 @@ function select_seat(id) {
 	var alink = $("#"+id);
 	
 	// 이미 선택된 좌석인지 확인
-    if (arr.includes(id)) {
+    if (selectseat.includes(id)) {
         // 선택 해제 (좌석을 이미 선택했을 경우)
         alink.removeClass('select');
-        arr = arr.filter(seatId => seatId !== id); // 배열에서 좌석 제거
+        selectseat = selectseat.filter(seatId => seatId !== id); // 배열에서 좌석 제거
         unselect(); // 선택 가능 좌석 수 증가
         updateSeat(); // 선택 가능 좌석 상태 업데이트
         return;
@@ -358,12 +435,34 @@ function select_seat(id) {
 		calc(); //금액 계산
 	}
 	
-	arr.push(id);
+	selectseat.push(id);
+}
+
+function default_calc() {
+	$("#calcshow").text("총 합계 0원");
 }
 
 function calc() {
-	var price = $("#price").val()
-	var money = persons * price;
+	var price0 = $("#price0").val();
+	var price1 = $("#price1").val();
+	var price2 = $("#price2").val();
+	var price3 = $("#price3").val();
+	
+	// 변경된 갑을 읽어야 하기에 .data('count')가 아닌 attr('data-count')로 직접 접근하여 값을 가져옴
+	var persons0 = $("#adult").attr('data-count'); //$("#adult").data('count');
+	var persons1= $("#youth").attr('data-count'); //$("#youth").data('count');
+	var persons2 = $("#old").attr('data-count'); //$("#old").data('count');
+	var persons3 = $("#disable").attr('data-count'); //$("#disable").data('count');
+	
+	// 가격과 인원 수 배열
+	var prices = [price0, price1, price2, price3];
+	var persons = [persons0, persons1, persons2, persons3];
+	
+	var money = 0;
+	for(var i = 0; i < 4; i++) {
+		money += prices[i] * persons[i];
+	}
+	
 	$("#calc").val(money);
 	$("#calcshow").text("총 합계 "+comma(money)+"원");
 	$("#next").val('Y');
@@ -376,17 +475,31 @@ function payment() {
 		return false;
 	} else {
 		var calc = $("#calc").val();
-		/* 각 인원 숫자 */
-		var adult = $("#adult").data('count');
-		var youth = $("#youth").data('count');
-		var old = $("#old").data('count');
-		var disable = $("#disable").data('count');
-		/* 각 인원 숫자 */
+		var seats = '';
 		
+		//선택한 좌석 정렬
+		selectseat.sort(function(a, b) { 
+		    var aNum = parseInt(a.replace(/[^\d]/g, '')); //숫자 추출
+		    var bNum = parseInt(b.replace(/[^\d]/g, '')); //숫자 추출
+		    var aChar = a.replace(/\d/g, ''); //문자 추출
+		    var bChar = b.replace(/\d/g, ''); //문자 추출
+		    
+		    if (aChar === bChar) { //문자 비교
+		        return aNum - bNum;
+		    } else { // 숫자 비교
+		        return aChar.localeCompare(bChar);
+		    }
+		}); 
+		
+		for(var i = 0; i < selectseat.length; i++) {
+			seats += selectseat[i] + ',';
+		}
+		seats = seats.slice(0, -1);
+
 		$.ajax({
             type: 'POST', // 요청 방식
             url: '/ticketing/saveSessionParamsMore', // 요청을 보낼 URL
-            data: { calc: calc, adult: adult, youth: youth, old: old, disable: disable }, // 전송할 데이터
+            data: { calc: calc, adult: selecttype[0], youth: selecttype[1], old: selecttype[2], disable: selecttype[3], seats: seats }, // 전송할 데이터
 			headers: {
 				'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 			},
@@ -400,4 +513,9 @@ function payment() {
             }
         });
     }
+}
+
+function move_form(actions) {
+	document.paycomform.action = actions;
+	paycomform.submit();
 }

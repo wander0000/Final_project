@@ -22,7 +22,29 @@
 		(
 			select a.movieno, b.movienm
 			from screentb a
-			inner join movietb2 b on (a.movieno = b.movieno)
+			inner join (
+				select movieno, movienm, releaseday, endday,
+					   case when ratingno = '전체관람가' then 'ALL'
+							when ratingno = '12세이상관람가' then '12'
+				            when ratingno = '15세이상관람가' then '15'
+				            when ratingno = '청소년관람불가' then '19'
+						end as ratingno, moviestatus
+				from
+				(
+					select max(movieno) as movieno, movienm, min(releaseday) as releaseday,
+						   max(endday) as endday, max(ratingno) as ratingno, moviestatus
+					from
+					(
+						select movieno, movienm, releaseday, '9999-12-31' as endday, ratingno, 1 as moviestatus
+						from boxofficetb
+						union all
+						select movieno, movienm, releaseday, endday, ratingno, moviestatus
+						from movietb
+						where moviestatus = 1
+					) as a
+					group by movienm, moviestatus
+				) as a
+			) b on (a.movieno = b.movieno)
 			group by a.movieno, b.movienm
 		) as a
 		order by movieno
@@ -34,7 +56,29 @@
 		(
 			select a.areano, a.theaterno, a.movieno, b.movienm, a.viewday, a.roomno, a.pricetype, a.starttime, a.endtime, a.selecseat, a.totalseat
 			from screentb a
-			inner join movietb2 b on (a.movieno = b.movieno)
+			inner join (
+				select movieno, movienm, releaseday, endday,
+					   case when ratingno = '전체관람가' then 'ALL'
+							when ratingno = '12세이상관람가' then '12'
+				            when ratingno = '15세이상관람가' then '15'
+				            when ratingno = '청소년관람불가' then '19'
+						end as ratingno, moviestatus
+				from
+				(
+					select max(movieno) as movieno, movienm, min(releaseday) as releaseday,
+						   max(endday) as endday, max(ratingno) as ratingno, moviestatus
+					from
+					(
+						select movieno, movienm, releaseday, '9999-12-31' as endday, ratingno, 1 as moviestatus
+						from boxofficetb
+						union all
+						select movieno, movienm, releaseday, endday, ratingno, moviestatus
+						from movietb
+						where moviestatus = 1
+					) as a
+					group by movienm, moviestatus
+				) as a
+			) b on (a.movieno = b.movieno)
 		) as a
 		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday}
 		order by movieno
@@ -42,7 +86,7 @@
     
     <select id="selectmovieinfo" resultType="com.boot.DTO.ScreentbDTO">
     	select areano, theaterno, theaternm, movieno, movienm, ratingno, 
-			   viewday, weekday, roomno, pricetype, nowprice, starttime, endtime, moviepostimg
+			   viewday, weekday, roomno, pricetype, starttime, endtime, moviepostimg
 		from
 		(
 			select a.areano, a.theaterno, b.theaternm, a.movieno, c.movienm, c.ratingno, a.viewday, 
@@ -55,20 +99,38 @@
 						WHEN 6 THEN '금'
 						WHEN 7 THEN '토'
 					END AS weekday,
-					a.roomno, a.pricetype, d.nowprice, a.starttime, a.endtime, c.moviepostimg
+					a.roomno, a.pricetype, a.starttime, a.endtime, c.moviepostimg
 			from screentb a
 			inner join theatertb b on (a.areano = b.areano and a.theaterno = b.theaterno)
-			inner join movietb2 c on (a.movieno = c.movieno)
-		    inner join (
-		    	select pricetype, nowprice
+			inner join (
+				select movieno, movienm, releaseday, endday,
+					   case when ratingno = '전체관람가' then 'ALL'
+							when ratingno = '12세이상관람가' then '12'
+							when ratingno = '15세이상관람가' then '15'
+							when ratingno = '청소년관람불가' then '19'
+						end as ratingno, moviestatus, moviepostimg
 				from
 				(
-					select substr(pricetype, 1, 1) as pricetype, nowprice
-					from pricetb
+					select max(movieno) as movieno, movienm, min(releaseday) as releaseday,
+						   max(endday) as endday, max(ratingno) as ratingno, moviestatus, max(moviepostimg) as moviepostimg
+					from
+					(
+						select movieno, movienm, releaseday, '9999-12-31' as endday, ratingno, 1 as moviestatus, moviepostimg
+						from boxofficetb
+						union all
+						select movieno, movienm, releaseday, endday, ratingno, moviestatus, moviepostimg
+						from movietb
+						where moviestatus = 1
+					) as a
+					group by movienm, moviestatus
 				) as a
-				group by pricetype, nowprice
-		    ) d on (a.pricetype = substr(d.pricetype, 1, 1))
+			) c on (a.movieno = c.movieno)
 		) as a
 		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
     </select>
+
+    <update id="Seat_deduction">
+    	update screentb set selecseat = selecseat - #{len}
+    	where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
+    </update>
 </mapper>

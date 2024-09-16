@@ -1,41 +1,85 @@
 package com.boot.Config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.boot.Security.CustomLoginSuccessHandler;
+import com.boot.Security.CustomLogoutHandler;
+import com.boot.Service.CustomOAuth2UserService;
+import com.boot.Service.OauthtbService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**", "/checkUserId", "/send-verification-code", "/verify-code", "/email/check-email").permitAll() // 로그인 및 회원가입 페이지는 인증 없이 접근 허용
-                .anyRequest().authenticated() // 나머지 페이지는 인증된 사용자만 접근 허용
-            .and()
-            .formLogin()
-                .loginPage("/login") // 로그인 페이지 설정
-                .loginProcessingUrl("/auth") // 로그인 폼 제출 URL
-                .usernameParameter("userid") // 로그인 ID 파라미터 이름
-                .passwordParameter("ppass") // 로그인 비밀번호 파라미터 이름
-                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL
-            .and()
-            .logout()
-                .logoutUrl("/logout") // 로그아웃 URL
-                .logoutSuccessUrl("/") // 로그아웃 성공 시 리디렉션 URL
-            .and()
-            .sessionManagement()
-                .sessionFixation().migrateSession(); // 세션 고정 공격 방지
 
-        return http.build();
-    }
+//    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final OauthtbService oauthtbService;
+	
+	
+	@Autowired
+	private CustomLoginSuccessHandler customLoginSuccessHandler;
 
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http
+	        .authorizeRequests()
+	            .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**","/main","/movie/**", 
+	                    "/checkUserId", "/verify-code", 
+	                    "/ticketing/logincheck", "/ticketing/movieselect", "/ticketing/theatershow", "/ticketing/movieshow",
+	                    "/ticketing/dateshow", "/ticketing/datetxt", "/ticketing/datetxtparam", "/ticketing/saveSessionParams",
+	                    "/findIdPage", "/userid", // 여기서 /userid 추가
+	                    "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
+	            .permitAll()  // 인증 없이 접근 가능하게 설정
+	        .anyRequest().authenticated()
+	        .and()
+	        .csrf()
+	            .ignoringAntMatchers("/email/**") // 필요에 따라 CSRF 무시할 경로 설정  // 이메일인증은 로그인이 되어있지않은 상태이기때문에 예외처리함
+	        .and()
+	        .formLogin()
+	            .loginPage("/login")
+	            .loginProcessingUrl("/auth")
+	            .usernameParameter("userid")
+	            .passwordParameter("ppass")
+	            .defaultSuccessUrl("/main")
+//	            .successHandler((request, response, authentication) -> {
+//	                String redirectUrl = request.getParameter("redirect");
+//	                if (redirectUrl == null || redirectUrl.isEmpty()) {
+//	                    redirectUrl = "/main"; // 기본 리디렉션 URL
+//	                }
+//	                response.sendRedirect(redirectUrl);
+//	            })
+	            .successHandler(customLoginSuccessHandler)//로그인 시 출석포인트 지급하기 위해 custum
+	        .and()
+	        .logout()
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/main")
+	            .addLogoutHandler(new CustomLogoutHandler()) // 선택한 영화 정보 (세션) 삭제
+	            .invalidateHttpSession(true) // 세션 무효화
+	        .and()
+	        .sessionManagement()
+	            .sessionFixation().none();
+
+	    return http.build();
+	}
+
+
+
+
+    // PasswordEncoder 빈을 등록
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // BCryptPasswordEncoder 빈 등록
+        return new BCryptPasswordEncoder();  // BCryptPasswordEncoder 사용
     }
 }

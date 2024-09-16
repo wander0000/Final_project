@@ -36,7 +36,7 @@ html,body
 {
     background-color: var(--background);
 }
-
+/*
 header 
 {
     height: 90px;
@@ -65,14 +65,14 @@ h5.logo a
     color: var(--main-color);
     font-size: 24px;
 }
-
+*/
 .menuList 
 {
     display: flex;
     gap: 0 40px;
 }
 
-.rightWrap 
+section .rightWrap 
 {
     margin-left: auto;
     display: flex;
@@ -80,7 +80,7 @@ h5.logo a
     gap: 0 20px;
 }
 
-.rightWrap * 
+section .rightWrap * 
 {
     height: 36px;
     box-sizing: border-box;
@@ -96,7 +96,7 @@ h5.logo a
     padding-left: 12px;
 }
 
-.rightWrap button 
+section .rightWrap button 
 {
     padding: 0 20px;
     cursor: pointer;
@@ -104,7 +104,8 @@ h5.logo a
 
 section 
 {
-    margin-top: 80px;
+    margin-top: 170px;
+    margin-bottom: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -317,7 +318,7 @@ section
     margin-bottom: 20px;
 }
 
-input {
+.inputshow {
     font-size: 24px;
     font-weight: 500;
     color: #fff;

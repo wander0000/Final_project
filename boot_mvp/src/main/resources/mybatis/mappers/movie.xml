@@ -1,0 +1,130 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.MovieDAO">  
+
+    <!-- 탭버튼 조건 -->
+    <sql id="searchGenre">
+        <if test='genre == "전체"'>
+            <!-- 전체일 경우 조건을 추가하지 않음 -->
+        </if>
+        
+        <if test='genre != "전체"'>
+            AND FIND_IN_SET(#{genre}, genre) > 0
+        </if>
+    </sql> 
+    
+    <sql id="searchGenre2">
+        <if test='genre == "전체"'>
+            <!-- 전체일 경우 조건을 추가하지 않음 -->
+        </if>
+        
+        <if test='genre != "전체"'>
+            AND FIND_IN_SET(#{genre}, b.genre) > 0
+        </if>
+    </sql>   
+
+    <!-- 현재 상영중인 영화 -->
+    <select id="GenreList" resultType="com.boot.DTO.MovietbDTO">
+        <![CDATA[
+        SELECT * FROM (
+            SELECT movieno, movienm, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, ratingno, times, intro, 
+                   moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor
+            FROM boxofficetb
+            WHERE 1=1
+            ]]>            
+            <include refid="searchGenre"/>
+            <![CDATA[
+            UNION ALL
+            
+            SELECT b.movieno, b.movienm, b.directornm, DATE_FORMAT(b.releaseday, '%Y.%m.%d') as openday, b.ratingno, b.times, b.intro, 
+                   b.moviebackimg, b.moviepostimg, b.movieyoutube, b.steelcut, b.genre, b.actor
+            FROM movietb b
+            LEFT JOIN boxofficetb a ON b.movienm = a.movienm
+            WHERE a.movienm IS NULL
+              AND b.intro IS NOT NULL
+              AND b.moviebackimg != ''
+              AND b.moviepostimg != ''
+              AND b.intro != ''
+              AND b.actor != ''
+              AND b.releaseday <= NOW()
+               ]]>   
+              <include refid="searchGenre2"/>
+              <![CDATA[
+        ) AS combined_results
+        ORDER BY STR_TO_DATE(openday, '%Y.%m.%d') ASC;
+        ]]>
+    </select> 
+    
+     <select id="Genre" resultType="com.boot.DTO.GenreDTO">
+     	select * from genre
+     </select>
+    
+     <select id="movieInfo" resultType="com.boot.DTO.MovietbDTO">
+		SELECT 
+		    movieno,
+		    movienm,    
+		    directornm,
+		    DATE_FORMAT(releaseday, '%Y.%m.%d') AS openday,
+		    ratingno,
+		    times,
+		    intro,
+		    movieen,
+		    moviebackimg,
+		    moviepostimg,
+		    movieyoutube,
+		    steelcut,
+		    genre,
+		    actor,
+		    NULL AS salesAcc, 
+		    NULL AS audiAcc,   
+		    NULL AS typeNm,   
+		    NULL AS showType   
+		FROM 
+		    movietb
+		WHERE 
+		    movieno = #{movieno}
+		
+		UNION ALL
+		
+		-- boxofficetb에서 컬럼 선택
+		SELECT 
+		    b.movieno,
+		    b.movienm,
+		    b.directornm,
+		    DATE_FORMAT(b.releaseday, '%Y.%m.%d') AS openday,
+		    b.ratingno,
+		    b.times,
+		    b.intro,
+		    m.movieen,
+		    b.moviebackimg,
+		    b.moviepostimg,
+		    b.movieyoutube,
+		    b.steelcut,
+		    b.genre,
+		    b.actor,
+		    b.salesAcc,  
+		    b.audiAcc,   
+		    b.typeNm,    
+		    b.showType   
+		FROM 
+		    boxofficetb b
+		    LEFT JOIN movietb m ON b.movienm = m.movienm
+		WHERE 
+		    b.movieno = #{movieno}
+     </select>
+
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

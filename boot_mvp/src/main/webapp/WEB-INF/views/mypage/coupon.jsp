@@ -25,6 +25,7 @@
 	<script src="${pageContext.request.contextPath}/js/mypage/coupon.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/header.jsp" %>
     <section class="section">
        <%@ include file="mypageHeader.jsp" %>
         <div class="mainContainer">
@@ -43,13 +44,19 @@
                         <div class="contentCon coupon active">
                             <div class="couponRegist">
                                 <div class="conTitle">쿠폰등록</div>
-                                <input class="inputReg" type="text" placeholder="쿠폰번호를 등록해주세요">
-                                <button class="" type="submit">등록하기</button>
-                            </div>
+								<form data-type="C" action="/generateCoupon" method="post">
+									<div class="conBody">
+										<!-- CSRF Token -->
+	                                    <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+								        <input class="inputReg" type="text" name="couponno" placeholder="쿠폰번호를 등록해주세요" required>
+								        <button class="couponBtn" type="submit">등록하기</button>
+									</div>
+							    </form>
+                        	</div>
                             <div class="couponList">
                                 <div class="filterBtn">
-                                    <button class="filter" type="submit">사용완료</button>
-                                    <button class="filter" type="submit">미사용</button>
+                                    <button class="filter" data-type="C" data-acrec="D" type="submit">사용완료</button>
+                                    <button class="filter" data-type="C" data-acrec="A" type="submit">미사용</button>
                                     <!-- <input type="button" value="사용완료"> -->
                                     <!-- <input type="button" value="미사용"> -->
                                 </div>
@@ -60,13 +67,13 @@
                                         <div class="conTitle">사용기간</div>
                                         <div class="conTitle">사용상태</div>
                                     </div>
-                                    <div class="contentRow">
-                                        <div class="couponCon">생일쿠폰(주중관람권)</div>
-                                        <div class="couponCon">주중 상영되는 영화관람</div>
-                                        <div class="couponCon">~2024-12-31</div>
-                                        <div class="couponCon">미사용</div>
+                                    <div class="" id="couponListContent">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
                                     </div>
                                 </div><!-- listTable 끝 -->
+								<div id="pagination" class="pagination">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+								</div>
                             </div><!-- couponList 끝 -->
                             <div class="useGuide">
                                 <div class="guideTitle">
@@ -89,14 +96,20 @@
 
                         <div class="contentCon discount">
                             <div class="couponRegist">
-                                <div class="conTitle">할인권등록</div>
-                                <input class="inputReg" type="text" placeholder="쿠폰번호를 등록해주세요">
-                                <button class="" type="submit">등록하기</button>
+                                <div class="conTitle" data-type="D">할인권등록</div>
+								<form data-type="D" action="/generateCoupon" method="post">
+									<div class="conBody">
+										<!-- CSRF Token -->
+	                                    <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+								        <input class="inputReg" type="text" name="couponno" placeholder="쿠폰번호를 등록해주세요" required>
+								        <button class="discntBtn" type="submit">등록하기</button>
+									</div>
+							    </form>
                             </div>
                             <div class="couponList">
                                 <div class="filterBtn">
-                                    <button class="filter" type="submit">사용완료</button>
-                                    <button class="filter" type="submit">미사용</button>
+                                    <button class="filter" data-type="D" data-acrec="D" type="submit">사용완료</button>
+                                    <button class="filter" data-type="D" data-acrec="A" type="submit">사용가능</button>
                                 </div>
                                 <div class="listTable">
                                     <div class="titleRow">
@@ -105,13 +118,13 @@
                                         <div class="conTitle">사용기간</div>
                                         <div class="conTitle">사용상태</div>
                                     </div>
-                                    <div class="contentRow">
-                                        <div class="couponCon">10% 할인권</div>
-                                        <div class="couponCon">상품금액의 10% 할인</div>
-                                        <div class="couponCon">~2024-12-31</div>
-                                        <div class="couponCon">미사용</div>
-                                    </div>
+									<div class="" id="discntListContent">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+	                                   </div>
                                 </div><!-- listTable 끝 -->
+								<div id="pagination" class="pagination">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+								</div>
                             </div><!-- couponList 끝 -->
                             <div class="useGuide">
                                 <div class="guideTitle">
@@ -140,5 +153,6 @@
             </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
     </section>
+	<%@ include file="/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

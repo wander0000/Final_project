@@ -102,7 +102,7 @@ section
   display: flex;
   justify-content: center;
   padding-top: 100px; /* Add padding at the top to ensure space for the centered .logbox */
-  padding-bottom: 100px; /* Add padding at the bottom for scrolling */
+  padding-bottom: 20%
 }
 
 .wrap 
@@ -122,7 +122,7 @@ section
 {
   width: 1920px;
   height: fit-content;
-  padding: 16%;
+  padding: 12%;
 }
 
 .logbox 
@@ -513,7 +513,9 @@ section
   font-size: 16px;
   font-weight: 300;
   user-select: none;
+  margin-right: 10px;
 }
+
 .grhh
 {
   display: flex;
@@ -651,4 +653,17 @@ html, body {
 /* 처음에 두 번째 회원가입 완료 섹션을 숨김 */
 .loginWrap2 {
     display: none;
+}
+
+html, body {
+  overflow-x: hidden; /* 수평 스크롤 숨김 */
+  overflow-y: hidden; /* 수직 스크롤 숨김 */
+  height: 100%; /* 전체 높이를 100%로 설정 */
+}
+
+/* 컨텐츠의 높이가 100% 이상인 경우도 수직 스크롤이 생기지 않도록 설정 */
+.wrap, .loginWrap, .loginWrap2 {
+  height: 100vh; /* 100vh를 사용하여 화면 높이만큼 설정 */
+  overflow-y: hidden; /* 개별 섹션에서 수직 스크롤 숨김 */
+  overflow-x: hidden; /* 수평 스크롤도 숨김 */
 }

@@ -25,6 +25,7 @@
 	<script src="${pageContext.request.contextPath}/js/mypage/userInfo.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/header.jsp" %>
     <section class="section">
     <%@ include file="mypageHeader.jsp" %>
         <div class="mainContainer">
@@ -78,8 +79,8 @@
 													<div class="inputCon">
 														<!-- CSRF Token -->
 					                                    <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>  
-														<div class="check_font" id="tel_check"></div>
 												        <input class="replace" type="tel" id="phone" name="newphone" required placeholder="변경할 전화번호">
+														<div class="check_font" id="tel_check"></div>
 											        </div>
 													<div class="sendButton">
 														<button type="cancel" class="cancel">취소</button>
@@ -205,8 +206,8 @@
 								                    <div class="inputCon">
 								                        <!-- CSRF Token -->
 								                        <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}" />
-								                        <div class="check_font" id="birth_check"></div>
 								                        <input class="replace" type="text" id="birth" name="newbirth" required placeholder="변경할 생년월일(YYYY-MM-DD)">
+								                        <div class="check_font" id="birth_check"></div>
 								                    </div>
 								                    <div class="sendButton">
 								                        <button type="cancel" class="cancel">취소</button>
@@ -267,5 +268,6 @@
             </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
     </section>
+	<%@ include file="/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

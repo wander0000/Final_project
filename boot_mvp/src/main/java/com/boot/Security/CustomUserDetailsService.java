@@ -39,6 +39,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getUuid(),
                 user.getPname(),
                 user.getPpass(),
+                user.getEmail(),
+                user.getPhone(),
                 Collections.singletonList(authority)  // 권한 목록
         );
     }

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.boot.DTO.UsertbDTO;
+import com.boot.Security.CustomUserDetails;
 import com.boot.Service.LoginService;
 
 @Component
@@ -35,23 +36,33 @@ public class AuthProvider implements AuthenticationProvider {
         if (userdto == null || userdto.getPpass() == null) {
             throw new BadCredentialsException("Invalid username or password");
         }
-        if (passwordEncoder.matches(password, userdto.getPpass())) {
-            // 로그인 성공 로직
-        } else {
+
+        if (!passwordEncoder.matches(password, userdto.getPpass())) {
             throw new BadCredentialsException("Invalid username or password");
         }
 
+        // 권한 리스트 생성
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("USER"));
 
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("USER"));
+        // CustomUserDetails 객체 생성 (UsertbDTO 정보를 기반으로)
+        CustomUserDetails customUserDetails = new CustomUserDetails(
+            userdto.getUserid(), 
+            userdto.getUuid(), 
+            userdto.getPname(), 
+            userdto.getPpass(), 
+            userdto.getEmail(),
+            userdto.getPhone(),
+            authorities
+        );
 
-        return new UsernamePasswordAuthenticationToken(userdto.getUserid(), null, roles);
+        // CustomUserDetails를 사용하여 UsernamePasswordAuthenticationToken 생성
+        return new UsernamePasswordAuthenticationToken(customUserDetails, null, authorities);
     }
-
 
     @Override
     public boolean supports(Class<?> authentication) {
-        // 지원하는 인증 방식 설정
+        // UsernamePasswordAuthenticationToken 지원
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

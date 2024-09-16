@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.PtHisttbDAO_4">
+    
+     <!-- 포인트 이력 테이블 조회(기간별)-->
+    <select id="getUserPtHis" resultType="com.boot.DTO.PthistDTO">
+        SELECT * FROM pthisttb where uuid=#{uuid}
+        <include refid="days"></include>
+        <include refid="pagenation"></include>
+    </select>
+    
+     <!-- 포인트 이력 목록의 갯수(기간별)-->
+    <select id="getTotalCountFiltered">
+        SELECT COUNT(*) 
+        FROM pthisttb where uuid=#{uuid}
+        <include refid="days"></include>
+    </select>
+    
+    <!--  정렬 로직: 기간별 15일,1개월,2개월, 3개월 -->
+	<sql id="days">
+      <if test="(days == '15')">
+        AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND now()
+        ORDER BY trndt DESC
+      </if>
+      <if test="(days == '30') or days == null or days == ''">
+         AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND now()
+         ORDER BY trndt DESC
+      </if>
+      <if test='(days == "60")'>
+         AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+         ORDER BY trndt DESC
+      </if>
+      <if test='(days == "90")'>
+      	 AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND now()
+         ORDER BY trndt DESC
+      </if>
+   </sql>
+   
+   <sql id="pagenation">
+   		LIMIT #{pageSize} OFFSET #{offset}
+   </sql>
+   
+   
+    <!-- 포인트 이력 테이블 조회(특정기간)-->
+    <select id="getUserPtHisBetween" resultType="com.boot.DTO.PthistDTO">
+        SELECT * FROM pthisttb where uuid=#{uuid}
+        AND trndt BETWEEN #{startDate} AND #{endDate}
+		ORDER BY trndt DESC
+		LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <!-- 포인트 이력 목록의 갯수(특정기간)-->
+    <select id="getTotalCountBetween">
+        SELECT COUNT(*) 
+        FROM pthisttb where uuid=#{uuid}
+        AND trndt BETWEEN #{startDate} AND #{endDate}
+		ORDER BY trndt DESC
+    </select>
+    
+    
+
+
+      
+   
+   
+    
+    <!-- 포인트적립 또는 포인트 사용 -->
+    <insert id="updatePtHis" parameterType="com.boot.DTO.PthistDTO">
+		INSERT INTO pthisttb (pthistno, description, kind, recqt, issqt, uuid)
+		SELECT CONCAT(
+		           'pt', 
+		           DATE_FORMAT(NOW(), '%y%m%d'),
+		           '-',
+		           LPAD(
+		               IFNULL(
+		                   (SELECT COUNT(*) + 1 
+		                    FROM pthisttb
+		                    WHERE DATE(trndt) = CURDATE()), 1
+		               ), 4, '0') 
+		       ),
+		       #{description},  
+		       #{kind},       
+		       #{recqt},          
+		       #{issqt},          
+		       #{uuid}
+		;
+    </insert>
+    
+    
+    <!-- 회원탈퇴시 포인트 이력 삭제 -->
+    <delete id="deletePtHis">
+		delete from pthisttb where uuid =#{uuid}
+    </delete>
+    
+</mapper>

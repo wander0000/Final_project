@@ -9,7 +9,7 @@ import lombok.Data;
 public class ScreentbDTO {
 	private int areano;
 	private int theaterno;
-	private int movieno;
+	private String movieno;
 	private Date viewday;	
 	private int roomno;
 	private Timestamp starttime;

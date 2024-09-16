@@ -7,43 +7,21 @@
 <meta charset="UTF-8">
 <title>예매 - MVP</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ticketing/payment.css">
-<script src="${pageContext.request.contextPath}/js/ticketing/ticketing_fn.js"></script>
+<script src="${pageContext.request.contextPath}/js/ticketing/pay_fn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 </head>
 <body>
-<form>
 	<div class="container">
-        <header class="header">
-            <div class="headerInner">
-                <h5 class="logo">
-                    <a href="#none">
-                        MVP
-                    </a>
-                </h5>
-                <ul class="menuList">
-                    <li class="menu">메뉴1</li>
-                    <li class="menu">메뉴2</li>
-                    <li class="menu">메뉴3</li>
-                    <li class="menu">메뉴4</li>
-                    <li class="menu">메뉴5</li>
-                </ul>
-                <div class="rightWrap">
-                    <div class="inputWrap">
-                        <input type="text" class="search">
-                    </div>
-                    <button type="button" class="login">로그인</button>
-                </div>
-            </div>
-        </header>
+        <jsp:include page="../header.jsp" />
         <section class="section">
             <div class="sectionCon">
                 <div class="tabDiv">
                     <div class="tabWrap">
                         <div class="tab">
-                            <a href="#none">01.상영시간</a>
+                            <a href="/ticketing/movieselect">01.상영시간</a>
                         </div>
                         <div class="tab">
-                            <a href="#none">02.인원/좌석</a>
+                            <a href="/ticketing/seatselect">02.인원/좌석</a>
                         </div>
                         <div class="tab active">
                             <a href="#none">03.결제</a>
@@ -92,7 +70,7 @@
                     <div class="seatinfo">
                         <div class="seatdetail">
                             <a href="#none">좌석</a>
-                            <a href="#none">J7, J8</a>
+                            <a href="#none">${seats }</a>
                         </div>
                     </div>
                 </div> <!-- movieDiv end -->
@@ -104,7 +82,7 @@
                         <div class="couponarea">
                             <a href="#none" class="afont">쿠폰</a>
                             <button type="button" class="discountBtn">쿠폰</button>
-                            <input type="text" id="coupon" value="-0 원" readonly>
+                            <input type="text" class="inputshow" id="coupon" value="-0 원" readonly>
                         </div>
                     </div> <!-- couponDiv end -->
                     <div class="pointDiv">
@@ -114,12 +92,12 @@
                         <div class="pointarea">
                             <a href="#none" class="afont">할인권</a>
                             <button type="button" class="discountBtn">할인권</button>
-                            <input type="text" id="discount" value="-0 원" readonly>
+                            <input type="text" class="inputshow" id="discount" value="-0 원" readonly>
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">포인트</a>
                             <button type="button" class="discountBtn">모두 사용</button>
-                            <input type="text" id="point" value="0 P">
+                            <input type="text" class="inputshow" id="point" value="0 P">
                         </div>
                     </div> <!-- pointDiv end -->
                     <div class="paymentDiv">
@@ -127,8 +105,8 @@
                             <a href="#none">최종 결제</a>
                         </div>
                         <div class="paymentbox">
-                            <button type="button" class="discountBtn">신용 카드</button>
-                            <button type="button" class="discountBtn">신용 카드</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('kakao')">카카오 페이</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('toss')">토스 페이</button>
                             <button type="button" class="discountBtn">신용 카드</button>
                             <button type="button" class="discountBtn">신용 카드</button>
                         </div>
@@ -139,38 +117,44 @@
                         <div class="discountListarea">
                             <div class="discountList">
                                 <a href="#none">쿠폰</a>
-                                <input type="text" id="t_coupon" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_coupon" value="-0 원" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">할인권</a>
-                                <input type="text" id="t_discount" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_discount" value="-0 원" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">포인트</a>
-                                <input type="text" id="t_point" value="-0 P" readonly>
+                                <input type="text" class="inputshow" id="t_point" value="-0 P" readonly>
                             </div>
                         </div>
                     </div>
                     <div class="totalpay">
                         <div class="showpay">
                             <a href="#none">상품금액</a>
-                            <input type="text" id="p_pay" value="28,000 원" readonly>
+                            <input type="hidden" id="calc" name="calc" value="${calc }">
+                            <fmt:formatNumber value="${calc }" type="number" var="p_pay" groupingUsed="true"/>
+                            <input type="text" class="inputshow" id="p_pay" value="${p_pay }원" readonly>
                         </div>
                         <div class="showpay">
                             <a href="#none">할인금액</a>
-                            <input type="text" id="d_pay" value="- 0" readonly>
+                            <input type="text" class="inputshow" id="d_pay" value="- 0" readonly>
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
-                            <input type="text" id="t_pay" value="28,000 원" readonly>
+                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }">
+                            <fmt:formatNumber value="${calc }" type="number" var="t_pay" groupingUsed="true"/>
+                            <input type="text" class="inputshow" id="t_pay" value="${t_pay }원" readonly>
                         </div>
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="button" class="pay">결제하기</button>
+                        <div id="paybutton">
+                        	<button type="button" class="pay" onclick="dis_pay_button()">결제하기</button>
+                        </div>
                     </div>
                 </div> <!-- finalpay-->
             </div> <!-- showWrap end -->
         </section>
     </div>
-</form>
+    <jsp:include page="../footer.jsp" />
 </body>
 </html>

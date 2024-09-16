@@ -1,0 +1,424 @@
+:root 
+{
+  /* 컬러 모음 */
+  --main-color: #FFA500;
+  --color-black: #111;
+  --color-white: #fff;
+  --color-gray: #787878;
+  --input-gray: #e5e5ec;
+  --button-gray: #f7f7f7;
+  --border-color-gray: #dadada;
+  --font-size32: 32px;
+  --font-size24: 24px;
+  --font-size20: 20px;
+  --font-size16: 16px;
+  --font-size14: 14px;
+  --font-size12: 12px;
+}
+
+/* 헤더  
+header 
+{
+  height: 90px;
+  border-bottom: 1px solid var(--border-color-gray);
+  background-color: #111;
+}
+
+.headerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.headerInner h5.logo 
+{
+  margin-right: 40px;
+  width: 120px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.headerInner ul.menu 
+{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+}
+
+.headerInner ul.menu li, .headerInner ul.rightMenu li 
+{
+  padding: 10px 20px;
+}
+
+.headerInner ul.menu li a, .headerInner ul.rightMenu li a 
+{
+  font-size: var(--input-tab-size);
+  color: var(--color-black);
+  font-weight: 500;
+}
+
+.rightMenu 
+{
+  margin-left: auto;
+  display: flex;
+}
+
+.headerInner ul.rightMenu li:first-child 
+{
+  margin-right: 40px;
+}
+
+헤더 끝 */
+
+
+
+
+/*    섹션    */
+html 
+{
+  background-image: url(../images/logimg.png);
+  background-size: auto; /* 이미지가 div에 꽉 차도록 설정 */
+  background-position: center; /* 이미지를 가운데에 위치 */
+  width: 100%; /* 원하는 너비 설정 */
+  height: 100%;
+  overflow: hidden; /* 스크롤을 방지 */
+  background-attachment: fixed; /* 배경 이미지가 스크롤되지 않도록 설정 */
+}
+
+body
+{
+  background-color: rgba(0, 0, 0, 0.85); /* 전체 배경을 검은색 85% 투명도로 설정 */
+}
+
+section 
+{
+  display: flex;
+  justify-content: center;
+}
+
+.wrap 
+{
+  min-width: 1920px;
+  min-height: 1000px;
+  /* padding: 50px 0; */
+  box-sizing: border-box;
+  display: flex;
+}
+
+
+.loginWrap 
+{
+  width: 1920px;
+}
+
+.logbox {
+  position: fixed; /* 화면 스크롤과 상관없이 화면에 고정 */
+  top: 50%; /* 화면의 세로 중앙 */
+  left: 50%; /* 화면의 가로 중앙 */
+  transform: translate(-50%, -50%); /* 요소의 중심을 기준으로 정렬 */
+  width: 500px;
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden; /* 자식 요소가 컨테이너를 넘어가지 않도록 설정 */
+  background-color: rgba(212, 212, 212, 0.05); /* 투명한 배경 */
+}
+
+.background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(212, 212, 212, 0.01); /* 배경 색상 및 투명도 조절 */
+  backdrop-filter: blur(10px); /* 배경 블러 효과 */
+  z-index: -1; /* 텍스트 및 버튼이 블러 배경 위에 위치하도록 설정 */
+}
+
+.content {
+  position: relative; /* 내용이 배경 위에 위치하도록 설정 */
+  z-index: 1; /* 텍스트 및 버튼을 배경 위에 위치시킴 */
+  color: #ffffff; /* 텍스트 색상 설정 */
+}
+
+.log1 {
+  margin-top: 50px;
+}
+
+.log1 .hh 
+{
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.idpwbox1, .idpwbox2
+{
+  height: 56px;
+  width: 420px;
+  padding-left: 16px;
+  font-size: 16px;
+  background-color: rgba(153, 153, 153, 0.2); /* #999999의 20% 투명도 */
+  outline: none; /* 클릭 시 테두리 표시 제거 */
+  caret-color: #999999; /* 커서 색상 설정 */
+  color: #ffffff; /* 입력 텍스트 색상 설정 */
+  /* color: #D9D9D9; 입력 텍스트 색상 설정 */
+}
+
+.idpwbox1::placeholder,
+.idpwbox2::placeholder 
+{
+  color: #999999; /* 플레이스홀더 색상 설정 */
+  opacity: 1; /* 불투명 설정 */
+}
+
+.idpwbox1 
+{
+  border-top-left-radius: 4px; /* 왼쪽 위 모서리 둥글게 */
+  border-top-right-radius: 4px; /* 오른쪽 위 모서리 둥글게 */
+  border: 1px solid #999999; /* 선 추가 */
+}
+
+.idpwbox2 
+{
+  border-bottom-left-radius: 4px; /* 왼쪽 아래 모서리 둥글게 */
+  border-bottom-right-radius: 4px; /* 오른쪽 아래 모서리 둥글게 */
+  border: 1px solid #999999; /* 선 추가 */
+  border-top: none; /* 위쪽 테두리(선) 없애기 */
+}
+
+.log2 
+{
+  margin-top: 50px;
+}
+
+.log4 
+{
+  margin-top: 40px;
+}
+
+.logbut 
+{
+  height: 56px;
+  width: 436px;
+  font-size: 16px;
+  background-color: #F3B931;
+  border-radius: 4px;
+  border: none; /* 기본 테두리 제거 */
+  cursor: pointer; /* 커서 모양 변경 */
+}
+.logbut2
+{
+  height: 56px;
+  width: 436px;
+  font-size: 16px;
+  background-color: #F3B931;
+  border-radius: 4px;
+  border: none; /* 기본 테두리 제거 */
+  cursor: pointer; /* 커서 모양 변경 */
+  margin-bottom: 38px;
+}
+
+.bottbox 
+{
+  margin-top: 40px;
+  margin-bottom: 32px;
+}
+
+.bot1, .bot2, .bot3 
+{
+  display: flex;
+  justify-content: center;
+  margin-right: 3%;
+}
+
+.a1, .a2 
+{
+  padding: 0 24px;
+}
+
+.bottbox .a2 
+{
+  border-left: 1px solid var(--color-white); /* 왼쪽 테두리 */
+  border-right: 1px solid var(--color-white); /* 오른쪽 테두리 */
+
+}
+
+.aa1
+{
+  text-decoration: none; /* 기본 링크 스타일 */
+  color: #ffffff; /* 기본 텍스트 색상 */
+}
+
+/* 푸터 
+footer 
+{
+  background-color: #111;
+  padding: 50px 0;
+  height: 320px;
+}
+
+.footerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+}
+
+.footerInner .f_conWrap 
+{
+  width: 50%;
+}
+
+.footerInner .left_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+  margin-top: 20px;
+}
+
+.footerInner .right_conWrap 
+{
+  text-align: right;
+}
+
+.footerInner .right_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+}
+
+.footerInner .right_conWrap h3 
+{
+  font-size: var(--sub-title-size);
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+ 푸터 끝 */
+
+
+
+
+
+/* 특정 요소들의 배경 투명도 유지 (전체 뒷배경 투명도설정) */
+header, footer, .container, section, html
+{
+    background-color: transparent; /* 기본적으로 투명하게 설정 */
+}
+
+.log1, .log2, .log3, .log4, .bottbox
+{
+  filter: none; /* 블러 효과 제거 */
+}
+
+
+/* 뒤로가기 아이콘 스타일 */
+.back-icon {
+    position: absolute;
+    top: 20px; /* 위에서 20px */
+    left: 20px; /* 왼쪽에서 20px */
+    font-size: 24px; /* 아이콘 크기 */
+    color: #ffffff; /* 아이콘 색상 */
+    cursor: pointer; /* 커서 모양 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.back-icon:hover {
+    color: #F3B931; /* 호버 시 색상 변경 */
+}
+
+
+
+/* 팝업 디자인을 회원가입 완료 페이지처럼 변경 */
+#resultModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    border-radius: 12px;
+    text-align: center;
+    background-color: rgba(212, 212, 212, 0.05); /* 투명한 배경 */
+}
+
+#resultModal .logbox {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    overflow: hidden; /* 자식 요소가 컨테이너를 넘어가지 않도록 설정 */
+    background-color: rgba(212, 212, 212, 0.05); /* 투명한 배경 */
+}
+
+#resultModal .background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(212, 212, 212, 0.01); /* 배경 색상 및 투명도 조절 */
+    backdrop-filter: blur(10px); /* 배경 블러 효과 */
+    z-index: -1; /* 텍스트 및 버튼이 블러 배경 위에 위치하도록 설정 */
+}
+
+#resultModal .content {
+    position: relative;
+    z-index: 1; /* 텍스트 및 버튼을 배경 위에 위치시킴 */
+    color: #ffffff; /* 텍스트 색상 설정 */
+    padding: 20px; /* 내부 여백 */
+}
+
+#resultModal .log1 {
+    margin-top: 20px;
+}
+
+#resultModal .log1 .hh {
+    font-size: 28px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+#resultModal .log4 {
+    margin-top: 20px;
+}
+
+#resultModal .logbut {
+    height: 56px;
+    width: 436px;
+    font-size: 16px;
+    background-color: #F3B931;
+    border-radius: 4px;
+    border: none; /* 기본 테두리 제거 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+#resultModal .logbut2 {
+    height: 56px;
+    width: 436px;
+    font-size: 16px;
+    background-color: #F3B931;
+    border-radius: 4px;
+    border: none; /* 기본 테두리 제거 */
+    cursor: pointer; /* 커서 모양 변경 */
+	margin-bottom: 38px;
+}
+
+.back-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-icon:hover {
+    color: #F3B931; /* 호버 시 색상 변경 */
+}
+

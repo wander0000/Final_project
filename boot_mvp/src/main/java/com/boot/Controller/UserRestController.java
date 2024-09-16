@@ -34,7 +34,8 @@ public class UserRestController {
 	
 	@DeleteMapping
 	public ResponseEntity<String> deleteUser() {
-		String id = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String id = user.getUserId();  // 사용자 ID 가져오기
 		if (id != null) {
 		loginservice.deleteUser(id);
 		}
@@ -49,8 +50,6 @@ public class UserRestController {
     @PatchMapping("/email")
 //    public ResponseEntity<String> updateEmail(@RequestBody UsertbDTO user, Authentication authentication) {
     public ResponseEntity<String> updateEmail(@RequestBody UsertbDTO user) {
-//        CustomUserDetails  userDetails = (CustomUserDetails) authentication.getPrincipal();//인증된 사용자 정보 가져옴
-//        String currentUserId = userDetails.getUserId();//로그인 된 사용자 아이디
     	log.info("@# updateEmail로 접근");
 
         // 서비스에 UserDTO와 Authentication 정보를 넘김

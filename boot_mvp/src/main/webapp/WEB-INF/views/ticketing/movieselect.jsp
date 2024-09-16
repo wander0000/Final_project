@@ -31,39 +31,18 @@ window.onload = function() {
 </script>
 <body>
 	<div class="container">
-        <header class="header">
-            <div class="headerInner">
-                <h5 class="logo">
-                    <a href="#">
-                        MVP
-                    </a>
-                </h5>
-                <ul class="menuList">
-                    <li class="menu">메뉴1</li>
-                    <li class="menu">메뉴2</li>
-                    <li class="menu">메뉴3</li>
-                    <li class="menu">메뉴4</li>
-                    <li class="menu">메뉴5</li>
-                </ul>
-                <div class="rightWrap">
-                    <div class="inputWrap">
-                        <input type="text" class="search">                    
-                    </div>
-                    <button type="button" class="login">로그인</button>
-                </div>
-            </div>            
-        </header>
+	<%@ include file="../header.jsp" %>
         <section class="section">
             <div class="sectionCon">
                 <div class="tabDiv">
                     <div class="tabWrap">
-                        <div class="tab">
+                        <div class="tab active">
                             <a href="#none">01.상영시간</a>
                         </div>
                         <div class="tab">
                             <a href="#none">02.인원/좌석</a>
                         </div>
-                        <div class="tab active">
+                        <div class="tab">
                             <a href="#none">03.결제</a>
                         </div>
                         <div class="tab">
@@ -119,7 +98,7 @@ window.onload = function() {
                             	<!-- movie_ajax.jsp 호출 영역 -->
                             	<c:forEach items="${movie }" var="movie">
                                		<div class="boxtit">
-								        <img src="${pageContext.request.contextPath}/images/rating/grade_15.png" alt="">
+								        <img src="${pageContext.request.contextPath}/images/rating/grade_${movie.ratingno }.png" alt="">
 								        <a href="#none" onclick="movies();">${movie.movienm }</a>
 									</div>
                                	</c:forEach>
@@ -177,6 +156,7 @@ window.onload = function() {
             </div> <!-- showWrap -->
         </section>
     </div>
+    <%@ include file="../footer.jsp" %>	
 </body>
 <script>    
 var swiper = new Swiper(".mySwiper",     

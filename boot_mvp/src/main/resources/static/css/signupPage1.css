@@ -119,7 +119,7 @@ section
   height: fit-content;
 }
 
-.logbox 
+.logbox
 {
   position: relative; /* Changed from absolute to relative positioning */
   margin: 0 auto; /* Center horizontally within its parent */
@@ -477,6 +477,24 @@ section
   font-size: 12px; /* 체크 표시 크기 */
 }
 
+
+/* 약관 팝업 시작 */
+.abab, .bcbc
+{
+  font-size: 20px;
+  color: #000000;
+}
+
+.bcbc
+{
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: left;
+  padding: 0 4%;
+}
+
+
+
 /* 푸터 
 footer 
 {
@@ -566,4 +584,87 @@ html, body {
   background-color: rgba(255, 255, 255, 0) !important; /* 배경색 투명 유지 */
   color: #ffffff !important; /* 텍스트 색상 유지 */
   font-size: 16px !important; /* 글씨 크기 유지 */
+}
+
+
+
+
+/* 기존 모달 스타일 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 460px;
+  max-width: 600px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  height: 80%;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.modal-header {
+  position: relative;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #000;
+  margin-top: 4%;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: -6px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+.modal-text {
+  overflow-y: auto;
+  padding-top: 20px;
+}
+
+
+
+
+/* 뒤로가기 아이콘 스타일 */
+.back-icon {
+    position: absolute;
+    top: 20px; /* 위에서 20px */
+    left: 20px; /* 왼쪽에서 20px */
+    font-size: 24px; /* 아이콘 크기 */
+    color: #ffffff; /* 아이콘 색상 */
+    cursor: pointer; /* 커서 모양 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+
+.back-icon:hover {
+    color: #F3B931; /* 호버 시 색상 변경 */
 }

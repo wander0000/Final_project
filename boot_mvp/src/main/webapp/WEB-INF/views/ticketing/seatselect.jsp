@@ -17,39 +17,18 @@
 </script>
 <body>
 	<div class="container">
-        <header class="header">
-            <div class="headerInner">
-                <h5 class="logo">
-                    <a href="#">
-                        MVP
-                    </a>
-                </h5>
-                <ul class="menuList">
-                    <li class="menu">메뉴1</li>
-                    <li class="menu">메뉴2</li>
-                    <li class="menu">메뉴3</li>
-                    <li class="menu">메뉴4</li>
-                    <li class="menu">메뉴5</li>
-                </ul>
-                <div class="rightWrap">
-                    <div class="inputWrap">
-                        <input type="text" class="search">                    
-                    </div>
-                    <button type="button" class="login">로그인</button>
-                </div>
-            </div>            
-        </header>
+        <%@ include file="../header.jsp" %>
         <section class="section">
             <div class="sectionCon">
                 <div class="tabDiv">
                     <div class="tabWrap">
                         <div class="tab">
-                            <a href="#none">01.상영시간</a>
-                        </div>
-                        <div class="tab">
-                            <a href="#none">02.인원/좌석</a>
+                            <a href="/ticketing/movieselect">01.상영시간</a>
                         </div>
                         <div class="tab active">
+                            <a href="#none">02.인원/좌석</a>
+                        </div>
+                        <div class="tab">
                             <a href="#none">03.결제</a>
                         </div>
                         <div class="tab">
@@ -163,7 +142,17 @@
 	                            	</div>
 	                                <div class="sitDiv">
 	                                	<c:forEach begin="1" end="14" var="num">
-	                                		<a href="#none" class="sit" id="${seat}${num}" data-seatnum="${seat}${num}" onclick="select_seat('${seat}${num}')">${num }</a>
+                							<c:set var="seatId" value="${seat}${num}" /> <!-- 좌석 ID 생성 -->
+                							<c:choose>
+                								<c:when test="${seats[seatId] == 1}"> <!-- 다른 사람이 선택된 좌석 -->
+                									<div class="diagonal-background">${num}</div>
+                									<%-- <a href="#none" class="sit" id="${seatId}" data-seatnum="${seatId}" onclick="">${num }</a> --%>
+                								</c:when>
+                								<c:otherwise> <!-- 잔여 좌석 -->
+                									<a href="#none" class="sit" id="${seatId}" data-seatnum="${seatId}" onclick="select_seat('${seatId}')">${num }</a>
+                								</c:otherwise>
+                							</c:choose>
+	                                		
 	                                		<%-- <input type="text" class="sit" value="${num }" disabled> --%>
 	                                	</c:forEach>
 	                                </div> <!-- sitDiv-->      
@@ -186,16 +175,18 @@
                         <a href="#none">선택좌석</a>
                     </div>
                     <div class="guide">
-                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type4.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type5.png" alt="">
                         <a href="#none">예매완료</a>
                     </div>
                     <div class="guide">
-                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type1.png" alt="">
+                        <img src="${pageContext.request.contextPath}/images/seat/ic_seat_type4.png" alt="">
                         <a href="#none">선택불가</a>
                     </div>
                 </div><!-- guideWrap end -->
                 <div class="botWrap">
-                	<input type="hidden" id="price" value="${movieinfo.nowprice }">
+                	<c:forEach items="${prices }" var="price" varStatus="status">
+                		<input type="hidden" id="price${status.index}" value="${price }">
+                	</c:forEach>
                 	<input type="hidden" id="calc" name="calc">
                 	<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <a href="#none" id="calcshow">총 합계 0원</a>
@@ -205,5 +196,6 @@
             </div> <!-- sectionCon 끝-->
         </section>
     </div>
+    <%@ include file="../footer.jsp" %>	
 </body>
 </html>

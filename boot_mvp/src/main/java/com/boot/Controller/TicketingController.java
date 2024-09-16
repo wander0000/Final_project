@@ -4,27 +4,37 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.boot.DTO.ScreentbDTO;
+import com.boot.DTO.ReserdtltbDTO;
 import com.boot.Service.AreaService_2;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.PricetbService_2;
+import com.boot.Service.ReserdtltbService_2;
 import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 
 @Controller
@@ -44,9 +54,30 @@ public class TicketingController {
 	@Autowired
 	private MovieService_2 movieService;
 	
+	@Autowired
+	private PricetbService_2 priceService;
+	
+	@Autowired
+	private ReserdtltbService_2 reserdtlService;
+	
+	//로그인 유무 체크
+    @GetMapping("/logincheck")
+    public ResponseEntity<Boolean> logincheck() {
+    	log.info("@# logincheck");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+        log.info("@# isLoggedIn: " + isLoggedIn);
+        
+        return ResponseEntity.ok(isLoggedIn);
+    }
+	
 	@RequestMapping("/movieselect")
-	public String Ticketing(Model model) {
+	public String Ticketing(HttpSession session, Model model) {
 		log.info("ticketing");
+		
+		//세션 초기화
+		if(session.getAttribute("movieInfo") != null)
+			session.setAttribute("movieInfo", "");
 		
 		model.addAttribute("area", areaservice.selectAll());
 		model.addAttribute("date", areaservice.datedual(""));
@@ -95,7 +126,7 @@ public class TicketingController {
 	        param.put("viewday", formattedDate);
 		}
 		
-		mav.addObject("title", movieService.getTitle(param));
+		mav.addObject("minfo", movieService.getTitleRating(param));
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
 		mav.addObject("detailinfo", screenService.selectdtl(param));
@@ -119,7 +150,7 @@ public class TicketingController {
 	public @ResponseBody Map<String, Object> datetxtparma(@RequestParam(value = "viewday") String viewday) {
 		log.info("@# datetxtparam");
 		Map<String, Object> respones = new HashMap<>();
-		log.info("dates: " + viewday);
+
 		String txt = areaservice.datedual(viewday).get(0).getTxt();
 		log.info("txt: " + txt);
 		log.info("@# txt: " + txt);
@@ -134,7 +165,7 @@ public class TicketingController {
 		log.info("@# saveSessionParams");
 		log.info("@# param: " + param);
 		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
-		session.setAttribute("params", param);
+		session.setAttribute("movieInfo", param);
 		session.setMaxInactiveInterval(3600);
 		
 		return "jsonView";
@@ -144,19 +175,42 @@ public class TicketingController {
 	public String seatselect(HttpSession session, Model model) {
 		log.info("@# seatselect");
 		// 세션에 등록한 값 사용
-		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> param = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# param: " + param);
+		
+		// movieInfo가 없을 경우 예외 발생
+	    if (param == null || param.isEmpty()) {
+	        throw new IllegalArgumentException("Movie information is missing in session.");
+	    }
 		
 		//model.addAttribute("param", param);
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(param));
-		log.info("movieinfo: " + screenService.selectmovieinfo(param));
 		
 		ArrayList<String> seat = new ArrayList<>();
-		for(int i = 65; i < 78; i++) {
+		for(int i = 65; i < 78; i++) { //A부터 M까지
 			seat.add(((char)i)+"");
 		}
 		log.info("seat: " + seat);
-		model.addAttribute("seatline", seat);
+		
+		/* 선택된 좌석 유무 확인 */
+		int cnt = reserdtlService.selected_count(param);
+		Map<String, Integer> seats = new LinkedHashMap<>(); // LinkedHashMap 삽입 순서 유지
+
+		for(int i = 65; i < 78; i++) { //A부터 M까지
+			for(int j = 1; j < 15; j++)
+			seats.put(((char)i)+j+"", 0);
+		}
+		
+		if(cnt > 0) {
+			ArrayList<ReserdtltbDTO> reserdtl = reserdtlService.selected_seat(param);
+			for(int i = 0; i < cnt; i++) {
+				seats.put(reserdtl.get(i).getSeat(), 1);
+			}
+		}
+		/* 선택된 좌석 유무 확인 */
+		model.addAttribute("seatline", seat); //전제 좌석
+		model.addAttribute("seats", seats); //선택 유뮤 좌석 표시
+		model.addAttribute("prices", priceService.selectprice(param));
 		return "ticketing/seatselect";
 	}
 	
@@ -166,13 +220,14 @@ public class TicketingController {
 		log.info("@# saveSessionParamsMore");
 		log.info("@# param: " + param);
 		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
-		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		
 		params.put("calc", param.get("calc")); // 총 가격
 		params.put("adult", param.get("adult")); //성인 숫자
 		params.put("youth", param.get("youth")); //청소년 숫자
 		params.put("old", param.get("old")); //경로 숫자
 		params.put("disable", param.get("disable")); //장애인 숫자
+		params.put("seats", param.get("seats"));
 		
 		session.setAttribute("params", params);
 		session.setMaxInactiveInterval(3600);
@@ -181,9 +236,9 @@ public class TicketingController {
 	}
 	
 	@RequestMapping("/payment")
-	public String payment(@RequestParam HashMap<String, String> param, HttpSession session, Model model) {
+	public String payment(HttpSession session, Model model) {
 		log.info("@# payment");
-		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("params");
+		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		log.info("@# params: " + params);
 		
 		model.addAttribute("movieinfo", screenService.selectmovieinfo(params));
@@ -192,7 +247,16 @@ public class TicketingController {
 		model.addAttribute("youth", params.get("youth"));
 		model.addAttribute("old", params.get("old"));
 		model.addAttribute("disable", params.get("disable"));
+		model.addAttribute("seats", params.get("seats"));
+		model.addAttribute("calc", params.get("calc"));
 		
-		return "ticketing/payment"; 
+		//이후 컨트롤러 작업은 PayContoller에서 진행
+		return "ticketing/payment";
+	}
+	
+	@RequestMapping("/ticketerrer")
+	public String ticketing_error() {
+		log.info("ticketing_error");
+		return "ticketing/ticketerrer";
 	}
 }

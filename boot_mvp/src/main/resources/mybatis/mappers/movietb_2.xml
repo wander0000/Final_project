@@ -4,14 +4,51 @@
 
 <mapper namespace="com.boot.DAO.MovietbDAO_2">   
     <select id="selectAll" resultType="com.boot.DTO.MovietbDTO">
-		select movieno, movienm
-		from movietb2
-		where moviestatus = 1
+		select movieno, movienm, releaseday, endday,
+			   case when ratingno = '전체관람가' then 'ALL'
+					when ratingno = '12세이상관람가' then '12'
+		            when ratingno = '15세이상관람가' then '15'
+		            when ratingno = '청소년관람불가' then '19'
+				end as ratingno, moviestatus
+		from
+		(
+			select max(movieno) as movieno, movienm, min(releaseday) as releaseday,
+				   max(endday) as endday, max(ratingno) as ratingno, moviestatus
+			from
+			(
+				select movieno, movienm, releaseday, '9999-12-31' as endday, ratingno, 1 as moviestatus
+				from boxofficetb
+				union all
+				select movieno, movienm, releaseday, endday, ratingno, moviestatus
+				from movietb
+				where moviestatus = 1
+			) as a
+			group by movienm, moviestatus
+		) as a
     </select>
     
-    <select id="getTitle" resultType="String">
-    	select movienm
-		from movietb2
+    <select id="getTitleRating" resultType="com.boot.DTO.MovietbDTO">
+    	select movienm, 
+    		   case when ratingno = '전체관람가' then 'ALL'
+					when ratingno = '12세이상관람가' then '12'
+		            when ratingno = '15세이상관람가' then '15'
+		            when ratingno = '청소년관람불가' then '19'
+			   end as ratingno
+		from
+		(
+			select max(movieno) as movieno, movienm, min(releaseday) as releaseday,
+				   max(endday) as endday, max(ratingno) as ratingno, moviestatus
+			from
+			(
+				select movieno, movienm, releaseday, '9999-12-31' as endday, ratingno, 1 as moviestatus
+				from boxofficetb
+				union all
+				select movieno, movienm, releaseday, endday, ratingno, moviestatus
+				from movietb
+				where moviestatus = 1
+			) as a
+			group by movienm, moviestatus
+		) as a
 		where movieno = #{movieno}
     </select>
 </mapper>

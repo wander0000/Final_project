@@ -16,12 +16,6 @@
             (#{userid}, UUID(), #{ppass}, #{pname}, #{email}, #{phone}, #{birth}, #{gender}, #{certno}, NOW(), NOW())
     </insert>
 
-    <!-- 이메일로 사용자 정보 가져오기 -->
-    <select id="getUserByEmail" resultType="com.boot.DTO.UsertbDTO">
-        SELECT *
-        FROM usertb
-        WHERE email = #{email}
-    </select>
 
     <!-- 사용자 ID로 사용자 정보 가져오기 -->
     <select id="getUserById" resultType="com.boot.DTO.UsertbDTO">
@@ -51,7 +45,7 @@
         WHERE userid = #{userid}
     </delete>
     
-	<!-- 아이디 중복검사 -->
+	<!-- 아이디 중복검사 (회원가입) -->
 	<select id="checkUserIdExists" resultType="int">
 	    SELECT COUNT(*)
 	    FROM usertb
@@ -60,13 +54,47 @@
 	
 	
 	
-	<!-- 이메일 중복검사 -->
+	<!-- 이메일 중복검사 (회원가입) -->
 	<select id="checkEmailExists" resultType="int">
 	    SELECT COUNT(*)
 	    FROM usertb
 	    WHERE email = #{email}
 	</select>
 
+
+
+	<!-- 이름, 아이디 조회 (아이디 찾기)-->
+	<select id="getUserIdByNameAndEmail" resultType="String">
+	    SELECT userid
+	    FROM usertb
+	    WHERE pname = #{pname} 
+	      AND email = #{email}
+	</select>
+	
+	
+	<!-- 이메일로 사용자 정보 가져오기 -->
+	<select id="getUserByEmail" resultType="com.boot.DTO.UsertbDTO">
+	    SELECT *
+	    FROM usertb
+	    WHERE email = #{email}
+	</select>
+	
+	
+	
+    <!-- 비밀번호 업데이트 쿼리 (비밀번호 재설정) -->
+    <update id="updatePasswordByEmail">
+        UPDATE usertb
+        SET ppass = #{ppass},
+            mdate = CURRENT_TIMESTAMP
+        WHERE email = #{email}
+    </update>
     
+    <!-- UUID 중복 확인 -->
+	<select id="existsByUuid2" resultType="boolean" parameterType="String">
+	    SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END
+	    FROM usertb
+	    WHERE uuid = #{uuid}
+	</select>
+
 
 </mapper>

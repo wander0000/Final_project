@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.MileageDAO_4">
+    
+    <!-- 마일리지 테이블 조회 -->
+    <select id="getMileage" resultType="com.boot.DTO.MileageDTO">
+        SELECT * FROM mileage where uuid=#{uuid}
+    </select>
+    
+    <!-- 회원가입시 최초 마일리지 데이터 생성-->
+    <insert id="insertMileage">
+		INSERT INTO mileage (uuid, recqt, onhqt)
+		SELECT uuid,
+		       SUM(CASE 
+					 WHEN YEAR(trndt) = YEAR(CURDATE()) 
+					 AND MONTH(trndt) = MONTH(CURDATE()) 
+					 THEN recqt 
+					 ELSE 0 
+				   END) AS total_recqt, 
+			   SUM(recqt) AS current_onhqt 
+		FROM pthisttb
+		WHERE uuid = #{uuid}
+		GROUP BY uuid;
+    </insert>
+    
+    <!-- 포인트이력발생시 uuid를 통해 pthisttb를 참조하여 업데이트 -->
+    <update id="updateMileage">
+		UPDATE mileage m
+		JOIN (
+		    SELECT uuid,
+		           SUM(CASE 
+		                 WHEN YEAR(trndt) = YEAR(CURDATE()) 
+		                 AND MONTH(trndt) = MONTH(CURDATE()) 
+		                 THEN recqt 
+		                 ELSE 0 
+		               END) AS total_recqt, 
+		           SUM(recqt) AS current_onhqt 
+		    FROM pthisttb
+		    WHERE uuid = #{uuid}
+		    GROUP BY uuid
+		) AS hist ON m.uuid = hist.uuid
+		SET m.recqt = hist.total_recqt,  
+		    m.onhqt = hist.current_onhqt, 
+			m.mdate = now(); 
+    </update>
+    
+     <!-- 회원탈퇴시 마일리지삭제 -->
+    <delete id="deleteMileage">
+		delete from mileage where uuid =#{uuid}
+    </delete>
+    
+</mapper>

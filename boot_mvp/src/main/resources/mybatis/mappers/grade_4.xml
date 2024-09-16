@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.GradeDAO_4">
+    
+    <!-- 사용자 등급 조회 -->
+    <select id="getUserGrade">
+        SELECT grade FROM gradetb where uuid=#{uuid}
+    </select>
+    
+    <!-- 회원가입시 사용자 grade 생성 - default Welcome-->
+    <insert id="insertGrade">
+		INSERT INTO gradetb (uuid, current_year) 
+		VALUES (#{uuid}, YEAR(NOW()))
+    </insert>
+    
+    <!-- 마일리지테이블 참조하여 어느포인트 이상이면 업데이트, 어떤 로직으로 할지 고민중 -->
+    <update id="updateGrade">
+		UPDATE gradetb g
+		JOIN (
+		    SELECT uuid,
+		           onhqt
+		    FROM mileage
+		    WHERE uuid = #{uuid}
+		    GROUP BY uuid
+		) AS mile ON g.uuid = mile.uuid
+		SET g.grade = CASE 
+		                 WHEN mile.onhqt >= 12000 THEN 'MVP'  
+		                 WHEN mile.onhqt >= 9600 THEN 'VIP'    
+		                 WHEN mile.onhqt >= 7800 THEN 'Friend' 
+		                 ELSE g.grade                          
+		              END
+    </update>
+    
+      <!-- 회원탈퇴시 grade 삭제  -->
+    <delete id="deleteGrade">
+		delete from gradetb where uuid =#{uuid}
+    </delete>
+    
+</mapper>
