@@ -18,27 +18,37 @@ import com.boot.Security.CustomUserDetails;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service("AttendencdService")
-public class AttendenceServiceImpl implements AttendencdService {
+@Service("AttendenceService")
+public class AttendenceServiceImpl implements AttendenceService {
 	@Autowired
 	private SqlSession sqlSession;
 	
 	
 	// 출석 기록 추가
-	@Override
-	public void checkAttendance() {
-		log.info("AttendenceService임플 checkAttendance 접근");
+    @Override
+    @Transactional
+    public void checkAttendance() {
+        log.info("AttendenceServiceImpl.checkAttendance() 시작");
+        try {
+            // 사용자 정보 가져오기
+            CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
+            log.info("checkAttendance, UUID: {}", uuid);
 
-		// 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
-		 // 오늘 출석 체크 여부 확인
-		AttendanceDAO dao = sqlSession.getMapper(AttendanceDAO.class);
-        int todayAttendance = dao.checkTodayAttendance(uuid);
-        if (todayAttendance == 0) {
-            dao.insertAttendance(uuid);
+            // 오늘 출석 체크 여부 확인
+            AttendanceDAO dao = sqlSession.getMapper(AttendanceDAO.class);
+            int todayAttendance = dao.checkTodayAttendance(uuid);
+            if (todayAttendance == 0) {
+                dao.insertAttendance(uuid);
+                log.info("출석 기록 추가 완료, UUID: {}", uuid);
+            } else {
+                log.info("이미 오늘 출석 체크가 완료되었습니다. UUID: {}", uuid);
+            }
+        } catch (Exception e) {
+            log.error("checkAttendance 처리 중 오류 발생", e);
+            throw e;  // 상위로 예외를 전파하여 트랜잭션 롤백
         }
-	}
+    }
 
 	// 출석 만근자 uuid 조회
 	@Override

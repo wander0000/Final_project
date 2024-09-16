@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.boot.DTO.CouponDTO;
-import com.boot.Service.AttendencdService;
+import com.boot.Service.AttendenceService;
 import com.boot.Service.CouponService;
 import com.boot.Service.UserService_4;
 
@@ -27,7 +27,7 @@ public class CouponScheduler {
     private CouponService couponService;
 
     @Autowired
-    private AttendencdService attService;
+    private AttendenceService attService;
 
     @Autowired
     private UserService_4 userService;
