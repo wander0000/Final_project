@@ -10,11 +10,13 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +36,8 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 
 @Controller
@@ -214,5 +218,28 @@ public class PayController {
 		model.addAttribute("seats", param.get("seats"));
 		
 		return "ticketing/paycompleted";
+	}
+	
+	@RequestMapping("couponPopUp/{gubun}")
+	public String couponPopUp(@PathVariable("gubun") String gubun, Model model) {
+		log.info("@# couponPopUp");
+		String title = gubun.equals("d") ? "할인권" : "쿠폰";
+		
+		model.addAttribute("title", title);
+		model.addAttribute("gubun", gubun);
+		model.addAttribute("pid", gubun.equals("d")?"discount":"coupon");
+		
+		return "common/couponPopUp";
+	}
+	
+	@RequestMapping("couponMatch")
+	public ResponseEntity<String> couponMatch(@RequestParam HashMap<String, String> param, Model model) {
+		log.info("@# couponMatch");
+		String result = "F";
+		
+		if(param.get("coupon").equals("coupon"))
+			result = "T";
+		
+		return ResponseEntity.ok(result);
 	}
 }

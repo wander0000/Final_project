@@ -81,7 +81,7 @@
                         </div>
                         <div class="couponarea">
                             <a href="#none" class="afont">쿠폰</a>
-                            <button type="button" class="discountBtn">쿠폰</button>
+                            <button type="button" class="discountBtn" onclick="openPop('c');">쿠폰</button>
                             <input type="text" class="inputshow" id="coupon" value="-0 원" readonly>
                         </div>
                     </div> <!-- couponDiv end -->
@@ -91,7 +91,7 @@
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">할인권</a>
-                            <button type="button" class="discountBtn">할인권</button>
+                            <button type="button" class="discountBtn" onclick="openPop('d');">할인권</button>
                             <input type="text" class="inputshow" id="discount" value="-0 원" readonly>
                         </div>
                         <div class="pointarea">
@@ -125,7 +125,7 @@
                             </div>
                             <div class="discountList">
                                 <a href="#none">포인트</a>
-                                <input type="text" class="inputshow" id="t_point" value="-0 P" readonly>
+                                <input type="text" class="inputshow" id="t_point" value="0 P" readonly>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
-                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }">
+                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }" onchange="change_t_pay()">
                             <fmt:formatNumber value="${calc }" type="number" var="t_pay" groupingUsed="true"/>
                             <input type="text" class="inputshow" id="t_pay" value="${t_pay }원" readonly>
                         </div>
