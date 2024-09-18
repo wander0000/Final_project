@@ -149,6 +149,37 @@
 				</div>
 			</div> 
 		</div> <!-- benefit 끝-->
+		<!-- 팝업창 (숨겨진 상태로 시작) -->
+		<div class="popUp">
+			<div class="popBg">
+				<div class="popCon">
+					<div class="popH">
+	                    <h4 class="popTitle">매일이 햬택! 출석체크!</h4>
+		                <div class="mlauto">
+		                    <span class="icon cancel fs24">
+		                        <i class="fa-solid fa-xmark"></i>
+		                    </span>
+		                </div>
+		            </div> <!-- popH 끝 -->
+					<div class="popM">
+	                    <h5 class="popAlert">로그인하면 자동으로 출석이벤트에 참여됩니다.</h5>
+	                    <h5 class="popAlert">매일 로그인하세요~ 10포인트 지급</h5>
+	                    <h5 class="popAlert">만근하면 5% 할인쿠폰 지급</h5>
+						<button id="checkAttendanceStatus">출석 현황 확인</button>
+	                </div>
+					<div class="popB">
+						<div class="checkCon">
+					         <input type="checkbox" id="dontShowTodayCheckbox">
+							 <label for="dontShowTodayCheckbox">오늘은 더 이상 보지 않기</label>
+						</div>
+						<div class="checkCon">
+					         <input type="checkbox" id="closePopup">
+							 <label for="closePopup">닫기</label>
+						</div>
+					</div>   
+				</div><!-- popCon 끝 -->
+			</div><!-- popBg 끝 -->
+		</div><!-- popUp 끝 -->
 			
     </section>
 	<!--model.addAttribute("boxOffice", boxDTO);
@@ -208,5 +239,44 @@
 			clickable: true
         }
         
+    });
+</script>
+<script>
+    /*
+    240917.서연주 
+    출석이벤트 팝업, 쿠키생성 
+    */
+    document.addEventListener('DOMContentLoaded', function () {
+		
+		// 모든 쿠키 값을 콘솔에 출력해보세요.
+		console.log("현재 쿠키: " + document.cookie);
+        // 쿠키 값 확인
+        let showAttendancePopup = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('showAttendancePopup='))
+          ?.split('=')[1];
+        
+        // console.log로 오타 수정
+        console.log("showAttendancePopup값은? " + showAttendancePopup);
+
+        // 변수 이름 통일
+        if (showAttendancePopup === 'true') {
+            // 출석 팝업 표시
+            $('.popUp').css({"display":"flex"});
+        }
+		console.log($('.popUp').css("display"));  // 팝업의 display 상태를 확인
+
+
+        // 팝업 닫기 버튼 클릭 이벤트
+		$('.popUp .icon.cancel, .popUp button.cancel').click(function() {
+		    console.log("닫기버튼이나 x표 click");
+			
+			// 체크박스가 체크된 경우 쿠키 설정
+            if (document.getElementById('dontShowTodayCheckbox').checked) {
+                document.cookie = "showAttendancePopup=false; path=/; max-age=86400;"; // 1일 동안 도메인의 모든 경로에서 쿠키가 유효
+            }
+		    $(this).parents('.popUp').css({"display":"none"}); 
+		});
+      
     });
 </script>

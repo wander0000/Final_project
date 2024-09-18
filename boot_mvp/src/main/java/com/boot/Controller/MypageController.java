@@ -24,15 +24,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.boot.DTO.CouponDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MembershipDTO;
+import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.PthistDTO;
 import com.boot.DTO.ReservetbDTO;
+import com.boot.DTO.ReviewDTO;
 import com.boot.DTO.UsertbDTO;
+import com.boot.DTO.WatchedMovieDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.CouponService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.MembershipService;
+import com.boot.Service.MoviestoryService;
 import com.boot.Service.TicketService;
 import com.boot.Service.UserService_4;
 
@@ -61,6 +65,9 @@ public class MypageController {
 	
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private MoviestoryService mvService;
 	
 	/* sms 전송을 위한 세팅 */
 	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCS5XV1C37RNDO0E", "IRLCQO4R6VDFOA0PTSOVFK2GACU3MQCP", "https://api.coolsms.co.kr");
@@ -203,6 +210,53 @@ public class MypageController {
 		
 		return "mypage/movieStory";
 	}
+	
+	
+	@GetMapping("/loadtWatchedMovies")//본영화(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadtWatchedMovies(@RequestParam("page") int page,
+												@RequestParam("pageSize") int pageSize) {
+		
+		  	int offset = (page - 1) * pageSize;//offset은 건너뛸 row의 갯수이기 때문에 1페이지 일때는 0, 2페이지 있을 때 페이지크기*1 
+	        List<WatchedMovieDTO> movieList = mvService.getWatchedMovies(pageSize, offset);
+	        int totalCount = mvService.getTotalCountWatchedMovies();  // 전체 데이터 개수 조회
+
+	        Map<String, Object> result = new HashMap<>();
+	        result.put("movieList", movieList);
+	        result.put("totalCount", totalCount);  // 전체 개수를 추가하여 반환
+	        return result;
+	}
+	
+	@GetMapping("/loadlikedMovies")//좋아요한 영화 조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadlikedMovies(@RequestParam("page") int page,
+											@RequestParam("pageSize") int pageSize) {
+		
+		int offset = (page - 1) * pageSize;//offset은 건너뛸 row의 갯수이기 때문에 1페이지 일때는 0, 2페이지 있을 때 페이지크기*1 
+		List<MovietbDTO> movieList = mvService.getlikedMovies(pageSize, offset);
+		int totalCount = mvService.getTotalCountlikedMovies();  // 전체 데이터 개수 조회
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("movieList", movieList);
+		result.put("totalCount", totalCount);  // 전체 개수를 추가하여 반환
+		return result;
+	}
+	
+	@GetMapping("/loadUserReviews")//관람편 조회(ajax로 접근)
+	@ResponseBody
+	public Map<String, Object> loadUserReviews(@RequestParam("page") int page,
+											@RequestParam("pageSize") int pageSize) {
+		
+		int offset = (page - 1) * pageSize;//offset은 건너뛸 row의 갯수이기 때문에 1페이지 일때는 0, 2페이지 있을 때 페이지크기*1 
+		List<ReviewDTO> commentList = mvService.getUserReviews(pageSize, offset);
+		int totalCount = mvService.getTotalCountUserReviews();  // 전체 데이터 개수 조회
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("commentList", commentList);
+		result.put("totalCount", totalCount);  // 전체 개수를 추가하여 반환
+		return result;
+	}
+	
 	
 	
 	@RequestMapping("mypage/coupon")//마이페이지 쿠폰/할인권으로
