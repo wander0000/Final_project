@@ -32,4 +32,5 @@ public class MovietbDTO {
 	
 	//add columns
 	private int areano;
+	private int scrapRate; //좋아요 개수
 }

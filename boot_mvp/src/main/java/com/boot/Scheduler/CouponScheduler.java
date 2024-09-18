@@ -42,6 +42,8 @@ public class CouponScheduler {
         couponService.issueBirthdayCoupons();
     }
 
+    
+    // 매달 1일 10:00에 만근유저 찾아서 쿠폰발행(출석이벤트)
     @Transactional
     @Scheduled(cron = "0 0 10 1 * ?") // 매달 1일 10:00에 실행 (cron 표현식 사용)
     public void issueMonthlyCoupons() {

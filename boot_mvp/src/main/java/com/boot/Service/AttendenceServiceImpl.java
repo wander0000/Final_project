@@ -27,7 +27,7 @@ public class AttendenceServiceImpl implements AttendenceService {
 	// 출석 기록 추가
     @Override
     @Transactional
-    public void checkAttendance() {
+    public boolean checkAttendance() {
         log.info("AttendenceServiceImpl.checkAttendance() 시작");
         try {
             // 사용자 정보 가져오기
@@ -41,8 +41,10 @@ public class AttendenceServiceImpl implements AttendenceService {
             if (todayAttendance == 0) {
                 dao.insertAttendance(uuid);
                 log.info("출석 기록 추가 완료, UUID: {}", uuid);
+                return true;  // 오늘 출석이 새로 추가됨
             } else {
                 log.info("이미 오늘 출석 체크가 완료되었습니다. UUID: {}", uuid);
+                return false; // 이미 출석 체크 완료됨
             }
         } catch (Exception e) {
             log.error("checkAttendance 처리 중 오류 발생", e);
