@@ -60,6 +60,17 @@ public class AttendenceServiceImpl implements AttendenceService {
 		AttendanceDAO dao = sqlSession.getMapper(AttendanceDAO.class);
 		return dao.checkMonthlyAttendance();
 	}
+
+	// 유저의 현재 달 출석조회
+	@Override
+	public List<Integer> checkUserAttendance() {
+		log.info("AttendenceService임플 checkUserAttendance 접근");
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
+		
+		AttendanceDAO dao = sqlSession.getMapper(AttendanceDAO.class);
+		return dao.checkUserAttendance(uuid);
+	}
     
     
     

@@ -1,6 +1,9 @@
 package com.boot.Controller;
 
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ import com.boot.DTO.UsertbDTO;
 import com.boot.DTO.WatchedMovieDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Security.CustomUserDetailsService;
+import com.boot.Service.AttendenceService;
 import com.boot.Service.CouponService;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
@@ -69,15 +73,61 @@ public class MypageController {
 	@Autowired
 	private MoviestoryService mvService;
 	
-	/* sms 전송을 위한 세팅 */
-	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCS5XV1C37RNDO0E", "IRLCQO4R6VDFOA0PTSOVFK2GACU3MQCP", "https://api.coolsms.co.kr");
+	@Autowired
+	private AttendenceService attService;
 	
 	
 	@RequestMapping("mypage")//마이페이지 메인으로
 	public String mypage(Model model) {
 		log.info("@# Mypage Main");		
 		
-		return "mypage/main";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (!(auth instanceof AnonymousAuthenticationToken)) {//익명의 사용자가 아니라면
+	    	CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String userName = userDetails.getUsername();  // 사용자 이름 가져오기
+        	MembershipDTO membership = memService.getMembership();//등급,포인트,포인트이력,마일리지 정보
+        	int couponCount = couponService.getTotalCountCoupon("C","A");  //사용가능한 쿠폰수 조회
+        	int discntCount = couponService.getTotalCountCoupon("D","A");  //사용가능한 할인권수 조회
+        	
+        	model.addAttribute("userName", userName);
+	        model.addAttribute("membership", membership);
+	        model.addAttribute("couponCount", couponCount);
+	        model.addAttribute("discntCount", discntCount);
+	        
+	        //출석 이벤트 달력 만들기
+	        // 현재 연월 가져오기
+	        YearMonth yearMonth = YearMonth.now();
+	        // 현재 년도
+	        int currentYear = yearMonth.getYear();
+	        // 현재 월
+	        int currentMonth = yearMonth.getMonthValue();
+	        // 해당 연월의 마지막 날 가져오기
+	        int lastDayOfMonth = yearMonth.lengthOfMonth();
+
+	        // 해당 달의 1일의 요일 가져오기 (1=월요일, 7=일요일)
+	        LocalDate firstDayOfMonth = yearMonth.atDay(1);
+	        DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
+	        int firstDayPosition = dayOfWeek.getValue(); // 1~7 (1=월요일, 7=일요일)
+
+	        // 요일을 계산하여 모델에 추가
+	        model.addAttribute("currentYear", currentYear);
+	        model.addAttribute("currentMonth", currentMonth);
+	        model.addAttribute("lastDayOfMonth", lastDayOfMonth);
+	        model.addAttribute("firstDayPosition", firstDayPosition); // 월의 첫 번째 요일
+	       
+	    }
+		
+		return "mypage/mypageMain";
+	}
+	
+	@GetMapping("/getAttendanceDays") //유저의 이번달 출석기록
+	@ResponseBody
+	public Map<String, Object> getAttendanceDays() {
+		List<Integer> attList = attService.checkUserAttendance();  //유저의 이번달 출석기록
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("attList", attList);
+        return result;
 	}
 	
 	@RequestMapping("mypage/ticket")//마이페이지 예매관리로

@@ -27,4 +27,5 @@ public class ReservetbDTO {
 	private int fldnb;
 	private int fldnc;
 	private int fldnd;
+	private String theaternm; //상영관이름 추가
 }

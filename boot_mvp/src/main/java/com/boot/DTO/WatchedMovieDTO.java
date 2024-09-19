@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class WatchedMovieDTO {
-	private int movieno;         // 영화 번호
+	private String movieno;         // 영화 번호
     private String areano;       // 지역 번호
     private String theaterno;    // 상영관 번호
     private String theaternm;    // 상영관 이름
