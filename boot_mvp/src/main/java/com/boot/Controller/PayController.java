@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.Security.CustomUserDetails;
+import com.boot.Service.CouponService_2;
 import com.boot.Service.MovieService;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.PointService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
 import com.boot.Service.ReservetbService_2;
@@ -62,6 +65,12 @@ public class PayController {
 	
 	@Autowired
 	private TheaterService_2 theaterService;
+	
+	@Autowired
+	private CouponService_2 couponService;
+	
+	@Autowired
+	private PointService_2 pointService;
 	
 	/* sms 전송을 위한 세팅 */
 	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSEPSQXUWDO2WGS", "BJUJJHURG1BIKIUKNKJLH1XIIQWPIYSL", "https://api.coolsms.co.kr");
@@ -165,6 +174,18 @@ public class PayController {
 			screenService.Seat_deduction(params);
 			/* 좌석 숫자만큼 전체 좌석에서 차감 */
 			
+			/* 쿠폰 및 할인권 사용 */
+			if(!param.get("couponno").equals("none")) {
+				params.put("couponno", param.get("couponno"));
+				
+				couponService.usingCoupon(params); //사용된 쿠폰으로 변경
+			}
+			
+			/* 포인트 사용 */
+			params.put("t_point", param.get("t_point"));
+			params.put("t_calc", param.get("t_calc"));
+			pointService.Call_movie_payment_points(params);
+			
 			/* 문자 전송을 위한 세팅 (금액 문제로 현재는 주석 처리) */
 			//선택한 영화 제목
 			/*
@@ -220,26 +241,73 @@ public class PayController {
 		return "ticketing/paycompleted";
 	}
 	
-	@RequestMapping("couponPopUp/{gubun}")
-	public String couponPopUp(@PathVariable("gubun") String gubun, Model model) {
+	@RequestMapping("couponPopUp/{type}")
+	public String couponPopUp(@PathVariable("type") String type, @RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# couponPopUp");
-		String title = gubun.equals("d") ? "할인권" : "쿠폰";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		String uuid = userDetails.getUuId();
+		param.put("uuid", uuid);
+		param.put("type", type);
+		String title = type.equals("D") ? "할인권" : "쿠폰";
 		
 		model.addAttribute("title", title);
-		model.addAttribute("gubun", gubun);
-		model.addAttribute("pid", gubun.equals("d")?"discount":"coupon");
+		model.addAttribute("gubun", type);
+		model.addAttribute("pid", type.equals("D")?"discount":"coupon");
+		model.addAttribute("coupons", couponService.getALLCoupon(param));
 		
 		return "common/couponPopUp";
 	}
 	
+	@RequestMapping("/pointPopUp")
+	public String pointPopUp(@RequestParam HashMap<String, String> param, Model model) {
+		log.info("@# pointPopUp");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		String uuid = userDetails.getUuId();
+		param.put("uuid", uuid);
+		
+		model.addAttribute("title", "Point");
+		model.addAttribute("points", pointService.getAllPoint(param));
+		
+		return "common/pointPopUp";
+	}
+	
 	@RequestMapping("couponMatch")
-	public ResponseEntity<String> couponMatch(@RequestParam HashMap<String, String> param, Model model) {
+	public ResponseEntity<Map<String, Object>> couponMatch(@RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# couponMatch");
+		log.info("@# param ==> " + param);
+		Map<String, Object> data = new HashMap<>();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		String uuid = userDetails.getUuId();
+		param.put("uuid", uuid);
 		String result = "F";
+		String msg = "";
+		int cnt = 0;
+		String benefit = "";
+		int refno = 0;
+		int couponcnt = couponService.checkCoupon(param);
 		
-		if(param.get("coupon").equals("coupon"))
+		if(couponcnt == 1) {
 			result = "T";
+			msg = "입력한 쿠폰이 등록되었습니다.\n결제 취소 시, 해당 쿠폰은 다시 사용할 수 없습니다.";
+			cnt = 1;
+			
+			benefit = couponService.getCoupon(param).getBenefit();
+			refno = couponService.getCoupon(param).getRefno();
+		} else {
+			result = "F";
+			msg = "존재하지 않는 쿠폰입니다. 다시 확인해 주세요.";
+			cnt = 0;
+		}
 		
-		return ResponseEntity.ok(result);
+		data.put("result", result);
+		data.put("msg", msg);
+		data.put("cnt", cnt);
+		data.put("benefit", benefit);
+		data.put("refno", refno);
+		
+		return ResponseEntity.ok(data);
 	}
 }

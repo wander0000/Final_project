@@ -475,6 +475,7 @@ function payment() {
 		return false;
 	} else {
 		var calc = $("#calc").val();
+		var pricetype = $("#pricetype").val();
 		var seats = '';
 		
 		//선택한 좌석 정렬
@@ -499,7 +500,7 @@ function payment() {
 		$.ajax({
             type: 'POST', // 요청 방식
             url: '/ticketing/saveSessionParamsMore', // 요청을 보낼 URL
-            data: { calc: calc, adult: selecttype[0], youth: selecttype[1], old: selecttype[2], disable: selecttype[3], seats: seats }, // 전송할 데이터
+            data: { calc: calc, pricetype: pricetype, adult: selecttype[0], youth: selecttype[1], old: selecttype[2], disable: selecttype[3], seats: seats }, // 전송할 데이터
 			headers: {
 				'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 			},
