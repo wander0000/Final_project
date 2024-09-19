@@ -99,7 +99,8 @@
 							        </span>
 							        <!-- 드롭다운 메뉴 -->
 							        <ul class="dropdown-menu" id="dropdownMenu">
-							            <li><a href="${pageContext.request.contextPath}/mypage/userInfo" style="display:flex; justify-content:center;  align-items:center;">마이페이지</a></li>
+							            <%-- <li><a href="${pageContext.request.contextPath}/mypage/userInfo" style="display:flex; justify-content:center;  align-items:center;">마이페이지</a></li> --%>
+							            <li><a href="${pageContext.request.contextPath}/mypage/movieStory" style="display:flex; justify-content:center;  align-items:center;">마이페이지</a></li>
 							            <li>
 							                <form action="/logout" method="post">
 							                    <input type="submit" value="로그아웃" style="background:none; border:none; color:#99A2B9; cursor:pointer; padding:0 20px;" />

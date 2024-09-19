@@ -22,5 +22,4 @@ public class CouponDTO {
 	private String name; //쿠폰 이름(주중관람권, 10% 할인권)
 	private String benefit; //해택(주중 상영 영화 관람 ..) 
 	private int period; //유효기간
-	
 }

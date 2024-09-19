@@ -81,8 +81,9 @@
                         </div>
                         <div class="couponarea">
                             <a href="#none" class="afont">쿠폰</a>
-                            <button type="button" class="discountBtn" onclick="openPop('c');">쿠폰</button>
-                            <input type="text" class="inputshow" id="coupon" value="-0 원" readonly>
+                            <button type="button" class="discountBtn" onclick="openPop('C');">쿠폰</button>
+                            <button type="button" id="C_cancel" class="discountBtn unshowbtn" onclick="cancel_active('C', 'coupon');">취소</button>
+                            <input type="text" class="inputshow" id="coupon" value="" readonly>
                         </div>
                     </div> <!-- couponDiv end -->
                     <div class="pointDiv">
@@ -91,13 +92,15 @@
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">할인권</a>
-                            <button type="button" class="discountBtn" onclick="openPop('d');">할인권</button>
-                            <input type="text" class="inputshow" id="discount" value="-0 원" readonly>
+                            <button type="button" class="discountBtn" onclick="openPop('D');">할인권</button>
+                            <button type="button" id="D_cancel" class="discountBtn unshowbtn" onclick="cancel_active('D', 'discount');">취소</button>
+                            <input type="text" class="inputshow" id="discount" value="" readonly>
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">포인트</a>
                             <button type="button" class="discountBtn">모두 사용</button>
-                            <input type="text" class="inputshow" id="point" value="0 P">
+                            <button type="button" id="P_cancel" class="discountBtn unshowbtn" onclick="cancel_active('P', 'point');">취소</button>
+                            <input type="text" class="inputshow" id="point" value="">
                         </div>
                     </div> <!-- pointDiv end -->
                     <div class="paymentDiv">
@@ -117,15 +120,15 @@
                         <div class="discountListarea">
                             <div class="discountList">
                                 <a href="#none">쿠폰</a>
-                                <input type="text" class="inputshow" id="t_coupon" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_coupon" value="-0" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">할인권</a>
-                                <input type="text" class="inputshow" id="t_discount" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_discount" value="-0" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">포인트</a>
-                                <input type="text" class="inputshow" id="t_point" value="0 P" readonly>
+                                <input type="text" class="inputshow" id="t_point" value="0" readonly>
                             </div>
                         </div>
                     </div>
@@ -142,7 +145,10 @@
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
-                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }" onchange="change_t_pay()">
+                            <input type="hidden" id="refno" value="0">
+                            <input type="hidden" id="pricetype" value="${pricetype }">
+                            <input type="hidden" id="couponno" name="couponno" value="none">
+                            <input type="hidden" id="t_calc" name="t_calc" value="${calc }">
                             <fmt:formatNumber value="${calc }" type="number" var="t_pay" groupingUsed="true"/>
                             <input type="text" class="inputshow" id="t_pay" value="${t_pay }원" readonly>
                         </div>

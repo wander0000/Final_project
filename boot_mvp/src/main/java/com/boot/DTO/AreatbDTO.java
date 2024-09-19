@@ -23,4 +23,5 @@ public class AreatbDTO {
 	private String day; 
 	private String weekday;
 	private String txt;
+	private int culday;
 }
