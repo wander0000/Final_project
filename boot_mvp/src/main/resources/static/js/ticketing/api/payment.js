@@ -41,6 +41,8 @@ function creatNum() {
 function kakaopay() {
 	//console.log(reservenum);
 	var reservenum = creatNum();
+	var couponno = $("#couponno").val();
+	
 	var IMP = window.IMP;
 	IMP.init('imp81407155'); // 포트원 계정 상점 고유 ID
 	IMP.request_pay({		
@@ -67,7 +69,7 @@ function kakaopay() {
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum },
+            	data : { "reservenum" : reservenum, "couponno": couponno },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},
@@ -82,6 +84,8 @@ function kakaopay() {
 
 function tosspay(){
 	var reservenum = creatNum();
+	var couponno = $("#couponno").val();
+	
 	var IMP = window.IMP;
 	IMP.init('imp81407155');
 	IMP.request_pay({		
@@ -98,7 +102,7 @@ function tosspay(){
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	}, function(rsp){
-		alert('rsp: ' + JSON.stringify(rsp));
+		//alert('rsp: ' + JSON.stringify(rsp));
 		if(rsp.imp_uid != '' ) {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
@@ -109,7 +113,7 @@ function tosspay(){
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum },
+            	data : { "reservenum" : reservenum, "couponno": couponno },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},

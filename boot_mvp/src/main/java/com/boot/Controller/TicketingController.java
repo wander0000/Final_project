@@ -223,6 +223,7 @@ public class TicketingController {
 		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		
 		params.put("calc", param.get("calc")); // 총 가격
+		params.put("pricetype", param.get("pricetype")); // 가격 타입
 		params.put("adult", param.get("adult")); //성인 숫자
 		params.put("youth", param.get("youth")); //청소년 숫자
 		params.put("old", param.get("old")); //경로 숫자
@@ -249,6 +250,7 @@ public class TicketingController {
 		model.addAttribute("disable", params.get("disable"));
 		model.addAttribute("seats", params.get("seats"));
 		model.addAttribute("calc", params.get("calc"));
+		model.addAttribute("pricetype", params.get("pricetype")); // 가격 타입
 		
 		//이후 컨트롤러 작업은 PayContoller에서 진행
 		return "ticketing/payment";

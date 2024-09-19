@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.CouponDAO_2">
+    <select id="checkCoupon" resultType="int">
+    	select count(*)
+		from
+		(
+			select a.couponno, a.refno, a.uuid, a.acrec, b.type, b.benefit
+			from coupontb a
+			inner join couponreftb b on (a.refno = b.refno)
+		) as a
+		where acrec = 'A' and type = #{type} and uuid = #{uuid} and couponno = #{couponno}
+    </select>
+    
+    <select id="getALLCoupon" resultType="com.boot.DTO.CouponDTO">
+    	select couponno, refno, uuid, acrec, type, benefit
+		from
+		(
+			select a.couponno, a.refno, a.uuid, a.acrec, b.type, b.benefit
+			from coupontb a
+			inner join couponreftb b on (a.refno = b.refno)
+		) as a
+		where acrec = 'A' and type = #{type} and uuid = #{uuid}
+    </select>
+    
+    <select id="getCoupon" resultType="com.boot.DTO.CouponDTO">
+    	select couponno, refno, uuid, acrec, benefit
+		from
+		(
+			select a.couponno, a.refno, a.uuid, a.acrec, b.type, b.benefit
+			from coupontb a
+			inner join couponreftb b on (a.refno = b.refno)
+		) as a
+		where acrec = 'A' and type = #{type} and uuid = #{uuid} and couponno = #{couponno}
+    </select>
+    
+    <update id="usingCoupon">
+    	update coupontb set acrec = 'D', mdate = now()
+    	where acrec = 'A' and uuid = #{uuid} and couponno = #{couponno}
+    </update>
+</mapper>
