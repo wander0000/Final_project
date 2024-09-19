@@ -26,6 +26,7 @@ import com.boot.Security.CustomUserDetails;
 import com.boot.Service.CouponService_2;
 import com.boot.Service.MovieService;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.PointService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
 import com.boot.Service.ReservetbService_2;
@@ -67,6 +68,9 @@ public class PayController {
 	
 	@Autowired
 	private CouponService_2 couponService;
+	
+	@Autowired
+	private PointService_2 pointService;
 	
 	/* sms 전송을 위한 세팅 */
 	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSEPSQXUWDO2WGS", "BJUJJHURG1BIKIUKNKJLH1XIIQWPIYSL", "https://api.coolsms.co.kr");
@@ -177,6 +181,11 @@ public class PayController {
 				couponService.usingCoupon(params); //사용된 쿠폰으로 변경
 			}
 			
+			/* 포인트 사용 */
+			params.put("t_point", param.get("t_point"));
+			params.put("t_calc", param.get("t_calc"));
+			pointService.Call_movie_payment_points(params);
+			
 			/* 문자 전송을 위한 세팅 (금액 문제로 현재는 주석 처리) */
 			//선택한 영화 제목
 			/*
@@ -248,6 +257,20 @@ public class PayController {
 		model.addAttribute("coupons", couponService.getALLCoupon(param));
 		
 		return "common/couponPopUp";
+	}
+	
+	@RequestMapping("/pointPopUp")
+	public String pointPopUp(@RequestParam HashMap<String, String> param, Model model) {
+		log.info("@# pointPopUp");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		String uuid = userDetails.getUuId();
+		param.put("uuid", uuid);
+		
+		model.addAttribute("title", "Point");
+		model.addAttribute("points", pointService.getAllPoint(param));
+		
+		return "common/pointPopUp";
 	}
 	
 	@RequestMapping("couponMatch")

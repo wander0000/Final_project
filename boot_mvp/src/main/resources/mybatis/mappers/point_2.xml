@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.PointDAO_2">
+	<select id="getAllPoint" resultType="com.boot.DTO.PointDTO">
+		select uuid, onhqt
+		from point
+		where uuid = #{uuid};
+	</select>
+	
+	<select id="Call_movie_payment_points" statementType="CALLABLE">
+        CALL movie_payment_points(
+            #{uuid, mode=IN, jdbcType=VARCHAR},
+            #{point, mode=IN, jdbcType=INTEGER},
+            #{t_calc, mode=IN, jdbcType=INTEGER}
+        )
+    </select>
+</mapper>

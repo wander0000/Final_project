@@ -42,6 +42,8 @@ function kakaopay() {
 	//console.log(reservenum);
 	var reservenum = creatNum();
 	var couponno = $("#couponno").val();
+	var t_calc = $("#t_calc").val();
+	var t_point = $("#t_point").val();
 	
 	var IMP = window.IMP;
 	IMP.init('imp81407155'); // 포트원 계정 상점 고유 ID
@@ -69,7 +71,7 @@ function kakaopay() {
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum, "couponno": couponno },
+            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},
@@ -85,6 +87,8 @@ function kakaopay() {
 function tosspay(){
 	var reservenum = creatNum();
 	var couponno = $("#couponno").val();
+	var t_calc = $("#t_calc").val();
+	var t_point = $("#t_point").val();
 	
 	var IMP = window.IMP;
 	IMP.init('imp81407155');
@@ -113,7 +117,7 @@ function tosspay(){
             $.ajax({
             	type : 'post',
             	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum, "couponno": couponno },
+            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},
@@ -122,7 +126,7 @@ function tosspay(){
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
-		console.log('msg: ' + msg);
+		//console.log('msg: ' + msg);
 		document.location.href="/ticketing/paycompleted";
 	});
 }
