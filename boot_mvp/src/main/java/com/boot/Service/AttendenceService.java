@@ -7,4 +7,6 @@ public interface AttendenceService {
 	public boolean checkAttendance();
 	//한달 출석 만근자 확인
 	public List<String> checkMonthlyAttendance();
+	//유저개인의 출석현황 
+	public List<Integer> checkUserAttendance();
 }

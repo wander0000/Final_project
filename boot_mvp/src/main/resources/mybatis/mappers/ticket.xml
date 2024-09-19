@@ -6,9 +6,16 @@
       
     <!-- 예매내역 목록 조회(기간별)-->  
     <select id="getTicketListForDays" resultType="com.boot.DTO.ReservetbDTO">
-    	SELECT r.*, m.movienm
+    	SELECT r.*, m.movienm, t.theaternm 
 		FROM reservetb r
-		JOIN movietb m ON r.movieno = m.movieno
+		LEFT OUTER JOIN (
+		    SELECT movieno, movienm 
+		    FROM movietb2 
+		    UNION
+		    SELECT movieno, movienm 
+		    FROM boxofficetb
+		) m ON r.movieno = m.movieno
+		LEFT OUTER JOIN theatertb t ON r.areano = t.areano AND r.theaterno = t.theaterno 
 		WHERE r.uuid = #{uuid} AND r.status='예매'
 		<include refid="days"></include>
 		<include refid="pagenation"></include>
