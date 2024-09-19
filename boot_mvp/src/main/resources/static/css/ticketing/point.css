@@ -1,0 +1,94 @@
+:root 
+{
+    --main-color : #f3b931;
+    --sub-gray: #99a2b9;
+    --font-black:#111;
+    --background: #0f1015;
+    --hover-black:#13151c;
+    --disabled:rgba(153,162,185,0.3);
+    --input-background-gray:rgba(217,217,217,0.1);
+}
+
+* 
+{
+    margin:0;
+    padding:0;
+}
+
+a 
+{
+    text-decoration: none;
+    color: #fff;
+}
+
+ul,li,ol 
+{
+    list-style: none;
+    color: #fff;
+}
+
+table,div 
+{
+    box-sizing: border-box;
+}
+
+html,body 
+{
+    background-color: var(--background);
+}
+
+section 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+	width: 95%;
+    height: 50px;
+}
+
+.title > h5 {
+	margin: 10px 0;
+	text-align: left;
+	color: white;
+	font-size: 36px;
+	font-weight: 600
+}
+
+.point-container {
+    padding: 10px; /* 내부 여백 */
+    margin: 5px; /* 외부 여백 */
+    display: flex; /* 라디오 버튼과 레이블을 가로로 정렬 */
+}
+
+.texts {
+	color: var(--sub-gray);
+    border: 0;
+    width: 420px;
+    height: 36px;
+    margin: 0 10px;
+    font-size: 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.btn_box {
+	width: 98%;
+	display: flex;
+	gap: 5px;
+	justify-content: right;
+}
+
+.mainbtn {
+	cursor: pointer;
+    height: 36px;
+    width: 120px;
+    background: var(--main-color);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+}

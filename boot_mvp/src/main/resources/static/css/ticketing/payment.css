@@ -225,7 +225,7 @@ section
 }
 
 .discountDiv {
-    height: 950px;
+    /* height: 950px; */
     background: rgba(217, 217, 217, 0.1);
     border-right: #0F1015 2px solid;
 }
@@ -325,7 +325,7 @@ section
 }
 
 .discountLists {
-    height: 710px;
+    height: 650px;
 }
 
 .discountListarea {

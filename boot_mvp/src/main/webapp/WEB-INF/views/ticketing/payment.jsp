@@ -82,7 +82,7 @@
                         <div class="couponarea">
                             <a href="#none" class="afont">쿠폰</a>
                             <button type="button" class="discountBtn" onclick="openPop('C');">쿠폰</button>
-                            <button type="button" id="C_cancel" class="discountBtn unshowbtn" onclick="cancel_active('C', 'coupon');">취소</button>
+                            <button type="button" id="C_cancel" class="discountBtn unshowbtn" onclick="cancel_coupon('C', 'coupon');">취소</button>
                             <input type="text" class="inputshow" id="coupon" value="" readonly>
                         </div>
                     </div> <!-- couponDiv end -->
@@ -93,13 +93,13 @@
                         <div class="pointarea">
                             <a href="#none" class="afont">할인권</a>
                             <button type="button" class="discountBtn" onclick="openPop('D');">할인권</button>
-                            <button type="button" id="D_cancel" class="discountBtn unshowbtn" onclick="cancel_active('D', 'discount');">취소</button>
+                            <button type="button" id="D_cancel" class="discountBtn unshowbtn" onclick="cancel_coupon('D', 'discount');">취소</button>
                             <input type="text" class="inputshow" id="discount" value="" readonly>
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">포인트</a>
-                            <button type="button" class="discountBtn">모두 사용</button>
-                            <button type="button" id="P_cancel" class="discountBtn unshowbtn" onclick="cancel_active('P', 'point');">취소</button>
+                            <button type="button" class="discountBtn" onclick="openPop2();">포인트</button>
+                            <button type="button" id="P_cancel" class="discountBtn unshowbtn" onclick="cancel_point();">취소</button>
                             <input type="text" class="inputshow" id="point" value="">
                         </div>
                     </div> <!-- pointDiv end -->
@@ -128,7 +128,7 @@
                             </div>
                             <div class="discountList">
                                 <a href="#none">포인트</a>
-                                <input type="text" class="inputshow" id="t_point" value="0" readonly>
+                                <input type="text" class="inputshow" id="t_point" name="t_point" value="0" readonly>
                             </div>
                         </div>
                     </div>
@@ -140,8 +140,12 @@
                             <input type="text" class="inputshow" id="p_pay" value="${p_pay }원" readonly>
                         </div>
                         <div class="showpay">
-                            <a href="#none">할인금액</a>
+                            <a href="#none">할인상품</a>
                             <input type="text" class="inputshow" id="d_pay" value="- 0" readonly>
+                        </div>
+                        <div class="showpay">
+                            <a href="#none">할인상품</a>
+                            <input type="text" class="inputshow" id="up_pay" value="- 0" readonly>
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
