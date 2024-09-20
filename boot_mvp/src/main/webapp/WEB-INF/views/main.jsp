@@ -297,7 +297,6 @@
     */
     document.addEventListener('DOMContentLoaded', function () {
 		
-		// 모든 쿠키 값을 콘솔에 출력해보세요.
 		console.log("현재 쿠키: " + document.cookie);
         // 쿠키 값 확인
         let showAttendancePopup = document.cookie
@@ -305,7 +304,6 @@
           .find(row => row.startsWith('showAttendancePopup='))
           ?.split('=')[1];
         
-        // console.log로 오타 수정
         console.log("showAttendancePopup값은? " + showAttendancePopup);
 
         // 변수 이름 통일
@@ -317,7 +315,7 @@
 
 
         // 팝업 닫기 버튼 클릭 이벤트
-		$('.popUp .icon.cancel, .popUp button.cancel').click(function() {
+		$('.popUp .icon.cancel, .popUp #closePopup').click(function() {
 		    console.log("닫기버튼이나 x표 click");
 			
 			// 체크박스가 체크된 경우 쿠키 설정
