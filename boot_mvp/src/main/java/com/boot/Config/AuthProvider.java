@@ -52,6 +52,7 @@ public class AuthProvider implements AuthenticationProvider {
             userdto.getPname(), 
             userdto.getPpass(), 
             userdto.getEmail(), 
+            userdto.getPhone(), 
             authorities
         );
 
