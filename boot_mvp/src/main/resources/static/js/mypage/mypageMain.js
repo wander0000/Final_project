@@ -83,7 +83,7 @@ $(document).ready(function()
                  
                  // attendanceDays에 dayValue가 있으면 아이콘으로 대체
                  if (attendanceDays.includes(dayValue)) {
-                     $(this).html('<i class="fa-regular fa-circle-check" class="mColor"></i>');  // 체크 아이콘으로 대체
+                     $(this).html('<span class="mColor"><i class="fa-regular fa-circle-check" ></i></span>');  // 체크 아이콘으로 대체
                  }
              });
          },

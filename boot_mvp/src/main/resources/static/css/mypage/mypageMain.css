@@ -84,13 +84,17 @@
 {
 	justify-content: space-between;
 }
-.cardUp, .cardU, .threeCon
+.cardUp, .threeCon
 {
 	display: flex;
     flex-direction: column;
 	gap: 10px 0;
 }
 
+.cardU{
+	display: flex;
+	gap: 0 20px ;
+}
 .threeCon
 {
 	align-items: center;	
