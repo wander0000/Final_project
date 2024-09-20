@@ -46,6 +46,7 @@ public class CouponServiceImpl implements CouponService {
 				coupon.setPeriod(30);//유효기간 30일
 				coupon.setReason("생일 축하 쿠폰");//지급사유
 				coupon.setRefno(1);//쿠폰 레퍼런스 타입
+				coupon.setAcrec("A");//쿠폰 상탱 A:사용가능
 				coupon.setUuid(birthdayUsers.get(i).getUuid());//사용자 uuid
 				
 				// 쿠폰 발급
@@ -131,7 +132,8 @@ public class CouponServiceImpl implements CouponService {
 		  try {
 			  CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
 			  dao.insertCoupon(coupon);
-			  return dao.selectLastCoupon(coupon.getCouponno());
+//			  return dao.selectLastCoupon(coupon.getCouponno());
+			  return coupon.getUuid();
           } catch (Exception e) {
              e.getStackTrace();
           }

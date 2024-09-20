@@ -377,14 +377,14 @@ section
 
 /*출석이벤트 팝업*/
 
-.popUp 
+.popUp.attend 
 {
     z-index: 9999;
     position: absolute; /* 또는 fixed */
     display: none; /* 처음엔 숨김 상태로 유지 */
 }
 
-.popBg 
+.attend .popBg
 {
   position: fixed;
   top: 0;
@@ -394,41 +394,43 @@ section
   background:rgba(0,0,0,0.6);
 }
 
-.popCon
+.attend .popCon 
 {
 	display: flex; 
 	flex-direction: column;
 	position: fixed; 
-	left: 50%; top: 50%; 
-	transform: translate(-50%, -50%); 
-	padding: 32px; 
+	right: 0; bottom: 0;
+/*	transform: translate(-50%, -50%); */
+	padding: 36px; 
 	overflow: hidden; /* 자식 요소가 컨테이너를 넘어가지 않도록 설정 */
 	background-color: #1A1B24;
 	border-radius: 16px;
- 	 gap: 40px 0;
+ 	gap: 20px 0;
+	width: 280px;
 
 }
 
-.popH
+.attend .popH
 {
 	display: flex;
+	padding: 0;
+    justify-content: space-between;
 }
 
-.mlauto
+.attend .cancelPOP
 {
-  margin-left: auto;
   z-index: 1000;
 }
 
 
-.popH .icon i
+.attend .popH .icon i
 {
   font-size: 20px;
   color: #fff;
   cursor: pointer;
 }
 
-.popM
+.attend .popM
 {
   display: flex;
   flex-direction: column;
@@ -437,15 +439,15 @@ section
   
 }
 
-.popTitle
+.attend .popTitle
 {
-  font-size: 24px;
+  font-size: 20px;
   text-align: center;
   color: #ffffff;
   font-weight: 400;
 }
 
-.popAlert
+.attend .popAlert
 {
   font-size:16px;
 /*  text-align: center;*/
@@ -453,7 +455,7 @@ section
   color: #99A2B9;
 }
 
-.popM button
+.attend .popM button
 {
     padding: 0 20px;
     height: 48px;
@@ -467,7 +469,7 @@ section
 	cursor: pointer;
 }
 
-.popM button:hover
+.attend .popM button:hover
 {
     border: 1px solid #F3B931;
     color: #F3B931;
@@ -476,27 +478,27 @@ section
 
 
 
-.popB 
+.attend .popB 
 {
 	display: flex;
 	justify-content: space-between;
 }
 
-.checkCon
+.attend .checkCon
 {
 	display: flex;
 	gap: 0 5px;
 	
 }
 
-.popB input
+.attend .popB input
 {
     color:  #99A2B9;
   	width: 15px;
 }
 
 
-.popB label
+.attend .popB label
 {
 	color:#99A2B9;
 	font-size: 14px;
