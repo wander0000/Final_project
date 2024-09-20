@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.CouponService_2;
 import com.boot.Service.MovieService;
 import com.boot.Service.MovieService_2;
@@ -72,6 +73,9 @@ public class PayController {
 	@Autowired
 	private PointService_2 pointService;
 	
+	@Autowired
+	private CustomUserDetailsService userService;
+	
 	/* sms 전송을 위한 세팅 */
 	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSEPSQXUWDO2WGS", "BJUJJHURG1BIKIUKNKJLH1XIIQWPIYSL", "https://api.coolsms.co.kr");
 	/*
@@ -109,8 +113,9 @@ public class PayController {
 			log.info("@# param: " + param);
 			HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 			log.info("@# params: " + params);
-			CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-			String uuid = userDetails.getUuId();
+			//CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+			//String uuid = userDetails.getUuId();
+			String uuid = userService.getUuidFromAuthenticatedUser();
 			params.put("uuid", uuid);
 	
 			/* 예매 번호 */
@@ -244,9 +249,10 @@ public class PayController {
 	@RequestMapping("couponPopUp/{type}")
 	public String couponPopUp(@PathVariable("type") String type, @RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# couponPopUp");
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-		String uuid = userDetails.getUuId();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		//String uuid = userDetails.getUuId();
+		String uuid = userService.getUuidFromAuthenticatedUser();
 		param.put("uuid", uuid);
 		param.put("type", type);
 		String title = type.equals("D") ? "할인권" : "쿠폰";
@@ -262,9 +268,10 @@ public class PayController {
 	@RequestMapping("/pointPopUp")
 	public String pointPopUp(@RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# pointPopUp");
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-		String uuid = userDetails.getUuId();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		//String uuid = userDetails.getUuId();
+		String uuid = userService.getUuidFromAuthenticatedUser();
 		param.put("uuid", uuid);
 		
 		model.addAttribute("title", "Point");
@@ -278,9 +285,10 @@ public class PayController {
 		log.info("@# couponMatch");
 		log.info("@# param ==> " + param);
 		Map<String, Object> data = new HashMap<>();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-		String uuid = userDetails.getUuId();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
+		//String uuid = userDetails.getUuId();
+		String uuid = userService.getUuidFromAuthenticatedUser();
 		param.put("uuid", uuid);
 		String result = "F";
 		String msg = "";
