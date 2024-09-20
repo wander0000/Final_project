@@ -98,7 +98,18 @@
 	    uuid, genrenm 
 	    from selectgenretb
 	    where uuid= #{uuid}		 
-    </select>    
+    </select>   
+    
+	<select id="selectMoviesByGenres" parameterType="map" resultType="com.boot.DTO.BoxOfficeDTO">
+	    SELECT movieno, movienm, moviepostimg, genre 
+	    FROM boxofficetb
+	    WHERE
+	    <foreach item="genre" collection="genreList" separator=" OR ">
+	        genre LIKE CONCAT('%', #{genre}, '%')
+	    </foreach>
+	    ORDER BY ranking
+	</select>    
+    
 </mapper>
 
 

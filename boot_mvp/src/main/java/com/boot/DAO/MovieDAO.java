@@ -1,6 +1,7 @@
 package com.boot.DAO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MovietbDTO;
+import com.boot.DTO.SelecGenretbDTO;
 
 //실행시 매퍼파일을 읽어 들이도록 지정
 @Mapper
@@ -43,6 +45,12 @@ public interface MovieDAO {
     
     // 영화상세정보
     public MovietbDTO movieInfo(@Param("movieno") String movieno);
+    
+    // 유저 영화 장르찾기
+    public ArrayList<SelecGenretbDTO> selectUserGenre(HashMap<String, Object> param);
+    
+    // 유저 영화 장르찾기
+    public ArrayList<BoxOfficeDTO> selectMoviesByGenres(HashMap<String, Object> param);
 
 }
 

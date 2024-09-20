@@ -37,7 +37,9 @@
  
 </head>
 <body>
-    <%@ include file="header.jsp" %>		
+   <!-- <%@ include file="header.jsp" %>	-->	
+   <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>
+   <div class="recommendPop"></div>
 	<section id="section" class="section">        
         <div class="swiper mySwiper">
             <div id="mainSlider" class="swiper-wrapper">
@@ -162,7 +164,7 @@
 	//페이지가 완전히 로드된 후 실행되는 함수
 	window.onload = function() 
 	{
-
+		recommendPop();
 	};		
 	
 	const tabs = document.querySelectorAll('.tab');
@@ -183,8 +185,56 @@
 	    rankingCons[index].classList.add('on');
 	  });
 	});
+	
+	function recommendPop() 
+	{
+		const csrfToken = document.getElementById('token').value;	
+		$.ajax
+		({
+			url:"/recommendPop",
+			type:"GET",
+			headers: {
+			    "X-CSRF-TOKEN": csrfToken
+			},
+			success:function(result) 
+			{
+				var str ='';
+				str+=' <div class="popInner">';
+				str+='<div class="popH">';
+				str+='<h5 class="popTitle">당신을 위한 추천 영화</h5>';
+				str+='<span class="material-symbols-outlined cancelPOP">close</span>';
+				str+='</div>';
+				str+='<div class="popB">';
+				str+='<div class="buttonArrow arrowLeft">';
+				str+='<span class="material-symbols-outlined ">arrow_back_ios</span>';
+				str+='</div>';
+				str+='<div class="buttonArrow arrowRight">';
+				str+='<span class="material-symbols-outlined ">arrow_forward_ios</span>';
+				str+='</div>';
+				result.forEach(function(movie) 
+				{					
+					str+='<div class="imgCon">';			    
+					str+='<img src="'+movie.moviepostimg+'">';			    
+					str+='</div>';		    
+				    // 생성한 요소를 영화 리스트 컨테이너에 추가				    
+				});
+				str+='</div>';	
+				str+='</div>';	
+				$('.recommendPop').html(str);
+			},
+			error:function() 
+			{
+				console.log("ajax 오류");
+			}	
+		});
+	}
 </script>
 <script>    
+	$(document).ready(function(){
+		$('.buttonArrow.arrowRight').click(function(){
+			
+		});
+	});
     var swiper = new Swiper(".mySwiper",     
     {            
         loopedSlides: 10,
@@ -206,7 +256,6 @@
         {
             el: ".swiper-pagination",
 			clickable: true
-        }
-        
+        }        
     });
 </script>

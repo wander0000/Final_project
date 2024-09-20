@@ -171,7 +171,7 @@ public class LoginController {
     }
 
     @PostMapping("/signup/step2")
-    public String signupStep2(@RequestParam(value = "genres", required = false) List<Integer> genres, HttpSession session) {
+    public String signupStep2(@RequestParam(value = "genres", required = false) List<String> genres, HttpSession session) {
     	UsertbDTO userdto = (UsertbDTO) session.getAttribute("signupUser");
         if (userdto == null) {
             return "redirect:/signup";
@@ -186,8 +186,8 @@ public class LoginController {
             if (savedUser != null) {
                 // 장르 정보 저장
                 if (genres != null && !genres.isEmpty()) {
-                    for (Integer genreno : genres) {
-                        selecgenretbService.insertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genreno));  // uuid로 수정
+                    for (String genrenm : genres) {
+                        selecgenretbService.insertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genrenm));  // uuid로 수정
                     }
                 }
             } else {
