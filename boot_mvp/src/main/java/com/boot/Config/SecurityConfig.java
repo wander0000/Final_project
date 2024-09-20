@@ -1,11 +1,13 @@
 package com.boot.Config;
 
+import com.boot.Security.CustomLoginSuccessHandler;
 import com.boot.Service.CustomOAuth2UserService;
 import com.boot.Service.OauthtbService;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +27,10 @@ public class SecurityConfig {
         this.customOAuth2UserService = customOAuth2UserService;
         this.oauthtbService = oauthtbService;
     }
+    
+    
+    @Autowired
+	private CustomLoginSuccessHandler customLoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,6 +51,7 @@ public class SecurityConfig {
                 .usernameParameter("userid")
                 .passwordParameter("ppass")
                 .defaultSuccessUrl("/")
+                .successHandler(customLoginSuccessHandler)//로그인 시 출석포인트 지급하기 위해 custum
             .and()  // formLogin 체인 종료
             .oauth2Login()
                 .loginPage("/login")  // 소셜 로그인도 동일한 로그인 페이지 사용

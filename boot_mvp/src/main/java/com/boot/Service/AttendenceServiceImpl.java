@@ -14,6 +14,7 @@ import com.boot.DAO.UsertbDAO_4;
 import com.boot.DTO.CouponDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,8 @@ public class AttendenceServiceImpl implements AttendenceService {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private CustomUserDetailsService userService;
 	
 	// 출석 기록 추가
     @Override
@@ -31,8 +34,8 @@ public class AttendenceServiceImpl implements AttendenceService {
         log.info("AttendenceServiceImpl.checkAttendance() 시작");
         try {
             // 사용자 정보 가져오기
-            CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
+//    		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
             log.info("checkAttendance, UUID: {}", uuid);
 
             // 오늘 출석 체크 여부 확인
@@ -65,8 +68,8 @@ public class AttendenceServiceImpl implements AttendenceService {
 	@Override
 	public List<Integer> checkUserAttendance() {
 		log.info("AttendenceService임플 checkUserAttendance 접근");
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 		
 		AttendanceDAO dao = sqlSession.getMapper(AttendanceDAO.class);
 		return dao.checkUserAttendance(uuid);

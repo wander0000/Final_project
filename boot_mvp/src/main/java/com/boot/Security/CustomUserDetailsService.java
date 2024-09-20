@@ -1,17 +1,22 @@
 package com.boot.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
 import com.boot.DAO.UsertbDAO_3;
+import com.boot.DTO.OauthtbDTO;
 import com.boot.DTO.UsertbDTO;
+import com.boot.Service.OauthtbService;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -21,6 +26,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UsertbDAO_3 usertbDAO_3) {
         this.usertbDAO_3 = usertbDAO_3;
     }
+    
+    @Autowired
+    private OauthtbService oauthService;
 
     @Override
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
@@ -40,19 +48,39 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getPname(),
                 user.getPpass(),
                 user.getEmail(),
+                user.getPhone(),
                 Collections.singletonList(authority)  // 권한 목록
         );
     }
     
     public String getUuidFromAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return userDetails.getUuId();  // uuid 값을 가져옴
-        } else {
-            // 인증되지 않은 사용자이거나, 사용자 정보가 CustomUserDetails가 아닌 경우
-            throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
-        }
+    		
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+                return userDetails.getUuId();  // uuid 값을 가져옴
+            } else if(authentication != null && authentication.getPrincipal() instanceof OAuth2User){
+            	
+                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+                String registrationId = oauthToken.getAuthorizedClientRegistrationId();// 공급자 ID (google, naver 등)
+                String oauthUserId = "";
+                if ("naver".equals(registrationId)) {
+                    oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+                }else if("google".equals(registrationId)) {
+                	oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+                }else {
+                	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
+                }
+                OauthtbDTO user = oauthService.oauthGetUserById(oauthUserId);
+                return user.getUuid();
+                
+            } else {
+            
+                // 인증되지 않은 사용자이거나, 사용자 정보가 CustomUserDetails가 아닌 경우
+                throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
+            }
+    		
+
     }
 
     

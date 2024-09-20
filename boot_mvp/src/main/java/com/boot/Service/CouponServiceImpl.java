@@ -13,6 +13,7 @@ import com.boot.DAO.UsertbDAO_4;
 import com.boot.DTO.CouponDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 public class CouponServiceImpl implements CouponService {
 	@Autowired
 	private SqlSession sqlSession;
+	
+
+	@Autowired
+	private CustomUserDetailsService userService;
+	
 	
 	//생일쿠폰 발행
 	@Override
@@ -54,8 +60,8 @@ public class CouponServiceImpl implements CouponService {
 	public List<CouponDTO> getCouponList(int pageSize,int offset, String type, String acrec) {
 		log.info("쿠폰서비스 임플 getCouponList 접근");
 		log.info("쿠폰서비스 임플 getCouponList type:"+type+"acrec"+acrec);
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 	    	CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
@@ -72,8 +78,8 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public int getTotalCountCoupon(String type, String acrec) {
 		log.info("쿠폰서비스 임플 getTotalCountCoupon 접근");
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 		
 		try { 
 			CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
@@ -92,8 +98,8 @@ public class CouponServiceImpl implements CouponService {
         log.info("쿠폰서비스 임플 generateCoupon 접근");
 
         // 사용자 정보 가져오기
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String uuid = userDetails.getUuId();  // 사용자 UUID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
         // DAO 연결
         CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
