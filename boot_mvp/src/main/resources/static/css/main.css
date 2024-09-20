@@ -284,6 +284,7 @@ section
     display: flex!important;
     flex-direction: column;
 	position: relative;
+	overflow: hidden;
 }
 
 .popH 
@@ -307,11 +308,24 @@ section
 	cursor: pointer;
 }
 
-.popB 
+.recommendPop .popB 
 {
     width: 400px!important;
-	display: flex!important;
-	overflow: hidden;	
+	display: flex!important;	
+	height: 423px;
+	position: relative;	
+}
+
+.popButtonWrap 
+{
+	position: absolute;
+    top: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: flex;
+    left: 50%;
+    z-index: 99;
+    width: 100%;	
 }
 
 .buttonArrow 
@@ -326,6 +340,7 @@ section
     align-items: center;
     justify-content: center;
 	cursor: pointer;
+	z-index: 99;
 }
 
 .buttonArrow.arrowLeft 
@@ -338,14 +353,25 @@ section
     right: 20px;
 }
 
-.imgCon, .imgCon img 
+.imgCon
 {
+	position:absolute;
 	width: 400px;
 	height: 426px;
-    object-fit: cover;
-    object-position: bottom;
-	opacity: 1 !important;
 	border-radius:0 0 6px 6px;
+	left: calc(400px*var(--i));
+}
+
+.imgCon img 
+{
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: bottom;
+	border-radius:0 0 6px 6px;	
 }
 
 
