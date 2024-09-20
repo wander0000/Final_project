@@ -312,6 +312,7 @@
 			error:function() 
 			{
 			    console.log("ajax 오류");
+				$('.recommendPop').css({"display": "none"});
 			}	
 		});
 	} // recommendPop 끝
