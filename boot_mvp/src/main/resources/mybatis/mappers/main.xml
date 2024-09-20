@@ -103,12 +103,20 @@
 	<select id="selectMoviesByGenres" parameterType="map" resultType="com.boot.DTO.BoxOfficeDTO">
 	    SELECT movieno, movienm, moviepostimg, genre 
 	    FROM boxofficetb
+	    <if test="genreList != null and genreList.size() > 0">
+	        WHERE
+	        <foreach item="genre" collection="genreList" separator=" OR ">
+	            genre LIKE CONCAT('%', #{genre}, '%')
+	        </foreach>
+	    </if>
+	    <!-- 
 	    WHERE
 	    <foreach item="genre" collection="genreList" separator=" OR ">
 	        genre LIKE CONCAT('%', #{genre}, '%')
 	    </foreach>
+	     -->
 	    ORDER BY ranking
-	</select>    
+	</select>       
     
 </mapper>
 
