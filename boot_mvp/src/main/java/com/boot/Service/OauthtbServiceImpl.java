@@ -68,6 +68,11 @@ public class OauthtbServiceImpl implements OauthtbService {
 	public OauthtbDTO oauthGetUserById(String id) {
         return oauthtbDAO.oauthGetUserById(id);
 	}
+
+	@Override
+	public OauthtbDTO oauthGetUserByuniq(String oauthuniq) {
+		 return oauthtbDAO.oauthGetUserByuniq(oauthuniq);
+	}
 	
 	
 }

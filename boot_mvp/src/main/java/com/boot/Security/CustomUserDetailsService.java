@@ -76,7 +76,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 }else {
                 	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
                 }
-                OauthtbDTO user = oauthService.oauthGetUserById(oauthUserId);
+                OauthtbDTO user = oauthService.oauthGetUserByuniq(oauthUserId);
+                log.info("user:"+user+"oauthUserId"+oauthUserId);
                 return user.getUuid();
                 
             } else {

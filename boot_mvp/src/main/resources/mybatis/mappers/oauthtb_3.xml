@@ -37,5 +37,10 @@
         WHERE userid = #{userid}
     </select>
     
+    <!-- 사용자 ID로 사용자 정보 가져오기 -->
+    <select id="oauthGetUserByuniq" resultType="com.boot.DTO.OauthtbDTO">
+        SELECT * FROM oauthtb
+        WHERE oauthuniq = #{oauthuniq}
+    </select>
     
 </mapper>
