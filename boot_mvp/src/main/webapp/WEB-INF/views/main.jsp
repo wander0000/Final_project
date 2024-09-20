@@ -152,21 +152,17 @@
 			</div> 
 		</div> <!-- benefit 끝-->
 		<!-- 팝업창 (숨겨진 상태로 시작) -->
-		<div class="popUp">
+		<div class="popUp attend">
 			<div class="popBg">
 				<div class="popCon">
 					<div class="popH">
 	                    <h4 class="popTitle">매일이 혜택! 출석체크!</h4>
-		                <div class="mlauto">
-		                    <span class="icon cancel fs24">
-		                        <i class="fa-solid fa-xmark"></i>
-		                    </span>
-		                </div>
+	                    <span class="material-symbols-outlined cancelPOP">close</span>
 		            </div> <!-- popH 끝 -->
 					<div class="popM">
-	                    <h5 class="popAlert">로그인하면 자동으로 출석이벤트에 참여됩니다.</h5>
-	                    <h5 class="popAlert">매일 로그인하세요~ 10포인트 지급</h5>
-	                    <h5 class="popAlert">만근하면 5% 할인쿠폰 지급</h5>
+<!--	                    <h5 class="popAlert">로그인하면 자동으로 출석이벤트에 참여됩니다.</h5>-->
+<!--	                    <h5 class="popAlert">매일 로그인하세요~ 10포인트 지급</h5>-->
+<!--	                    <h5 class="popAlert">만근하면 5% 할인쿠폰 지급</h5>-->
 						<button id="checkAttendanceStatus">출석 현황 확인</button>
 	                </div>
 					<div class="popB">
@@ -369,20 +365,20 @@
         // 변수 이름 통일
         if (showAttendancePopup === 'true') {
             // 출석 팝업 표시
-            $('.popUp').css({"display":"flex"});
+            $('.popUp.attend').css({"display":"flex"});
         }
-		console.log($('.popUp').css("display"));  // 팝업의 display 상태를 확인
+		console.log($('.popUp.attend').css("display"));  // 팝업의 display 상태를 확인
 
 
         // 팝업 닫기 버튼 클릭 이벤트
-		$('.popUp .icon.cancel, .popUp #closePopup').click(function() {
+		$('.popUp.attend .icon.cancel, .popUp.attend #closePopup').click(function() {
 		    console.log("닫기버튼이나 x표 click");
 			
 			// 체크박스가 체크된 경우 쿠키 설정
             if (document.getElementById('dontShowTodayCheckbox').checked) {
                 document.cookie = "showAttendancePopup=false; path=/; max-age=86400;"; // 1일 동안 도메인의 모든 경로에서 쿠키가 유효
             }
-		    $(this).parents('.popUp').css({"display":"none"}); 
+		    $(this).parents('.popUp.attend').css({"display":"none"}); 
 		});
 		
 		//출석현황 버튼 누르면 마이페이지 메인으로가기

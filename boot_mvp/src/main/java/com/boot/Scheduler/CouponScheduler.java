@@ -45,7 +45,7 @@ public class CouponScheduler {
     
     // 매달 1일 10:00에 만근유저 찾아서 쿠폰발행(출석이벤트)
     @Transactional
-    @Scheduled(cron = "0 0 10 1 * ?") // 매달 1일 10:00에 실행 (cron 표현식 사용)
+    @Scheduled(cron = "0 46 15 * * ?") // 매달 1일 10:00에 실행 (cron 표현식 사용)
     public void issueMonthlyCoupons() {
         // 만근한 유저들의 UUID 리스트 가져오기
         List<String> uuidList = attService.checkMonthlyAttendance();
@@ -58,6 +58,7 @@ public class CouponScheduler {
                 coupon.setPeriod(30); // 유효기간 30일
                 coupon.setReason("출석이벤트 만근 축하");
                 coupon.setRefno(4); // 쿠폰 레퍼런스 타입 (10% 할인권)
+                coupon.setAcrec("N"); // 쿠폰 상태:미등록
                 coupon.setUuid(uuid); // 사용자 UUID
 
                 // 쿠폰 발급 후 쿠폰번호 조회
