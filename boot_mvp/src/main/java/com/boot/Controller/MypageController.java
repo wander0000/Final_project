@@ -83,15 +83,17 @@ public class MypageController {
 	 @Autowired
     private OauthtbService oauthService;
 	
-	
+	 @Autowired
+	private CustomUserDetailsService customService;
+	 
 	@RequestMapping("mypage")//마이페이지 메인으로
 	public String mypage(Model model) {
 		log.info("@# Mypage Main");		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (!(auth instanceof AnonymousAuthenticationToken)) {//익명의 사용자가 아니라면
-	    	CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    	String userName = userDetails.getUsername();  // 사용자 이름 가져오기
+//	    	CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String userName = customService.getNameFromAuthenticatedUser();  // 사용자 이름 가져오기
         	MembershipDTO membership = memService.getMembership();//등급,포인트,포인트이력,마일리지 정보
         	int couponCount = couponService.getTotalCountCoupon("C","A");  //사용가능한 쿠폰수 조회
         	int discntCount = couponService.getTotalCountCoupon("D","A");  //사용가능한 할인권수 조회

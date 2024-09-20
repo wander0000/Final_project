@@ -43,4 +43,9 @@
         WHERE oauthuniq = #{oauthuniq}
     </select>
     
+    <select id="oauthGetUserByuniqcnt" resultType="int">
+        SELECT count(*) FROM oauthtb
+        WHERE oauthuniq = #{oauthuniq}
+    </select>
+    
 </mapper>

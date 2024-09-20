@@ -63,23 +63,24 @@ public class SecurityConfig {
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)  // 의존성 주입된 customOAuth2UserService 사용
             .and()  // userInfoEndpoint 체인 종료
-            .successHandler((HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
-                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-                String registrationId = oauthToken.getAuthorizedClientRegistrationId();
-                String oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
-                if ("naver".equals(registrationId)) {
-                    oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
-                    log.info("#######################################oauthUserId: "+oauthUserId);
-                }
-                boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
-                log.info("#######################################isExistingUser: "+isExistingUser);
-                
-                if (isExistingUser) {
-                    response.sendRedirect("/main");  // 기존 회원이면 홈 페이지로 리다이렉트
-                } else {
-                    response.sendRedirect("/oauthSignupSubmit1");  // 신규 회원이면 추가 회원가입 페이지로 리다이렉트
-                }
-            })  // OAuth2 로그인 성공 후 로직 추가
+            .successHandler(customLoginSuccessHandler)//로그인 시 출석포인트 지급하기 위해 custum
+//            .successHandler((HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
+//                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+//                String registrationId = oauthToken.getAuthorizedClientRegistrationId();
+//                String oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+//                if ("naver".equals(registrationId)) {
+//                    oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+//                    log.info("#######################################oauthUserId: "+oauthUserId);
+//                }
+//                boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
+//                log.info("#######################################isExistingUser: "+isExistingUser);
+//                
+//                if (isExistingUser) {
+//                    response.sendRedirect("/main");  // 기존 회원이면 홈 페이지로 리다이렉트
+//                } else {
+//                    response.sendRedirect("/oauthSignupSubmit1");  // 신규 회원이면 추가 회원가입 페이지로 리다이렉트
+//                }
+//            })  // OAuth2 로그인 성공 후 로직 추가
             .and()  // oauth2Login 체인 종료
             .logout()  // 로그아웃 설정
                 .logoutUrl("/logout")
