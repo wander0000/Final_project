@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
             .authorizeRequests()
                 .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**",
-                        "/checkUserId", "/verify-code", "/oauthCheckUserid",
+                        "/checkUserId", "/verify-code", "/oauthCheckUserid","/oauthSignupSubmit1","/main",
                         "/findIdPage", "/userid", "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
                 .permitAll()  // 인증 없이 접근 가능하게 설정
             .anyRequest().authenticated()
@@ -80,6 +80,8 @@ public class SecurityConfig {
             .logout()  // 로그아웃 설정
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
+                .invalidateHttpSession(true) // 세션 무효화
+//                .deleteCookies("JSESSIONID", "token") // 쿠키 삭제
             .and()  // logout 체인 종료
             .sessionManagement()
                 .sessionFixation().none();

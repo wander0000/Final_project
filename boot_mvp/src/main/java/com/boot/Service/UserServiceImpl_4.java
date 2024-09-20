@@ -21,6 +21,7 @@ import com.boot.DAO.UsertbDAO_4;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,8 @@ public class UserServiceImpl_4 implements UserService_4 {
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private CustomUserDetailsService userService;
 
 	@Override
 	public void updateEmail(UsertbDTO user) {
@@ -111,18 +114,18 @@ public class UserServiceImpl_4 implements UserService_4 {
 	public void updateSelectGenre(String genreList) {
 		log.info("updateSelectGenre 서비스임플");
 		log.info("@# 바꿀 장르리스트=>"+genreList);
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 uuid 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
     	
 		SelecGenretbDAO_4 dao = sqlSession.getMapper(SelecGenretbDAO_4.class);
 		
 		// 선호장르번호가 ,로 구분된 문자열로 넘어오기 때문에 분리해서 배열로 만들어 insert해 줌
 	    if (genreList != null) {
 	    	dao.deleteSelectGenre(uuid);//수정전 데이터 삭제
-	    	// Stream을 사용하여 String 배열을 int 배열로 변환
-	    	int[] arr = Arrays.stream(genreList.split(","))
-	    	                     .mapToInt(Integer::parseInt)  // 문자열을 int로 변환
-	    	                     .toArray();
+	    	// Stream을 사용하여 문자열을 String 배열로 변환
+	    	String[] arr = Arrays.stream(genreList.split(","))
+                    .map(String::trim)  // 각 문자열의 앞뒤 공백을 제거
+                    .toArray(String[]::new);
 	    	for(int i = 0; i<arr.length; i++){
 	    		dao.updateSelectGenre(arr[i], uuid); //새 데이터 입력
 	    	}	
@@ -133,8 +136,8 @@ public class UserServiceImpl_4 implements UserService_4 {
 	public String getSelectGenre() {
 		log.info("getSelectGenre 서비스임플");
 		
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 uuid 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 		SelecGenretbDAO_4 dao = sqlSession.getMapper(SelecGenretbDAO_4.class);
 		String genreList="";//리턴할 문자열 초기화, 로그인유져가 없으면 빈문자열로 반환됨
 		
