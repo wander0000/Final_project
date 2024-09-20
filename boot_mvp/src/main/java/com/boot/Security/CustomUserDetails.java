@@ -6,8 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 //보안 인증 정보의 중앙화, 코드의 재사용성과 일관성, 캐싱 및 성능향상(을 위해 custom
 public class CustomUserDetails implements UserDetails{
 

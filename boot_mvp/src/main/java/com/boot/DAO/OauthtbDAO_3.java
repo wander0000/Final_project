@@ -15,4 +15,5 @@ public interface OauthtbDAO_3
     public boolean oauthCheckNewUser(@Param("oauthUserId") String oauthUserId, @Param("registrationId") String registrationId);
     public OauthtbDTO oauthGetUserById(String userid); // ID로 회원 정보 가져오기
     public OauthtbDTO oauthGetUserByuniq(String oauthuniq); // oauthuniq로 회원 정보 가져오기
+    public int oauthGetUserByuniqcnt(String oauthuniq); // oauthuniq로 회원 정보 가져오기
 }

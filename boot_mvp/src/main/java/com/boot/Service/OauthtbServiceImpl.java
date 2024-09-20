@@ -73,6 +73,11 @@ public class OauthtbServiceImpl implements OauthtbService {
 	public OauthtbDTO oauthGetUserByuniq(String oauthuniq) {
 		 return oauthtbDAO.oauthGetUserByuniq(oauthuniq);
 	}
+
+	@Override
+	public int oauthGetUserByuniqcnt(String oauthuniq) {
+		return oauthtbDAO.oauthGetUserByuniqcnt(oauthuniq);
+	}
 	
 	
 }
