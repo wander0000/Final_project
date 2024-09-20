@@ -14,12 +14,16 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.boot.DTO.OauthtbDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Service.MembershipService;
+import com.boot.Service.OauthtbService;
 
 @Component
 public class UserInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private MembershipService memService;
+	
+	@Autowired
+	private OauthtbService oauthService;
 	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -50,7 +54,7 @@ public class UserInterceptor implements HandlerInterceptor {
                 loginedUserId = userDetails.getUserId();
             }
 
-            if (loginedUserId != null) {
+            if (loginedUserId != null && oauthService.oauthGetUserByuniq(loginedUserId) != null) {
                 // 로그인한 유저의 ID를 request에 추가
                 request.setAttribute("userid", loginedUserId);
 
