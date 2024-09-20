@@ -25,6 +25,25 @@ window.onload = function() {
     if (firstLink) {
         // 첫 번째 a 태그의 클릭 이벤트를 트리거
         firstLink.click();
+
+        if('${gubun}' == 'mypage') {
+        	setTimeout(function() {
+                var secondLink = document.querySelector('.theaterscroll .Div_tab a');
+                if (secondLink) {
+                    secondLink.click();
+                    
+                    setTimeout(function() {
+                    	var thirdLink = document.querySelector('.moviebox .boxtit #selected_${sel_movino}');
+                    	if(thirdLink) {
+                    		var nextLink = thirdLink.nextElementSibling;
+                    		if(nextLink) {
+                    			nextLink.click();
+                    		}
+                    	}
+                    }, 100); //0.1초 후 실행
+                }
+            }, 100); //0.1초 후 실행
+        } // end if ('${gubun}' == 'mypage')
     }
     //movieevent('N');
 };
