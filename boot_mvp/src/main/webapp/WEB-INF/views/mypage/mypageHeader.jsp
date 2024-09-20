@@ -59,7 +59,7 @@
 	    color: rgba(153, 162, 185, 0.3);
 	    font-size: 16px;
 	    font-weight: 600;
-	    margin-left: 131px;; 
+	/*    margin-left: 131px;-*/
 		color: #99A2B9;
 		font-size: 16px;
 		font-weight: 400;
@@ -79,15 +79,17 @@
         <div class="subHeader">
 			<div class="headerSubInner">
 	            <ul class="submenuList">
-	                <li class="submenu"><a href="ticket">예매관리</a></li>
-	                <li class="submenu"><a href="membership">멤버십</a></li>
-	                <li class="submenu"><a href="movieStory">무비스토리</a></li>
-	                <li class="submenu"><a href="coupon">쿠폰/할인권</a></li>
-	                <li class="submenu"><a href="userInfo">회원정보</a></li>
-	                <li class="submenu"><a href="withdraw">회원탈퇴</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage">My MVP</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/ticket">예매관리</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/membership">멤버십</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/movieStory">무비스토리</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰/할인권</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/userInfo">회원정보</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/withdraw">회원탈퇴</a></li>
 	            </ul>
 			</div>
         </div>
+		
 </body>
 </html>
 <script>

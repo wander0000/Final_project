@@ -184,6 +184,7 @@
                     </div>
                 </div><!-- guideWrap end -->
                 <div class="botWrap">
+                	<input type="hidden" id="pricetype" name="pricetype" value="${movieinfo.pricetype }">
                 	<c:forEach items="${prices }" var="price" varStatus="status">
                 		<input type="hidden" id="price${status.index}" value="${price }">
                 	</c:forEach>

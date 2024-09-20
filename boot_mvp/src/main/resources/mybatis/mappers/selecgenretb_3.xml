@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boot.DAO.SelecGenretbDAO_3">
 
-	<insert id="insertUserGenre" parameterType="com.boot.DTO.SelecGenretbDTO">
-	    INSERT INTO selecgenretb (uuid, genreno)
-	    VALUES (#{uuid}, #{genreno})
+	<insert id="usertbinsertUserGenre" parameterType="com.boot.DTO.SelecGenretbDTO">
+	    INSERT INTO userselecgenretb (uuid, genrenm)
+	    VALUES (#{uuid}, #{genrenm})
 	</insert>
 
+	<insert id="oauthtbinsertUserGenre" parameterType="com.boot.DTO.SelecGenretbDTO">
+	    INSERT INTO oauthselecgenretb (uuid, genrenm)
+	    VALUES (#{uuid}, #{genrenm})
+	</insert>
+	
 </mapper>

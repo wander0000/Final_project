@@ -355,7 +355,7 @@
     margin-bottom: 20px;
     font-size: 14px;
     display: inline-flex;
-	width: 300px;
+    width: fit-content;
 	justify-content: center;
 
 }
@@ -509,6 +509,16 @@ filterTitle
     align-items: center;
     height: 56px;
     box-sizing: border-box;
+}
+
+.noContent
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	font-size: 20px;
+    font-weight: 200;
 }
 
 .titleRow

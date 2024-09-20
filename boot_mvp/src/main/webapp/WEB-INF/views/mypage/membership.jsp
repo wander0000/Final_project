@@ -47,7 +47,7 @@
                                 <div class="membershipCard">
                                     <div class="cardTop">
                                         <span>
-                                            <img class="welcome" src="${pageContext.request.contextPath}/images/welcome.svg" alt="#">
+                                            <img class="welcome" src="${pageContext.request.contextPath}/images/i-welcome.svg" alt="#">
                                         </span>
                                         <div class="grade">Welcome</div>
                                     </div>
@@ -65,7 +65,7 @@
                                 <div class="membershipCard">
                                     <div class="cardTop">
                                         <span>
-                                            <img class="firend" src="${pageContext.request.contextPath}/images/friend.svg" alt="#">
+                                            <img class="firend" src="${pageContext.request.contextPath}/images/i-friend.svg" alt="#">
                                         </span>
                                         <div class="grade">Friend</div>
                                     </div>
@@ -83,7 +83,7 @@
                                 <div class="membershipCard">
                                     <div class="cardTop">
                                         <span>
-                                            <img class="vip" src="${pageContext.request.contextPath}/images/vip.svg" alt="#">
+                                            <img class="vip" src="${pageContext.request.contextPath}/images/i-vip.svg" alt="#">
                                         </span>
                                         <div class="grade">VIP</div>
                                     </div>
@@ -101,7 +101,7 @@
                                 <div class="membershipCard">
                                     <div class="cardTop">
                                         <span>
-                                            <img class="mvp" src="${pageContext.request.contextPath}/images/mvp.svg" alt="#">
+                                            <img class="mvp" src="${pageContext.request.contextPath}/images/i-mvp.svg" alt="#">
                                         </span>
                                         <div class="grade">MVP</div>
                                     </div>

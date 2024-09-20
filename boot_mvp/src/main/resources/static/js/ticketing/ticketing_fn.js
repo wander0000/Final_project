@@ -108,7 +108,6 @@ function movieevent(movieno, movienm) {
 			'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 		},
 		success: function(result) {
-			console.log(result);
 			allDivs.forEach(function(div) {
 		        div.classList.remove('active');
 		    });
@@ -175,6 +174,24 @@ function date_event(viewday) {
 	});
 }
 
+function checkLoginStatus(callback) {
+    $.ajax({
+        type: 'get',
+        url: '/ticketing/logincheck',
+		headers: {
+			'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+		},
+		dataType: 'json', // 응답이 JSON 형식일 것으로 기대		
+        success: function(isLoggedIn) {
+            callback(isLoggedIn);
+        },
+        error: function(xhr, status, error) {
+            console.error("로그인 상태 확인 실패:", status, error);
+            callback(false);
+        }
+    });
+}
+
 function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime, pricetype) {
     if (confirm("해당 시간으로 하시겠습니까?")) {
         $.ajax({
@@ -186,7 +203,16 @@ function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime, pricet
 			},
             success: function(response) {
                 console.log('서버 응답:', response);
-				window.location.href = "/ticketing/seatselect";
+				// 세션에 먼저 저장 후 로그인 여부 확인
+				checkLoginStatus(function(isLoggedIn) {
+					if(isLoggedIn) {
+						window.location.href = "/ticketing/seatselect";
+					} else {
+						alert("로그인이 필요합니다.\n로그인 화면으로 이동합니다.");
+						var currentUrl = "/ticketing/seatselect";
+		                window.location.href = "/login?redirect=" + encodeURIComponent(currentUrl);
+					}
+				});
             },
             error: function(xhr, status, error) {
                 // 오류가 발생했을 때 처리할 내용
@@ -449,6 +475,7 @@ function payment() {
 		return false;
 	} else {
 		var calc = $("#calc").val();
+		var pricetype = $("#pricetype").val();
 		var seats = '';
 		
 		//선택한 좌석 정렬
@@ -473,7 +500,7 @@ function payment() {
 		$.ajax({
             type: 'POST', // 요청 방식
             url: '/ticketing/saveSessionParamsMore', // 요청을 보낼 URL
-            data: { calc: calc, adult: selecttype[0], youth: selecttype[1], old: selecttype[2], disable: selecttype[3], seats: seats }, // 전송할 데이터
+            data: { calc: calc, pricetype: pricetype, adult: selecttype[0], youth: selecttype[1], old: selecttype[2], disable: selecttype[3], seats: seats }, // 전송할 데이터
 			headers: {
 				'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 			},

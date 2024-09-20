@@ -4,7 +4,7 @@
 
 	<!--사용자 uuid로 저장된 선호장르 번호로 선호장르명 가지고 오기-->
 	<select id="getUserGenre">
-	   select genrenm 
+	   select g.genrenm 
 		from selecgenretb  s
 		left outer join genre g on s.genreno = g.genreno
 		where uuid=#{uuid};

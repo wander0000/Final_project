@@ -39,10 +39,11 @@
 	.userCon { display: flex; align-items: center; gap: 0 10px; height: 36px; background: rgba(217,217,217,0.1); padding: 0 12px; border:0; border-radius: 6px; color: #99A2B9;}
 	.userCon img {height:26px; display: flex; align-items: center; justify-content: center;} 
 	.dropdown-menu { position: relative; z-index:2000;}
-	.dropdown-menu { display: none; position: absolute; top: 79%; right: 60px; background-color: rgba(217,217,217,0.1); padding: 10px; list-style: none; border-radius: 5px; z-index: 2001;}
-	.dropdown-menu li { margin: 5px 0; display: flex; justify-content: center; align-items: center; font-size: 14px; color: #99A2B9;}
-	.dropdown-menu li a, .dropdown-menu li input[type="submit"] {color: #99A2B9; text-decoration: none; padding: 5px 10px; display: block; font-size: 14px;}
-	.dropdown-menu li input[type="submit"]:hover, .dropdown-menu li a:hover { text-decoration: underline; font-size: 14px;}
+	.dropdown-menu { display: none; position: absolute; top: 79%; right: 60px; background-color:#1A1B24;; padding: 10px; list-style: none; border-radius: 5px; z-index: 2001;}
+	.dropdown-menu li { margin: 5px 0;  font-size: 14px; color: #99A2B9; display: flex; justify-content: center;  align-items: center;}
+	.dropdown-menu li a {display: flex; justify-content: center;  align-items: center;}
+	.dropdown-menu li a, .dropdown-menu li input[type="submit"] {color: #99A2B9; text-decoration: none;  display: block; font-size: 14px; height:27px;}
+	.dropdown-menu li input[type="submit"]:hover, .dropdown-menu li a:hover { text-decoration: underline; font-size: 14px; }
 	.dropdown-toggle { background: none; border: none; font-size: 14px; cursor: pointer; color: #99A2B9; }
 </style>  
 <!-- import js -->
@@ -98,10 +99,10 @@
 							        </span>
 							        <!-- 드롭다운 메뉴 -->
 							        <ul class="dropdown-menu" id="dropdownMenu">
-							            <li><a href="mypage/userInfo">마이페이지</a></li>
+							            <li><a href="${pageContext.request.contextPath}/mypage" style="display:flex; justify-content:center;  align-items:center;">마이페이지</a></li>
 							            <li>
 							                <form action="/logout" method="post">
-							                    <input type="submit" value="로그아웃" style="background:none; border:none; color:#99A2B9; cursor:pointer;" />
+							                    <input type="submit" value="로그아웃" style="background:none; border:none; color:#99A2B9; cursor:pointer; padding:0 20px;" />
 							                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							                </form>
 							            </li>
@@ -183,6 +184,8 @@
 		     dropdownIcon.addEventListener('click', function(event) {
 		         console.log("드롭다운 아이콘 클릭");
 		         event.stopPropagation();
+				 //드롭다운 클릭된 경우, subHeader 숨기기
+ 	             subHeader.classList.remove('dpF');
 		         var dropdownMenu = document.getElementById('dropdownMenu');
 		         
 		         // 드롭다운 메뉴 표시 또는 숨기기

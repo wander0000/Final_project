@@ -33,8 +33,16 @@
 		    select date_add(date, interval 1 day)
 		    from daterange
 		    where date_add(date, interval 1 day) <![CDATA[ <= ]]> last_day(date_format(now(), '%Y-%m-01'))
+		),
+		last_wednesday AS (
+		    select max(date) as last_wednesday
+		    from daterange
+		    where dayofweek(date) = 4
 		)
 		select date, day, weekday,
+			   case when date = (select last_wednesday from last_wednesday) then 3
+					when weekday = '일' or weekday = '토' then 2
+	   		   else 1 end as culday,
 			   concat(date_format((date), '%y.%m.%d'), '(', weekday ,')') as txt
 		from
 		(

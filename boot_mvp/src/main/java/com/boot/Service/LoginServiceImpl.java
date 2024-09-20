@@ -79,6 +79,12 @@ public class LoginServiceImpl implements LoginService {
         // DAO를 통해 비밀번호를 업데이트합니다.
         userdao.updatePasswordByEmail(email, encodedPassword);
     }
+
+    @Override
+    public boolean existsByUuid2(String uuid) {
+        // 실제로 DAO 메서드를 호출하여 중복 여부 확인
+        return userdao.existsByUuid2(uuid);
+    }
     
 
     

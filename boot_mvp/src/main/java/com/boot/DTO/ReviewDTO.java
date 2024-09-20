@@ -1,7 +1,6 @@
 package com.boot.DTO;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +17,8 @@ public class ReviewDTO {
     private String review; // 리뷰
     
     private String userid; // 조인으로 가져올 아이디
+    private String movienm; // 조인으로 가져올 영화명
+    private Date viewday; // 조인으로 가져올 관람일
     
     private int limit;
     private int page;

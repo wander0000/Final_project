@@ -39,7 +39,7 @@
                                 <form action="/auth" method="post">
 									<!-- CSRF Token -->
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>                                    
-									
+									<input type="hidden" name="redirect" value="${param.redirect}"/>
                                     <input type="text" name="userid" placeholder="아이디" class="idpwbox1" required>
                             </div>
                             <div class="log3">
@@ -62,6 +62,9 @@
                                     </div>
                                 </div>
                             </div>
+	                                    <div class="a1">
+	                                        <a href="/oauth2/authorization/naver">네이버로 로그인</a>
+	                                    </div>
                         </div>
                     </div>
 

@@ -21,6 +21,7 @@ import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Service.AttendenceService;
 import com.boot.Service.BoxOfficeService;
 import com.boot.Service.MembershipService;
 import com.boot.Service.MovieService;
@@ -38,7 +39,7 @@ public class MainController {
 	private BoxOfficeService boxofficeService;
 	
 	@Autowired
-	private MembershipService memService;
+	private AttendenceService attendService;
 	
 	@RequestMapping("/main")
 	public String main(Model model) 
@@ -63,20 +64,6 @@ public class MainController {
 		model.addAttribute("boxOffice", boxDTO);
 		model.addAttribute("moviePlayingList", moviePlayingList);
 		model.addAttribute("movieUpcomingList", movieUpcomingList);
-		
-		// 24.09.11 연주 - 로그인 한 유저이면 userid,grade(멤버십등금)정보 넣어보내기
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		 	
-		if (!(auth instanceof AnonymousAuthenticationToken)) {//
-			CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 정보 가져오기
-			String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
-			log.info("사용자 ID=================>"+userDetails.getUserId());
-		    model.addAttribute("userid", loginedUserId);
-		    
-		    String grade = memService.getGrade();
-		    model.addAttribute("grade", grade);
-		}
-		// --------------24.09.11 연주 끝 ------------------------------------------
 		
 		return "main";
 	};

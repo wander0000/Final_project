@@ -31,7 +31,7 @@
          ORDER BY trndt DESC
       </if>
       <if test='(days == "90")'>
-      	 AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+      	 AND trndt BETWEEN DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND now()
          ORDER BY trndt DESC
       </if>
    </sql>
@@ -46,7 +46,7 @@
         SELECT * FROM pthisttb where uuid=#{uuid}
         AND trndt BETWEEN #{startDate} AND #{endDate}
 		ORDER BY trndt DESC
-		LIMIT #{pageSize} OFFSET #{offset}
+		<include refid="pagenation"></include>
     </select>
     
     <!-- 포인트 이력 목록의 갯수(특정기간)-->

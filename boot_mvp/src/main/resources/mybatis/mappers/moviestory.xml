@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.MovieStoryDAO">       
+        
+    <!-- 본영화+관람편 조회 -->
+    <select id="getWatchedMovies" resultType="com.boot.DTO.WatchedMovieDTO">
+		SELECT 
+		    r.movieno,
+		    t.theaternm,          
+		    r.viewday,            
+		    r.roomno,            
+		    r.tmember,            
+		    rv.review,            
+		    rv.star,              
+		    mu.moviepostimg,       
+		    mu.movienm             
+		FROM reservetb r
+		LEFT OUTER JOIN reviewtb rv ON r.movieno = rv.movieno AND r.uuid = rv.uuid  
+		LEFT OUTER JOIN (
+		    SELECT movieno, moviepostimg, movienm 
+		    FROM movietb2 
+		    UNION
+		    SELECT movieno, moviepostimg, movienm 
+		    FROM boxofficetb
+		) mu ON r.movieno = mu.movieno
+		LEFT OUTER JOIN theatertb t ON r.areano = t.areano AND r.theaterno = t.theaterno 
+		<![CDATA[
+		WHERE r.viewday < NOW()   
+ 		]]>
+		AND r.uuid = #{uuid} 
+		ORDER BY r.viewday DESC
+		<include refid="pagenation"></include>
+    </select>
+    
+    <!-- 본영화 갯수 조회 -->
+    <select id="getTotalCountWatchedMovies" resultType="int">
+		<![CDATA[
+			SELECT count(*) 
+			FROM reservetb r
+			WHERE r.viewday < NOW()  
+			AND r.uuid = #{uuid}
+ 		]]>
+    </select>
+    
+    
+    <!-- 좋아요 한 영화 리스트 -->
+    <select id="getlikedMovies" resultType="com.boot.DTO.MovietbDTO">
+		SELECT 
+		    li.movieno,
+		    m.moviepostimg,
+		    m.movienm,
+		    MIN(m.releaseday) AS releaseday,
+		    MAX(m.endday) AS endday,
+		    (
+		        SELECT COUNT(*) 
+		        FROM liketb 
+		        WHERE movieno = li.movieno
+		    ) AS scrapRate 
+		FROM 
+		    liketb li
+		LEFT OUTER JOIN (
+		    SELECT movieno, moviepostimg, movienm, releaseday, endday
+		    FROM movietb2 
+		    UNION
+		    SELECT movieno, moviepostimg, movienm, releaseday, NULL AS endday
+		    FROM boxofficetb
+		) m ON li.movieno = m.movieno
+		WHERE 
+		    li.uuid = #{uuid}
+		GROUP BY 
+		    li.movieno, m.moviepostimg, m.movienm  
+		ORDER BY 
+		    releaseday DESC
+		<include refid="pagenation"></include>
+    </select>
+    
+    <!-- 좋아요 한 영화의 갯수 -->
+    <select id="getTotalCountlikedMovies" resultType="int">
+        SELECT count(*) 
+        FROM liketb 
+		WHERE uuid = #{uuid}
+    </select>
+    
+    
+    <!-- 관람평 목록 조회 -->
+	<select id="getUserReviews">
+		SELECT 
+		    r.movieno,
+		    MAX(r.viewday) AS viewday, 
+		    rv.review,
+		    rv.star,
+		    m.movienm
+		FROM reviewtb rv
+		LEFT OUTER JOIN reservetb r ON r.movieno = rv.movieno AND r.uuid = rv.uuid
+		LEFT OUTER JOIN (
+		    SELECT movieno, movienm 
+		    FROM movietb2 
+		    UNION
+		    SELECT movieno, movienm 
+		    FROM boxofficetb
+		) m ON rv.movieno = m.movieno
+		<![CDATA[
+		WHERE r.viewday < NOW()
+ 		]]>
+		  AND r.uuid = #{uuid}
+		GROUP BY r.movieno, rv.review, rv.star, m.movienm
+		ORDER BY MAX(r.viewday) DESC
+		<include refid="pagenation"></include>
+	</select>
+
+    <!-- 관람평 갯수 조회 -->
+    <select id="getTotalCountUserReviews" resultType="int">
+        SELECT count(*) 
+        FROM reviewtb 
+		WHERE uuid = #{uuid}
+    </select>
+
+ 	<sql id="pagenation">
+   		LIMIT #{pageSize} OFFSET #{offset}
+   </sql>
+         
+</mapper>

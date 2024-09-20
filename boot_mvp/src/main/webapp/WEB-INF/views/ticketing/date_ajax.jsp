@@ -5,8 +5,8 @@
 <html>
 <body>
 	<div class="selectit">
-	    <img src="${pageContext.request.contextPath}/images/rating/grade_15.png" alt="">
-	    <a href="#none">${title }</a>
+	    <img src="${pageContext.request.contextPath}/images/rating/grade_${minfo.ratingno}.png" alt="">
+	    <a href="#none">${minfo.movienm }</a>
 	</div>
 	<div class="listtime">
 		<c:forEach items="${detailinfo }" var="info">

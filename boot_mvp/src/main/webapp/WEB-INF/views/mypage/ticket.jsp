@@ -46,26 +46,25 @@
                                 <div class="filterBtn">
                                     <div class="leftFilter">
                                         <div class="filterTitle">기간별 조회</div>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">15일</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">1개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">2개월</button>
-                                        <button class="filter" type="submit" id="period" name="orderByPeriod">3개월</button>
-                                        
+											<button class="filter" data-days="15">15일</button>
+										   	<button class="filter" data-days="30">1개월</button>
+										   	<button class="filter" data-days="60">2개월</button>
+										   	<button class="filter" data-days="90">3개월</button>
                                     </div>
                                     <div class="rightFilter">
                                         <div class="filterTitle">월별 조회</div>
-                                        <select id="orderBy" name="orderBy" class="custom-select" onchange="switchTab(this.value);">
+                                        <select id="orderBy" name="orderBy" class="custom-select">
                                             <option disabled selected>선택</option>
-                                            <option>예매일</option>
-                                            <option>상영일</option>
+                                            <option value="예매일">예매일</option>
+                                            <option value="상영일">상영일</option>
                                             <!-- <option value="bookingday" <c:if test="${pageMaker.cri.orderBy == 'bookingday'}">selected='selected'</c:if>>예매일</option> -->
                                             <!-- <option value="showingday" <c:if test="${pageMaker.cri.orderBy == 'showingday'}">selected='selected'</c:if>>상영일</option> -->
                                         </select>
-                                        <select id="yearSelect" name="year" class="custom-select" onchange="updateFilter();">
+                                        <select id="yearSelect" name="year" class="custom-select">
                                             <option disabled selected>연도</option>
-                                            <!-- JavaScript로 동적으로 옵션 추가 예정 -->
+                                            <!-- JavaScript로 동적으로 옵션 추가 예정 --> 
                                         </select>
-                                        <select id="monthSelect" name="month" class="custom-select" onchange="updateFilter();">
+                                        <select id="monthSelect" name="month" class="custom-select">
                                             <option disabled selected>월</option>
                                             <option value="1">1월</option>
                                             <option value="2">2월</option>
@@ -93,22 +92,13 @@
                                         <div class="conTitle">상태</div>
                                         <div class="conTitle">입장권QR</div>
                                     </div>
-                                    <div class="contentRowBook">
-                                        <div class="ticketCon">0807-1644-0213-266</div>
-                                        <div class="ticketCon">행복의 나라</div>
-                                        <div class="ticketCon">~2024-08-27 16:00</div>
-                                        <div class="ticketCon">2</div>
-                                        <div class="ticketCon">2024-08-27 15:40 </div>
-                                        <div class="ticketCon">
-                                            <button class="submitTab" value="cancel_status" type="submit">취소가능</button>
-                                        </div>
-                                        <div class="ticketCon">
-                                            <button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>
-                                        </div>
-                                     
-
-                                    </div><!-- contentRow 끝 -->
+                                    <div class="contentRowBookList" id="ticketListContent">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+                                    </div><!-- contentRowBookList 끝 -->
                                 </div><!-- listTable 끝 -->
+								<div id="pagination" class="pagination">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+								</div>
                             </div><!-- bookingList 끝 -->
                             <div class="useGuide">
                                 <div class="guideTitle">
@@ -142,12 +132,10 @@
                                         <div class="conTitle">상영일시</div>
                                         <div class="conTitle">취소금액</div>
                                     </div>
-                                    <div class="contentRowCancel">
-                                        <div class="couponCon">2024-08-23 14:22:33</div>
-                                        <div class="couponCon">행복의 나라</div>
-                                        <div class="couponCon">2024-08-27 16:00</div>
-                                        <div class="couponCon">22,000</div>
-                                    </div>
+									<div id="cancelticketList">
+										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+									</div>
+                                   
                                 </div><!-- listTable 끝 -->
                             </div><!-- couponList 끝 -->
                             <div class="useGuide">

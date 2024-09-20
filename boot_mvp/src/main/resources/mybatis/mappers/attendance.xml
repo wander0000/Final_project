@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.DAO.AttendanceDAO">
+    
+    <!-- 유저의 오늘 출석 기록 확인 -->
+	<select id="checkTodayAttendance" parameterType="String" resultType="int">
+	    SELECT COUNT(*) FROM attendance WHERE uuid= #{uuid} AND adate= CURDATE()
+	</select>
+	
+	<!-- 출석 기록 추가 -->
+	<insert id="insertAttendance">
+	    INSERT INTO attendance (uuid,adate) VALUES (#{uuid},CURDATE())
+	</insert>
+	
+	<!-- 한 달 연속 출석 확인 -->
+	<select id="checkMonthlyAttendance" resultType="String">
+			SELECT uuid
+			FROM attendance
+			WHERE adate BETWEEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01') 
+			               AND LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+			GROUP BY uuid
+			HAVING COUNT(*) = DAY(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)));
+	</select>
+	
+	<!-- 이번달 출석 확인 -->
+	<select id="checkUserAttendance">
+		SELECT DAY(adate) as day
+		FROM attendance
+		WHERE uuid = #{uuid}
+		AND adate 
+		BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01')
+		AND LAST_DAY(NOW())
+	</select>
+	
+	
+	
+	
+    
+    
+</mapper>

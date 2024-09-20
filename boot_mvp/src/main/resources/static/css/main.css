@@ -349,3 +349,127 @@ section
 }
 
 
+/*출석이벤트 팝업*/
+
+.popUp 
+{
+    z-index: 9999;
+    position: absolute; /* 또는 fixed */
+    display: none; /* 처음엔 숨김 상태로 유지 */
+}
+
+.popBg 
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:rgba(0,0,0,0.6);
+}
+
+.popCon
+{
+	display: flex; 
+	flex-direction: column;
+	position: fixed; 
+	left: 50%; top: 50%; 
+	transform: translate(-50%, -50%); 
+	padding: 32px; 
+	overflow: hidden; /* 자식 요소가 컨테이너를 넘어가지 않도록 설정 */
+	background-color: #1A1B24;
+	border-radius: 16px;
+ 	 gap: 40px 0;
+
+}
+
+.popH
+{
+	display: flex;
+}
+
+.mlauto
+{
+  margin-left: auto;
+  z-index: 1000;
+}
+
+
+.popH .icon i
+{
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popM
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px 0;
+  
+}
+
+.popTitle
+{
+  font-size: 24px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.popAlert
+{
+  font-size:16px;
+/*  text-align: center;*/
+  font-weight:400;
+  color: #99A2B9;
+}
+
+.popM button
+{
+    padding: 0 20px;
+    height: 48px;
+    border-radius: 6px;
+    background-color: rgba(217, 217, 217, 0.1);
+    box-sizing: border-box;
+    color: #99A2B9;
+	border: none;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.popM button:hover
+{
+    border: 1px solid #F3B931;
+    color: #F3B931;
+	background: rgb(243 185 49 / 30%);
+}
+
+.popB 
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+.checkCon
+{
+	display: flex;
+	gap: 0 5px;
+	
+}
+
+.popB input
+{
+    color:  #99A2B9;
+  	width: 15px;
+}
+
+
+.popB label
+{
+	color:#99A2B9;
+	font-size: 14px;
+}

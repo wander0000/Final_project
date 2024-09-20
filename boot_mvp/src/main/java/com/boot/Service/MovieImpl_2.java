@@ -26,10 +26,8 @@ public class MovieImpl_2 implements MovieService_2 {
 	}
 
 	@Override
-	public String getTitle(HashMap<String, String> param) {
+	public MovietbDTO getTitleRating(HashMap<String, String> param) {
 		MovietbDAO_2 dao = sqlSession.getMapper(MovietbDAO_2.class);
-		return dao.getTitle(param);
+		return dao.getTitleRating(param);
 	}
-	
-	
 }

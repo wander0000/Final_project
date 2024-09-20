@@ -133,34 +133,49 @@ function checkUserId(callback) {
 
     var csrfToken = $('input[name="${_csrf.parameterName}"]').val();
 
-    $.ajax({
-        url: "/checkUserId",
-        type: "GET",
-        data: { userid: userId },
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-        },
-        success: function(response) {
-            if (response.userExists) {
-                alert("이미 사용 중인 아이디입니다.");
-                isUserIdChecked = false;
-                callback(false);
-            } else {
-                var confirmUsage = confirm("사용 가능한 아이디입니다. 사용하시겠습니까?");
-                if (confirmUsage) {
-                    $('#userIdInput').addClass('readonly');
-                    $('#checkId').hide();
-                    $('#userIdInput').prop('readonly', true);
-                    isUserIdChecked = true;
-                }
-                callback(true);
+    // 두 개의 테이블에서 중복 확인을 진행
+    $.when(
+        // 첫 번째 테이블에서 중복 체크
+        $.ajax({
+            url: "/checkUserId",
+            type: "GET",
+            data: { userid: userId },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
             }
-        },
-        error: function() {
-            alert("서버 오류. 다시 시도해주세요.");
+        }),
+        // 두 번째 테이블에서 중복 체크 (OAuth 테이블)
+        $.ajax({
+            url: "/oauthCheckUserid",
+            type: "GET",
+            data: { userid: userId },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+            }
+        })
+    ).done(function(checkUserIdResponse, oauthCheckUseridResponse) {
+        // 두 테이블 응답에서 userExists 값을 확인
+        var userIdExists = checkUserIdResponse[0].userExists;
+        var oauthUserIdExists = oauthCheckUseridResponse[0].userExists;
+
+        if (!userIdExists && !oauthUserIdExists) {
+            var confirmUsage = confirm("사용 가능한 아이디입니다. 사용하시겠습니까?");
+            if (confirmUsage) {
+                $('#userIdInput').addClass('readonly');
+                $('#checkId').hide();
+                $('#userIdInput').prop('readonly', true);
+                isUserIdChecked = true;
+            }
+            callback(true);
+        } else {
+            alert("이미 사용 중인 아이디입니다.");
             isUserIdChecked = false;
             callback(false);
         }
+    }).fail(function() {
+        alert("서버 오류. 다시 시도해주세요.");
+        isUserIdChecked = false;
+        callback(false);
     });
 }
 

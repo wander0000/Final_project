@@ -11,8 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +59,17 @@ public class TicketingController {
 	
 	@Autowired
 	private ReserdtltbService_2 reserdtlService;
+	
+	//로그인 유무 체크
+    @GetMapping("/logincheck")
+    public ResponseEntity<Boolean> logincheck() {
+    	log.info("@# logincheck");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+        log.info("@# isLoggedIn: " + isLoggedIn);
+        
+        return ResponseEntity.ok(isLoggedIn);
+    }
 	
 	@RequestMapping("/movieselect")
 	public String Ticketing(HttpSession session, Model model) {
@@ -110,7 +126,7 @@ public class TicketingController {
 	        param.put("viewday", formattedDate);
 		}
 		
-		mav.addObject("title", movieService.getTitle(param));
+		mav.addObject("minfo", movieService.getTitleRating(param));
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
 		mav.addObject("detailinfo", screenService.selectdtl(param));
@@ -207,6 +223,7 @@ public class TicketingController {
 		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		
 		params.put("calc", param.get("calc")); // 총 가격
+		params.put("pricetype", param.get("pricetype")); // 가격 타입
 		params.put("adult", param.get("adult")); //성인 숫자
 		params.put("youth", param.get("youth")); //청소년 숫자
 		params.put("old", param.get("old")); //경로 숫자
@@ -233,6 +250,7 @@ public class TicketingController {
 		model.addAttribute("disable", params.get("disable"));
 		model.addAttribute("seats", params.get("seats"));
 		model.addAttribute("calc", params.get("calc"));
+		model.addAttribute("pricetype", params.get("pricetype")); // 가격 타입
 		
 		//이후 컨트롤러 작업은 PayContoller에서 진행
 		return "ticketing/payment";

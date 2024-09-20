@@ -15,4 +15,5 @@ public interface UserService_4 {
 	 public void updateSelectGenre(String genrenlList);
 	 public void deleteSelectGenre(String uuid);
 	 public String getSelectGenre();
+	 public String getUserPhoneNumber(String uuid);
 }

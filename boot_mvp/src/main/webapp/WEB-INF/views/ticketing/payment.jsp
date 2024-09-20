@@ -11,7 +11,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 </head>
 <body>
-<form method="post" action="">
 	<div class="container">
         <jsp:include page="../header.jsp" />
         <section class="section">
@@ -82,8 +81,9 @@
                         </div>
                         <div class="couponarea">
                             <a href="#none" class="afont">쿠폰</a>
-                            <button type="button" class="discountBtn">쿠폰</button>
-                            <input type="text" id="coupon" value="-0 원" readonly>
+                            <button type="button" class="discountBtn" onclick="openPop('C');">쿠폰</button>
+                            <button type="button" id="C_cancel" class="discountBtn unshowbtn" onclick="cancel_coupon('C', 'coupon');">취소</button>
+                            <input type="text" class="inputshow" id="coupon" value="" readonly>
                         </div>
                     </div> <!-- couponDiv end -->
                     <div class="pointDiv">
@@ -92,13 +92,15 @@
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">할인권</a>
-                            <button type="button" class="discountBtn">할인권</button>
-                            <input type="text" id="discount" value="-0 원" readonly>
+                            <button type="button" class="discountBtn" onclick="openPop('D');">할인권</button>
+                            <button type="button" id="D_cancel" class="discountBtn unshowbtn" onclick="cancel_coupon('D', 'discount');">취소</button>
+                            <input type="text" class="inputshow" id="discount" value="" readonly>
                         </div>
                         <div class="pointarea">
                             <a href="#none" class="afont">포인트</a>
-                            <button type="button" class="discountBtn">모두 사용</button>
-                            <input type="text" id="point" value="0 P">
+                            <button type="button" class="discountBtn" onclick="openPop2();">포인트</button>
+                            <button type="button" id="P_cancel" class="discountBtn unshowbtn" onclick="cancel_point();">취소</button>
+                            <input type="text" class="inputshow" id="point" value="">
                         </div>
                     </div> <!-- pointDiv end -->
                     <div class="paymentDiv">
@@ -118,15 +120,15 @@
                         <div class="discountListarea">
                             <div class="discountList">
                                 <a href="#none">쿠폰</a>
-                                <input type="text" id="t_coupon" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_coupon" value="-0" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">할인권</a>
-                                <input type="text" id="t_discount" value="-0 원" readonly>
+                                <input type="text" class="inputshow" id="t_discount" value="-0" readonly>
                             </div>
                             <div class="discountList">
                                 <a href="#none">포인트</a>
-                                <input type="text" id="t_point" value="-0 P" readonly>
+                                <input type="text" class="inputshow" id="t_point" name="t_point" value="0" readonly>
                             </div>
                         </div>
                     </div>
@@ -135,17 +137,24 @@
                             <a href="#none">상품금액</a>
                             <input type="hidden" id="calc" name="calc" value="${calc }">
                             <fmt:formatNumber value="${calc }" type="number" var="p_pay" groupingUsed="true"/>
-                            <input type="text" id="p_pay" value="${p_pay }원" readonly>
+                            <input type="text" class="inputshow" id="p_pay" value="${p_pay }원" readonly>
                         </div>
                         <div class="showpay">
-                            <a href="#none">할인금액</a>
-                            <input type="text" id="d_pay" value="- 0" readonly>
+                            <a href="#none">할인상품</a>
+                            <input type="text" class="inputshow" id="d_pay" value="- 0" readonly>
+                        </div>
+                        <div class="showpay">
+                            <a href="#none">할인상품</a>
+                            <input type="text" class="inputshow" id="up_pay" value="- 0" readonly>
                         </div>
                         <div class="showpay">
                             <a href="#none">결제금액</a>
+                            <input type="hidden" id="refno" value="0">
+                            <input type="hidden" id="pricetype" value="${pricetype }">
+                            <input type="hidden" id="couponno" name="couponno" value="none">
                             <input type="hidden" id="t_calc" name="t_calc" value="${calc }">
                             <fmt:formatNumber value="${calc }" type="number" var="t_pay" groupingUsed="true"/>
-                            <input type="text" id="t_pay" value="${t_pay }원" readonly>
+                            <input type="text" class="inputshow" id="t_pay" value="${t_pay }원" readonly>
                         </div>
                         <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div id="paybutton">
@@ -157,6 +166,5 @@
         </section>
     </div>
     <jsp:include page="../footer.jsp" />
-</form>
 </body>
 </html>

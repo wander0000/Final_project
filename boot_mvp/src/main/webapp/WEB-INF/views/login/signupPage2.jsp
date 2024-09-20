@@ -42,7 +42,7 @@
                                 <div class="genrebox">
                                     <div class="genreboxButtons">
                                         <c:forEach var="genre" items="${genres}">
-                                            <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genreno}" class="genrebut" />
+                                            <input type="checkbox" id="${genre.genreno}" name="genres" value="${genre.genrenm}" class="genrebut" />
                                             <label for="${genre.genreno}" class="genrebutlabel">${genre.genrenm}</label>
                                         </c:forEach>
                                     </div>
