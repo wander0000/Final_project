@@ -11,6 +11,9 @@ import com.boot.DTO.SelecGenretbDTO;
 
 public interface MovieService {
 	
+	// TMDB 영화 데이터 삭제
+    void deleteMovie();	
+    
 	// TMDB 영화 데이터 받아서 입력	
 	void insertMovie();
     

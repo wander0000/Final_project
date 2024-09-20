@@ -406,6 +406,12 @@ public class BoxOfficeServiceimpl implements BoxOfficeService{
 	{
 	    return movienm.replaceAll("(\\D)(\\d)", "$1 $2");  // 숫자 앞에 공백 추가
 	}
+
+	@Override
+	public void deleteBoxOffice() {
+		MovieDAO dao = sqlSession.getMapper(MovieDAO.class);
+		dao.deleteBoxOffice();		
+	}
 	
 	
 	

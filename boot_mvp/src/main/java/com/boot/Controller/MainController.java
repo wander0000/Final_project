@@ -75,21 +75,21 @@ public class MainController {
 	};
 		
 
-	@GetMapping("/saveMovie")
-    public ModelAndView insertMovie()
-	{
-        try 
-        {
-        	movieService.insertMovie();  // TMDB 영화 데이터 수집 및 저장
-        	boxofficeService.insertBoxOffice();  // TMDB 영화 데이터 수집 및 저장
-            return new ModelAndView("redirect:/main");  // 성공 시 영화 목록 페이지로 리다이렉트
-        } 
-        catch (Exception e) 
-        {
-            e.printStackTrace();
-            return new ModelAndView("error");  // 오류 발생 시 에러 페이지로 이동
-        }
-    }
+//	@GetMapping("/saveMovie")
+//    public ModelAndView insertMovie()
+//	{
+//        try 
+//        {
+//        	movieService.insertMovie();  // TMDB 영화 데이터 수집 및 저장
+//        	boxofficeService.insertBoxOffice();  // TMDB 영화 데이터 수집 및 저장
+//            return new ModelAndView("redirect:/main");  // 성공 시 영화 목록 페이지로 리다이렉트
+//        } 
+//        catch (Exception e) 
+//        {
+//            e.printStackTrace();
+//            return new ModelAndView("error");  // 오류 발생 시 에러 페이지로 이동
+//        }
+//    }
 	
 	@RequestMapping("/recommendPop")
 	public ResponseEntity<Object> recommendPop(@RequestParam HashMap<String, Object> param) 
