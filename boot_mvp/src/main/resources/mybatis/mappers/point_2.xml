@@ -10,7 +10,7 @@
 	<select id="Call_movie_payment_points" statementType="CALLABLE">
         CALL movie_payment_points(
             #{uuid, mode=IN, jdbcType=VARCHAR},
-            #{point, mode=IN, jdbcType=INTEGER},
+            #{t_point, mode=IN, jdbcType=INTEGER},
             #{t_calc, mode=IN, jdbcType=INTEGER}
         )
     </select>
