@@ -15,6 +15,12 @@ import com.boot.DTO.SelecGenretbDTO;
 //실행시 매퍼파일을 읽어 들이도록 지정
 @Mapper
 public interface MovieDAO { 	
+
+	// TMDB 영화 데이터 받아서 입력
+    void deleteMovie();
+    
+	// boxOffice 영화 데이터 받아서 입력
+    void deleteBoxOffice();
 	
 	// TMDB 영화 데이터 받아서 입력
     void insertMovie(List<MovietbDTO> movieList);

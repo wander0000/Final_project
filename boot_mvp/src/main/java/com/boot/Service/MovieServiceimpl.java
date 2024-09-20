@@ -544,6 +544,13 @@ public class MovieServiceimpl implements MovieService{
 		
 		return dto;
 	}
+
+	@Override
+	public void deleteMovie() 
+	{
+		MovieDAO dao = sqlSession.getMapper(MovieDAO.class);
+		dao.deleteMovie();
+	}
 	
 
 	
