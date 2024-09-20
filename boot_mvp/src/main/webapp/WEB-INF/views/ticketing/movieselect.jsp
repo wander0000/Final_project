@@ -33,9 +33,7 @@ window.onload = function() {
                     secondLink.click();
                     
                     setTimeout(function() {
-						console.log("영화선택칸 활성화 되어야함");
                     	var thirdLink = document.querySelector('.moviebox .boxtit #selected_${sel_movino}');
-						console.log("선택된 영화번호"+${sel_movino});
 						
                     	if(thirdLink) {
                     		var nextLink = thirdLink.nextElementSibling;
