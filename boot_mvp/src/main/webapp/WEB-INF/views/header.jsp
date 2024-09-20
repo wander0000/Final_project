@@ -37,7 +37,7 @@
 	.rightWrap button#logout:hover { background: rgba(243,185,49,0.2); color: #F3B931;}
 	.loginCon { display: flex; align-items: center; gap: 0 10px;}
 	.userCon { display: flex; align-items: center; gap: 0 10px; height: 36px; background: rgba(217,217,217,0.1); padding: 0 12px; border:0; border-radius: 6px; color: #99A2B9;}
-	.userCon img {height:26px; display: flex; align-items: center; justify-content: center;} 
+	.userCon img {height:20px; display: flex; align-items: center; justify-content: center;} 
 	.dropdown-menu { position: relative; z-index:2000;}
 	.dropdown-menu { display: none; position: absolute; top: 79%; right: 60px; background-color:#1A1B24;; padding: 10px; list-style: none; border-radius: 5px; z-index: 2001;}
 	.dropdown-menu li { margin: 5px 0;  font-size: 14px; color: #99A2B9; display: flex; justify-content: center;  align-items: center;}
@@ -66,17 +66,17 @@
                 </li>-->
             </ul>
             <div class="rightWrap">
-                <div class="inputWrap">
+<!--                <div class="inputWrap">
                     <input class="searchInput" type="search">
                     <span class="material-symbols-outlined searchIcon">search</span>
-                </div>
+                </div>-->
 				<div class="loginCon">
 				    <c:choose>
 				        <c:when test="${empty userid}">
 				            <button class="login" id="login" onclick="location.href='/login'">로그인</button>
 				        </c:when>
 				        <c:otherwise>
-							<div class="userCon">
+							<div class="userCon" style="background:none">
 							    <c:choose>
 							        <c:when test="${grade == 'Welcome'}">
 							            <img src="${pageContext.request.contextPath}/images/i-welcome.svg" alt="welcome">
