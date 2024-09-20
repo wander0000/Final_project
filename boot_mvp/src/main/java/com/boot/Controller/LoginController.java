@@ -154,10 +154,11 @@ public class LoginController {
 
     
 //    // oauth 회원가입페이지이동
-//    @GetMapping("/oauthSignup1")
-//    public String oauthSignup(Model model) {
-//        return "/login/oauthSignup1";
-//    }
+    @GetMapping("/oauthSignupSubmit1")
+    public String oauthSignupSubmit1() {
+        // 회원가입 페이지로 이동
+        return "/login/oauthSignup1";  // 리턴 값은 실제 뷰 파일의 이름
+    }
     
     // oauth 추가 회원가입 1
     @PostMapping("/oauthSignupSubmit1")
