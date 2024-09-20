@@ -72,6 +72,7 @@ public class SecurityConfig {
                 if (isExistingUser) {
                     response.sendRedirect("/");  // 기존 회원이면 홈 페이지로 리다이렉트
                 } else {
+
                     response.sendRedirect("/oauthSignupSubmit1");  // 신규 회원이면 추가 회원가입 페이지로 리다이렉트
                 }
             })  // OAuth2 로그인 성공 후 로직 추가
