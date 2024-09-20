@@ -96,7 +96,7 @@
     <select id="selectUserGenre" resultType="com.boot.DTO.SelecGenretbDTO">    	
 	    SELECT 
 	    uuid, genrenm 
-	    from selectgenretb
+	    from selecgenretb
 	    where uuid= #{uuid}		 
     </select>   
     

@@ -40,7 +40,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getPname(),
                 user.getPpass(),
                 user.getEmail(),
-                user.getPhone(),
                 Collections.singletonList(authority)  // 권한 목록
         );
     }

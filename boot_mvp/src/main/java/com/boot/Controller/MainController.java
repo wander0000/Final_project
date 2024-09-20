@@ -2,10 +2,12 @@ package com.boot.Controller;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -86,9 +88,10 @@ public class MainController {
     }
 	
 	@RequestMapping("/recommendPop")
-	public ResponseEntity<List<BoxOfficeDTO>> recommendPop(@RequestParam HashMap<String, Object> param) 
+	public ResponseEntity<Object> recommendPop(@RequestParam HashMap<String, Object> param) 
 	{
     	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
     	String uuid = user.getUuId();  // 사용자 ID 가져오기
     	param.put("uuid",uuid);
     	ArrayList<SelecGenretbDTO> selectGD = movieService.selectUserGenre(param);

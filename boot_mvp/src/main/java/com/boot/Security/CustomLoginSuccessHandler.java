@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import com.boot.Service.AttendenceService;
+import com.boot.Service.CustomOAuth2UserService;
 import com.boot.Service.MembershipService;
+import com.boot.Service.OauthtbService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,19 +25,49 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
+    private OauthtbService oauthtbService;
+    
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
     private AttendenceService attendanceService;
 
     @Autowired
     private MembershipService memService;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         log.info("Authentication success. User: {}", authentication.getName());
 
         try {
+            // OAuth2 인증이 발생한 경우
+            if (authentication instanceof OAuth2AuthenticationToken) {
+                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+                String registrationId = oauthToken.getAuthorizedClientRegistrationId();
+                String oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+                if ("naver".equals(registrationId)) {
+                    oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+                }
+
+                // 새로운 사용자 확인
+                boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
+                if (isExistingUser) {
+                    log.info("기존 사용자입니다. 홈 페이지로 리다이렉트합니다.");
+                    response.sendRedirect("/");  // 기존 회원이면 홈 페이지로 리다이렉트
+                } else {
+                    log.info("신규 사용자입니다. 추가 회원가입 페이지로 리다이렉트합니다.");
+                    response.sendRedirect("/oauthSignupSubmit1");  // 신규 회원이면 추가 회원가입 페이지로 리다이렉트
+                    return;
+                }
+            }
+
             // 로그인 성공 후 포인트 지급 및 출석 체크
             boolean isNewAttendance = attendanceService.checkAttendance();  // 출석 기록 여부 확인 > 출석기록
-            log.info("Authentication success. 오늘 처음 로그인함?:"+isNewAttendance);
+            log.info("오늘 처음 로그인함?:" + isNewAttendance);
 
             // 출석 기록이 새로 추가되었으면 팝업을 띄우도록 쿠키 설정
             if (isNewAttendance) {
@@ -49,12 +82,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                 // 쿠키 생성
                 Cookie attendancePopupCookie = new Cookie("showAttendancePopup", "true");
                 attendancePopupCookie.setPath("/"); // 사이트 전역에서 사용 가능
-                // 자정까지 남은 시간 동안만 유효하게 설정
-                attendancePopupCookie.setMaxAge((int) secondsUntilMidnight);
-                // 쿠키 응답에 추가
+                attendancePopupCookie.setMaxAge((int) secondsUntilMidnight); // 자정까지 유효
                 response.addCookie(attendancePopupCookie);
             }
-
 
             log.info("Attendance checked successfully for user: {}", authentication.getName());
         } catch (Exception e) {
