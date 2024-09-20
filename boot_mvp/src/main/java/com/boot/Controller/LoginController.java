@@ -32,6 +32,7 @@ import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
+import com.boot.Service.MembershipService;
 import com.boot.Service.OauthtbService;
 import com.boot.Service.SelecGenretbService;
 
@@ -52,6 +53,9 @@ public class LoginController {
 
     @Autowired
     private SelecGenretbService selecgenretbService;
+    
+    @Autowired
+    private MembershipService memService;
 
     @Autowired
     private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
@@ -236,6 +240,9 @@ public class LoginController {
                         selecgenretbService.oauthtbinsertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genrenm));  // uuid로 수정
                     }
                 }
+                
+                //멤버십 정보 생성(grade,가입축하포인트적립, point, mileage 생성)
+                memService.insertMembership(savedUser.getUuid());
             } else {
                 return "redirect:/oauthSignupSubmit2?error_code=-99"; // 사용자 정보 확인 오류
             }
@@ -348,6 +355,9 @@ public class LoginController {
                         selecgenretbService.usertbinsertUserGenre(new SelecGenretbDTO(savedUser.getUuid(), genrenm));  // uuid로 수정
                     }
                 }
+                
+                //멤버십 정보 생성(grade,가입축하포인트적립, point, mileage 생성)
+                memService.insertMembership(savedUser.getUuid());
             } else {
                 return "redirect:/signup/step2?error_code=-99"; // 사용자 정보 확인 오류
             }

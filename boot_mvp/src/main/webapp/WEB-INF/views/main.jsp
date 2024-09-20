@@ -384,6 +384,11 @@
             }
 		    $(this).parents('.popUp').css({"display":"none"}); 
 		});
+		
+		//출석현황 버튼 누르면 마이페이지 메인으로가기
+		document.getElementById('checkAttendanceStatus').addEventListener('click', function() {
+		    window.location.href = "${pageContext.request.contextPath}/mypage";
+		});
       
     });
 </script>
