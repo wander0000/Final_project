@@ -156,7 +156,7 @@
 			<div class="popBg">
 				<div class="popCon">
 					<div class="popH">
-	                    <h4 class="popTitle">매일이 햬택! 출석체크!</h4>
+	                    <h4 class="popTitle">매일이 혜택! 출석체크!</h4>
 		                <div class="mlauto">
 		                    <span class="icon cancel fs24">
 		                        <i class="fa-solid fa-xmark"></i>
@@ -229,43 +229,102 @@
 			},
 			success:function(result) 
 			{
+				console.log(result.uuid);
+				if (typeof result !== 'object') 
+				{
+				    $('.recommendPop').css({"display": "none"});
+				    console.log("로그인하지 않은 사용자입니다.");
+				    return;
+				}
+				
 				var str ='';
 				str+=' <div class="popInner">';
-				str+='<div class="popH">';
-				str+='<h5 class="popTitle">당신을 위한 추천 영화</h5>';
-				str+='<span class="material-symbols-outlined cancelPOP">close</span>';
-				str+='</div>';
-				str+='<div class="popB">';
+				str+='<div class="popButtonWrap">';
 				str+='<div class="buttonArrow arrowLeft">';
 				str+='<span class="material-symbols-outlined ">arrow_back_ios</span>';
 				str+='</div>';
 				str+='<div class="buttonArrow arrowRight">';
 				str+='<span class="material-symbols-outlined ">arrow_forward_ios</span>';
 				str+='</div>';
-				result.forEach(function(movie) 
+				str+='</div>';									
+				str+='<div class="popH">';
+				str+='<h5 class="popTitle">당신을 위한 추천 영화</h5>';
+				str+='<span class="material-symbols-outlined cancelPOP">close</span>';
+				str+='</div>';
+				str+='<div class="popB">';
+
+				
+				result.forEach(function(movie, index)
 				{					
-					str+='<div class="imgCon">';			    
+					str += '<div class="imgCon" style="--i:' + index + ';">';  // index를 --i에 할당			    
 					str+='<img src="'+movie.moviepostimg+'">';			    
 					str+='</div>';		    
 				    // 생성한 요소를 영화 리스트 컨테이너에 추가				    
 				});
+				
 				str+='</div>';	
 				str+='</div>';	
-				$('.recommendPop').html(str);
+				$('.recommendPop').html(str);	
+				
+				// 추천 슬라이드 부분
+				let imgs = document.querySelectorAll('.imgCon');
+				let currentIndex = 0;
+
+				let popB = document.querySelector('.popB');
+				let prev = document.querySelector('.buttonArrow.arrowLeft');
+				let next = document.querySelector('.buttonArrow.arrowRight');
+
+				function updateButtons() 
+				{
+				    prev.style.background = currentIndex === 0 ? '#2b2b2b' : ''; // 비활성화 색상
+				    prev.style.cursor = currentIndex === 0 ? 'inherit' : ''; // 비활성화 색상
+				    next.style.background = currentIndex === imgs.length - 1 ? '#2b2b2b' : ''; // 비활성화 색상
+				    next.style.cursor = currentIndex === imgs.length - 1 ? 'inherit' : ''; // 비활성화 색상
+				    prev.disabled = currentIndex === 0; // 버튼 비활성화
+				    next.disabled = currentIndex === imgs.length - 1; // 버튼 비활성화
+				}
+
+				if (prev && next) 
+				{
+				    next.addEventListener('click', function() {
+				        if (currentIndex < imgs.length - 1) 
+						{
+				            currentIndex++;
+				            popB.style.transform = 'translateX(-' + (currentIndex * 400) + 'px)';
+				            updateButtons(); // 버튼 상태 업데이트
+				        }
+				    });
+
+				    prev.addEventListener('click', function() {
+				        if (currentIndex > 0) {
+				            currentIndex--;
+				            popB.style.transform = 'translateX(-' + (currentIndex * 400) + 'px)';
+				            updateButtons(); // 버튼 상태 업데이트
+				        }
+				    });
+
+				    updateButtons(); // 초기 버튼 상태 업데이트
+				} else {
+				    console.error("버튼 요소를 찾을 수 없습니다.");
+				}					
+				
 			},
 			error:function() 
 			{
-				console.log("ajax 오류");
+			    console.log("ajax 오류");
 			}	
 		});
-	}
+	} // recommendPop 끝
+	
+
+
 </script>
-<script>    
-	$(document).ready(function(){
-		$('.buttonArrow.arrowRight').click(function(){
-			
-		});
-	});
+<script>
+	$(document).on('click', '.recommendPop .popInner .popH span.cancelPOP', function() 
+	{
+	    $('.recommendPop').css({"display": "none"});
+	});	
+		
     var swiper = new Swiper(".mySwiper",     
     {            
         loopedSlides: 10,

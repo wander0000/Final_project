@@ -208,7 +208,7 @@
 		// 드롭다운 메뉴를 클릭했을 때 닫히지 않도록 이벤트 전파 방지
 		document.getElementById('dropdownMenu').addEventListener('click', function(event) {
 		    event.stopPropagation(); // 메뉴 내부 클릭 시 이벤트 전파 방지
-		});
+		}); 
 		
 		
 		
