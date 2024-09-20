@@ -14,6 +14,8 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ import com.boot.DTO.CouponDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MembershipDTO;
 import com.boot.DTO.MovietbDTO;
+import com.boot.DTO.OauthtbDTO;
 import com.boot.DTO.PthistDTO;
 import com.boot.DTO.ReservetbDTO;
 import com.boot.DTO.ReviewDTO;
@@ -41,6 +44,7 @@ import com.boot.Service.GenreService;
 import com.boot.Service.LoginService;
 import com.boot.Service.MembershipService;
 import com.boot.Service.MoviestoryService;
+import com.boot.Service.OauthtbService;
 import com.boot.Service.TicketService;
 import com.boot.Service.UserService_4;
 
@@ -75,6 +79,9 @@ public class MypageController {
 	
 	@Autowired
 	private AttendenceService attService;
+	
+	 @Autowired
+    private OauthtbService oauthService;
 	
 	
 	@RequestMapping("mypage")//마이페이지 메인으로
@@ -368,24 +375,53 @@ public class MypageController {
 	@RequestMapping("mypage/userInfo")//마이페이지 회원정보으로
 	public String userInfo(Model model) {
 		log.info("@# Mypage userInfo");	
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    if (!(auth instanceof AnonymousAuthenticationToken)) {
-		    	CustomUserDetails userDetails = (CustomUserDetails)auth.getPrincipal(); // 로그인된 사용자의 ID 가져오기
-	        	String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
-	        	
-		        UsertbDTO userdto = loginservice.getUserById(loginedUserId);
-		        log.info("@# Mypage userdto=>"+userdto);	
-		        
-		        userdto.setPpass(null); // 비밀번호는 숨김
-		        model.addAttribute("user", userdto);
-		        
-		        String genreList = userService.getSelectGenre();
-		        model.addAttribute("genreList", genreList);//선호장르 정보 담기
-		        
-		        List<GenreDTO> genres = genreservice.getAllGenres();
-		        model.addAttribute("genres", genres);//장르참조테이블 정보 담기
-		    }
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
+		 if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
+				
+			UsertbDTO userdto = loginservice.getUserById(loginedUserId);
+			log.info("@# Mypage userdto=>"+userdto);	
+			
+			userdto.setPpass(null); // 비밀번호는 숨김
+			model.addAttribute("user", userdto);
+			
+			String genreList = userService.getSelectGenre();
+			model.addAttribute("genreList", genreList);//선호장르 정보 담기
+			
+			List<GenreDTO> genres = genreservice.getAllGenres();
+			model.addAttribute("genres", genres);//장르참조테이블 정보 담기
+             
+         } else if(authentication != null && authentication.getPrincipal() instanceof OAuth2User){
+         	
+             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+             String registrationId = oauthToken.getAuthorizedClientRegistrationId();// 공급자 ID (google, naver 등)
+             String oauthUserId = "";
+             if ("naver".equals(registrationId)) {
+                 oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+             }else if("google".equals(registrationId)) {
+             	oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+             }else {
+             	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
+             }
+             OauthtbDTO user = oauthService.oauthGetUserById(oauthUserId);
+             
+ 			model.addAttribute("user", user);
+ 			
+ 			String genreList = userService.getSelectGenre();
+ 			model.addAttribute("genreList", genreList);//선호장르 정보 담기
+ 			
+ 			List<GenreDTO> genres = genreservice.getAllGenres();
+ 			model.addAttribute("genres", genres);//장르참조테이블 정보 담기
+ 			
+ 			// OAuth2 로그인 여부 확인
+ 	        boolean isOAuth2User = authentication instanceof OAuth2AuthenticationToken;
+
+ 	        // JSP에 전달
+ 	        model.addAttribute("isOAuth2User", isOAuth2User);
+         }
+		   
 		return "mypage/userInfo";
 	}
 	

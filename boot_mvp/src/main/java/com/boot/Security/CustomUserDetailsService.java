@@ -18,7 +18,10 @@ import com.boot.DTO.OauthtbDTO;
 import com.boot.DTO.UsertbDTO;
 import com.boot.Service.OauthtbService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UsertbDAO_3 usertbDAO_3;
@@ -60,12 +63,14 @@ public class CustomUserDetailsService implements UserDetailsService {
                 CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
                 return userDetails.getUuId();  // uuid 값을 가져옴
             } else if(authentication != null && authentication.getPrincipal() instanceof OAuth2User){
+            	log.info("naver로그인 OAuth2User");
             	
                 OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
                 String registrationId = oauthToken.getAuthorizedClientRegistrationId();// 공급자 ID (google, naver 등)
                 String oauthUserId = "";
                 if ("naver".equals(registrationId)) {
                     oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+                    log.info("naver로그인 oauthUserId"+oauthUserId);
                 }else if("google".equals(registrationId)) {
                 	oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
                 }else {
