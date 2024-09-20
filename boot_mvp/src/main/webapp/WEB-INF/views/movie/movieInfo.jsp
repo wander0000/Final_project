@@ -230,11 +230,11 @@
 			<div class="contentWrap">
 				<div class="content movieDetailInfo on">
 					<div class="contentTXT">
-						<h5 class="showType"><span class="contentT">상영타입 :</span> ${movieInfo.showType}</h5>
-						<h5 class="typeNm"><span class="contentT">영화유형 :</span> ${movieInfo.typeNm}</h5>
-						<h5 class="genreTxt"><span class="contentT">장르 :</span> ${movieInfo.genre}</h5>
-						<h5 class="directornm"><span class="contentT">감독 :</span> ${movieInfo.directornm}</h5>
-						<h5 class="actor"><span class="contentT">출연진 :</span> ${movieInfo.actor}</h5>
+						<h5 class="showType"><span class="contentT">상영타입 : </span> ${movieInfo.showType}</h5>
+						<h5 class="typeNm"><span class="contentT">영화유형 : </span> ${movieInfo.typeNm}</h5>
+						<h5 class="genreTxt"><span class="contentT">장르 : </span> ${movieInfo.genre}</h5>
+						<h5 class="directornm"><span class="contentT">감독 : </span> ${movieInfo.directornm}</h5>
+						<h5 class="actor"><span class="contentT">출연진 : </span> ${movieInfo.actor}</h5>
 					</div>
 					<div class="overviewWrap">
 						<div id="overview"></div>

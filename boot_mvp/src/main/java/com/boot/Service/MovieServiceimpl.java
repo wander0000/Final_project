@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.boot.DAO.MovieDAO;
+import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MovietbDTO;
+import com.boot.DTO.SelecGenretbDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -523,6 +525,22 @@ public class MovieServiceimpl implements MovieService{
 	public MovietbDTO movieInfo(String movieno) {
 		MovieDAO dao = sqlSession.getMapper(MovieDAO.class);
 		MovietbDTO dto = dao.movieInfo(movieno);
+		
+		return dto;
+	}
+
+	@Override
+	public ArrayList<SelecGenretbDTO> selectUserGenre(HashMap<String, Object> param) {
+		MovieDAO dao = sqlSession.getMapper(MovieDAO.class);
+		ArrayList<SelecGenretbDTO> dto = dao.selectUserGenre(param);
+		
+		return dto;
+	}
+
+	@Override
+	public ArrayList<BoxOfficeDTO> selectMoviesByGenres(HashMap<String, Object> param) {
+		MovieDAO dao = sqlSession.getMapper(MovieDAO.class);
+		ArrayList<BoxOfficeDTO> dto = dao.selectMoviesByGenres(param);
 		
 		return dto;
 	}
