@@ -25,6 +25,7 @@ import com.boot.DTO.LikeDTO;
 import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.ReviewDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.BoxOfficeService;
 import com.boot.Service.LikeService;
 import com.boot.Service.MovieService;
@@ -48,6 +49,9 @@ public class MovieController {
 	
 	@Autowired
 	private LikeService likeService;
+	
+	@Autowired
+    private CustomUserDetailsService userService;	
 	
 	@RequestMapping("/movie")
     public String movie(Model model) 
@@ -137,8 +141,10 @@ public class MovieController {
         
         HashMap<String,String> param = new HashMap<String,String>();
         param.put("movieno", movieno);
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = user.getUuId();
+        
+//        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String uuid = user.getUuId();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
     	param.put("uuid",uuid);
         
         ReviewDTO reviewdto = new ReviewDTO();
@@ -198,8 +204,9 @@ public class MovieController {
     	mav.addObject("movieInfo",movieInfo);
     	mav.addObject("reviewInfo",reviewInfo);
     	
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 //    	String id ="50a14682-69d3-11ef-84e9-4cedfbc1d545";
     	param.put("uuid",id);
 
@@ -273,8 +280,9 @@ public class MovieController {
         
         List<ReviewDTO> reviewList = reviewService.selectReviewPaging(reviewdto);    
         
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
     	log.info("@# id ==> " + id);    	
     	
     	HashMap<String,String> param = new HashMap<String,String>();
@@ -305,8 +313,9 @@ public class MovieController {
     public ResponseEntity<String> insertReview(@RequestParam HashMap<String, String> param) 
     {
     	
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
 //    	String id ="11";
     	param.put("uuid",id);
     	
@@ -320,8 +329,9 @@ public class MovieController {
     public ResponseEntity<String> modifyReview(@RequestParam HashMap<String, String> param) 
     {
     	
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
 //    	String id ="11";
     	param.put("uuid",id);
     	
@@ -335,8 +345,9 @@ public class MovieController {
     public ResponseEntity<String> deleteReview(@RequestParam HashMap<String, String> param) 
     {
     	
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
 //    	String id ="11";
     	param.put("uuid",id);
     	
@@ -352,6 +363,7 @@ public class MovieController {
 //    {    	
 //    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    
 //    	param.put("uuid",id);
 //    	
 //    	log.info("####Insert param==>"+param);
@@ -377,8 +389,9 @@ public class MovieController {
     @RequestMapping("/isLike")
     public ResponseEntity<String> isLike(@RequestParam HashMap<String, String> param) 
     {    	
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
     	param.put("uuid",id);    	
     	
     	log.info("####param==>"+param);
@@ -409,8 +422,9 @@ public class MovieController {
     @RequestMapping("/numLike")
     public ResponseEntity<LikeDTO> numLike(@RequestParam HashMap<String, String> param) 
     {   
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    	String id = user.getUuId();  // 사용자 ID 가져오기
+    	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
     	param.put("uuid",id);
 
     	int islike = likeService.isLike(param);

@@ -23,6 +23,7 @@ import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.MovietbDTO;
 import com.boot.DTO.SelecGenretbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.AttendenceService;
 import com.boot.Service.BoxOfficeService;
 import com.boot.Service.MembershipService;
@@ -42,6 +43,9 @@ public class MainController {
 	
 	@Autowired
 	private AttendenceService attendService;
+	
+	@Autowired
+    private CustomUserDetailsService userService;
 	
 	@RequestMapping("/main")
 	public String main(Model model) 
@@ -90,9 +94,10 @@ public class MainController {
 	@RequestMapping("/recommendPop")
 	public ResponseEntity<Object> recommendPop(@RequestParam HashMap<String, Object> param) 
 	{
-    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    
-    	String uuid = user.getUuId();  // 사용자 ID 가져오기
+//    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
+    	
+//    	String uuid = user.getUuId();  // 사용자 ID 가져오기
     	param.put("uuid",uuid);
     	ArrayList<SelecGenretbDTO> selectGD = movieService.selectUserGenre(param);
     	

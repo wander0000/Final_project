@@ -602,7 +602,7 @@ $(document).ready(function()
 						content += '<div class="detailCon">';
 						content += '<div class="movieDetail">';
 						content += '<img src="'+dto.moviepostimg+'" alt="'+dto.movienm+'">';
-						content += '<input type="hidden" id="movieno" value="'+dto.movieno+'}">';
+						content += '<input type="hidden" id="movieno" value="'+dto.movieno+'">';
 						content += '<div class="infoCon">';
 						content += '<div class="movieConM">';
 						content += '<div class="movieTitle">' + dto.movienm + '</div>';
@@ -614,7 +614,7 @@ $(document).ready(function()
 						content += '</span>';
 						content += '<div class="scrapRate">'+dto.scrapRate+'</div>';
 						content += '</div>';
-						content += '<button class="bookingBtn" type="submit">예매하기</button>';
+						content += '<button class="bookingBtn" type="button" onclick="move_ticketing(\''+dto.movieno+'\')">예매하기</button>';
 						content += '</div>';
 						content += '</div>';
 						content += '</div>';
@@ -720,3 +720,7 @@ $(document).ready(function()
 	 
 
 });// document ready 끝
+
+function move_ticketing(movieno) {
+	window.location.href = "/ticketing/move_ticketing?movieno="+movieno;
+}

@@ -82,6 +82,7 @@ public class TicketingController {
 		model.addAttribute("area", areaservice.selectAll());
 		model.addAttribute("date", areaservice.datedual(""));
 		model.addAttribute("movie", movieService.selectAll());
+		model.addAttribute("gubun", "none");
 		
 		return "ticketing/movieselect";
 	}
@@ -254,6 +255,19 @@ public class TicketingController {
 		
 		//이후 컨트롤러 작업은 PayContoller에서 진행
 		return "ticketing/payment";
+	}
+	
+	@RequestMapping("/move_ticketing")
+	public String move_ticketing(@RequestParam HashMap<String, String> param, Model model) {
+		log.info("@# move_ticketing");
+		
+		model.addAttribute("area", areaservice.selectAll());
+		model.addAttribute("date", areaservice.datedual(""));
+		model.addAttribute("movie", movieService.selectAll());
+		model.addAttribute("sel_movino", param.get("movieno"));
+		model.addAttribute("gubun", "mypage");
+		//return "ticketing/movieselected";
+		return "ticketing/movieselect";
 	}
 	
 	@RequestMapping("/ticketerrer")
