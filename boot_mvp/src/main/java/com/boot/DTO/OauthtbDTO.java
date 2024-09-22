@@ -25,4 +25,6 @@ public class OauthtbDTO {
     
     private String oauthUserId;
     private String registrationId;
+    private String ppass;
+    private String account; //환불계좌
 }
