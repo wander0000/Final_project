@@ -304,7 +304,8 @@ $(document).ready(function()
 
 	        // 콤마로 연결된 문자열로 변환
 	        let genreTextString = selectedGenreTexts.join(', ');//장르이름배열(화면에 표시)
-	        let genreValueString = selectedGenres.join(',');//장르번호배열(서버단에 넘기는 값)
+//	        let genreValueString = selectedGenres.join(',');//장르번호배열(서버단에 넘기는 값)
+	        let genreValueString = selectedGenreTexts.join(',');//장르이름배열(서버단에 넘기는 값) > selectgenretb에 직접  name을 넣는것으로 DB변경
 
 	        // div에 텍스트 실시간 업데이트(글자수 제한:나머지 ...표시)
 			

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.boot.DAO.TicketDAO;
 import com.boot.DTO.ReservetbDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private CustomUserDetailsService userService;
 
 	@Override
 	public List<ReservetbDTO> getTicketListForDays(int days, int pageSize, int offset) {
@@ -35,8 +39,8 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 	    	TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
@@ -60,8 +64,8 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 	    	TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
@@ -85,8 +89,8 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
     	 try {
 	        // DAO 객체 가져오기
@@ -119,8 +123,8 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 	    	TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
@@ -150,8 +154,8 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 	    	TicketDAO dao = sqlSession.getMapper(TicketDAO.class);

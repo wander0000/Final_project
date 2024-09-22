@@ -384,7 +384,7 @@ public class MypageController {
 			String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
 				
 			UsertbDTO userdto = loginservice.getUserById(loginedUserId);
-			log.info("@# Mypage userdto=>"+userdto);	
+			log.info("@# Mypage UserInfo CustomUserDetails userdto=>"+userdto);	
 			
 			userdto.setPpass(null); // 비밀번호는 숨김
 			model.addAttribute("user", userdto);
@@ -407,9 +407,11 @@ public class MypageController {
              }else {
              	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
              }
-             OauthtbDTO user = oauthService.oauthGetUserById(oauthUserId);
+             OauthtbDTO user = oauthService.oauthGetUserByuniq(oauthUserId);
              
  			model.addAttribute("user", user);
+ 			
+ 			log.info("@# Mypage UserInfo OAuth2User user: {}"+user);
  			
  			String genreList = userService.getSelectGenre();
  			model.addAttribute("genreList", genreList);//선호장르 정보 담기

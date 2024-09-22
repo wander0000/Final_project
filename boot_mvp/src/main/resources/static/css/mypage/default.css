@@ -60,6 +60,10 @@ button, input, select
 	outline: none;
 }
 
+button{
+	height: 36px;
+}
+
 
 /*페이징 버튼*/
 

@@ -368,18 +368,31 @@
             $('.popUp.attend').css({"display":"flex"});
         }
 		console.log($('.popUp.attend').css("display"));  // 팝업의 display 상태를 확인
+		
+		
 
+		// 자정까지 남은 시간(초)을 계산하는 함수
+		function getSecondsUntilMidnight() {
+		    var now = new Date();
+		    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+		    return Math.floor((midnight - now) / 1000);
+		}
+
+		// 자정까지 남은 시간을 자바스크립트 변수로 설정
+		var secondsUntilMidnight = getSecondsUntilMidnight();
 
         // 팝업 닫기 버튼 클릭 이벤트
-		$('.popUp.attend .icon.cancel, .popUp.attend #closePopup').click(function() {
+		$(''.popUp.attend .cancelPOP, .popUp.attend #closePopup').click(function() {
 		    console.log("닫기버튼이나 x표 click");
 			
 			// 체크박스가 체크된 경우 쿠키 설정
             if (document.getElementById('dontShowTodayCheckbox').checked) {
-                document.cookie = "showAttendancePopup=false; path=/; max-age=86400;"; // 1일 동안 도메인의 모든 경로에서 쿠키가 유효
+                 document.cookie = "showAttendancePopup=false; path=/; max-age=" + secondsUntilMidnight + ";";; // 자정까지 도메인의 모든 경로에서 쿠키가 유효
             }
 		    $(this).parents('.popUp.attend').css({"display":"none"}); 
 		});
+		
+		
 		
 		//출석현황 버튼 누르면 마이페이지 메인으로가기
 		document.getElementById('checkAttendanceStatus').addEventListener('click', function() {
