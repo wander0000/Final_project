@@ -216,7 +216,7 @@
 							<h5 class="num">${salesAcc}원</h5>
 						</div>						
 					</div>
-					<button class="book">예매하기</button>				
+					<button type="button" class="book" onclick="location.href='/ticketing/move_ticketing?movieno=${movieInfo.movieno}'">예매하기</button>				
 				</div> <!-- movieInfo 끝-->
 				<div class="post">
 					<img src="${movieInfo.moviepostimg}" alt="${dto.movienm}">
