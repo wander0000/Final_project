@@ -139,15 +139,19 @@
 		            </h5>		                    
 		        </div>
 		        <h5 class="more">
-		            <a href="">혜택 더보기</a>                    
+		            <a href="/benefit">혜택 더보기</a>                    
 		        </h5>  				            
 		    </div><!-- tabWrap 끝-->
 			<div class="benefitImg">
 				<div class="bImg">
-					<img src="${pageContext.request.contextPath}/images/benefit.jpg">
+					<a href="/benefit">    
+						<img src="${pageContext.request.contextPath}/images/benefit2.png">
+					</a>
 				</div>
 				<div class="bImg">
-					<img src="${pageContext.request.contextPath}/images/benefit2.png">
+					<a href="/benefit">    
+						<img src="${pageContext.request.contextPath}/images/benefit1.png" >
+					</a>
 				</div>
 			</div> 
 		</div> <!-- benefit 끝-->
