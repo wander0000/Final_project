@@ -237,15 +237,18 @@ public class TicketServiceImpl implements TicketService {
                 if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
                     throw new RuntimeException("로그인된 사용자가 없습니다.");
                 }
-
+            	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
                 // DAO를 통한 DB 업데이트
                 TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
 
                 // 1. 예매 취소 (reservetb 데이터)
-                dao.deleteTicket(reservenum);
-
+//                dao.deleteTicket(reservenum);
                 // 2. 예매 상세 정보 취소 (reserdtltb 데이터)
-                dao.deleteTicketDetail(reservenum);
+//                dao.deleteTicketDetail(reservenum);
+                
+                
+                // 프로시져 호출 (예매정보 취소로, 포인트, 마일리지, garde 업데이트, 좌석반환)
+                dao.Call_deleteTicket(uuid,reservenum);
 
             } catch (Exception e) {
                 log.error("DB 처리 중 예외 발생: ", e);
