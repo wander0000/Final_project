@@ -80,7 +80,7 @@
 				) as a
 			) b on (a.movieno = b.movieno)
 		) as a
-		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday}
+		where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and starttime > now()
 		order by movieno
     </select>
     

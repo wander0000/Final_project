@@ -6,6 +6,7 @@
 <body>
 	<div class="selectit">
 	    <img src="${pageContext.request.contextPath}/images/rating/grade_${minfo.ratingno}.png" alt="">
+	    <input type="hidden" id="movienm" value="${minfo.movienm }">
 	    <a href="#none">${minfo.movienm }</a>
 	</div>
 	<div class="listtime">

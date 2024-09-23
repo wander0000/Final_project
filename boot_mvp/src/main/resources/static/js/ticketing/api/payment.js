@@ -59,7 +59,7 @@ function kakaopay() {
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	},function(rsp) {
-		alert('rsp: ' + JSON.stringify(rsp)); 
+		//alert('rsp: ' + JSON.stringify(rsp)); 
 		if(rsp.success) {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.

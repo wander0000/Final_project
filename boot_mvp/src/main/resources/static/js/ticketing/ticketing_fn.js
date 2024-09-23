@@ -100,6 +100,7 @@ function movieevent(movieno, movienm) {
 	var alink2 = document.getElementById('showdate');
 	var areano = $("#areano_m").val();
 	var theaterno = $("#theaterno_m").val();
+	
 	$.ajax({
 		type: 'post',
 		data: {areano: areano, theaterno: theaterno, movieno: movieno, viewday: 'no'},
@@ -193,33 +194,52 @@ function checkLoginStatus(callback) {
 }
 
 function seatFrom(areano, theaterno, movieno, viewday, roomno, starttime, pricetype) {
-    if (confirm("해당 시간으로 하시겠습니까?")) {
-        $.ajax({
-            type: 'POST', // 요청 방식
-            url: '/ticketing/saveSessionParams', // 요청을 보낼 URL
-            data: { areano: areano, theaterno: theaterno, movieno: movieno, viewday: viewday, roomno: roomno, starttime: starttime, pricetype: pricetype }, // 전송할 데이터
-			headers: {
-				'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-			},
-            success: function(response) {
-                console.log('서버 응답:', response);
-				// 세션에 먼저 저장 후 로그인 여부 확인
-				checkLoginStatus(function(isLoggedIn) {
-					if(isLoggedIn) {
-						window.location.href = "/ticketing/seatselect";
-					} else {
-						alert("로그인이 필요합니다.\n로그인 화면으로 이동합니다.");
-						var currentUrl = "/ticketing/seatselect";
-		                window.location.href = "/login?redirect=" + encodeURIComponent(currentUrl);
-					}
-				});
-            },
-            error: function(xhr, status, error) {
-                // 오류가 발생했을 때 처리할 내용
-                console.error("AJAX 요청 실패:", status, error);
-            }
-        });
-    }
+	var dateString = starttime;
+	// Date 객체로 변환
+	var targetDate = new Date(dateString);
+
+	// 현재 날짜와 시간 가져오기
+	var currentDate = new Date();
+	
+	if(targetDate > currentDate) {
+	    if (confirm("해당 시간으로 하시겠습니까?")) {
+	        $.ajax({
+	            type: 'POST', // 요청 방식
+	            url: '/ticketing/saveSessionParams', // 요청을 보낼 URL
+	            data: { areano: areano, theaterno: theaterno, movieno: movieno, viewday: viewday, roomno: roomno, starttime: starttime, pricetype: pricetype }, // 전송할 데이터
+				headers: {
+					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+				},
+	            success: function(response) {
+	                console.log('서버 응답:', response);
+					// 세션에 먼저 저장 후 로그인 여부 확인
+					checkLoginStatus(function(isLoggedIn) {
+						if(isLoggedIn) {
+							window.location.href = "/ticketing/seatselect";
+						} else {
+							alert("로그인이 필요합니다.\n로그인 화면으로 이동합니다.");
+							var currentUrl = "/ticketing/seatselect";
+			                window.location.href = "/login?redirect=" + encodeURIComponent(currentUrl);
+						}
+					});
+	            },
+	            error: function(xhr, status, error) {
+	                // 오류가 발생했을 때 처리할 내용
+	                console.error("AJAX 요청 실패:", status, error);
+	            }
+	        });
+	    }
+	} else {
+		alert('선택한 상영 시간의 영화는 현재 선택이 불가능합니다.\n다른 상영시간을 선택하세요.');
+		
+		var childDiv = document.getElementById('selected_' + movieno);
+		if (childDiv) {
+	         var parentDiv = childDiv.closest('.boxtit'); // 가장 가까운 div 요소 찾기
+			 if (parentDiv) {
+ 		        parentDiv.classList.add('active');
+ 		    }
+	    }
+	}
 }
 
 function down(id) {
