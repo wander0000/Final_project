@@ -59,14 +59,37 @@
 		FROM 
 		    liketb li
 		LEFT OUTER JOIN (
-		    SELECT movieno, moviepostimg, movienm, releaseday, endday
-		    FROM movietb2 
-		    UNION
-		    SELECT movieno, moviepostimg, movienm, releaseday, NULL AS endday
+		SELECT 
+		    MAX(movieno) AS movieno, 
+		    MAX(moviepostimg) AS moviepostimg, 
+		    MAX(movienm) AS movienm, 
+		    MIN(releaseday) AS releaseday, 
+		    MAX(endday) AS endday
+		FROM (
+		    SELECT 
+		        movieno, 
+		        moviepostimg, 
+		        movienm,  
+		        REPLACE(movienm, ' ', '') AS movienm_nospace, 
+		        releaseday, 
+		        endday
+		    FROM movietb
+		    UNION ALL
+		    SELECT 
+		        movieno, 
+		        moviepostimg, 
+		        movienm, 
+		        REPLACE(movienm, ' ', '') AS movienm_nospace, 
+		        releaseday, 
+		        DATE_ADD(releaseday, INTERVAL 30 DAY) as endday
 		    FROM boxofficetb
+		) AS movies
+		GROUP BY 
+		    movienm_nospace,  
+		    moviepostimg
 		) m ON li.movieno = m.movieno
 		WHERE 
-		    li.uuid = #{uuid}
+		    li.uuid = 'c54936fb-69a6-11ef-84e9-4cedfbc1d545'
 		GROUP BY 
 		    li.movieno, m.moviepostimg, m.movienm  
 		ORDER BY 

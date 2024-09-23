@@ -52,10 +52,12 @@ public class UserInterceptor implements HandlerInterceptor {
                 	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
                 }
                 
-                loginedUserId = oauthUserId;
-                
-                if (loginedUserId != null && oauthService.oauthGetUserByuniqcnt(loginedUserId) > 0) {
+                if (oauthUserId != null && oauthService.oauthGetUserByuniqcnt(oauthUserId) > 0) {
                 	// 로그인한 유저의 ID를 request에 추가
+                	OauthtbDTO user = oauthService.oauthGetUserByuniq(oauthUserId);
+                	log.info("@# ============== user: "+user);
+                	loginedUserId = user.getUserid();
+                	log.info("@# ============== loginedUserId: "+loginedUserId);
                 	request.setAttribute("userid", loginedUserId);
                 	
                 	// 로그인한 유저의 등급 정보 가져오기
