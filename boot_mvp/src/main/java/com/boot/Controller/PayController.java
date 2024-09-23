@@ -103,6 +103,15 @@ public class PayController {
 	}
 	/* 토스페이 */
 	
+	/* 카카오페이 */
+	@RequestMapping("/card_ajax")
+	public String card(Model model) {
+		log.info("card");
+		
+		return "pay/cardbutton_ajax";
+	}
+	/* 카카오페이 */
+	
 	@RequestMapping("/reserve")
 	@Transactional
 	@ResponseBody
