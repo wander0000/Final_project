@@ -37,7 +37,6 @@ function creatNum() {
 	return reservenum; 
 }
 
-
 function kakaopay() {
 	//console.log(reservenum);
 	var reservenum = creatNum();
@@ -60,27 +59,32 @@ function kakaopay() {
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	},function(rsp) {
-		//alert('rsp: ' + JSON.stringify(rsp)); success 있음
-		if(rsp.success){
+		alert('rsp: ' + JSON.stringify(rsp)); 
+		if(rsp.success) {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
             msg += '// 상점 거래ID : ' + rsp.merchant_uid;
             msg += '// 결제 금액 : ' + rsp.paid_amount;
             msg += '// 카드 승인번호 : ' + rsp.apply_num;
             
-            $.ajax({
-            	type : 'post',
-            	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
-				headers: {
-					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-				},
-            });
+			if(rsp.success) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";
+					}, errer: function() {
+						console.log('Ajax 에러...');
+					}
+	            });
+			}
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
-		document.location.href="/ticketing/paycompleted";
 	});
 }
 
@@ -107,27 +111,32 @@ function tosspay(){
 		buyer_postcode : '123-456'                           //우편번호 
 	}, function(rsp){
 		//alert('rsp: ' + JSON.stringify(rsp));
-		if(rsp.imp_uid != '' ) {
+		if(rsp.imp_uid != '') {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
             msg += '// 상점 거래ID : ' + rsp.merchant_uid;
             msg += '// 결제 금액 : ' + rsp.paid_amount;
             msg += '// 카드 승인번호 : ' + rsp.apply_num;
-            
-            $.ajax({
-            	type : 'post',
-            	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
-				headers: {
-					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-				},
-            });
+			
+			if(!rsp.error_code) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";					
+					}, errer: function() {
+						console.log('Ajax 에러...');	
+					}
+	            });
+			}
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
 		//console.log('msg: ' + msg);
-		document.location.href="/ticketing/paycompleted";
 	});
 }
 
@@ -160,21 +169,26 @@ function cardpay(){
             msg += '// 상점 거래ID : ' + rsp.merchant_uid;
             msg += '// 결제 금액 : ' + rsp.paid_amount;
             msg += '// 카드 승인번호 : ' + rsp.apply_num;
-            
-            $.ajax({
-            	type : 'post',
-            	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
-				headers: {
-					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-				},
-            });
+
+			if(rsp.success) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";
+					}, error: function() {
+						console.log('Ajax 에러...');
+					}
+	            });
+			}
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
 		//console.log('msg: ' + msg);
-		document.location.href="/ticketing/paycompleted";
 	});
 }
 
