@@ -64,8 +64,14 @@ function show_pay() {
 	var calc = $("#calc").val();
 	var t_calc = 0;
 	var discount = (Number($("#pricetype").val()) == 1) ? 11000 : 15000;
-	
+
 	switch(refno) {
+		case 0:
+			t_calc = discount;
+			
+			$("#t_calc").val(t_calc);
+			$("#t_pay").val(formatNumber(t_calc) + '원');
+			break;
 		case 1:
 			$("#d_pay").val('주중 상영 영화관람');
 			t_calc = ((Number(calc) - discount == 0) ? 0 : Number(calc) - discount);
