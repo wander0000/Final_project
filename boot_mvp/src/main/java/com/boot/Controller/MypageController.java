@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -197,11 +198,22 @@ public class MypageController {
 	public ResponseEntity<String> cancelTicket(@RequestParam String reservenum) {
 		log.info("@# Mypage cancelTicket");		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {//익명의 사용자가 아니라면
-			
-			ticketService.deleteTicket(reservenum);
-		}
-		return ResponseEntity.ok("예매내역이 성공적으로 취소되었습니다.");
+	    // 익명의 사용자가 아닌지 확인
+	    if (!(auth instanceof AnonymousAuthenticationToken) && auth.isAuthenticated()) {
+	        // 결제 및 예매 취소 처리
+	        boolean isCancelled = ticketService.cancelPayment(reservenum);
+
+	        if (isCancelled) {
+	            return ResponseEntity.ok("예매내역이 성공적으로 취소되었습니다.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                                 .body("결제 취소에 실패했습니다.");
+	        }
+	    } else {
+	        // 익명 사용자거나 인증되지 않은 사용자인 경우
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+	                             .body("로그인이 필요합니다.");
+	    }
 	}
 	
 	

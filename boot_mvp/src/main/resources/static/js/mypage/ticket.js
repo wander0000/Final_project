@@ -145,7 +145,7 @@ $(document).ready(function()
                       content += '<div class="ticketCon">' + dto.tmember + '</div>';
                       content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
                       content += '<div class="ticketCon">';
-					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" type="submit" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
+					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
                       content += '</div>';
                       content += '<div class="ticketCon">';
                       content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
@@ -246,7 +246,7 @@ $(document).ready(function()
 				  content += '<div class="ticketCon">' + dto.tmember + '</div>';
 				  content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
 				  content += '<div class="ticketCon">';
-				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" type="submit" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
+				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status"  data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
 				  content += '</div>';
 				  content += '<div class="ticketCon">';
 				  content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
@@ -424,6 +424,8 @@ $(document).ready(function()
 	//예매 취소하기
 	$(document).on('click', '#cancelBtn', function(e) {
 	    e.preventDefault();  // 기본 폼 제출 동작을 막습니다.
+		
+		
 	    
 	    var buttonText = $(this).text();  // 버튼의 텍스트 값을 가져옴
 	    var reservenum = $(this).data('reservenum');  // 버튼에 저장된 예약번호 가져옴
@@ -456,6 +458,29 @@ $(document).ready(function()
 	    }
 	});
 
+	
+	
+      function cancelPay() {
+//      $.ajax({
+//          // 예: http://www.myservice.com/payments/cancel
+//          "url": "{환불정보를 수신할 고객사 서비스 URL}",
+//          "type": "POST",
+//          "contentType": "application/json",
+//          "data": JSON.stringify({
+//              "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+//              "cancel_request_amount": 2000, // 환불금액
+//              "reason": "테스트 결제 환불" // 환불사유
+//              // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+//              "refund_holder": "홍길동",
+//              // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+//              "refund_bank": "88"
+//              // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+//              "refund_account": "56211105948400"
+//          }),
+//          "dataType": "json"
+//      	});
+  	}
+	
 	
 
 	

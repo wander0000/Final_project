@@ -1,15 +1,23 @@
 package com.boot.Service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.boot.DAO.TicketDAO;
 import com.boot.DTO.ReservetbDTO;
@@ -167,30 +175,90 @@ public class TicketServiceImpl implements TicketService {
 	    }
 	}
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void deleteTicket(String reservenum) {
-		// 1. 로그인 여부 확인
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    
-	    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
-	        throw new RuntimeException("로그인된 사용자가 없습니다.");
-	    }
-	    
-	    try { 
-	    	TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
-	    	// 2. 예매취소하기(reservetb 데이터)
-            dao.deleteTicket(reservenum);
-            // 2. 예매취소하기(reserdtltb 데이터)
-            dao.deleteTicketDetail(reservenum);
-	       
-	    } catch (Exception e) {
-	        log.error("예외 발생: ", e);
-	        throw new RuntimeException("예매취소 중 문제가 발생했습니다", e);
-	    }
-		
-	}
 	
+	//===================== 예매취소 하기 시작(240923)=======================================================
+	
+	private static final String API_URL = "https://api.iamport.kr";
+	private static final String IMP_KEY = "7705461586021156";   // 아임포트 REST API 키
+	private static final String IMP_SECRET = "F1OJZ5t8GHk1epZmap1A3IVBzPF5WsmudjCRcKSani8o0emlomsFkgl80ExLohjtoZSgkJQGoFcoPvFQ"; // 아임포트 REST API Secret
+	 
+	// 1. 아임포트 Access Token을 가져오는 메서드
+    public String getAccessToken() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = API_URL + "/users/getToken";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("imp_key", IMP_KEY);
+        params.put("imp_secret", IMP_SECRET);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, params, Map.class);
+        
+        if (response.getStatusCode() == HttpStatus.OK) {
+            Map body = response.getBody();
+            Map responseMap = (Map) body.get("response");
+            return (String) responseMap.get("access_token");
+        }
+        return null;
+    }
+	
+ // 결제 취소 요청 메서드와 DB 업데이트 추가
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean cancelPayment(String reservenum) {
+        String accessToken = getAccessToken();
+        if (accessToken == null) {
+            return false;
+        }
+
+        String url = API_URL + "/payments/cancel";
+        RestTemplate restTemplate = new RestTemplate();
+
+        // HTTP 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        // 결제 취소 요청 데이터 설정
+        Map<String, Object> params = new HashMap<>();
+        String merchant_uid = "movie_ticket_" +reservenum;
+        params.put( "merchant_uid", merchant_uid ); // 취소할 결제건의 고유번호
+//        params.put("amount", amount);  // 취소할 금액 (부분 취소의 경우)
+
+        // HTTP 엔티티 생성
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(params, headers);
+
+        // API 호출
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            try {
+                // 로그인 여부 확인
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+                    throw new RuntimeException("로그인된 사용자가 없습니다.");
+                }
+
+                // DAO를 통한 DB 업데이트
+                TicketDAO dao = sqlSession.getMapper(TicketDAO.class);
+
+                // 1. 예매 취소 (reservetb 데이터)
+                dao.deleteTicket(reservenum);
+
+                // 2. 예매 상세 정보 취소 (reserdtltb 데이터)
+                dao.deleteTicketDetail(reservenum);
+
+            } catch (Exception e) {
+                log.error("DB 처리 중 예외 발생: ", e);
+                throw new RuntimeException("예매 취소 중 문제가 발생했습니다", e);
+            }
+
+            return true; // 결제 취소 및 DB 업데이트 성공
+        } else {
+            log.error("결제 취소 실패: " + response.getBody().get("message"));
+            return false; // 결제 취소 실패
+        }
+    }
+
 	
 
 
