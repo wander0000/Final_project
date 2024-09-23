@@ -60,7 +60,7 @@
             <ul class="menuWrap">
 				<li class="menu" data-target="movies">영화</li>
 				<li class="menu" data-target="tickets"><a href="/ticketing/movieselect">예매</a></li>
-				<li class="menu">혜택</li>
+				<li class="menu"><a href="/benefit">혜택</a></li>
                 <!--<li class="menu">
                     <a href="">파트너 구하기</a>
                 </li>-->

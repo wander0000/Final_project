@@ -123,7 +123,12 @@ public class MainController {
 		return ResponseEntity.ok(movies);
 	}
 	
-
+	
+	  // 혜택 페이지 이동
+	  @GetMapping("/benefit")
+	  public String benefit() {
+	      return "/benefit/benefit";  // 리턴 값은 실제 뷰 파일의 이름
+	  }
 
 
 } // public class MainController 끝 
