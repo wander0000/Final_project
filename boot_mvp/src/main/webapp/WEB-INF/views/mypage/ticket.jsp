@@ -89,11 +89,12 @@
                                         <div class="conTitle">상영일시</div>
                                         <div class="conTitle">매수</div>
                                         <div class="conTitle">취소가능일</div>
+                                        <div class="conTitle">결제금액</div>
                                         <div class="conTitle">상태</div>
-                                        <div class="conTitle">입장권QR</div>
+<!--                                        <div class="conTitle">입장권QR</div>-->
                                     </div>
                                     <div class="contentRowBookList" id="ticketListContent">
-										
+										<input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}">
 										<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
                                     </div><!-- contentRowBookList 끝 -->
                                 </div><!-- listTable 끝 -->

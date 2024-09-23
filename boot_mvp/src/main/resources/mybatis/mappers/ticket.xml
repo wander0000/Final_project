@@ -32,19 +32,19 @@
     <!--  정렬 로직: 기간별 15일,1개월,2개월, 3개월 -->
 	<sql id="days">
       <if test="(days == '15')">
-        AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND now()
+       AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 8 DAY)
         ORDER BY r.starttime DESC
       </if>
       <if test="(days == '30') or days == null or days == ''">
-         AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND now()
+         AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND DATE_ADD(CURDATE(), INTERVAL 15 DAY)
          ORDER BY r.starttime DESC
       </if>
       <if test='(days == "60")'>
-         AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 60 DAY) AND now()
+        AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
          ORDER BY r.starttime DESC
       </if>
       <if test='(days == "90")'>
-      	 AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 90 DAY) AND now()
+      	 AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 415 DAY) AND DATE_ADD(CURDATE(), INTERVAL 45 DAY)
          ORDER BY r.starttime DESC
       </if>
    </sql>
@@ -139,12 +139,21 @@
 		    moviepostimg )m ON r.movieno = m.movieno
 		WHERE r.uuid = #{uuid}
         AND r.status = '취소' 
-        AND DATE(r.viewday) BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() 
+        AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)
         ORDER BY r.starttime DESC
     </select>
    
    
     <!-- 예매취소 -->
+    
+	<select id="Call_deleteTicket" statementType="CALLABLE">
+        CALL deleteTicket(
+            #{v_uuid, mode=IN, jdbcType=VARCHAR},
+            #{v_reservenum, mode=IN, jdbcType=VARCHAR}
+        )
+    </select>
+    
+    
     <update id="deleteTicket">
 		update reservetb set mdate=now(), status='취소' where reservenum =#{reservenum}
     </update>

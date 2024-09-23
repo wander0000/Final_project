@@ -144,12 +144,13 @@ $(document).ready(function()
                       content += '<div class="ticketCon">' + formattedStarttime + '</div>';
                       content += '<div class="ticketCon">' + dto.tmember + '</div>';
                       content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
+					  content += '<div class="ticketCon">' + dto.tprice + '</div>';
                       content += '<div class="ticketCon">';
 					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
                       content += '</div>';
-                      content += '<div class="ticketCon">';
-                      content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
-                      content += '</div>';
+//                      content += '<div class="ticketCon">';
+//                      content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
+//                      content += '</div>';
                       content += '</div>';
                   });
               }
@@ -245,12 +246,13 @@ $(document).ready(function()
 				  content += '<div class="ticketCon">' + formattedStarttime + '</div>';
 				  content += '<div class="ticketCon">' + dto.tmember + '</div>';
 				  content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
+				  content += '<div class="ticketCon">' + dto.tprice + '</div>';
 				  content += '<div class="ticketCon">';
 				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status"  data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
 				  content += '</div>';
-				  content += '<div class="ticketCon">';
-				  content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
-				  content += '</div>';  
+//				  content += '<div class="ticketCon">';
+//				  content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
+//				  content += '</div>';  
 				  content += '</div>'; 
 
 				  document.getElementById('ticketListContent').innerHTML += content;
@@ -330,37 +332,51 @@ $(document).ready(function()
 	      }
 	  });
 
-	// 이전 그룹으로 이동
-	$(document).on('click', '.prev-btn', function() {
-		var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
-		var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
-		console.log("prev-btn 클릭의 loadParams=>"+loadParams);  // 파라미터확인
-	    
-	    var prevPage = Math.max(1, currentPage - pageGroupSize);  // 이전 페이지 계산
-	    loadParams.page = prevPage;  // 페이지 업데이트
-	    
-	    if (loadMethod === 'monthly') {
-	        loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, prevPage, loadParams.pageSize);
-	    } else if (loadMethod === 'period') {
-	        loadTicketList(loadParams.days, prevPage, loadParams.pageSize);
-	    }
-	});
+	  // 이전 그룹으로 이동
+	  $(document).on('click', '.prev-btn', function() {
+	      var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
+	      var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
+	      console.log("prev-btn 클릭의 loadParams => " + loadParams);  // 파라미터 확인
 
-	// 다음 그룹으로 이동
-	$(document).on('click', '.next-btn', function() {
-	    var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
-	    var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
-	    
-	    var nextPage = Math.min(totalPages, currentPage + pageGroupSize);  // 다음 페이지 계산
-	    loadParams.page = nextPage;  // 페이지 업데이트
-	    
-	    if (loadMethod === 'monthly') {
-	        loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, nextPage, loadParams.pageSize);
-	    } else if (loadMethod === 'period') {
-	        loadTicketList(loadParams.days, nextPage, loadParams.pageSize);
-	    }
-	});
-	
+	      try {
+	          loadParams = JSON.parse(loadParams);  // 문자열을 객체로 변환
+	      } catch (e) {
+	          console.error("loadParams 파싱 오류: ", e);
+	          return;
+	      }
+
+	      var prevPage = Math.max(1, currentPage - pageGroupSize);  // 이전 페이지 계산
+	      loadParams.page = prevPage;  // 페이지 업데이트
+
+	      if (loadMethod === 'monthly') {
+	          loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, prevPage, loadParams.pageSize);
+	      } else if (loadMethod === 'period') {
+	          loadTicketList(loadParams.days, prevPage, loadParams.pageSize);
+	      }
+	  });
+
+	  // 다음 그룹으로 이동
+	  $(document).on('click', '.next-btn', function() {
+	      var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
+	      var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
+	      console.log("next-btn 클릭의 loadParams => " + loadParams);  // 파라미터 확인
+
+	      try {
+	          loadParams = JSON.parse(loadParams);  // 문자열을 객체로 변환
+	      } catch (e) {
+	          console.error("loadParams 파싱 오류: ", e);
+	          return;
+	      }
+
+	      var nextPage = Math.min(totalPages, currentPage + pageGroupSize);  // 다음 페이지 계산
+	      loadParams.page = nextPage;  // 페이지 업데이트
+
+	      if (loadMethod === 'monthly') {
+	          loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, nextPage, loadParams.pageSize);
+	      } else if (loadMethod === 'period') {
+	          loadTicketList(loadParams.days, nextPage, loadParams.pageSize);
+	      }
+	  });
 	
 
 	// 예매취소내역 : 예매취소 탭  클릭 시 AJAX로 데이터를 로드
@@ -425,8 +441,6 @@ $(document).ready(function()
 	$(document).on('click', '#cancelBtn', function(e) {
 	    e.preventDefault();  // 기본 폼 제출 동작을 막습니다.
 		
-		
-	    
 	    var buttonText = $(this).text();  // 버튼의 텍스트 값을 가져옴
 	    var reservenum = $(this).data('reservenum');  // 버튼에 저장된 예약번호 가져옴
 //		const csrfToken = document.getElementById(csrfTokenId).value; // CSRF 토큰 가져오기
@@ -460,27 +474,7 @@ $(document).ready(function()
 
 	
 	
-      function cancelPay() {
-//      $.ajax({
-//          // 예: http://www.myservice.com/payments/cancel
-//          "url": "{환불정보를 수신할 고객사 서비스 URL}",
-//          "type": "POST",
-//          "contentType": "application/json",
-//          "data": JSON.stringify({
-//              "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
-//              "cancel_request_amount": 2000, // 환불금액
-//              "reason": "테스트 결제 환불" // 환불사유
-//              // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-//              "refund_holder": "홍길동",
-//              // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-//              "refund_bank": "88"
-//              // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-//              "refund_account": "56211105948400"
-//          }),
-//          "dataType": "json"
-//      	});
-  	}
-	
+
 	
 
 	
