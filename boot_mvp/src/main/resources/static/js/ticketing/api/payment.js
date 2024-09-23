@@ -37,10 +37,13 @@ function creatNum() {
 	return reservenum; 
 }
 
-
 function kakaopay() {
 	//console.log(reservenum);
 	var reservenum = creatNum();
+	var couponno = $("#couponno").val();
+	var t_calc = $("#t_calc").val();
+	var t_point = $("#t_point").val();
+	
 	var IMP = window.IMP;
 	IMP.init('imp81407155'); // 포트원 계정 상점 고유 ID
 	IMP.request_pay({		
@@ -56,32 +59,41 @@ function kakaopay() {
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	},function(rsp) {
-		//alert('rsp: ' + JSON.stringify(rsp)); success 있음
-		if(rsp.success){
+		//alert('rsp: ' + JSON.stringify(rsp)); 
+		if(rsp.success) {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
             msg += '// 상점 거래ID : ' + rsp.merchant_uid;
             msg += '// 결제 금액 : ' + rsp.paid_amount;
             msg += '// 카드 승인번호 : ' + rsp.apply_num;
             
-            $.ajax({
-            	type : 'post',
-            	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum },
-				headers: {
-					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-				},
-            });
+			if(rsp.success) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";
+					}, errer: function() {
+						console.log('Ajax 에러...');
+					}
+	            });
+			}
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
-		document.location.href="/ticketing/paycompleted";
 	});
 }
 
 function tosspay(){
 	var reservenum = creatNum();
+	var couponno = $("#couponno").val();
+	var t_calc = $("#t_calc").val();
+	var t_point = $("#t_point").val();
+	
 	var IMP = window.IMP;
 	IMP.init('imp81407155');
 	IMP.request_pay({		
@@ -98,30 +110,88 @@ function tosspay(){
 		buyer_addr : 'addr',	                             //주소
 		buyer_postcode : '123-456'                           //우편번호 
 	}, function(rsp){
-		alert('rsp: ' + JSON.stringify(rsp));
+		//alert('rsp: ' + JSON.stringify(rsp));
+		if(rsp.imp_uid != '') {
+			var msg = "결제 완료";
+            msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
+            msg += '// 상점 거래ID : ' + rsp.merchant_uid;
+            msg += '// 결제 금액 : ' + rsp.paid_amount;
+            msg += '// 카드 승인번호 : ' + rsp.apply_num;
+			
+			if(!rsp.error_code) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";					
+					}, errer: function() {
+						console.log('Ajax 에러...');	
+					}
+	            });
+			}
+        }else{
+        	var msg = "결제 실패"
+        	msg += "에러 내용" + rsp.error_msg;
+        }
+		//console.log('msg: ' + msg);
+	});
+}
+
+function cardpay(){
+	var reservenum = creatNum();
+	var couponno = $("#couponno").val();
+	var t_calc = $("#t_calc").val();
+	var t_point = $("#t_point").val();
+	
+	var IMP = window.IMP;
+	IMP.init('imp81407155');
+	IMP.request_pay({		
+		pg : 'html5_inicis.INIpayTest', //pg : 'uplus.tlgdacomxpay',
+		pay_method : 'inipay',
+		merchant_uid : 'movie_ticket_' +reservenum,   //주문번호
+		name : 'MVP',                                  //상품명
+		amount : $('#t_calc').val(),                 //가격
+		//m_redirect_url: "/ticketing/paycompleted", //모바일에서 결제 완료 후 리다이렉트될 경로
+		//customer_uid : buyer_name + new Date().getTime(),  //해당 파라미터값이 있어야 빌링 키 발급 시도
+		buyer_email : 'test123@naver.com',             //구매자 이메일
+		buyer_name : 'KW',                           //구매자 이름
+		buyer_tel : 'hp',                                    //전화번호
+		buyer_addr : 'addr',	                             //주소
+		buyer_postcode : '123-456'                           //우편번호 
+	}, function(rsp){
+		//alert('rsp: ' + JSON.stringify(rsp));
 		if(rsp.imp_uid != '' ) {
 			var msg = "결제 완료";
             msg += '고유ID : ' + rsp.imp_uid;                //아임포트 uid는 실제 결제 시 결제 고유번호를 서버와 비교해서 결제처리하는데 필요없긴함.
             msg += '// 상점 거래ID : ' + rsp.merchant_uid;
             msg += '// 결제 금액 : ' + rsp.paid_amount;
             msg += '// 카드 승인번호 : ' + rsp.apply_num;
-            
-            $.ajax({
-            	type : 'post',
-            	url : '/ticketing/reserve',
-            	data : { "reservenum" : reservenum },
-				headers: {
-					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
-				},
-            });
+
+			if(rsp.success) {
+	            $.ajax({
+	            	type : 'post',
+	            	url : '/ticketing/reserve',
+	            	data : { "reservenum" : reservenum, "couponno": couponno, "t_calc": t_calc, "t_point": t_point },
+					headers: {
+						'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+					}, success: function() {
+						document.location.href="/ticketing/paycompleted";
+					}, error: function() {
+						console.log('Ajax 에러...');
+					}
+	            });
+			}
         }else{
         	var msg = "결제 실패"
         	msg += "에러 내용" + rsp.error_msg;
         }
-		console.log('msg: ' + msg);
-		document.location.href="/ticketing/paycompleted";
+		//console.log('msg: ' + msg);
 	});
 }
+
 
 /*
 참고 코드

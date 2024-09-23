@@ -37,7 +37,9 @@
  
 </head>
 <body>
-    <%@ include file="header.jsp" %>		
+   <!-- <%@ include file="header.jsp" %>	-->	
+   <input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>
+   <div class="recommendPop"></div>
 	<section id="section" class="section">        
         <div class="swiper mySwiper">
             <div id="mainSlider" class="swiper-wrapper">
@@ -83,7 +85,7 @@
 									<h5 class="releaseday">${dto.openday}<h5>											
 								</div>
 								<div class="buttonWrap">
-									<button class="active" onclick="location.href=''">예매하기</button>									
+									<button class="active" onclick="location.href='/ticketing/move_ticketing?movieno=${dto.movieno}'">예매하기</button>									
 									<button onclick="location.href='../movie/movieInfo?movieno=${dto.movieno}'">상세보기</button>
 								</div>
 							</div>
@@ -137,18 +139,49 @@
 		            </h5>		                    
 		        </div>
 		        <h5 class="more">
-		            <a href="">혜택 더보기</a>                    
+		            <a href="/benefit">혜택 더보기</a>                    
 		        </h5>  				            
 		    </div><!-- tabWrap 끝-->
 			<div class="benefitImg">
 				<div class="bImg">
-					<img src="${pageContext.request.contextPath}/images/benefit.jpg">
+					<a href="/benefit">    
+						<img src="${pageContext.request.contextPath}/images/benefit2.png">
+					</a>
 				</div>
 				<div class="bImg">
-					<img src="${pageContext.request.contextPath}/images/benefit2.png">
+					<a href="/benefit">    
+						<img src="${pageContext.request.contextPath}/images/benefit1.png" >
+					</a>
 				</div>
 			</div> 
 		</div> <!-- benefit 끝-->
+		<!-- 팝업창 (숨겨진 상태로 시작) -->
+		<div class="popUp attend">
+			<div class="popBg">
+				<div class="popCon">
+					<div class="popH">
+	                    <h4 class="popTitle">매일이 혜택! 출석체크!</h4>
+	                    <span class="material-symbols-outlined cancelPOP">close</span>
+		            </div> <!-- popH 끝 -->
+					<div class="popM">
+<!--	                    <h5 class="popAlert">로그인하면 자동으로 출석이벤트에 참여됩니다.</h5>-->
+<!--	                    <h5 class="popAlert">매일 로그인하세요~ 10포인트 지급</h5>-->
+<!--	                    <h5 class="popAlert">만근하면 5% 할인쿠폰 지급</h5>-->
+						<button id="checkAttendanceStatus">출석 현황 확인</button>
+	                </div>
+					<div class="popB">
+						<div class="checkCon">
+					         <input type="checkbox" id="dontShowTodayCheckbox">
+							 <label for="dontShowTodayCheckbox">오늘은 더 이상 보지 않기</label>
+						</div>
+						<div class="checkCon">
+					         <input type="checkbox" id="closePopup">
+							 <label for="closePopup">닫기</label>
+						</div>
+					</div>   
+				</div><!-- popCon 끝 -->
+			</div><!-- popBg 끝 -->
+		</div><!-- popUp 끝 -->
 			
     </section>
 	<!--model.addAttribute("boxOffice", boxDTO);
@@ -162,7 +195,7 @@
 	//페이지가 완전히 로드된 후 실행되는 함수
 	window.onload = function() 
 	{
-
+		recommendPop();
 	};		
 	
 	const tabs = document.querySelectorAll('.tab');
@@ -183,8 +216,116 @@
 	    rankingCons[index].classList.add('on');
 	  });
 	});
+	
+	function recommendPop() 
+	{
+		const csrfToken = document.getElementById('token').value;	
+		$.ajax
+		({
+			url:"/recommendPop",
+			type:"GET",
+			headers: {
+			    "X-CSRF-TOKEN": csrfToken
+			},
+			success:function(result) 
+			{
+				console.log(result.uuid);
+				if (typeof result !== 'object') 
+				{
+				    $('.recommendPop').css({"display": "none"});
+				    console.log("로그인하지 않은 사용자입니다.");
+				    return;
+				}
+				
+				var str ='';
+				str+=' <div class="popInner">';
+				str+='<div class="popButtonWrap">';
+				str+='<div class="buttonArrow arrowLeft">';
+				str+='<span class="material-symbols-outlined ">arrow_back_ios</span>';
+				str+='</div>';
+				str+='<div class="buttonArrow arrowRight">';
+				str+='<span class="material-symbols-outlined ">arrow_forward_ios</span>';
+				str+='</div>';
+				str+='</div>';									
+				str+='<div class="popH">';
+				str+='<h5 class="popTitle">당신을 위한 추천 영화</h5>';
+				str+='<span class="material-symbols-outlined cancelPOP">close</span>';
+				str+='</div>';
+				str+='<div class="popB">';
+
+				
+				result.forEach(function(movie, index)
+				{					
+					str += '<div class="imgCon" style="--i:' + index + ';">';  // index를 --i에 할당			    
+					str+='<img src="'+movie.moviepostimg+'">';			    
+					str+='</div>';		    
+				    // 생성한 요소를 영화 리스트 컨테이너에 추가				    
+				});
+				
+				str+='</div>';	
+				str+='</div>';	
+				$('.recommendPop').html(str);	
+				
+				// 추천 슬라이드 부분
+				let imgs = document.querySelectorAll('.imgCon');
+				let currentIndex = 0;
+
+				let popB = document.querySelector('.popB');
+				let prev = document.querySelector('.buttonArrow.arrowLeft');
+				let next = document.querySelector('.buttonArrow.arrowRight');
+
+				function updateButtons() 
+				{
+				    prev.style.background = currentIndex === 0 ? '#2b2b2b' : ''; // 비활성화 색상
+				    prev.style.cursor = currentIndex === 0 ? 'inherit' : ''; // 비활성화 색상
+				    next.style.background = currentIndex === imgs.length - 1 ? '#2b2b2b' : ''; // 비활성화 색상
+				    next.style.cursor = currentIndex === imgs.length - 1 ? 'inherit' : ''; // 비활성화 색상
+				    prev.disabled = currentIndex === 0; // 버튼 비활성화
+				    next.disabled = currentIndex === imgs.length - 1; // 버튼 비활성화
+				}
+
+				if (prev && next) 
+				{
+				    next.addEventListener('click', function() {
+				        if (currentIndex < imgs.length - 1) 
+						{
+				            currentIndex++;
+				            popB.style.transform = 'translateX(-' + (currentIndex * 400) + 'px)';
+				            updateButtons(); // 버튼 상태 업데이트
+				        }
+				    });
+
+				    prev.addEventListener('click', function() {
+				        if (currentIndex > 0) {
+				            currentIndex--;
+				            popB.style.transform = 'translateX(-' + (currentIndex * 400) + 'px)';
+				            updateButtons(); // 버튼 상태 업데이트
+				        }
+				    });
+
+				    updateButtons(); // 초기 버튼 상태 업데이트
+				} else {
+				    console.error("버튼 요소를 찾을 수 없습니다.");
+				}					
+				
+			},
+			error:function() 
+			{
+			    console.log("ajax 오류");
+				$('.recommendPop').css({"display": "none"});
+			}	
+		});
+	} // recommendPop 끝
+	
+
+
 </script>
-<script>    
+<script>
+	$(document).on('click', '.recommendPop .popInner .popH span.cancelPOP', function() 
+	{
+	    $('.recommendPop').css({"display": "none"});
+	});	
+		
     var swiper = new Swiper(".mySwiper",     
     {            
         loopedSlides: 10,
@@ -206,7 +347,61 @@
         {
             el: ".swiper-pagination",
 			clickable: true
-        }
+        }        
+    });
+</script>
+<script>
+    /*
+    240917.서연주 
+    출석이벤트 팝업, 쿠키생성 
+    */
+    document.addEventListener('DOMContentLoaded', function () {
+		
+		console.log("현재 쿠키: " + document.cookie);
+        // 쿠키 값 확인
+        let showAttendancePopup = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('showAttendancePopup='))
+          ?.split('=')[1];
         
+        console.log("showAttendancePopup값은? " + showAttendancePopup);
+
+        // 변수 이름 통일
+        if (showAttendancePopup === 'true') {
+            // 출석 팝업 표시
+            $('.popUp.attend').css({"display":"flex"});
+        }
+		console.log($('.popUp.attend').css("display"));  // 팝업의 display 상태를 확인
+		
+		
+
+		// 자정까지 남은 시간(초)을 계산하는 함수
+		function getSecondsUntilMidnight() {
+		    var now = new Date();
+		    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+		    return Math.floor((midnight - now) / 1000);
+		}
+
+		// 자정까지 남은 시간을 자바스크립트 변수로 설정
+		var secondsUntilMidnight = getSecondsUntilMidnight();
+
+        // 팝업 닫기 버튼 클릭 이벤트
+		$(''.popUp.attend .cancelPOP, .popUp.attend #closePopup').click(function() {
+		    console.log("닫기버튼이나 x표 click");
+			
+			// 체크박스가 체크된 경우 쿠키 설정
+            if (document.getElementById('dontShowTodayCheckbox').checked) {
+                 document.cookie = "showAttendancePopup=false; path=/; max-age=" + secondsUntilMidnight + ";";; // 자정까지 도메인의 모든 경로에서 쿠키가 유효
+            }
+		    $(this).parents('.popUp.attend').css({"display":"none"}); 
+		});
+		
+		
+		
+		//출석현황 버튼 누르면 마이페이지 메인으로가기
+		document.getElementById('checkAttendanceStatus').addEventListener('click', function() {
+		    window.location.href = "${pageContext.request.contextPath}/mypage";
+		});
+      
     });
 </script>

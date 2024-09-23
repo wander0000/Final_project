@@ -145,6 +145,8 @@ section
   color: #ffffff; /* 텍스트 색상 설정 */
 }
 
+
+
 .log1 {
   margin-top: 50px;
 }
@@ -223,6 +225,26 @@ section
   display: flex;
   justify-content: center;
   margin-right: 3%;
+}
+.bot1
+{
+	margin-bottom: 40px;
+}
+.naver
+{
+	color: #03c75a;
+}
+
+.nana
+{
+	width: 100px; 
+	height: auto;
+}
+.a11
+{
+
+	display: inline-block; 
+	text-align: center;
 }
 
 .a1, .a2 

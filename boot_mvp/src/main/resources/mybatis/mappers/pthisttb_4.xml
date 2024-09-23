@@ -46,7 +46,7 @@
         SELECT * FROM pthisttb where uuid=#{uuid}
         AND trndt BETWEEN #{startDate} AND #{endDate}
 		ORDER BY trndt DESC
-		LIMIT #{pageSize} OFFSET #{offset}
+		<include refid="pagenation"></include>
     </select>
     
     <!-- 포인트 이력 목록의 갯수(특정기간)-->

@@ -1,5 +1,6 @@
 package com.boot.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.boot.DTO.ReservetbDTO;
@@ -15,5 +16,7 @@ public interface TicketService {
 	public int getTotalCountMonthly(String keyword,int year, int month);
 	//예매취소 내역 목록조회
 	public List<ReservetbDTO> getTicketListCanceled();
-	public void deleteTicket(String reservenum);//예매취소
+	public String getAccessToken();//아임포트 결제취소용 엑세스토큰
+	public boolean cancelPayment(String reservenum);//예매취소
+	
 }

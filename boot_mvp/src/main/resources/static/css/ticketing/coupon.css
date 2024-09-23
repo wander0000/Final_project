@@ -1,0 +1,107 @@
+:root 
+{
+    --main-color : #f3b931;
+    --sub-gray: #99a2b9;
+    --font-black:#111;
+    --background: #0f1015;
+    --hover-black:#13151c;
+    --disabled:rgba(153,162,185,0.3);
+    --input-background-gray:rgba(217,217,217,0.1);
+}
+
+* 
+{
+    margin:0;
+    padding:0;
+}
+
+a 
+{
+    text-decoration: none;
+    color: #fff;
+}
+
+ul,li,ol 
+{
+    list-style: none;
+    color: #fff;
+}
+
+table,div 
+{
+    box-sizing: border-box;
+}
+
+html,body 
+{
+    background-color: var(--background);
+}
+
+section 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+	width: 95%;
+    height: 50px;
+}
+
+.title > h5 {
+	margin: 10px 0;
+	text-align: left;
+	color: white;
+	font-size: 36px;
+	font-weight: 600
+}
+
+.coupon-container {
+	border: 1px solid var(--main-color); /* 테두리 색상 */
+    border-radius: 5px; /* 모서리 둥글기 */
+    padding: 10px; /* 내부 여백 */
+    margin: 5px; /* 외부 여백 */
+    display: flex; /* 라디오 버튼과 레이블을 가로로 정렬 */
+}
+
+.coupons {
+	display: grid;
+	grid-template-columns: 1fr; /* 원하는 열 수에 따라 조정 */
+	grid-template-rows: repeat(4, 56px); /* 원하는 열 수에 따라 조정 */
+	gap: 10px;
+    align-items: center;
+	width: 98%;
+	min-height: 279px; /* 최대 높이 설정 */
+	max-height: 280px; /* 최대 높이 설정 */
+	overflow-y: auto; /* 세로 스크롤 활성화 */
+	margin: 10px 20px;
+}
+
+.couponbox {
+	color: var(--sub-gray);
+    border: 0;
+    width: 420px;
+    margin: 0 10px;
+    font-size: 24px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.btn_box {
+	width: 98%;
+	display: flex;
+	gap: 5px;
+	justify-content: right;
+}
+
+.mainbtn {
+	cursor: pointer;
+    height: 36px;
+    width: 120px;
+    background: var(--main-color);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+}

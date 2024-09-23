@@ -1,13 +1,19 @@
 package com.boot.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.boot.DTO.BoxOfficeDTO;
 import com.boot.DTO.GenreDTO;
 import com.boot.DTO.MovietbDTO;
+import com.boot.DTO.SelecGenretbDTO;
 
 public interface MovieService {
 	
+	// TMDB 영화 데이터 삭제
+    void deleteMovie();	
+    
 	// TMDB 영화 데이터 받아서 입력	
 	void insertMovie();
     
@@ -28,4 +34,10 @@ public interface MovieService {
     
     // 영화상세정보
     public MovietbDTO movieInfo(String movieno);
+    
+    // 유저 영화 장르찾기
+    public ArrayList<SelecGenretbDTO> selectUserGenre(HashMap<String, Object> param);
+    
+    // 유저 영화 장르찾기
+    public ArrayList<BoxOfficeDTO> selectMoviesByGenres(HashMap<String, Object> param);
 }

@@ -58,7 +58,9 @@
                             <div class="infoDetail">
                                 <div class="th">휴대폰번호</div>
                                 <div class="td">${user.phone}</div>
-                                <button class="modifyBtn" type="submit">휴대폰번호 변경</button>
+								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
+								      <button class="modifyBtn" type="submit">휴대폰번호 변경</button>
+							  	</c:if>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
@@ -96,7 +98,9 @@
                                 <div class="th">선호장르</div>
                                 <div class="td" id="selectedGenresText">${genreList}</div>
 							    <input type="hidden" id="selectedGenresValue" />
-                                <button class="modifyBtn" type="submit">선호장르 변경</button>
+								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
+	                                <button class="modifyBtn" type="submit">선호장르 변경</button>
+							  	</c:if>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
@@ -148,7 +152,9 @@
 							 <div class="infoDetail">
                                 <div class="th">비밀번호</div>
                                 <div class="td" id="pwValue">${user.ppass}</div>
-                                <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
+								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
+	                                <button class="modifyBtn pwBtn" type="submit">비밀번호 변경</button>
+							  	</c:if>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
@@ -185,7 +191,9 @@
                             <div class="infoDetail">
                                 <div class="th">생년월일</div>
                                 <div class="td" id="birthday">${user.birth}</div>
-                                <button class="modifyBtn" type="submit">생년월일 변경</button>
+								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
+	                                <button class="modifyBtn" type="submit">생년월일 변경</button>
+							  	</c:if>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 								    <div class="popBg">
@@ -229,7 +237,9 @@
 		                                <div class="td">${user.account}</div>
 									</c:otherwise>
 								</c:choose>		
-                                <button class="modifyBtn" type="submit">환불계좌 등록</button>
+								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
+	                                <button class="modifyBtn" type="submit">환불계좌 등록</button>
+							  	</c:if>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">

@@ -21,6 +21,7 @@ import com.boot.DTO.MileageDTO;
 import com.boot.DTO.PointDTO;
 import com.boot.DTO.PthistDTO;
 import com.boot.Security.CustomUserDetails;
+import com.boot.Security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MembershipServiceImpl implements MembershipService {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private CustomUserDetailsService userService;
 	
 	@Override
 	//트랜잭션 내에서 성공적으로 모든 작업이 완료되면, 트랜잭션은 커밋
@@ -79,8 +83,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try {
 	        // 1. 사용자 grade 조회
@@ -133,8 +137,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try {
 	    	// 1. 포인트 적립(pthisttb에 정보 삽입)
@@ -178,8 +182,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try {
 	        // 1. 사용자 grade 삭제
@@ -218,8 +222,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
@@ -244,8 +248,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
@@ -270,8 +274,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
@@ -296,8 +300,8 @@ public class MembershipServiceImpl implements MembershipService {
 	    }
 	    
 	    // 2. 로그인된 사용자 정보 가져오기
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try { 
 			PtHisttbDAO_4 dao = sqlSession.getMapper(PtHisttbDAO_4.class);
@@ -313,8 +317,8 @@ public class MembershipServiceImpl implements MembershipService {
 
 	@Override
 	public String getGrade() {//멤버십 등급 조회
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String uuid = userDetails.getUuId();  // 사용자 ID 가져오기
+//		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
 
 	    try {
 	        // 1. 사용자 grade 조회

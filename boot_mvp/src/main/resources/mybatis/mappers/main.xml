@@ -3,6 +3,16 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.boot.DAO.MovieDAO">  
+
+    <!-- TMDB 영화 삭제  -->
+    <delete id="deleteMovie">
+		delete from movietb
+    </delete>
+
+    <!-- 박스오피스 영화 삭제  -->
+    <delete id="deleteBoxOffice">
+		delete from boxofficetb
+    </delete>
  
     <!-- TMDB 영화 삽입-->    
     <insert id="insertMovie" parameterType="list">
@@ -96,9 +106,28 @@
     <select id="selectUserGenre" resultType="com.boot.DTO.SelecGenretbDTO">    	
 	    SELECT 
 	    uuid, genrenm 
-	    from selectgenretb
+	    from selecgenretb
 	    where uuid= #{uuid}		 
-    </select>    
+    </select>   
+    
+	<select id="selectMoviesByGenres" parameterType="map" resultType="com.boot.DTO.BoxOfficeDTO">
+	    SELECT movieno, movienm, moviepostimg, genre 
+	    FROM boxofficetb
+	    <if test="genreList != null and genreList.size() > 0">
+	        WHERE
+	        <foreach item="genre" collection="genreList" separator=" OR ">
+	            genre LIKE CONCAT('%', #{genre}, '%')
+	        </foreach>
+	    </if>
+	    <!-- 
+	    WHERE
+	    <foreach item="genre" collection="genreList" separator=" OR ">
+	        genre LIKE CONCAT('%', #{genre}, '%')
+	    </foreach>
+	     -->
+	    ORDER BY ranking
+	</select>       
+    
 </mapper>
 
 

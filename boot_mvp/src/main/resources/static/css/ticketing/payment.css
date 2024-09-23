@@ -36,36 +36,7 @@ html,body
 {
     background-color: var(--background);
 }
-/*
-header 
-{
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.headerInner 
-{
-    min-width: 83.3%;
-    display: flex;    
-    align-items: center;
-    height: 100%;
-}
-
-h5.logo 
-{
-    width: 160px;
-    height: 26px;
-}
-
-h5.logo a 
-{
-    text-decoration: none;
-    color: var(--main-color);
-    font-size: 24px;
-}
-*/
 .menuList 
 {
     display: flex;
@@ -254,7 +225,7 @@ section
 }
 
 .discountDiv {
-    height: 950px;
+    /* height: 950px; */
     background: rgba(217, 217, 217, 0.1);
     border-right: #0F1015 2px solid;
 }
@@ -297,6 +268,14 @@ section
     border-radius: 6px;
 }
 
+.discountBtn.unshowbtn {
+	display: none;
+}
+
+.discountBtn.showbtn {
+	display: block;
+}
+
 .finalpay {
     background: rgba(217, 217, 217, 0.1);
 }
@@ -311,12 +290,21 @@ section
 }
 
 .couponarea, .pointarea {
+    /*
     display: grid;
     grid-template-columns: 18.7% 15.9% 65.3%;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    */
+    display: grid;
+    grid-template-columns: 14.7% 15% 15% 50%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
 }
+
 
 .inputshow {
     font-size: 24px;
@@ -337,7 +325,7 @@ section
 }
 
 .discountLists {
-    height: 710px;
+    height: 650px;
 }
 
 .discountListarea {

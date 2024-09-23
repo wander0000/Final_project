@@ -13,4 +13,6 @@ public interface AttendanceDAO {
 	public void insertAttendance(@Param("uuid") String uuid); 
 	// 출석 만근자 uuid 조회
 	public List<String> checkMonthlyAttendance();
+	//유저개인의 출석현황 
+	public List<Integer> checkUserAttendance(@Param("uuid") String uuid);
 }

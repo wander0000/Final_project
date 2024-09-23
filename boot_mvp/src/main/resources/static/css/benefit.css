@@ -1,0 +1,196 @@
+:root 
+{
+  /* 컬러 모음 */
+  --main-color: #FFA500;
+  --color-black: #111;
+  --color-white: #fff;
+  --color-gray: #787878;
+  --input-gray: #e5e5ec;
+  --button-gray: #f7f7f7;
+  --border-color-gray: #dadada;
+  --font-size32: 32px;
+  --font-size24: 24px;
+  --font-size20: 20px;
+  --font-size16: 16px;
+  --font-size14: 14px;
+  --font-size12: 12px;
+}
+
+/* 헤더  
+header 
+{
+  height: 90px;
+  border-bottom: 1px solid var(--border-color-gray);
+  background-color: #111;
+}
+
+.headerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.headerInner h5.logo 
+{
+  margin-right: 40px;
+  width: 120px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.headerInner ul.menu 
+{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+}
+
+.headerInner ul.menu li, .headerInner ul.rightMenu li 
+{
+  padding: 10px 20px;
+}
+
+.headerInner ul.menu li a, .headerInner ul.rightMenu li a 
+{
+  font-size: var(--input-tab-size);
+  color: var(--color-black);
+  font-weight: 500;
+}
+
+.rightMenu 
+{
+  margin-left: auto;
+  display: flex;
+}
+
+.headerInner ul.rightMenu li:first-child 
+{
+  margin-right: 40px;
+}
+
+헤더 끝 */
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F1015;
+  margin-left: 20px;
+}
+
+
+
+.boonWrap 
+{
+  width: 1200px;
+  height: fit-content;
+  margin-top: 210px;
+
+}
+
+.boonl1
+{
+  margin-top: 80px;
+  display: flex;
+
+}
+
+.bo
+{
+  margin-left: 120px;
+}
+
+.bobo
+{
+  font-size: 32px;
+  font-weight: 600;
+  color: #F3B931;
+  margin-bottom: 12px;
+}
+
+.bobobo
+{
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 1.6;
+}
+
+
+.imgimg
+{
+	height: 300px;
+	width: 385px;
+	border-radius: 10px;
+}
+
+
+
+.footerInner 
+{
+	margin-top: 120px;
+}
+
+
+
+
+
+
+
+
+
+/* 푸터 
+footer 
+{
+  background-color: #111;
+  padding: 50px 0;
+  height: 320px;
+}
+
+.footerInner 
+{
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+}
+
+.footerInner .f_conWrap 
+{
+  width: 50%;
+}
+
+.footerInner .left_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+  margin-top: 20px;
+}
+
+.footerInner .right_conWrap 
+{
+  text-align: right;
+}
+
+.footerInner .right_conWrap .textWrap 
+{
+  font-size: var(--input-tab-size);
+  line-height: 24px;
+}
+
+.footerInner .right_conWrap h3 
+{
+  font-size: var(--sub-title-size);
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+ 푸터 끝 */
+
+
+

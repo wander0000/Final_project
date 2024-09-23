@@ -144,12 +144,13 @@ $(document).ready(function()
                       content += '<div class="ticketCon">' + formattedStarttime + '</div>';
                       content += '<div class="ticketCon">' + dto.tmember + '</div>';
                       content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
+					  content += '<div class="ticketCon">' + dto.tprice + '</div>';
                       content += '<div class="ticketCon">';
-					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" type="submit" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
+					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
                       content += '</div>';
-                      content += '<div class="ticketCon">';
-                      content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
-                      content += '</div>';
+//                      content += '<div class="ticketCon">';
+//                      content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
+//                      content += '</div>';
                       content += '</div>';
                   });
               }
@@ -245,12 +246,13 @@ $(document).ready(function()
 				  content += '<div class="ticketCon">' + formattedStarttime + '</div>';
 				  content += '<div class="ticketCon">' + dto.tmember + '</div>';
 				  content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
+				  content += '<div class="ticketCon">' + dto.tprice + '</div>';
 				  content += '<div class="ticketCon">';
-				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" type="submit" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
+				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status"  data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
 				  content += '</div>';
-				  content += '<div class="ticketCon">';
-				  content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
-				  content += '</div>';  
+//				  content += '<div class="ticketCon">';
+//				  content += '<button class="submitTab" value="ticket_status" type="submit">입장권보내기</button>';
+//				  content += '</div>';  
 				  content += '</div>'; 
 
 				  document.getElementById('ticketListContent').innerHTML += content;
@@ -330,41 +332,57 @@ $(document).ready(function()
 	      }
 	  });
 
-	// 이전 그룹으로 이동
-	$(document).on('click', '.prev-btn', function() {
-		var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
-		var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
-		console.log("prev-btn 클릭의 loadParams=>"+loadParams);  // 파라미터확인
-	    
-	    var prevPage = Math.max(1, currentPage - pageGroupSize);  // 이전 페이지 계산
-	    loadParams.page = prevPage;  // 페이지 업데이트
-	    
-	    if (loadMethod === 'monthly') {
-	        loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, prevPage, loadParams.pageSize);
-	    } else if (loadMethod === 'period') {
-	        loadTicketList(loadParams.days, prevPage, loadParams.pageSize);
-	    }
-	});
+	  // 이전 그룹으로 이동
+	  $(document).on('click', '.prev-btn', function() {
+	      var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
+	      var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
+	      console.log("prev-btn 클릭의 loadParams => " + loadParams);  // 파라미터 확인
 
-	// 다음 그룹으로 이동
-	$(document).on('click', '.next-btn', function() {
-	    var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
-	    var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
-	    
-	    var nextPage = Math.min(totalPages, currentPage + pageGroupSize);  // 다음 페이지 계산
-	    loadParams.page = nextPage;  // 페이지 업데이트
-	    
-	    if (loadMethod === 'monthly') {
-	        loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, nextPage, loadParams.pageSize);
-	    } else if (loadMethod === 'period') {
-	        loadTicketList(loadParams.days, nextPage, loadParams.pageSize);
-	    }
-	});
-	
+	      try {
+	          loadParams = JSON.parse(loadParams);  // 문자열을 객체로 변환
+	      } catch (e) {
+	          console.error("loadParams 파싱 오류: ", e);
+	          return;
+	      }
+
+	      var prevPage = Math.max(1, currentPage - pageGroupSize);  // 이전 페이지 계산
+	      loadParams.page = prevPage;  // 페이지 업데이트
+
+	      if (loadMethod === 'monthly') {
+	          loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, prevPage, loadParams.pageSize);
+	      } else if (loadMethod === 'period') {
+	          loadTicketList(loadParams.days, prevPage, loadParams.pageSize);
+	      }
+	  });
+
+	  // 다음 그룹으로 이동
+	  $(document).on('click', '.next-btn', function() {
+	      var loadMethod = $(this).data('loadmethod');  // loadMethod 값 가져오기
+	      var loadParams = $(this).attr('data-loadparams');  // 문자열로 저장된 loadParams 가져오기
+	      console.log("next-btn 클릭의 loadParams => " + loadParams);  // 파라미터 확인
+
+	      try {
+	          loadParams = JSON.parse(loadParams);  // 문자열을 객체로 변환
+	      } catch (e) {
+	          console.error("loadParams 파싱 오류: ", e);
+	          return;
+	      }
+
+	      var nextPage = Math.min(totalPages, currentPage + pageGroupSize);  // 다음 페이지 계산
+	      loadParams.page = nextPage;  // 페이지 업데이트
+
+	      if (loadMethod === 'monthly') {
+	          loadMonthlyTicketList(loadParams.keyword, loadParams.year, loadParams.month, nextPage, loadParams.pageSize);
+	      } else if (loadMethod === 'period') {
+	          loadTicketList(loadParams.days, nextPage, loadParams.pageSize);
+	      }
+	  });
 	
 
 	// 예매취소내역 : 예매취소 탭  클릭 시 AJAX로 데이터를 로드
     $('.ticketCancel').on('click', function() {
+		
+		
 	
   	  // AJAX 요청
       $.ajax({
@@ -418,32 +436,45 @@ $(document).ready(function()
 	    });
     });
 	
-	//예매 취소하기 
+	
+	//예매 취소하기
 	$(document).on('click', '#cancelBtn', function(e) {
 	    e.preventDefault();  // 기본 폼 제출 동작을 막습니다.
-
-	    var buttonText = $(this).text();  // 버튼의 텍스트 값을 가져옴
-	    var reservenum = $(this).data('reservenum');  // 버튼에 저장된 예약번호
 		
-	    if (buttonText === '취소가능') {
+	    var buttonText = $(this).text();  // 버튼의 텍스트 값을 가져옴
+	    var reservenum = $(this).data('reservenum');  // 버튼에 저장된 예약번호 가져옴
+//		const csrfToken = document.getElementById(csrfTokenId).value; // CSRF 토큰 가져오기
+	    const csrfToken = document.getElementById('token').value;  // CSRF 토큰 가져오기
+		console.log("csrfToken:" + csrfToken);
+
+	    if (buttonText === '취소가능') {  // 버튼의 텍스트가 "취소가능"일 때만 실행
 	        if (confirm("정말로 이 예매를 취소하시겠습니까?")) {
 	            $.ajax({
-	                url: '/cancelTicket',
+	                url: '/cancelTicket',  // 예매 취소 API 엔드포인트
 	                type: 'POST',
-	                data: { reservenum: reservenum },
+	                headers: {
+//	                    "Content-Type": "application/json",
+	                    "X-CSRF-TOKEN": csrfToken  // CSRF 토큰을 헤더에 추가
+	                },
+	                data: {  // 예약번호를 JSON 형식으로 전달
+	                    reservenum: reservenum
+	                },
 	                success: function(response) {
-	                    alert(response);  // 서버의 응답 메시지를 출력
-	                    loadTicketList('30', 1, 5);  // 성공시 목록고침
+	                    alert(response);  // 서버 응답 메시지 출력
+	                    loadTicketList('30', 1, 5);  // 성공 시 목록 갱신
 	                },
 	                error: function(xhr, status, error) {
 	                    alert('취소에 실패했습니다. 다시 시도해 주세요.');
-	                    console.log(error);
+	                    console.log(error);  // 에러 로그 출력
 	                }
 	            });
 	        }
 	    }
 	});
+
 	
+	
+
 	
 
 	

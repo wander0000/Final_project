@@ -119,6 +119,14 @@ section
   height: fit-content;
 }
 
+.loginWrap2
+{
+  width: 1920px;
+  height: fit-content;
+  padding: 4.8%;
+  overflow: hidden; /* 모든 스크롤을 숨김 */
+}
+
 .logbox
 {
   position: relative; /* Changed from absolute to relative positioning */
@@ -559,9 +567,10 @@ header, footer, .container, section, html
 }
 
 /* 컨텐츠를 수평으로 넘지 않도록 설정 */
-.wrap, .loginWrap {
-  overflow-x: hidden; /* 수평 스크롤을 숨김 */
+.wrap, .loginWrap, .loginWrap2 {
+  overflow: hidden; /* 모든 스크롤을 숨김 */
 }
+
 
 /* 전체 페이지의 overflow-x 숨김 */
 html, body {

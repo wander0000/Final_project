@@ -18,6 +18,9 @@ import com.boot.DTO.UsertbDTO;
 import com.boot.Security.CustomUserDetails;
 import com.boot.Service.LoginService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class AuthProvider implements AuthenticationProvider {
 
@@ -31,7 +34,8 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userid = (String) authentication.getName(); 
         String password = (String) authentication.getCredentials(); 
-
+        
+        log.info("@@@@@@@@@@@userid:"+userid+"@@@@@@@@@@@password:"+password);
         UsertbDTO userdto = loginservice.getUserById(userid);
         if (userdto == null || userdto.getPpass() == null) {
             throw new BadCredentialsException("Invalid username or password");
@@ -51,8 +55,8 @@ public class AuthProvider implements AuthenticationProvider {
             userdto.getUuid(), 
             userdto.getPname(), 
             userdto.getPpass(), 
-            userdto.getEmail(),
-            userdto.getPhone(),
+            userdto.getEmail(), 
+            userdto.getPhone(), 
             authorities
         );
 

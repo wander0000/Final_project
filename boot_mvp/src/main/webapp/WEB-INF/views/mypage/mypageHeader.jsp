@@ -79,12 +79,13 @@
         <div class="subHeader">
 			<div class="headerSubInner">
 	            <ul class="submenuList">
-	                <li class="submenu"><a href="ticket">예매관리</a></li>
-	                <li class="submenu"><a href="membership">멤버십</a></li>
-	                <li class="submenu"><a href="movieStory">무비스토리</a></li>
-	                <li class="submenu"><a href="coupon">쿠폰/할인권</a></li>
-	                <li class="submenu"><a href="userInfo">회원정보</a></li>
-	                <li class="submenu"><a href="withdraw">회원탈퇴</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage">My MVP</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/ticket">예매관리</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/membership">멤버십</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/movieStory">무비스토리</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/coupon">쿠폰/할인권</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/userInfo">회원정보</a></li>
+	                <li class="submenu"><a href="${pageContext.request.contextPath}/mypage/withdraw">회원탈퇴</a></li>
 	            </ul>
 			</div>
         </div>
@@ -102,17 +103,20 @@
 
 	// 페이지 로드 시 현재 URL과 일치하는 링크에 active 클래스 추가
 	window.addEventListener('DOMContentLoaded', () => {
-		
-    	//const currentPath = window.location.pathname; //여기까지하면 'mypage/coupon'
-		// '/mypage/' 이후의 경로만 가져오기
-		const currentPath = window.location.pathname.substring('/mypage/'.length);
-		console.log(currentPath)
-      
-    	links.forEach(link => {
-        	if (link.getAttribute('href') === currentPath) {
-            	link.classList.add('active');
-        	}
-    	});
+	    // 현재 경로에서 contextPath를 제외한 부분을 가져옵니다.
+	    const currentPath = window.location.pathname.replace(`${pageContext.request.contextPath}`, '');
+	    console.log("현재 경로:", currentPath);
+	    
+	    links.forEach(link => {
+	        // 각 링크의 href에서 contextPath를 제외한 경로만 가져옵니다.
+	        const linkPath = link.getAttribute('href').replace(`${pageContext.request.contextPath}`, '');
+	        console.log("링크 경로:", linkPath);
+
+	        // 현재 경로와 링크 경로가 일치하면 active 클래스 추가
+	        if (currentPath === linkPath) {
+	            link.classList.add('active');
+	        }
+	    });
 	});
 
 	// 각 링크에 클릭 이벤트를 추가합니다.

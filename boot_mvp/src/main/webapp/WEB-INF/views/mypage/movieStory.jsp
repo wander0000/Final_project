@@ -22,9 +22,9 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage/default.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage/movieStory.css">
-	<script src="${pageContext.request.contextPath}/js/mypage/movieStory.js"></script>
 </head>
 <body>
+
 	<%@ include file="/WEB-INF/views/header.jsp" %>
     <section class="section">
       <%@ include file="mypageHeader.jsp" %>
@@ -38,200 +38,42 @@
                         <div class="tabCon active" data-tab="watched">본영화</div>
                         <div class="tabCon" data-tab="comment">관람평</div>
                         <div class="tabCon" data-tab="wanted">보고싶어</div>
-                        <div class="tabCon" data-tab="partner">파트너스</div>
+<!--                        <div class="tabCon" data-tab="partner">파트너스</div>-->
                     </div>
                    
                     <div class="contentDiv">
 
                         <div class="contentCon watched active">
-                            <div class="movieList">
-                            
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div infoCon>
-                                            <div class="movieConM">
-                                                <h3 class="movieTitle">나는 니가 지난 여름에 한 일을 알고 있다.</h3>
-                                                <div class="detailInfo">
-                                                    <div>2024-08-01</div>
-                                                    <div>MVP 서면 3관</div>
-                                                    <div>2명</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                    <button class="commentBtn" type="submit">관람평남기기</button>
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div infoCon>
-                                            <div class="movieConM">
-                                                <h3 class="movieTitle">행복의 나라</h3>
-                                                <div class="detailInfo">
-                                                    <div>2024-08-01</div>
-                                                    <div>MVP 서면 3관</div>
-                                                    <div>2명</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                    <button class="commentBtn" type="submit">관람평남기기</button>
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div infoCon>
-                                            <div class="movieConM">
-                                                <h3 class="movieTitle">행복의 나라</h3>
-                                                <div class="detailInfo">
-                                                    <div>2024-08-01</div>
-                                                    <div>MVP 서면 3관</div>
-                                                    <div>2명</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                    <button class="commentBtn" type="submit">관람평남기기</button>
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div infoCon>
-                                            <div class="movieConM">
-                                                <h3 class="movieTitle">행복의 나라</h3>
-                                                <div class="detailInfo">
-                                                    <div>2024-08-01</div>
-                                                    <div>MVP 서면 3관</div>
-                                                    <div>2명</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                    <button class="commentBtn" type="submit">관람평남기기</button>
-                                </div><!-- detailCon  영화 하나 끝 -->
-
+                            <div class="movieList" id="watchedmovieList">
+									<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
                             </div><!-- movieList 끝 -->
+							<div id="pagination" class="pagination">
+								<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+							</div>
                         </div><!-- contentCon watched (본영화) 끝 -->  
 
 
                         <div class="contentCon comment">
-                            <div class="commentList">
-                                <div class="commentDetail">
-                                    <div class="commentTitle">행복의 나라</div>
-                                    <div class="commentTime">2024-08-27</div>
-                                    <div class="commentBody">너무 재밌었고 배우분들 너무 연기도 짱짱 몰입감도 짱짱 !! </div>
-                                    <div class="commentStar">
-                                        <span class="icon">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <div class="commentStarRate">10</div>
-                                    </div>
-                                </div><!-- commentDetail 관람평 하나 끝 -->
-                                <div class="commentDetail">
-                                    <div class="commentTitle">행복의 나라</div>
-                                    <div class="commentTime">2024-08-27</div>
-                                    <div class="commentBody">너무 재밌었고 배우분들 너무 연기도 짱짱 몰입감도 짱짱 !!너무 재밌었고 배우분들 너무 연기도 짱짱 몰입감도 짱짱 !!너무 재밌었고 배우분들 너무 연기도 짱짱 몰입감도 짱짱 !!</div>
-                                    <div class="commentStar">
-                                        <span class="icon">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <div class="commentStarRate">1</div>
-                                    </div>
-                                </div><!-- commentDetail 관람평 하나 끝 -->
-                                <div class="commentDetail">
-                                    <div class="commentTitle">나는 니가 지난 여름에 한 일을 알고 있다.</div>
-                                    <div class="commentTime">2024-08-27</div>
-                                    <div class="commentBody">너무 재밌었고 배우분들 너무 연기도 짱짱 몰입감도 짱짱 !! </div>
-                                    <div class="commentStar">
-                                        <span class="icon">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <div class="commentStarRate">8</div>
-                                    </div>
-                                </div><!-- commentDetail 관람평 하나 끝 -->
+                            <div class="commentList" id="commentList">
+								<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
                             </div> <!-- commentList 관람평 리스트 끝 -->
-                        </div><!-- contentCon comment 끝 -->  
+							<div id="pagination" class="pagination">
+								<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+							</div>
+							
+						
+						<input type="hidden" id="token" name="${_csrf}" value="${_csrf.token}"/>
+						 </div><!-- contentCon comment 끝 -->  
 
 
 
                         <div class="contentCon wanted">
-                            <div class="movieList">
-                            
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div class="movieConM">
-                                            <h3 class="movieTitle">나는 니가 지난 여름에 한 일을 알고 있다.</h3>
-                                        </div>
-                                        <div class="movieConB">
-                                            <div class="scrapCon">
-                                                <span class="iconHeart">
-                                                    <i class="fa-regular fa-heart"></i>
-                                                </span>
-                                                <div class="scrapRate">128</div>
-                                            </div>
-                                            <button class="bookingBtn" type="submit">예매하기</button>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                </div><!-- detailCon  영화 하나 끝 -->
-
-
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div class="movieConM">
-                                            <h3 class="movieTitle">행복의 나라</h3>
-                                        </div>
-                                        <div class="movieConB">
-                                            <div class="scrapCon">
-                                                <span class="iconHeart">
-                                                    <i class="fa-regular fa-heart"></i>
-                                                </span>
-                                                <div class="scrapRate">12888</div>
-                                            </div>
-                                            <button class="bookingBtn" type="submit">예매하기</button>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div class="movieConM">
-                                            <h3 class="movieTitle">행복의 나라</h3>
-                                        </div>
-                                        <div class="movieConB">
-                                            <div class="scrapCon">
-                                                <span class="iconHeart">
-                                                    <i class="fa-regular fa-heart"></i>
-                                                </span>
-                                                <div class="scrapRate">128</div>
-                                            </div>
-                                            <button class="bookingBtn" type="submit">예매하기</button>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                <div class="detailCon">
-                                    <div class="movieDetail">
-                                        <img src="${pageContext.request.contextPath}/images/common.jfif" alt="#">
-                                        <div class="movieConM">
-                                            <h3 class="movieTitle">행복의 나라</h3>
-                                        </div>
-                                        <div class="movieConB">
-                                            <div class="scrapCon">
-                                                <span class="iconHeart">
-                                                    <i class="fa-regular fa-heart"></i>
-                                                </span>
-                                                <div class="scrapRate">128</div>
-                                            </div>
-                                            <button class="bookingBtn" type="submit">예매하기</button>
-                                        </div>
-                                    </div><!-- movieDetail  영화 하나 끝 -->
-                                </div><!-- detailCon  영화 하나 끝 -->
-                                
-                                
+                            <div class="movieList" id="likedmovieList">
+								<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->                  
                             </div><!-- movieList 끝 -->
+							<div id="pagination" class="pagination">
+								<!-- 여기서 JavaScript로 데이터를 동적으로 채움 -->
+							</div>
                         </div><!-- contentCon wanted (보고싶어) 끝 -->  
 
                         
@@ -373,8 +215,10 @@
                 
             </div><!-- mainContainerContent -->
         </div> <!-- mainContainer -->
+
     </section>
 	<%@ include file="/WEB-INF/views/footer.jsp" %>
+	<script src="${pageContext.request.contextPath}/js/mypage/movieStory.js"></script>
 </body>
 </html>
 

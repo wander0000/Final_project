@@ -7,6 +7,16 @@
     --hover-black:#13151c;
     --disabled:rgba(153,162,185,0.3);
     --input-background-gray:rgba(217,217,217,0.1);
+	--fs12: 0.6px;
+	--fs14: 0.8vw;
+	--fs16: 0.8vw;
+	--fs18: 0.95vw;
+	--fs20: 1.05vw;
+	--fs24: 1.25vw;
+	--fs28: 1.5vw;
+	--fs32: 1.7vw;
+	--fs36: 2vw;
+	--fs48: 2.5vw;	
 }
 
 * 
@@ -431,4 +441,25 @@ label {
     right: 16px;
     bottom: 4px;
     font-size: 12px;
+}
+
+/* swiper 속성값 */
+.swiper 
+{
+	width: 80%!important;
+}
+
+.swiper-button-wrap 
+{
+	position: absolute;
+    top: 0;
+    width: 100%;
+    height: 44px;
+}
+
+.swiper-button-next:after, .swiper-button-prev:after 
+{
+	font-size: var(--fs24)!important;
+	font-weight: 600;
+	
 }

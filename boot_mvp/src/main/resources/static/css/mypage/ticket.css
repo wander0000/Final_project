@@ -177,7 +177,7 @@
 
 .contentRowBook button
 {
-    height: 40px;
+    height: 36px;
 }
 
 
@@ -257,4 +257,8 @@
     color: #111;
     background-color: #F3B931;
     border: none;
+}
+
+select{
+	height: 36px important!; 
 }

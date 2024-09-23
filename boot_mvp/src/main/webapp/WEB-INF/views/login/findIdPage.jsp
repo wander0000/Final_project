@@ -80,4 +80,4 @@
 <script>
     const contextPath = '${pageContext.request.contextPath}';
 </script>
-<script src="${pageContext.request.contextPath}/js/findIdPage.js"></script>
+<script src="${pageContext.request.contextPath}/js/login/findIdPage.js"></script>

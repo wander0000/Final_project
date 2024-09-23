@@ -38,7 +38,7 @@
 
 .tabConDiv {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     height: 56px;
     font-size: 20px;
     text-align: center;
@@ -111,7 +111,7 @@
 
 .movieDetail img{
     width: 100%;
-    height: auto;
+	height: 528px; /* 원하는 고정된 높이 값 설정 */
     object-fit: cover; /* 이미지가 그리드 항목 크기에 맞도록 조정 */
     box-sizing: border-box;
     border-radius: 16px ;
@@ -168,6 +168,37 @@
     text-align: center;
 }
 
+.userReview {
+    display: flex;
+    gap: 0 10px;
+    align-items: center;
+    padding: 0 20px;
+    height: 48px;
+	width: fit-content;
+    border-radius: 6px;
+    background-color: rgba(217, 217, 217, 0.1);
+    box-sizing: border-box;
+    color: #99A2B9;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 24px;
+}
+
+
+.userStar
+{
+	display: flex;
+	align-items: center;
+	
+}
+
+.userStar span
+{
+	font-size: 18px;
+	color: #F3B931;
+}
+
 
 /* 관람평 */
 
@@ -181,6 +212,7 @@
 
 .commentDetail{
     display: flex;
+	align-items: center;
     padding: 24px;
     gap: 0 20px;
     background-color: #1A1B24;
@@ -204,14 +236,250 @@
 {
     margin-left: auto;
     display: flex;
+	align-items: center;
     gap: 0 10px;
     font-size: 24px;
     color: #F3B931;
+	position: relative;  /* 부모 요소가 기준이 되도록 설정 */
+}
+
+/*관람평팝업*/
+.pop 
+{
+    height:100vh;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	z-index:999;
+}
+
+.popInner 
+{
+    width: 500px;
+    background: #fff;
+}
+
+.popH 
+{
+    background: #f3b931;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+ 
+
+.content .popH h5,  .content .popH span, .popH h5,  .popH span
+{
+    font-size: 1.05vw;
+	color: #111;
+	font-weight: 500;
+}
+
+.popH span 
+{
+	font-size: 1.25vw;
+}
+
+.popB 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    margin: 0 auto;
+}
+
+
+
+.popMovienm 
+{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+.popRating 
+{
+    display: flex;
+    align-items: center;
+    gap: 0 40px;
+	margin-top: 40px;
+}
+.rating 
+{
+    float: none;
+    display: flex;  
+}
+
+.rating label 
+{
+    width: 20px;
+/*    overflow: hidden;*/
+    cursor: pointer;           
+}
+
+.rating input 
+{
+    display: none;
+}
+
+.rating__label--full 
+{
+    margin-right: 20px;
+}
+
+.rating__label--full:last-child 
+{
+    margin-right: 0;
+}
+
+.rating label .star-icon 
+{
+    width: 20px;
+    height: 40px;
+    display: block;
+    background-image: url(../../images/star.svg);
+    background-repeat: no-repeat;
+    background-size: 41px; 
+    transition: opacity 0.2s ease;
+}
+
+.rating label .star-icon.filled 
+{
+    background-image: url(../../images/star-fill.svg);
+}
+
+/* 별에 마우스를 올렸을 때 투명도 0.5 적용 */
+.rating label:hover .star-icon 
+{
+    opacity: 0.5;
+}
+
+/* 선택된 별들의 색이 채워짐 */
+.rating label.selected .star-icon,
+.rating label.selected ~ label .star-icon 
+{
+    background-image: url(../images/star-fill.svg);
+}
+
+.rating__label--full .star-icon 
+{
+    background-position: right;
+}
+
+.rating-result 
+{
+    font-size: 18px;
+    color: #333;
+	display: flex;
+	align-items: center;
+}
+
+.textAreaWrap 
+{
+    width: 100%;
+    margin-top:40px;
+}
+
+.textAreaWrap textArea 
+{
+    width: 100%;
+    height: 200px;
+    border: 1px solid #dadada;
+    border-radius: 3px;
+}
+
+.textAreaWrap textArea::placeholder 
+{
+    padding:12px;
+}
+
+.popF 
+{
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.popF .buttonWrap 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 20px;
+}
+
+.popF .buttonWrap .button 
+{
+    height: 36px;
+    padding: 0 20px;
+    border:0;
+	border-radius: 3px;
+	cursor: pointer;
+	border: 1px solid #dadada;
+	text-align: center;
+}
+
+.popF .buttonWrap .button:hover 
+{
+	color: #111;
+	border: 1px solid #F3B931;
+	background:#F3B931;
+}
+
+.content #selected-rating 
+{
+	color: #F3B931;
+	font-size: 1.5vw;
+	margin-right: 4px;
+	font-weight: 600;
+}
+
+
+
+.optionReview 
+{
+    width: 120px;
+    background: #fff;
+    position: absolute;
+	top: 100%;  /* 부모요소 바로 아래에 위치하게 함 */
+	left: 50%;  /* 부모요소의 중앙에 위치하게 함 */
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 9;
+	font-size: 16px;
+	color: #99A2B9;
+}
+
+.optionReview li:hover {
+    background: rgba(243, 185, 49, 0.2) !important;
+}
+
+.optionReview li {
+    padding: 20px;
+    cursor: pointer;
 }
 
 
 /* 보고싶어 */
 
+
+.infoCon
+{
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0;
+}
 .movieConB
 {
     display: flex;
@@ -244,6 +512,51 @@
     background-color: #F3B931;
     color: #111;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* 파트너스 */
@@ -304,8 +617,8 @@ button.state
 
 button.delete, button.modify
 {
-    padding: 0 10px;
-    width: 60px;
+/*    padding: 0 10px;*/
+/*    width: 60px;*/
 }
 
 button.messageAlert
@@ -332,4 +645,16 @@ button.messageAlert
 .closed
 {
     display: none;
+}
+
+
+
+.noContent
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	font-size: 20px;
+    font-weight: 200;
 }

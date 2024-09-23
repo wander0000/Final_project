@@ -1,0 +1,267 @@
+
+.mainContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainerContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    margin-top: 40px;
+    width: 1600px;
+}
+
+.menuTitle
+{
+    color: var(--main-color);
+    font-size: 28px;
+	font-weight: 600;
+}   
+
+.mainContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 40px 0;
+    box-sizing: border-box;
+    /* background-color: #1A1B24; */
+    color: var(--sub-gray);
+    font-size: 14px;
+    font-weight: 400;
+	margin-bottom: 40px;
+}
+
+
+.font14{ font-size: 14px; }
+.font16{ font-size: 16px; }
+.font20{ font-size: 20px; }
+.font24{ font-size: 24px; }
+
+.mColor{color: #F3B931 }
+.fff{ color: #fff; }
+
+
+.contentDiv
+{
+	display: flex;
+   	flex-direction: column;
+  	justify-content: center;
+	gap: 40px 0;
+}
+
+.topBoxes {
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr;
+	gap : 0 40px;
+    align-items: stretch; /* 높이를 동일하게 맞춤 */
+}
+
+.bottomBoxes{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+	gap : 0 40px;
+    align-items: center;
+    align-items: stretch; /* 높이를 동일하게 맞춤 */
+}
+
+.cardBox
+{
+	display: flex;
+    flex-direction: column;
+    background-color: #1A1B24;
+    color: #99A2B9;
+	padding: 24px;
+	gap : 20px 0;
+}
+
+.one
+{
+	justify-content: space-between;
+}
+.cardUp, .threeCon
+{
+	display: flex;
+    flex-direction: column;
+	gap: 10px 0;
+}
+
+.cardU{
+	display: flex;
+	gap: 0 20px ;
+}
+.threeCon
+{
+	align-items: center;	
+}
+.cardDown > a
+{
+	margin-bottom: auto;
+}
+
+.three
+{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 0 40px;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+
+.locatiionCon
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.alertBox
+{
+    padding: 10px 20px;
+    background-color: rgba(217, 217, 217, 0.1);
+    border-radius: 6px;
+    color: #F3B931;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: inline-flex;
+    width: fit-content;
+	justify-content: center;
+
+}
+
+/* 네비게이터 스타일 */
+.navigator {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* 단계 표시 원 스타일 */
+.circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1; /* 선 아래로 가지 않도록 설정 */
+}
+
+.gradeCircle {
+    width: 20px;
+    height: 20px;
+    background-color: #99A2B9; 
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.gradeCircle.active {
+    box-sizing: border-box;
+    border:5px solid #F3B931; /* 첫 번째 원 (Welcome) 색상 */
+}
+
+/* 단계 텍스트 */
+.circle div:last-child {
+    font-size: 12px;
+    color: #cbcecf;
+}
+
+/* 라인 스타일 */
+.line {
+    position: absolute;
+    top: 21%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    width: 400px;
+    background-color: #99A2B9;
+    z-index: 0; /* 원들 아래에 위치하도록 설정 */
+    justify-self: center;
+}
+
+
+
+.listTable
+{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 3px;
+    background-color: #1A1B24;
+    padding: 0 20px;
+}
+
+.titleRow, .contentRow
+{
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 1fr 2fr;
+    text-align: center;
+    /* justify-content: center; */
+    align-items: center;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.ticketCon
+{
+	display: flex;
+	justify-content: center;
+}
+
+
+.noContent
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 56px;
+	font-size: 20px;
+    font-weight: 200;
+}
+
+.contentRow
+{
+    border-top: 1px solid rgba(217, 217, 217, 0.1);
+}
+
+
+.moreInfo
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+    margin-top: auto;
+}
+
+
+.calendar
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap:  0;
+}
+
+.weekdays{
+	margin-top:20px;
+}
+.weekdays, .days
+{
+	display: grid;
+	grid-template-columns: repeat(7,1fr);
+	width: 100%;
+	text-align: center;
+	gap: 20px 0;
+}
+
+.day.empty 
+{
+    background-color: transparent;  /* 빈칸은 투명하게 */
+}
