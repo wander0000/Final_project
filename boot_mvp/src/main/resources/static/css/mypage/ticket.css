@@ -258,3 +258,7 @@
     background-color: #F3B931;
     border: none;
 }
+
+select{
+	height: 36px important!; 
+}

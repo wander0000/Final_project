@@ -614,7 +614,14 @@ $(document).ready(function()
 						content += '</span>';
 						content += '<div class="scrapRate">'+dto.scrapRate+'</div>';
 						content += '</div>';
-						content += '<button class="bookingBtn" type="button" onclick="move_ticketing(\''+dto.movieno+'\')">예매하기</button>';
+						// releaseday와 endday 비교하여 예매 버튼 표시
+				        var releaseday = new Date(dto.releaseday);  // 개봉일
+				        var endday = new Date(dto.endday);  // 종료일
+						var today = new Date();  // 현재 날짜
+
+				        if (today >= releaseday && today <= endday) {
+				            content += '<button class="bookingBtn" type="button" onclick="move_ticketing(\''+dto.movieno+'\')">예매하기</button>';
+				        }
 						content += '</div>';
 						content += '</div>';
 						content += '</div>';
