@@ -81,4 +81,4 @@
 <script>
     const contextPath = '${pageContext.request.contextPath}';
 </script>
-<script src="${pageContext.request.contextPath}/js/loginPage.js"></script>  
+<script src="${pageContext.request.contextPath}/js/login/loginPage.js"></script>  

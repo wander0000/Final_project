@@ -131,7 +131,7 @@ public class LoginController {
                 if (isExistingUser) {
                     model.addAttribute("name", oauth2User.getAttribute("name"));
                     model.addAttribute("provider", registrationId);
-                    return "login/homePage";  // 기존 회원
+                    return "/main";  // 기존 회원
                 } else {
                     // 신규 회원일 경우 필요한 정보들(model에 추가)
                     model.addAttribute("oauthUserId", oauthUserId);
@@ -144,17 +144,17 @@ public class LoginController {
                 UserDetails userDetails = (UserDetails) principal;
                 String username = userDetails.getUsername();
                 model.addAttribute("username", username);
-                return "login/homePage";
+                return "/main";
             }
         }
-        return "login/homePage";  // 인증되지 않은 사용자면 로그인 페이지로 이동
+        return "login/main";  // 인증되지 않은 사용자면 로그인 페이지로 이동
     }
 
-    // 그냥 홈페이지로 이동하는 매핑
-    @GetMapping("/login/homePage")
-    public String homePage() {
-        return "/login/homePage";  // homePage.jsp 파일로 이동 (뷰 리졸버에서 prefix, suffix 설정에 따라 경로가 결정됨)
-    }
+//    // 그냥 홈페이지로 이동하는 매핑
+//    @GetMapping("/login/homePage")
+//    public String homePage() {
+//        return "/login/homePage";  // homePage.jsp 파일로 이동 (뷰 리졸버에서 prefix, suffix 설정에 따라 경로가 결정됨)
+//    }
 
     
 //    // oauth 회원가입페이지이동
@@ -255,7 +255,7 @@ public class LoginController {
             return "redirect:/oauthSignupSubmit2?error_code=-90"; // 기타 오류
         }
 
-        return "redirect:/login/homePage";
+        return "redirect:/main";
     }
     
 

@@ -62,4 +62,4 @@
 <script>
     const contextPath = '${pageContext.request.contextPath}';
 </script>
-<script src="${pageContext.request.contextPath}/js/findPwPage.js"></script>  
+<script src="${pageContext.request.contextPath}/js/login/findPwPage.js"></script>  
