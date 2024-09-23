@@ -61,40 +61,6 @@ public class LoginController {
     private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
     
     
-    
-//    public void checkPrincipalType() {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if (auth instanceof OAuth2AuthenticationToken) {
-//            // OAuth2 로그인 사용자 처리
-//            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) auth;
-//
-//            // OAuth2 공급자 정보 가져오기
-//            String registrationId = oauthToken.getAuthorizedClientRegistrationId();  // 공급자 ID (google, naver 등)
-//            System.out.println("OAuth2 로그인 사용자가 로그인했습니다. 공급자: " + registrationId);
-//            
-//            OAuth2User oauthUser = (OAuth2User) principal;
-//            String name = oauthUser.getAttribute("name");
-//            System.out.println("사용자 이름: " + name);
-//            
-//            // 공급자에 따라 추가 처리
-//            if ("google".equals(registrationId)) {
-//                System.out.println("구글로 로그인했습니다.");
-//            } else if ("naver".equals(registrationId)) {
-//                System.out.println("네이버로 로그인했습니다.");
-//            } else if ("facebook".equals(registrationId)) {
-//                System.out.println("페이스북으로 로그인했습니다.");
-//            }
-//        } else if (principal instanceof UserDetails) {
-//            // 폼 로그인 사용자 처리
-//            UserDetails userDetails = (UserDetails) principal;
-//            System.out.println("폼 로그인 사용자가 로그인했습니다.");
-//            System.out.println("아이디: " + userDetails.getUsername());
-//        }
-//    }
-    
-    
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -150,21 +116,15 @@ public class LoginController {
         return "login/main";  // 인증되지 않은 사용자면 로그인 페이지로 이동
     }
 
-//    // 그냥 홈페이지로 이동하는 매핑
-//    @GetMapping("/login/homePage")
-//    public String homePage() {
-//        return "/login/homePage";  // homePage.jsp 파일로 이동 (뷰 리졸버에서 prefix, suffix 설정에 따라 경로가 결정됨)
-//    }
-
     
-//    // oauth 회원가입페이지이동
+    // oauth 추가회원가입 1 페이지이동
     @GetMapping("/oauthSignupSubmit1")
     public String oauthSignupSubmit1() {
-        // 회원가입 페이지로 이동
         return "/login/oauthSignup1";  // 리턴 값은 실제 뷰 파일의 이름
     }
     
-    // oauth 추가 회원가입 1
+    
+    // oauth 추가회원가입 1
     @PostMapping("/oauthSignupSubmit1")
     public String oauthSignupSubmit1(
             @RequestParam("userid") String userid,
@@ -197,7 +157,7 @@ public class LoginController {
     }
     
     
-    // oauth 추가 회원가입 2 
+    // oauth 추가회원가입 2 페이지이동
     @GetMapping("/oauthSignupSubmit2")
     public String oauthSignupSubmit2Page(HttpSession session, Model model) {
     	OauthtbDTO oauthtbDTO = (OauthtbDTO) session.getAttribute("signupUser");
@@ -213,11 +173,10 @@ public class LoginController {
     }
     
     
-    
+    // oauth 추가회원가입 2
     @PostMapping("/oauthSignupSubmit2")
     public String oauthSignupSubmit2(@RequestParam(value = "genres", required = false) List<String> genres, HttpSession session) {
     	OauthtbDTO oauthtbDTO = (OauthtbDTO) session.getAttribute("signupUser");
-    	
     	log.info("선택된 장르: {}", genres);
         log.info("oauthSignupSubmit2버트 oauth 회원 정보: {}", oauthtbDTO);
         
@@ -258,19 +217,9 @@ public class LoginController {
         return "redirect:/main";
     }
     
-
-    
     
 
-    // 전체 유저리스트 (이거 안씀)
-    @GetMapping("/userList")
-    public String getUserList(Model model) {
-        List<UsertbDTO> userlist = loginservice.getUserList();
-        model.addAttribute("list", userlist);
-        return "login/userListPage";
-    }
-
-    // 로그인페이지
+    // 로그인 페이지이동
     @GetMapping("/login")
     public String loginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -281,7 +230,8 @@ public class LoginController {
     }
 
     
-    // usertb 회원가입페이지 이동 (권한없으면 가입가능)
+    
+    // user 회원가입 1 페이지이동
     @GetMapping("/signup")
     public String signupPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -290,6 +240,8 @@ public class LoginController {
         }
         return "redirect:/";
     }
+    
+    
 
     // user 회원가입 1
     @PostMapping("/signup/step1")
@@ -320,7 +272,7 @@ public class LoginController {
         return "redirect:/signup/step2";
     }
 
-    // user 회원가입 2
+    // user 회원가입 2 페이지이동
     @GetMapping("/signup/step2")
     public String signupStep2Page(HttpSession session, Model model) {
     	UsertbDTO userdto = (UsertbDTO) session.getAttribute("signupUser");
@@ -335,6 +287,8 @@ public class LoginController {
         return "login/signupPage2";
     }
 
+    
+    // user 회원가입 2
     @PostMapping("/signup/step2")
     public String signupStep2(@RequestParam(value = "genres", required = false) List<String> genres, HttpSession session) {
     	UsertbDTO userdto = (UsertbDTO) session.getAttribute("signupUser");
