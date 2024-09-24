@@ -83,7 +83,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             } else {
             
                 // 인증되지 않은 사용자이거나, 사용자 정보가 CustomUserDetails가 아닌 경우
-                throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
+                //throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
+            	return null;
             }
     		
     }

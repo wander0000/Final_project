@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -144,19 +145,24 @@ public class MovieController {
         
 //        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //    	String uuid = user.getUuId();
-    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
-    	param.put("uuid",uuid);
-        
+    	
+        String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
+    	if (uuid != null && !uuid.isEmpty()) 
+    	{	
+    	    param.put("uuid", uuid);  // uuid가 존재할 때만 param에 추가
+    	    int count = reviewService.findMovieno(param);  // reviewService 메소드 실행
+        	model.addAttribute("count", count);
+    	}
+    	
         ReviewDTO reviewdto = new ReviewDTO();
         reviewdto.setMovieno(movieno);
         
 //      Integer reviewNum = reviewService.countReview(param);
         Integer reviewNum = reviewService.countReview(reviewdto);
     	Integer starSum = reviewService.countstar(param);
-    	int count = reviewService.findMovieno(param);
+    	
     	
     	log.info("@#@#@# movieInfo param==>" + param);
-    	log.info("@#@#@# movieInfo count==>" + count);
     	
     	if(starSum == null) 
     	{
@@ -175,10 +181,9 @@ public class MovieController {
     	}    	
     	
     	  
-    	log.info("@#@# review2 param =========>"+param);
-    	log.info("@#@# review2 count =========>"+count);    	
+    	log.info("@#@# review2 param =========>"+param);	
     	
-    	model.addAttribute("count", count);
+
     	model.addAttribute("reviewNum", reviewNum);
         model.addAttribute("audiAcc", formattedNumber);
         model.addAttribute("salesAcc", salesAccNumber);
@@ -392,6 +397,12 @@ public class MovieController {
 //    	CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //    	String id = user.getUuId();  // 사용자 ID 가져오기
     	String id = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기    	
+    	
+        if (id == null || id.isEmpty()) 
+        {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 필요"); // 또는 적절한 메시지를 설정
+        }
+        
     	param.put("uuid",id);    	
     	
     	log.info("####param==>"+param);

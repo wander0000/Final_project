@@ -53,7 +53,13 @@ function reviewshow2(movieno, pageNum)
 				 a += '<div class="review">';
 				 a += '<div class="left">';
 				 a += '<h5 class="leftTitle">관람평</h5>';	
-				 a += '<p class="reviewCon">'+value.review+'</p>';				 
+				 
+				 if (value.review.length > 20) {
+				     a += '<p class="reviewCon">' + value.review.substring(0, 20) + '...</p>';
+				 } else {
+				     a += '<p class="reviewCon">' + value.review + '</p>';
+				 }		
+				 		 
                  a += '</div>';
 				 a += '<div class="right">';
 				 a += '<span class="material-symbols-outlined">stars</span>';
@@ -79,20 +85,21 @@ function reviewshow2(movieno, pageNum)
 			  var reviewWrapH = '<div class="reviewWrapH">';
 			  var h ="";
 			  h+='<h5 class="reviewWrapTitle"><span class="Strong">'+movieInfo.movienm+'</span> 에 대한 <span class="Strong reviewNum">'+reviewNum+'</span>개의 관람평이 있어요!</h5>';
-			  h+='<div class="write">';
-			  if(count==0) 
+			  if(uuid2) 
 			  {
-					h+='<span class="material-symbols-outlined open-pop">edit_square</span>';
-					h+='<h5 class="open-pop">관람평 작성하기</h5>';					
-			   }
-			   else 
-			   {
-					h+='<h5>이미 등록된 관람평이 있습니다.</h5>';	
-			   }		  		  
-			  h+='</div>';
-			  h+='</div>';
-
-			  
+				  h+='<div class="write">';
+				  if(count==0) 
+				  {
+						h+='<span class="material-symbols-outlined open-pop">edit_square</span>';
+						h+='<h5 class="open-pop">관람평 작성하기</h5>';					
+				   }
+				   else 
+				   {
+						h+='<h5>이미 등록된 관람평이 있습니다.</h5>';	
+				   }		  		  
+				  h+='</div>';
+			  }			  
+			  h+='</div>';					
 			  // 페이지 버튼 생성
 			  var pagingHtml = '<div class="pagingWrap">';
 			  for (var num = startpage; num <= endpage; num++) {
@@ -269,6 +276,18 @@ function reviewshow2(movieno, pageNum)
 		console.log("@#@# star==>"+star);
 		var textArea = $("#textArea").val();
 		console.log("@#@# textArea==>"+textArea);
+		
+		// star 또는 textArea가 비어 있을 경우
+		if (!star) {
+		    alert("별점을 선택해 주세요.");
+		    return;
+		}
+
+		if (!textArea || textArea.trim() === "") {
+		    alert("관람평을 작성해 주세요.");
+		    return;
+		}
+				
 		alert("관람평을 수정하셨습니다.");
 		$.ajax
 		({

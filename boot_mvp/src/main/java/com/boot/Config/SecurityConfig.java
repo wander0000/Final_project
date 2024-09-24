@@ -36,13 +36,13 @@ public class SecurityConfig {
         http
             .authorizeRequests()
                 .antMatchers("/login", "/signup", "/signup/**", "/css/**", "/js/**", "/images/**",
-                        "/checkUserId", "/verify-code", "/oauthCheckUserid","/oauthSignupSubmit1","/main",
+                        "/checkUserId", "/verify-code", "/oauthCheckUserid","/oauthSignupSubmit1","/main", "/movie/**",
                         "/findIdPage", "/userid", "/findPwPage", "/findPassword", "/resetPwPage", "/resetPassword", "/email/**")
                 .permitAll()  // 인증 없이 접근 가능하게 설정
             .anyRequest().authenticated()
             .and()  // authorizeRequests 체인 종료
             .csrf()
-                .ignoringAntMatchers("/email/**")  // 이메일 인증에 CSRF 비활성화
+                .ignoringAntMatchers("/email/**", "/movie/**")  // 이메일 인증에 CSRF 비활성화
             .and()  // csrf 체인 종료
             .formLogin()
                 .loginPage("/login")

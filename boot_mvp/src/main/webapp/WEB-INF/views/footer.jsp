@@ -33,26 +33,26 @@
     <footer>
         <div class="footerInner">
             <h1 class="number">
-                <a href="#">1234-5678</a>
+                <a>1234-5678</a>
             </h1>
             <div class="textWrap">
                 <h5 class="time">
-                    <a href="#">오전 9시 ~ 오후6시(토요일, 공휴일 휴무)</a>
+                    <a>오전 9시 ~ 오후6시(토요일, 공휴일 휴무)</a>
                 </h5> 
                 <h5 class="address">
-                    <a href="#">부산광역시 부산진구 중앙대로 688 한준빌딩 2층</a>
+                    <a>부산광역시 부산진구 중앙대로 688 한준빌딩 2층</a>
                 </h5> 
                 <h5 class="ceo">
-                    <a href="#">대표이사 : MVP</a>
+                    <a>대표이사 : MVP</a>
                 </h5> 
                 <h5 class="info">
-                    <a href="#">사업자등록번호 : 123-45-67890 / 통신판매업신고 : 9999-98765호</a>
+                    <a>사업자등록번호 : 123-45-67890 / 통신판매업신고 : 9999-98765호</a>
                 </h5> 
                 <h5 class="email">
-                    <a href="#">이메일 : mvp@mvp.com</a>
+                    <a>이메일 : mvp@mvp.com</a>
                 </h5> 
                 <h5 class="right">
-                    <a href="#">Copyright ⓒ MVP ALL RIGHTS RESERVED.</a>
+                    <a>Copyright ⓒ MVP ALL RIGHTS RESERVED.</a>
                 </h5> 
             </div>            
         </div>
