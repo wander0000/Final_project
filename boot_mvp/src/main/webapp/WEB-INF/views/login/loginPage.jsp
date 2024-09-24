@@ -51,6 +51,10 @@
                                     <input type="submit" value="로그인" class="logbut">
                                 </form> <!-- End of Login Form -->
                             </div>
+							<a class="a11" href="/oauth2/authorization/naver">
+							    <div class="logo"></div>
+								<div class="naver">로그인</div>
+							</a>							
                             <div class="bottbox">
                                 <div class="bot1">
                                     <div class="a1">
@@ -63,10 +67,6 @@
                                         <a href="${pageContext.request.contextPath}/signup" class="aa1">회원가입</a>
                                     </div>
                                 </div>
-								<a class="a11" href="/oauth2/authorization/naver">
-								    <img src="/images/naver.png" alt="네이버 로그인" class="nana">
-									<div class="naver">네이버로 로그인하기</div>
-								</a>
                             </div>
 
                         </div>
