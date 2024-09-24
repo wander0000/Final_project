@@ -288,10 +288,21 @@ $(document).ready(function()
 	                  content = '<div class="noContent">등록된 관람평이 없습니다.</div>';
 	              } else {
 	                  $.each(commentList, function (index, dto) {
-	                      var date = new Date(dto.viewday);
-	                      var formattedDate = date.toLocaleDateString('ko-KR', {
-	                          year: 'numeric', month: '2-digit', day: '2-digit'
-	                      }).replace(/\./g, '-').replace(/-\s/g, '-').slice(0, -1);  // 날짜 부분에서 점을 하이픈으로 대체
+						var formattedDate;
+
+						if (dto.viewday === null || dto.viewday === undefined || dto.viewday === '') {
+						    formattedDate = "실관람아님";
+						} else {
+						    try {
+						        var date = new Date(dto.viewday);
+						        formattedDate = date.toLocaleDateString('ko-KR', {
+						            year: 'numeric', month: '2-digit', day: '2-digit'
+						        }).replace(/\./g, '-').replace(/-\s/g, '-').slice(0, -1);
+						    } catch (error) {
+						        console.error("날짜 변환 중 오류 발생:", error);
+						        formattedDate = "날짜 형식 오류";
+						    }
+						}
 
 	                      content += '<div class="commentDetail">';
 	                      content += '<div class="commentTitle">' + dto.movienm + '</div>';

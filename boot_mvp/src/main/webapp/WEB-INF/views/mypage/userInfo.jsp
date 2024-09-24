@@ -98,9 +98,7 @@
                                 <div class="th">선호장르</div>
                                 <div class="td" id="selectedGenresText">${genreList}</div>
 							    <input type="hidden" id="selectedGenresValue" />
-								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
-	                                <button class="modifyBtn" type="submit">선호장르 변경</button>
-							  	</c:if>
+                                <button class="modifyBtn" type="submit">선호장르 변경</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">
@@ -237,9 +235,7 @@
 		                                <div class="td">${user.account}</div>
 									</c:otherwise>
 								</c:choose>		
-								<c:if test="${!isOAuth2User}">  <!-- OAuth2 로그인 사용자인 경우 버튼을 숨깁니다 -->
-	                                <button class="modifyBtn" type="submit">환불계좌 등록</button>
-							  	</c:if>
+                                <button class="modifyBtn" type="submit">환불계좌 등록</button>
 								<!-- 팝업창 (숨겨진 상태로 시작) -->
 								<div class="popUp">
 									<div class="popBg">

@@ -19,7 +19,7 @@
 
 	<!-- 선호하는 장르 수정(해당유저의 DB는 삭제하고 다시 삽입) -->
     <insert id="updateSelectGenre">
-	    INSERT INTO selecgenretb (uuid, genrenm,origin_table)
+	    INSERT INTO selecgenretb (uuid, genrenm, origin_table)
 	    VALUES (#{uuid}, #{genrenm},'user')
 	</insert>
 	

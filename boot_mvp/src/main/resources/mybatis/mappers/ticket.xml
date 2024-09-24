@@ -8,13 +8,7 @@
     <select id="getTicketListForDays" resultType="com.boot.DTO.ReservetbDTO">
     	SELECT r.*, m.movienm, t.theaternm 
 		FROM reservetb r
-		LEFT OUTER JOIN (
-		    SELECT movieno, movienm 
-		    FROM movietb2 
-		    UNION
-		    SELECT movieno, movienm 
-		    FROM boxofficetb
-		) m ON r.movieno = m.movieno
+		LEFT OUTER JOIN movieinfotb_v m ON r.movieno = m.movieno
 		LEFT OUTER JOIN theatertb t ON r.areano = t.areano AND r.theaterno = t.theaterno 
 		WHERE r.uuid = #{uuid} AND r.status='예매'
 		<include refid="days"></include>
@@ -59,7 +53,7 @@
     <select id="getTicketListByScreeningDateForMonth" resultType="com.boot.DTO.ReservetbDTO">
 		SELECT r.*, m.movienm
 		FROM reservetb r
-		JOIN movietb m ON r.movieno = m.movieno
+		LEFT OUTER JOIN movieinfotb_v m ON r.movieno = m.movieno
 		WHERE r.uuid = #{uuid} AND r.status='예매'
 		AND YEAR(r.starttime) = #{year}
 		AND MONTH(r.starttime) = #{month}
@@ -83,7 +77,7 @@
     <select id="getTicketListByReservationDateForMonth" resultType="com.boot.DTO.ReservetbDTO">
 		SELECT r.*, m.movienm
 		FROM reservetb r
-		JOIN movietb m ON r.movieno = m.movieno
+		LEFT OUTER JOIN movieinfotb_v m ON r.movieno = m.movieno
 		WHERE r.uuid = #{uuid} AND r.status='예매'
 		AND YEAR(r.adate) = #{year}
 		AND MONTH(r.adate) = #{month}
@@ -108,35 +102,7 @@
 		    r.*, m.movienm
 		FROM
 		    reservetb r
-		    left outer join
-		(SELECT 
-		    MAX(movieno) AS movieno, 
-		    MAX(moviepostimg) AS moviepostimg, 
-		    MAX(movienm) AS movienm, 
-		    MIN(releaseday) AS releaseday, 
-		    MAX(endday) AS endday
-		FROM (
-		    SELECT 
-		        movieno, 
-		        moviepostimg, 
-		        movienm,  -- 원래의 영화 제목을 보존
-		        REPLACE(movienm, ' ', '') AS movienm_nospace, -- 공백이 제거된 영화 제목을 그룹화에 사용
-		        releaseday, 
-		        endday
-		    FROM movietb
-		    UNION ALL
-		    SELECT 
-		        movieno, 
-		        moviepostimg, 
-		        movienm, 
-		        REPLACE(movienm, ' ', '') AS movienm_nospace, 
-		        releaseday, 
-		        '9999-12-31' AS endday
-		    FROM boxofficetb
-		) AS movies
-		GROUP BY 
-		    movienm_nospace,  -- 공백 제거된 영화 제목을 기준으로 그룹화
-		    moviepostimg )m ON r.movieno = m.movieno
+		LEFT OUTER JOIN movieinfotb_v m ON r.movieno = m.movieno
 		WHERE r.uuid = #{uuid}
         AND r.status = '취소' 
         AND r.viewday BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)
