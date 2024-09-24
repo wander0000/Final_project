@@ -87,9 +87,7 @@ public class LoginController {
                     oauthUserId = oauth2User.getAttribute("id");
                     email = oauth2User.getAttribute("email");  // 페이스북 이메일 정보
                 }
-                log.info("오스2 유저아이디: {}", oauthUserId);
-                log.info("오스2 프로바이더: {}", registrationId);
-                log.info("오스2 이메일: {}", email);
+
 
                 // 기존 회원 여부를 확인
                 boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
@@ -99,10 +97,14 @@ public class LoginController {
                     model.addAttribute("provider", registrationId);
                     return "/main";  // 기존 회원
                 } else {
+                    log.info("오스2 유저아이디: {}", oauthUserId);
+                    log.info("오스2 프로바이더: {}", registrationId);
+                    log.info("오스2 이메일: {}", email);
                     // 신규 회원일 경우 필요한 정보들(model에 추가)
                     model.addAttribute("oauthUserId", oauthUserId);
                     model.addAttribute("registrationId", registrationId);
                     model.addAttribute("email", email);  // 이메일도 추가
+                    
                     return "login/oauthSignup1";  // 신규 회원은 회원가입 페이지로 이동
                 }
             } else if (principal instanceof UserDetails) {
@@ -148,6 +150,7 @@ public class LoginController {
         oauthtbDTO.setOauthdiff(registrationId);
         oauthtbDTO.setEmail(email);
 
+        log.info(" oauthSignupSubmit1 oauthtbDTO========>"+oauthtbDTO);
 //        // 서비스 호출하여 DB에 회원 정보 저장
 //        oauthtbService.oauthInsertUser(oauthtbDTO);
         session.setAttribute("signupUser", oauthtbDTO);
@@ -161,6 +164,7 @@ public class LoginController {
     @GetMapping("/oauthSignupSubmit2")
     public String oauthSignupSubmit2Page(HttpSession session, Model model) {
     	OauthtbDTO oauthtbDTO = (OauthtbDTO) session.getAttribute("signupUser");
+    	log.info(" oauthSignupSubmit2  oauthtbDTO========>"+oauthtbDTO);
         if (oauthtbDTO == null) {
             return "redirect:/oauthSignupSubmit1";
         }
