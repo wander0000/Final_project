@@ -212,6 +212,7 @@ section
   border-radius: 4px;
   border: none; /* 기본 테두리 제거 */
   cursor: pointer; /* 커서 모양 변경 */
+  font-weight: 500;
 }
 
 .bottbox 
@@ -232,7 +233,9 @@ section
 }
 .naver
 {
-	color: #03c75a;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
 }
 
 .nana
@@ -242,9 +245,28 @@ section
 }
 .a11
 {
+    text-align: center;
+    width: 100%;
+    width: 436px;
+    margin: 24px auto 0;
+    background: #03c75a;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 12px;
+    border-radius: 3px;
+}
 
-	display: inline-block; 
-	text-align: center;
+.a11 .logo 
+{
+	background-image: url(https://pm.pstatic.net/resources/asset/sp_main.3e7d337e.png);
+    background-size: 443px 424px;
+    background-position: -130px -270px;
+    background-repeat: no-repeat;
+    width: 72px;
+    height: 17px;
+    margin-top: 2px;
 }
 
 .a1, .a2 
@@ -263,6 +285,8 @@ section
 {
   text-decoration: none; /* 기본 링크 스타일 */
   color: #ffffff; /* 기본 텍스트 색상 */
+  font-weight: 100;
+  font-size: 15px;
 }
 
 /* 푸터 

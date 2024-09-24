@@ -274,7 +274,7 @@ public class BoxOfficeServiceimpl implements BoxOfficeService{
 			        steelcut = extractSteelCuts(movieDetailNode, imgBaseURL);
 			        BoxOfficeDTO movie = new BoxOfficeDTO();            
 		            
-			        String bmovieno = "b-"+movieno;
+			        String bmovieno = "b"+movieno;
 		            movie.setMovieno(bmovieno);
 		            movie.setMovienm(movienm);
 		            movie.setDirectornm(directorStr);

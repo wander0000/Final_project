@@ -18,6 +18,13 @@
 	--rank: 2.8vw;
 }
 
+.active 
+{
+	color:var(--maincolor)!important;
+	background:rgba(243, 185, 49,0.3)!important;
+}
+
+
 section 
 {
     margin-top: 170px;

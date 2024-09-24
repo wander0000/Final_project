@@ -134,7 +134,7 @@
 		<div class="benefit">
 			<div class="tabWrap">
 		        <div class="status">
-					<h5 class="tab active">
+					<h5 class="tabBenefit active">
 		                혜택
 		            </h5>		                    
 		        </div>

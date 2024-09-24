@@ -17,6 +17,12 @@
     --fs36: 36px;
 }
 
+.active 
+{
+	color:var(--maincolor)!important;
+	background:rgba(243, 185, 49,0.3)!important;
+}
+
 section 
 {
     margin-top: 170px;
@@ -236,6 +242,14 @@ section
 	color: var(--subcolor);
 	font-size: var(--fs14);
 	font-weight: 300;
+}
+
+.tabBenefit 
+{
+    font-size: var(--fs28);
+    font-weight: 600;
+    cursor: pointer;
+	background:none!important;
 }
 
 .benefit 
