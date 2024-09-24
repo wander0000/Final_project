@@ -19,8 +19,17 @@
     </select>
     
     <select id="selected_seat" resultType="com.boot.DTO.ReserdtltbDTO">
-    	select seat from reserdtltb
-    	where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime} 
+    	select seat
+    	from
+    	(
+	    	select seat 
+	    	from reserdtltb
+	    	where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
+	    	union
+	    	select seat
+	    	from reserdtltmptb
+	    	where areano = #{areano} and theaterno = #{theaterno} and movieno = #{movieno} and viewday = #{viewday} and roomno = #{roomno} and starttime = #{starttime}
+    	) as a
     </select>
 </mapper>
 

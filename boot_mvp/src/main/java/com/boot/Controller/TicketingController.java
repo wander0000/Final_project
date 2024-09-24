@@ -25,18 +25,18 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.DTO.ReserdtltbDTO;
+import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.AreaService_2;
 import com.boot.Service.MovieService_2;
 import com.boot.Service.Movieinfotb_vService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
+import com.boot.Service.ReserdtltmptbService_2;
 import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
 
 @Controller
 @Slf4j
@@ -63,6 +63,12 @@ public class TicketingController {
 	
 	@Autowired
 	private ReserdtltbService_2 reserdtlService;
+	
+	@Autowired
+	private ReserdtltmptbService_2 reserdtltmptbService;
+	
+	@Autowired
+	private CustomUserDetailsService userService;
 	
 	//로그인 유무 체크
     @GetMapping("/logincheck")
@@ -227,6 +233,9 @@ public class TicketingController {
 		//선택한 영화 관련 지역, 상영관, 영화, 일자, 시간 값 세션 등록
 		HashMap<String, String> params = (HashMap<String, String>) session.getAttribute("movieInfo");
 		
+		String uuid = userService.getUuidFromAuthenticatedUser();
+		params.put("uuid", uuid);
+		
 		params.put("calc", param.get("calc")); // 총 가격
 		params.put("pricetype", param.get("pricetype")); // 가격 타입
 		params.put("adult", param.get("adult")); //성인 숫자
@@ -234,6 +243,15 @@ public class TicketingController {
 		params.put("old", param.get("old")); //경로 숫자
 		params.put("disable", param.get("disable")); //장애인 숫자
 		params.put("seats", param.get("seats"));
+		
+		//선택한 좌석 임시 테이블 저장
+		String seats[] = param.get("seats").split(",");
+		params.put("idno", reserdtltmptbService.getCnt(params)+"");
+		for (int i = 0; i < seats.length; i++) {
+			//uuid 기준 으로 선택한 좌석 임시 테이블 저장
+			params.put("seat", seats[i]);
+			reserdtltmptbService.inserttmp(params);
+		}
 		
 		session.setAttribute("params", params);
 		session.setMaxInactiveInterval(3600);

@@ -31,6 +31,7 @@ import com.boot.Service.Movieinfotb_vService_2;
 import com.boot.Service.PointService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
+import com.boot.Service.ReserdtltmptbService_2;
 import com.boot.Service.ReservetbService_2;
 import com.boot.Service.ScreenService_2;
 import com.boot.Service.TheaterService_2;
@@ -76,6 +77,9 @@ public class PayController {
 	
 	@Autowired
 	private PointService_2 pointService;
+	
+	@Autowired
+	private ReserdtltmptbService_2 reserdtltmptbService;
 	
 	@Autowired
 	private CustomUserDetailsService userService;
@@ -254,6 +258,9 @@ public class PayController {
 		model.addAttribute("old", param.get("old"));
 		model.addAttribute("disable", param.get("disable"));
 		model.addAttribute("seats", param.get("seats"));
+		
+		//tmp 테이블 삭제
+		reserdtltmptbService.deletetmp(param);
 		
 		return "ticketing/paycompleted";
 	}
