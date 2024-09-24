@@ -3,17 +3,19 @@
 <mapper namespace="com.boot.DAO.ReviewDAO">       
 
     <select id="selectReview">
-        SELECT r.uuid, r.movieno, r.star, r.review, u.userid
+        SELECT r.uuid, r.movieno, r.star, r.review, COALESCE(u.userid, o.userid) AS userid
         FROM reviewtb r
-        INNER JOIN usertb u ON r.uuid=u.uuid
+        LEFT JOIN usertb u ON r.uuid=u.uuid
+        LEFT JOIN oauthtb o ON r.uuid=o.uuid
         where movieno = #{movieno}
         ORDER BY uuid DESC
     </select>
     
     <select id="selectReviewPaging">
-        SELECT r.uuid, r.movieno, r.star, r.review, u.userid
+        SELECT r.uuid, r.movieno, r.star, r.review,COALESCE(u.userid, o.userid) AS userid    
         FROM reviewtb r
-        INNER JOIN usertb u ON r.uuid=u.uuid
+        LEFT JOIN usertb u ON r.uuid=u.uuid
+        LEFT JOIN oauthtb o ON r.uuid=o.uuid
         where movieno = #{movieno}
         ORDER by uuid DESC
         LIMIT #{limit} OFFSET #{offset}
