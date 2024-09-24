@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.Movieinfotb_vDAO_2">
+	<select id="selectAll" resultType="com.boot.DTO.Movieinfotb_vDTO">
+		select movieno, movienm, releaseday, endday,
+			   case when ratingno = '전체관람가' then 'ALL'
+					when ratingno = '12세이상관람가' then '12'
+					when ratingno = '15세이상관람가' then '15'
+					when ratingno = '청소년관람불가' then '19'
+				end as ratingno, moviestatus
+		from movieinfotb_v
+    </select>
+    
+    <select id="getTitleRating" resultType="com.boot.DTO.Movieinfotb_vDTO">
+    	select movienm, 
+    		   case when ratingno = '전체관람가' then 'ALL'
+					when ratingno = '12세이상관람가' then '12'
+		            when ratingno = '15세이상관람가' then '15'
+		            when ratingno = '청소년관람불가' then '19'
+			   end as ratingno
+		from movieinfotb_v
+		where movieno = #{movieno}
+    </select>
+    
+</mapper>

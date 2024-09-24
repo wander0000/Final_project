@@ -53,7 +53,7 @@ function kakaopay() {
 		name : 'MVP',                                  //상품명
 		amount : $('#t_calc').val(),                    //가격
 		//customer_uid : buyer_name + new Date().getTime(),  //해당 파라미터값이 있어야 빌링 키 발급 시도
-		buyer_email : 'test123@naver.com',             //구매자 이메일
+		buyer_email : '',             //구매자 이메일
 		buyer_name : 'KW',                           //구매자 이름
 		buyer_tel : 'hp',                                    //전화번호
 		buyer_addr : 'addr',	                             //주소
@@ -104,7 +104,7 @@ function tosspay(){
 		amount : $('#t_calc').val(),                 //가격
 		//m_redirect_url: "/ticketing/paycompleted", //모바일에서 결제 완료 후 리다이렉트될 경로
 		//customer_uid : buyer_name + new Date().getTime(),  //해당 파라미터값이 있어야 빌링 키 발급 시도
-		buyer_email : 'test123@naver.com',             //구매자 이메일
+		buyer_email : '',             //구매자 이메일
 		buyer_name : 'KW',                           //구매자 이름
 		buyer_tel : 'hp',                                    //전화번호
 		buyer_addr : 'addr',	                             //주소
@@ -156,7 +156,7 @@ function cardpay(){
 		amount : $('#t_calc').val(),                 //가격
 		//m_redirect_url: "/ticketing/paycompleted", //모바일에서 결제 완료 후 리다이렉트될 경로
 		//customer_uid : buyer_name + new Date().getTime(),  //해당 파라미터값이 있어야 빌링 키 발급 시도
-		buyer_email : 'test123@naver.com',             //구매자 이메일
+		buyer_email : '',             //구매자 이메일
 		buyer_name : 'KW',                           //구매자 이름
 		buyer_tel : 'hp',                                    //전화번호
 		buyer_addr : 'addr',	                             //주소

@@ -30,5 +30,6 @@
 		<mapper resource="mybatis/mappers/coupontb_2.xml"/>
 		<mapper resource="mybatis/mappers/attendance.xml"/>
 		<mapper resource="mybatis/mappers/moviestory.xml"/>
+		<mapper resource="mybatis/mappers/movieinfotb_v_2.xml"/>
     </mappers>
 </configuration>
