@@ -103,7 +103,7 @@
 									<h5 class="releaseday">${dto.openday}<h5>											
 								</div>
 								<div class="buttonWrap">
-									<button class="active" onclick="location.href=''">예매하기</button>
+									<button class="active" onclick="location.href='/ticketing/move_ticketing?movieno=${dto.movieno}'">예매하기</button>
 									<button onclick="location.href='../movie/movieInfo?movieno=${dto.movieno}'">상세보기</button>
 								</div>
 							</div>
@@ -122,7 +122,6 @@
 									<h5 class="difference active">개봉 D-${dto.daysDifference}</h5>											
 								</div>								
 								<div class="buttonWrap">
-									<button class="active" onclick="location.href=''">예매하기</button>
 									<button onclick="location.href='../movie/movieInfo?movieno=${dto.movieno}'">상세보기</button>
 								</div>
 							</div>

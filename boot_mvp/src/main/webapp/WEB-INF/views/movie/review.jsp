@@ -138,7 +138,7 @@
 		<div class="reviewWrapH">
 			<h5 class="reviewWrapTitle"><span class="Strong">${movieInfo.movienm}</span> 에 대한 <span class="Strong ">${reviewNum}</span>개의 관람평이 있어요!</h5>
 			<div class="write">			
-				<c:if test="${count==0}">
+				<c:if test="${count==0} ">
 					<span class="material-symbols-outlined open-pop2">edit_square</span>
 					<h5 class="open-pop2">관람평 작성하기</h5>	
 				</c:if>	
@@ -169,7 +169,15 @@
 				<div class="review">								
 					<div class="left">
 						<h5 class="leftTitle">관람평</h5>
-						<p class="reviewCon">${dto.review}</p>
+						<c:choose>
+						    <c:when test="${fn:length(dto.review) > 20}">
+						        <c:set var="shortReview" value="${fn:substring(dto.review, 0, 20)}" />
+						        <p class="reviewCon">${shortReview}...</p>
+						    </c:when>
+						    <c:otherwise>
+						        <p class="reviewCon">${dto.review}</p>
+						    </c:otherwise>
+						</c:choose>							
 					</div>
 					<div class="right">
 						<span class="material-symbols-outlined">stars</span>
@@ -345,6 +353,18 @@
 		var movieno = $("#movieno").val();	
 		console.log("@#@# movieno==>"+movieno);
 		var textArea2 = $("#textArea2").val();
+		
+		// star 또는 textArea가 비어 있을 경우
+		if (!star2) {
+		    alert("별점을 선택해 주세요.");
+		    return;
+		}
+
+		if (!textArea2 || textArea2.trim() === "") {
+		    alert("관람평을 작성해 주세요.");
+		    return;
+		}
+				
 		alert("관람평을 수정하셨습니다.");		
 		$.ajax
 		({

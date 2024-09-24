@@ -85,7 +85,7 @@
 									</div>
 								</div>
 								<div class="buttonWrap">
-									<button class="active" onclick="location.href=''">예매하기</button>
+									<button class="active" onclick="location.href='/ticketing/move_ticketing?movieno=${dto.movieno}'">예매하기</button>
 									<button onclick="location.href='../movie/movieInfo?movieno=${dto.movieno}'">상세보기</button>
 								</div>
 							</div>
