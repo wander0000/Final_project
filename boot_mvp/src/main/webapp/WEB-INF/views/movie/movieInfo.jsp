@@ -106,8 +106,8 @@
 	        </div>
 	        <div class="popF">
 	            <div class="buttonWrap">
-	                <input class="button cancel close-pop" value="취소">
-	                <input class="button submit" value="등록" onclick="insertReview();">
+	                <input type="button" class="button cancel close-pop" value="취소">
+	                <input type="button" class="button submit" value="등록" onclick="insertReview();">
 	            </div>
 	        </div>                
 	    </div>        
@@ -128,8 +128,8 @@
 	        </div>
 	        <div class="popF">
 	            <div class="buttonWrap">
-	                <input class="button cancel close-pop" value="취소">
-	                <input class="button delete" value="삭제" onclick="deleteReview();">
+	                <input type="button" class="button cancel close-pop" value="취소">
+	                <input type="button" class="button delete" value="삭제" onclick="deleteReview();">
 	            </div>
 	        </div>                
 	    </div>        
