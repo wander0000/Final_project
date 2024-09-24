@@ -140,10 +140,10 @@ function openPop(type) {
 		alert('이미 할인권 또는 쿠폰을 등록하였습니다...');
 		return false;	
 	} else {
-		window.open('/ticketing/couponPopUp/'+type, 'popupWindow', 'width=600,height=400,top=50,left=50,scrollbars=yes');
+		window.open('/ticketing/couponPopUp/'+type, 'popupWindow', 'width=600,height=440,top=50,left=50,scrollbars=yes');
 	}
 }
 
 function openPop2() {
-	window.open('/ticketing/pointPopUp/', 'popupWindow', 'width=600,height=160,top=50,left=50,scrollbars=yes');
+	window.open('/ticketing/pointPopUp/', 'popupWindow', 'width=600,height=240,top=50,left=50,scrollbars=yes');
 }

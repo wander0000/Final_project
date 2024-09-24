@@ -54,7 +54,7 @@ section
 	margin: 10px 0;
 	text-align: left;
 	color: white;
-	font-size: 36px;
+	font-size: 24px;
 	font-weight: 600
 }
 
@@ -84,7 +84,7 @@ section
     border: 0;
     width: 420px;
     margin: 0 10px;
-    font-size: 24px;
+    font-size: 16px;
     border-radius: 6px;
     font-weight: 600;
 }
@@ -92,8 +92,8 @@ section
 .btn_box {
 	width: 98%;
 	display: flex;
-	gap: 5px;
-	justify-content: right;
+	gap: 12px;
+	justify-content: center;
 }
 
 .mainbtn {
