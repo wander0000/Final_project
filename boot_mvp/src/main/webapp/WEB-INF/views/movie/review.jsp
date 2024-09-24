@@ -62,32 +62,32 @@
 	                        <span class="star-icon one">
 	                        </span>
 	                    </label>
-	                    <label class="rating__label rating__label--half" for="star1half7">
-	                        <input type="radio" id="star1half7" class="rating__input" name="rating2" value="3">
+	                    <label class="rating__label rating__label--half" for="starhalf7">
+	                        <input type="radio" id="starhalf7" class="rating__input" name="rating2" value="3">
 	                        <span class="star-icon one"></span>
 	                    </label>
 	                    <label class="rating__label rating__label--full" for="star7">
 	                        <input type="radio" id="star7" class="rating__input" name="rating2" value="4">
 	                        <span class="star-icon one"></span>
 	                    </label>
-	                    <label class="rating__label rating__label--half" for="star2half8">
-	                        <input type="radio" id="star2half8" class="rating__input" name="rating2" value="5">
+	                    <label class="rating__label rating__label--half" for="starhalf8">
+	                        <input type="radio" id="starhalf8" class="rating__input" name="rating2" value="5">
 	                        <span class="star-icon one"></span>
 	                    </label>
 	                    <label class="rating__label rating__label--full" for="star8">
 	                        <input type="radio" id="star8" class="rating__input" name="rating2" value="6">
 	                        <span class="star-icon one"></span>
 	                    </label>
-	                    <label class="rating__label rating__label--half" for="star3half9">
-	                        <input type="radio" id="star3half9" class="rating__input" name="rating2" value="7">
+	                    <label class="rating__label rating__label--half" for="starhalf9">
+	                        <input type="radio" id="starhalf9" class="rating__input" name="rating2" value="7">
 	                        <span class="star-icon one"></span>
 	                    </label>
 	                    <label class="rating__label rating__label--full" for="star9">
 	                        <input type="radio" id="star9" class="rating__input" name="rating2" value="8">
 	                        <span class="star-icon one"></span>
 	                    </label>
-	                    <label class="rating__label rating__label--half" for="star4hal10">
-	                        <input type="radio" id="star4half10" class="rating__input" name="rating2" value="9">
+	                    <label class="rating__label rating__label--half" for="starhalf10">
+	                        <input type="radio" id="starhalf10" class="rating__input" name="rating2" value="9">
 	                        <span class="star-icon one"></span>
 	                    </label>
 	                    <label class="rating__label rating__label--full" for="star10">
