@@ -171,7 +171,7 @@ public class PayController {
 			ArrayList<Integer> pricedto = priceService.selectprice(params);
 			ArrayList<Integer> pricedate = new ArrayList<>();
 			//총 인원으로 각 가격 타입별 금액 계산
-			for(int i = 0; i < tmember; i++) {
+			for(int i = 0; i < pricedto.size(); i++) {
 				price = pricedto.get(i);
 				
 				for(int j = 0; j < ptype.get(i); j++) {

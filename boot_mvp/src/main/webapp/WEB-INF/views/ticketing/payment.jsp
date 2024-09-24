@@ -108,9 +108,9 @@
                             <a href="#none">최종 결제</a>
                         </div>
                         <div class="paymentbox">
-                            <button type="button" class="discountBtn" onclick="switchbutton('kakao')">카카오 페이</button>
-                            <button type="button" class="discountBtn" onclick="switchbutton('toss')">토스 페이</button>
-                            <button type="button" class="discountBtn" onclick="switchbutton('card')">신용 카드</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('kakao', this)">카카오 페이</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('toss', this)">토스 페이</button>
+                            <button type="button" class="discountBtn" onclick="switchbutton('card', this)">신용 카드</button>
                         </div>
                     </div> <!-- paymentDiv end -->
                 </div> <!-- discountDiv end -->

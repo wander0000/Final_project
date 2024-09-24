@@ -35,6 +35,10 @@ function use_point() {
 	} else if(point % 10 != 0) {
 		alert('포인트의 최소 사용 단위는 10입니다.');
 		return false;
+	} else if(point == 0 || point == '') {
+		alert('사용할 포인트를 입력하세요.');
+		 $('#point').focus();
+		return false;
 	} else {
 		window.opener.document.getElementById('point').value = point;
 		
@@ -44,6 +48,16 @@ function use_point() {
 		window.opener.calc_point(); //현재 창(자식)에서 부모 창의 스크립트 함수 처리
 		closePopup();
 	}
+}
+
+function use_all() {
+	window.opener.document.getElementById('point').value = Number($("#maxonhqt").val());
+	
+	cancel_button = window.opener.document.getElementById("P_cancel");
+	$(cancel_button).addClass("showbtn");
+	
+	window.opener.calc_point(); //현재 창(자식)에서 부모 창의 스크립트 함수 처리
+	closePopup();
 }
 
 
@@ -61,6 +75,7 @@ function use_point() {
         		<input type="text" class="texts" id="point" name="point" placeholder="총 사용 가능 포인트 ${points.onhqt }" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" onkeydown="enter_regist();">
         	</div>
             <div class="btn_box">
+            	<button type="button" class="mainbtn" onclick="use_all()">모두사용</button>
 	            <button type="button" class="mainbtn" onclick="use_point()">사용하기</button>
 	            <button type="button" class="mainbtn" onclick="closePopup();">닫기</button>
            	</div>

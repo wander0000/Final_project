@@ -34,7 +34,7 @@ function cancel_point(){
 	show_pay();
 }
 
-function switchbutton(page) { //결제 방법에 따른 결제 버튼 변환
+function switchbutton(page, button) { //결제 방법에 따른 결제 버튼 변환
 	$.ajax({
 		type: 'post',
 		url: page+"_ajax",
@@ -44,6 +44,9 @@ function switchbutton(page) { //결제 방법에 따른 결제 버튼 변환
 		success: function(response) {
 			//console.log("서버에서 반환된 HTML:", response);
 			//show_pay();
+			
+			$(".paymentbox .discountBtn").removeClass('active');
+			$(button).addClass('active');
 			
 			$("#paybutton").html(response);
 		}, error: function(xhr, status, error) {
