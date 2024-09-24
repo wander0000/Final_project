@@ -151,6 +151,38 @@ $(document).ready(function()
  	    }
  	});
 
+	
+	
+	
+	
 
+	//	멤버십 네비게이터 라인길이 동적으로 변화
+	function updateLinePosition() {
+	    const circles = document.querySelectorAll('.circle');
+	    const line = document.querySelector('.line');
+	    
+	    if (circles.length > 1) {
+	        const firstCircle = circles[0].getBoundingClientRect();
+	        const lastCircle = circles[circles.length - 1].getBoundingClientRect();
+
+	        // 첫 번째 circle과 마지막 circle 사이의 거리를 계산
+	        const distance = lastCircle.left - firstCircle.left;
+
+			 // line의 길이를 설정
+			        line.style.width = `${distance -firstCircle.width / 4 }px`;
+			//        line.style.left = `${firstCircle.width / 2}px`;
+	    }
+	}
+
+	// 초기 로딩 시 위치를 설정
+	updateLinePosition();
+
+	// 스크롤이나 화면 크기 변경 시에도 위치를 동적으로 업데이트
+	window.addEventListener('resize', updateLinePosition);
+	window.addEventListener('scroll', updateLinePosition);
+
+
+	
+	
 	
 });// document ready 끝

@@ -23,6 +23,19 @@ html,body
     background-color: #0F1015;
 }
 
+section
+{
+	margin-top: 90px ;
+}
+
+.mainContainerContent
+{
+
+    min-width: 1600px !important;
+    width: 90% !important;
+}
+	
+
 a
 {
     text-decoration: none;
@@ -77,23 +90,24 @@ button{
 
 .pageBtn
 {
-	padding: 10px;
-	width: 24px !important;
-	height: 24px !important;
-	box-sizing: border-box;
-	background-color:  #1A1B24;
-}
+	padding: 8px 16px;
+/*	width: 24px !important;*/
+/*	height: 24px !important;*/
+/*	box-sizing: border-box;*/
+	border-radius: 6px;
+	background-color:  rgba(217,217,217,0.1);;
+	color: #99A2b9;}
 
-.pageBtn:hover
+.pageBtn:hover, .pageBtn.active:hover
 {
-    border: 1px solid #F3B931;
-    background-color: rgba(243, 185, 49, 0.2);
-    color: #F3B931;
+/*    border: 1px solid #F3B931;*/
+    background-color:#F3B931;
+    color: #fff;
 }
 
 .pageBtn.active {
-    color: #111;
-    background-color: #F3B931;
+    color: #F3B931;
+    background-color: rgb(243 185 49 / 30%);
     border: none;
 }
 

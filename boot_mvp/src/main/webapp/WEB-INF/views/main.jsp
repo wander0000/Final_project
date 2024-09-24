@@ -357,6 +357,10 @@
     */
     document.addEventListener('DOMContentLoaded', function () {
 		
+		var isLoggedIn = <%= request.getUserPrincipal() != null ? "true" : "false" %>;//로그인 한 유저인지 판별
+		
+		if (isLoggedIn){
+		
 		console.log("현재 쿠키: " + document.cookie);
         // 쿠키 값 확인
         let showAttendancePopup = document.cookie
@@ -373,7 +377,7 @@
         }
 		console.log($('.popUp.attend').css("display"));  // 팝업의 display 상태를 확인
 		
-		
+		}
 
 		// 자정까지 남은 시간(초)을 계산하는 함수
 		function getSecondsUntilMidnight() {
@@ -386,7 +390,7 @@
 		var secondsUntilMidnight = getSecondsUntilMidnight();
 
         // 팝업 닫기 버튼 클릭 이벤트
-		$('.popUp.attend .cancelPOP, .popUp.attend #closePopup').click(function() {
+		$('.popUp.attend .cancelPOP, .popUp.attend #closePopup, .popUp.attend #checkAttendanceStatus').click(function() {
 		    console.log("닫기버튼이나 x표 click");
 			
 			// 체크박스가 체크된 경우 쿠키 설정

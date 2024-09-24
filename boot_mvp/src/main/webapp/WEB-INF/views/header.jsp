@@ -186,6 +186,7 @@
 		         event.stopPropagation();
 				 //드롭다운 클릭된 경우, subHeader 숨기기
  	             subHeader.classList.remove('dpF');
+			//    document.querySelector('.mypageHeader').style.display = 'none';  // mypageHeader 숨기기-->
 		         var dropdownMenu = document.getElementById('dropdownMenu');
 		         
 		         // 드롭다운 메뉴 표시 또는 숨기기
@@ -206,9 +207,9 @@
 		    }
 		});
 		// 드롭다운 메뉴를 클릭했을 때 닫히지 않도록 이벤트 전파 방지
-		document.getElementById('dropdownMenu').addEventListener('click', function(event) {
-		    event.stopPropagation(); // 메뉴 내부 클릭 시 이벤트 전파 방지
-		}); 
+	//	document.getElementById('dropdownMenu').addEventListener('click', function(event) {
+	//	    event.stopPropagation(); // 메뉴 내부 클릭 시 이벤트 전파 방지
+	//	}); 
 		
 		
 		

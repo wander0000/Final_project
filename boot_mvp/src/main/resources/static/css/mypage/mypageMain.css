@@ -139,7 +139,7 @@
 .navigator {
     position: relative;
     width: 100%;
-    max-width: 700px;
+/*    max-width: 700px;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -180,7 +180,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    width: 400px;
+/*    width: 433px;*/
     background-color: #99A2B9;
     z-index: 0; /* 원들 아래에 위치하도록 설정 */
     justify-self: center;
