@@ -335,7 +335,7 @@ public class MovieController {
 //    	String id ="11";
     	param.put("uuid",id);
     	
-    	log.info("####param==>"+param);
+    	log.info("#### modifyReview param==>"+param);
     	
     	reviewService.updateReview(param);
     	return ResponseEntity.ok("Review modify");

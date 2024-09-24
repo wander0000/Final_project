@@ -63,8 +63,7 @@
 	    SELECT 
 		movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
 		moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor
-		from boxofficetb
-		order by ranking        
+		from movietb       
     </select>
     
     <!-- 현재 상영중인 영화 -->
@@ -73,12 +72,8 @@
 		    SELECT
 		    movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
 			moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor
-			FROM movietb
-			WHERE intro IS NOT NULL
-			  AND moviebackimg != ''
-			  AND moviepostimg != ''
-			  AND intro != ''
-			  AND releaseday <= NOW()
+			FROM movieinfotb_v
+			WHERE releaseday <= NOW()
 			ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), releaseday)) desc
 			LIMIT 20  
 		]]>   
@@ -90,19 +85,16 @@
 		    SELECT
 		    movieno, movienm, movieen, directornm, DATE_FORMAT(releaseday, '%Y.%m.%d') as openday, endday, moviestatus, ratingno, times, intro, 
 			moviebackimg, moviepostimg, movieyoutube, steelcut, genre, actor		    
-			FROM movietb
+			FROM movieinfotb_v
 			
-			WHERE intro IS NOT NULL 
-		      AND moviebackimg != ''
-			  AND moviepostimg != ''
-			  AND intro != ''
-			  AND releaseday >= NOW()
+			WHERE releaseday >= NOW()
 			ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), releaseday)) ASC
 			LIMIT 20 
 		]]>   
-    </select>     
-    
-    <!-- 상영예정 영화 -->
+    </select>      
+
+        
+    <!-- 유저 장르 선택 -->
     <select id="selectUserGenre" resultType="com.boot.DTO.SelecGenretbDTO">    	
 	    SELECT 
 	    uuid, genrenm 

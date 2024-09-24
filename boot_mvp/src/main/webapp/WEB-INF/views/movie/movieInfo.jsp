@@ -41,7 +41,8 @@
 <body>
     <%@ include file="../header.jsp" %>	
 	<!-- 입력 팝업 -->
-	<div class="pop write">
+	
+<div class="pop write">
 	    <div class="popInner">
 	        <div class="popH">
 				<h5 class="popTitle">관람평 작성하기</h5>
@@ -106,11 +107,12 @@
 	        <div class="popF">
 	            <div class="buttonWrap">
 	                <input class="button cancel close-pop" value="취소">
-	                <input class="button submit" value="등록" onclick="insertReview2();">
+	                <input class="button submit" value="등록" onclick="insertReview();">
 	            </div>
 	        </div>                
 	    </div>        
 	</div>
+
 
 	<!-- 삭제 팝업-->
 	<div class="pop delete">
@@ -127,7 +129,7 @@
 	        <div class="popF">
 	            <div class="buttonWrap">
 	                <input class="button cancel close-pop" value="취소">
-	                <input class="button delete" value="삭제" onclick="deleteReview2();">
+	                <input class="button delete" value="삭제" onclick="deleteReview();">
 	            </div>
 	        </div>                
 	    </div>        
@@ -250,7 +252,7 @@
 				<div class="content reviewDetailInfo">
 
 					<div class="reviewWrap">						
-						<!-- review.jsp 불러옴-->
+						<!-- review.js 불러옴-->
 					</div>	<!-- reviewWrap 끝-->						
 				</div> <!-- content reviewDetailInfo 끝-->
 					

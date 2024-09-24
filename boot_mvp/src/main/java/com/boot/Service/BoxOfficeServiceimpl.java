@@ -7,7 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -176,16 +178,25 @@ public class BoxOfficeServiceimpl implements BoxOfficeService{
 	            
 	            // 상영타입 추출
 	            List<String> showTypeNames = new ArrayList<>();
+	            Set<String> uniqueShowTypes = new HashSet<>();
+
 	            JsonNode showTypeNode = boxInfo.path("showTypes");
-	            if (showTypeNode.isArray()) 
-		        {
-	            	for (JsonNode showType : showTypeNode) 
-	            	{
-		                String showTypeName = showType.path("showTypeGroupNm").asText();
-		                showTypeNames.add(showTypeName);		                
-		            }
-		        }
-	            showTypeStr = String.join(",", showTypeNames);
+	            if (showTypeNode.isArray()) {
+	                for (JsonNode showType : showTypeNode) {
+	                    String showTypeName = showType.path("showTypeGroupNm").asText();
+	                    String showTypeName2 = showType.path("showTypeNm").asText();
+	                    
+	                    // showTypeName과 showTypeName2가 같으면 하나만 추가
+	                    if (showTypeName.equals(showTypeName2)) {
+	                        uniqueShowTypes.add(showTypeName);
+	                    } else {
+	                        uniqueShowTypes.add(showTypeName + " " + showTypeName2);
+	                    }
+	                }
+	            }
+
+	            // Set을 List로 변환하고, 문자열로 연결
+	            showTypeStr = String.join(", ", uniqueShowTypes);
 	            
 	            // 관람등급
 	            List<String> GradeNames = new ArrayList<>();
@@ -268,7 +279,8 @@ public class BoxOfficeServiceimpl implements BoxOfficeService{
 			        
 		            String movieDetailResponse2 = restTemplate.getForObject(youtubeSteelUrl, String.class);
 			        JsonNode movieDetailNode = objectMapper.readTree(movieDetailResponse2);
-			        
+			       
+		            
 			        // 비디오 및 이미지 정보 추출
 			        movieyoutube = extractYouTubeVideoKey(movieDetailNode);
 			        steelcut = extractSteelCuts(movieDetailNode, imgBaseURL);
