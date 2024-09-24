@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,7 +42,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
             // OAuth 사용자 확인
             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
             String registrationId = oauthToken.getAuthorizedClientRegistrationId(); // 공급자 ID (google, naver 등)
-            String oauthUserId = getOAuthUserId(oauthToken, registrationId);
+            String oauthUserId = getOAuthUserId(oauthToken, registrationId); 
+            Object principal = authentication.getPrincipal();
+            OAuth2User oauth2User = (OAuth2User) principal;
+            String email = oauth2User.getAttribute("email");  // 이메일 정보
 
             log.info("OAuth 로그인: {} - 유저 ID: {}", registrationId, oauthUserId);
 
@@ -55,6 +59,11 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
             } else {
                 // 신규 회원일 경우 추가 회원가입 페이지로 리디렉션
                 log.info("신규 회원, 추가 가입 절차로 리디렉션");
+                HttpSession session = request.getSession();
+                session.setAttribute("oauthUserId", oauthUserId);
+                session.setAttribute("registrationId", registrationId);
+                session.setAttribute("email", email);
+               
                 response.sendRedirect("/oauthSignupSubmit1");
             }
         } else {
