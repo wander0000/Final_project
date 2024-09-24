@@ -33,8 +33,10 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
 		ReserdtltmptbDAO_2 dao = sqlSession.getMapper(ReserdtltmptbDAO_2.class);
 		dao.inserttmp(param);
 		
+		HashMap<String, String> newParam = new HashMap<>(param);
+		
 		//10분 해당 임시 데이터 삭제
-		scheduler.schedule(() -> deletetmp(param), 10, TimeUnit.MINUTES);
+		scheduler.schedule(() -> deletetmp(newParam), 10, TimeUnit.MINUTES);
 	}
 
 	@Override
