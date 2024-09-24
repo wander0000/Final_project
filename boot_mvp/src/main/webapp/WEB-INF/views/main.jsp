@@ -386,7 +386,7 @@
 		var secondsUntilMidnight = getSecondsUntilMidnight();
 
         // 팝업 닫기 버튼 클릭 이벤트
-		$(''.popUp.attend .cancelPOP, .popUp.attend #closePopup').click(function() {
+		$('.popUp.attend .cancelPOP, .popUp.attend #closePopup').click(function() {
 		    console.log("닫기버튼이나 x표 click");
 			
 			// 체크박스가 체크된 경우 쿠키 설정
