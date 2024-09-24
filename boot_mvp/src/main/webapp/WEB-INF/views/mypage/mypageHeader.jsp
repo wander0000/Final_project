@@ -24,32 +24,44 @@
 </head>
 <style>
 
-	.section
+	.dsF
 	{
-	    display: flex;
-	    flex-direction: column;
-	    gap: 0 40px;
+		display: flex;
+		justify-content: center;
+		gap: 0 40px;
 		margin-top: 90px;
-		margin-bottom: 120px;
-	}
-	.subHeader 
-	{
+		height : 40px;
 		background: #1A1B24;
 		border-bottom: 1px solid #1A1B24;
-    /*	osition: fixed;*/
-		top: 90px;
-	    height: 40px;
-		width:100%
+		
 	}
 	
-	.headerSubInner
+	
+	
+	.subHeader 
 	{
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		min-width: 1600px !important;
 		width: 90% !important;
 		justify-content: start;
-		margin-left: 131px;
+		position: fixed;
+		background: #1A1B24;
+		border-bottom: 1px solid #1A1B24;
+	}
+	
+	
+	
+	
+	.headerSubInner,
+	{
+	    display: flex;
+	    align-items: center;
+	    min-width: 1600px !important;
+	    width: 90% !important;
+	    justify-content: start;
+		z-index: 9;
 	}
 
 	.submenuList 
@@ -59,7 +71,7 @@
 	    color: rgba(153, 162, 185, 0.3);
 	    font-size: 16px;
 	    font-weight: 600;
-	/*    margin-left: 131px;-*/
+		margin-left: 131px;
 		color: #99A2B9;
 		font-size: 16px;
 		font-weight: 400;
@@ -75,7 +87,7 @@
 	
 </style>
 <body>
-    
+    <div class="dsF mypageHeader">
         <div class="subHeader">
 			<div class="headerSubInner">
 	            <ul class="submenuList">
@@ -89,6 +101,7 @@
 	            </ul>
 			</div>
         </div>
+	</div>
 		
 </body>
 </html>
@@ -119,6 +132,27 @@
 	    });
 	});
 
-	// 각 링크에 클릭 이벤트를 추가합니다.
+	/*
+	
+		var dropdownIcon = document.querySelector('#dropdownButton i'); // #dropdownButton 내의 i 태그 선택
+		 console.log("드롭다운 아이콘 준비 완료");
+
+		 if (dropdownIcon) {  // 아이콘이 존재하는지 확인
+		     dropdownIcon.addEventListener('click', function(event) {
+		         console.log("드롭다운 아이콘 클릭");
+		         event.stopPropagation();
+		         var dropdownMenu = document.getElementById('dropdownMenu');
+		         
+		         // 드롭다운 메뉴 표시 또는 숨기기
+		         if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+		             dropdownMenu.style.display = 'block';
+			  		  document.querySelector('.mypageHeader').style.display = 'none';  // mypageHeader 숨기기
+		         } else {
+			  		  document.querySelector('.mypageHeader').style.display = 'flex';  // mypageHeader 숨기기
+		         }
+		     });
+		 }
+		 
+		 */
 	
 </script>

@@ -313,7 +313,7 @@ $(document).ready(function()
 	                      content += '<div class="commentStarRate">' + dto.star + '</div>';
 	                      content += '<span class="material-symbols-outlined optionReviewB" style="cursor:pointer">more_vert</span>';
 	                      content += '<ul class="optionReview">';
-	                      content += '<li class="modify-pop" data-movienm="'+dto.movienm+'" data-review="'+dto.review+'" data-star="'+dto.star+'">수정하기</li>';
+	                      content += '<li class="modify-review" data-movienm="'+dto.movienm+'" data-review="'+dto.review+'" data-star="'+dto.star+'">수정하기</li>';
 	                      content += '<li class="delete-review" data-movieno="'+dto.movieno+'">삭제하기</li>';
 	                      content += '</ul>';
 	                      content += '</div>';
@@ -447,13 +447,14 @@ $(document).ready(function()
 	    
 	    
 	// 팝업을 열고 데이터를 채워주는 함수
-	$(document).on('click', '.modify-pop', function() {
+	$(document).on('click', '.modify-review', function() {
+		console.log("click modify-pop");
 	    var movienm = $(this).data('movienm');
 	    var review = $(this).data('review');
 	    var star = $(this).data('star');
 
 	    // 팝업 데이터 채우기
-	    $('.pop.write .popMovienm').text(movienm);
+	    $('.pop.modify .popMovienm').text(movienm);
 	    $('#textArea').val(review);
 	    $('#selected-rating').text(star);
 
@@ -467,7 +468,7 @@ $(document).ready(function()
 	    });
 
 	    // 팝업 표시
-	    $(this).closest('.commentDetail').find('.pop.write').css({"display":"flex"});
+	    $(this).closest('.commentDetail').find('.pop.modify').css({"display":"flex"});
 	});
     	
 	

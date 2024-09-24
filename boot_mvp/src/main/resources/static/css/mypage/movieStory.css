@@ -304,6 +304,7 @@
     text-align: center;
     margin-top: 20px;
     font-size: 24px;
+	color: #111;
 }
 
 .popRating 
@@ -378,7 +379,7 @@
 .rating-result 
 {
     font-size: 18px;
-    color: #333;
+    color: #99A2b9;
 	display: flex;
 	align-items: center;
 }
@@ -395,6 +396,8 @@
     height: 200px;
     border: 1px solid #dadada;
     border-radius: 3px;
+	padding:12px;
+	cursor: text;
 }
 
 .textAreaWrap textArea::placeholder 
@@ -415,12 +418,13 @@
     align-items: center;
     justify-content: center;
     gap: 0 20px;
+	padding: 0 40px;
 }
 
 .popF .buttonWrap .button 
 {
     height: 36px;
-    padding: 0 20px;
+    padding: 0 40px;
     border:0;
 	border-radius: 3px;
 	cursor: pointer;

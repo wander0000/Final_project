@@ -21,7 +21,7 @@
 		<![CDATA[
 		WHERE r.viewday < NOW()   
  		]]>
-		AND r.uuid = #{uuid} 
+		AND r.uuid = #{uuid} AND r.status = '예매'
 		ORDER BY r.viewday DESC
 		<include refid="pagenation"></include>
     </select>
@@ -45,7 +45,7 @@
 		    m.movienm,
 		    m.releaseday,
 		    m.endday,
-		    (SELECT COUNT(*) FROM liketb WHERE m.movieno = li.movieno) AS scrapRate
+		    (SELECT COUNT(*) FROM liketb WHERE liketb.movieno = m.movieno) AS scrapRate
 		FROM
 		    liketb li
 		LEFT OUTER JOIN movieinfotb_v m ON li.movieno = m.movieno
