@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -43,14 +44,23 @@ public class UserInterceptor implements HandlerInterceptor {
             	log.info("@# ============== auth");
                 OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) auth;
                 String registrationId = oauthToken.getAuthorizedClientRegistrationId();// 공급자 ID (google, naver 등)
+                Object principal = auth.getPrincipal();
+                OAuth2User oauth2User = (OAuth2User) principal;
                 String oauthUserId = null;
+                String email = null;
                 if ("naver".equals(registrationId)) {
                     oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+                    email = oauth2User.getAttribute("email");  // 이메일 정보
                 }else if("google".equals(registrationId)) {
                 	oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+                	email = oauth2User.getAttribute("email");  // 이메일 정보
                 }else {
                 	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
+                	email = oauth2User.getAttribute("email");  // 이메일 정보
                 }
+                request.setAttribute("oauthUserId", oauthUserId);
+                request.setAttribute("registrationId", registrationId);
+                request.setAttribute("email", email);
                 
                 if (oauthUserId != null && oauthService.oauthGetUserByuniqcnt(oauthUserId) > 0) {
                 	// 로그인한 유저의 ID를 request에 추가
