@@ -238,7 +238,7 @@ public class MovieController {
     		average = (double) 0; // 예를 들어 기본값 설정
     	} 
     	
-    	mav.addObject("uuid",id);
+    	mav.addObject("uuid",id); // review.jsp insert2, modify2, delete2
     	mav.addObject("count",count);
     	mav.addObject("reviewNum",reviewNum);
     	mav.addObject("average",average);
@@ -303,7 +303,7 @@ public class MovieController {
     	
     	MovietbDTO movieInfo = movieService.movieInfo(movieno);
     	
-    	result.put("movieInfo", movieInfo);
+    	result.put("movieInfo", movieInfo); // review.js + movieInfo + insert, modify, delete
     	result.put("count", count);    	
     	result.put("uuid2", id);    	
     	result.put("reviewNum", reviewNum);

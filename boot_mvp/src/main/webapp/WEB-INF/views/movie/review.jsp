@@ -103,8 +103,8 @@
 	        </div>
 	        <div class="popF">
 	            <div class="buttonWrap">
-	                <input class="button cancel close-pop2" value="취소">
-	                <input class="button submit" value="등록" onclick="insertReview2();">
+	                <input type="button" class="button cancel close-pop2" value="취소">
+	                <input type="button" class="button submit" value="등록" onclick="insertReview2();">
 	            </div>
 	        </div>                
 	    </div>        
@@ -125,8 +125,8 @@
 	        </div>
 	        <div class="popF">
 	            <div class="buttonWrap">
-	                <input class="button cancel close-pop" value="취소">
-	                <input class="button delete" value="삭제" onclick="deleteReview();">
+	                <input type="button" class="button cancel close-pop" value="취소">
+	                <input type="button" class="button delete" value="삭제" onclick="deleteReview();">
 	            </div>
 	        </div>                
 	    </div>        
@@ -137,8 +137,16 @@
 	<div class="reviewContentWrap">
 		<div class="reviewWrapH">
 			<h5 class="reviewWrapTitle"><span class="Strong">${movieInfo.movienm}</span> 에 대한 <span class="Strong ">${reviewNum}</span>개의 관람평이 있어요!</h5>
+			<c:choose>
+				<c:when test="${uuid=='' || uuid==null}">
+					<style>.reviewWrapH .write{display:none}</style>
+				</c:when>
+				<c:otherwise>
+					<style>.reviewWrapH .write{display:flex}</style>
+				</c:otherwise>
+			</c:choose>
 			<div class="write">			
-				<c:if test="${count==0} ">
+				<c:if test="${count==0}">
 					<span class="material-symbols-outlined open-pop2">edit_square</span>
 					<h5 class="open-pop2">관람평 작성하기</h5>	
 				</c:if>	

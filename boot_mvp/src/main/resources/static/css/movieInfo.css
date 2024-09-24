@@ -635,12 +635,11 @@ section
     height: 200px;
     border: 1px solid #dadada;
     border-radius: 3px;
+	resize: none;
+	padding: 12px;
+	font-size: var(--fs16);
 }
 
-.textAreaWrap textArea::placeholder 
-{
-    padding:12px;
-}
 
 .popF 
 {
@@ -665,7 +664,7 @@ section
 	border-radius: 3px;
 	cursor: pointer;
 	border: 1px solid #dadada;
-	width:60px;
+	/*width:60px;*/
 	text-align: center;
 }
 
