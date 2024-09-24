@@ -124,7 +124,7 @@ function reviewshow2(movieno, pageNum)
 			$('input.button.submit').removeClass("submit").addClass("modify");
 
 			// onclick 속성 변경
-			$('input.button.modify').attr("onclick", "modifyReview2()");
+			$('input.button.modify').attr("onclick", "modifyReview()");
 
 			// value (버튼 텍스트)도 변경할 수 있습니다 (선택 사항)
 			$('input.button.modify').val("수정");			
@@ -217,14 +217,27 @@ function reviewshow2(movieno, pageNum)
 		});
 	});
 	
-	function insertReview2() 
+	function insertReview() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var star = $("input[name='rating']:checked").val();
 		var movieno = $("#movieno").val();	
 		console.log("@#@# movieno==>"+movieno);
 		var textArea = $("#textArea").val();
+		
+		// star 또는 textArea가 비어 있을 경우
+		if (!star) {
+		    alert("별점을 선택해 주세요.");
+		    return;
+		}
+
+		if (!textArea || textArea.trim() === "") {
+		    alert("관람평을 작성해 주세요.");
+		    return;
+		}		
+		
 		alert("관람평이 등록되셨습니다.");
+		
 		$.ajax
 		({
 			url: "/movie/insertReview",
@@ -238,7 +251,7 @@ function reviewshow2(movieno, pageNum)
 				console.log("성공");	
 				closePop();
 				reviewshow();				
-				reviewshow2();
+				reviewshow2();				
 			},
 			error:function() 
 			{
@@ -247,13 +260,15 @@ function reviewshow2(movieno, pageNum)
 		});
 	}
 	
-	function modifyReview2() 
+	function modifyReview() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var star = $("input[name='rating']:checked").val();
 		var movieno = $("#movieno").val();	
 		console.log("@#@# movieno==>"+movieno);
+		console.log("@#@# star==>"+star);
 		var textArea = $("#textArea").val();
+		console.log("@#@# textArea==>"+textArea);
 		alert("관람평을 수정하셨습니다.");
 		$.ajax
 		({
@@ -277,7 +292,7 @@ function reviewshow2(movieno, pageNum)
 		});
 	}	
 
-	function deleteReview2() 
+	function deleteReview() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var movieno = $("#movieno").val();	

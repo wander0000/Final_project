@@ -23,7 +23,7 @@ public class SchedulerConfig {
         this.movieJob = movieJob;
     }
 
-    @Scheduled(cron = "0 05 09 * * ?")  // 매일 15시 52분에 실행
+    @Scheduled(cron = "0 30 12 * * ?")  // 매일 09시 05분에 실행
     public void runMovieJob() {
         try {
             JobParameters jobParameters = new JobParametersBuilder()

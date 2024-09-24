@@ -70,7 +70,7 @@
 									<div>
 										<c:choose>
 										    <c:when test="${fn:length(dto.movienm) > 12}">
-										        <h5 class="movienm" style="letter-spacing: -4px;">${dto.movienm}</h5>
+										        <h5 class="movienm" style="letter-spacing: -2px;">${dto.movienm}</h5>
 										    </c:when>
 										    <c:otherwise>
 										        <h5 class="movienm">${dto.movienm}</h5>

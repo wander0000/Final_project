@@ -38,11 +38,12 @@
 </head>
 <body>
 	<!-- 입력 팝업 -->
-	<div class="pop write">
+	
+	<div class="pop write2">
 	    <div class="popInner">
 	        <div class="popH">
 				<h5 class="popTitle">관람평 작성하기</h5>
-				<span class="material-symbols-outlined close-pop" style="cursor:pointer">close</span>					
+				<span class="material-symbols-outlined close-pop2" style="cursor:pointer">close</span>					
 	        </div>
 	        <div class="popB">
 	            <div class="popMovienm">
@@ -102,15 +103,16 @@
 	        </div>
 	        <div class="popF">
 	            <div class="buttonWrap">
-	                <input class="button cancel close-pop" value="취소">
-	                <input class="button submit" value="등록" onclick="insertReview();">
+	                <input class="button cancel close-pop2" value="취소">
+	                <input class="button submit" value="등록" onclick="insertReview2();">
 	            </div>
 	        </div>                
 	    </div>        
 	</div>
 	
+	
 	<!-- 삭제 팝업-->
-	<div class="pop delete">
+	<div class="pop delete2">
 	    <div class="popInner">
 	        <div class="popH">
 				<h5 class="popTitle">관람평 삭제하기</h5>
@@ -137,8 +139,8 @@
 			<h5 class="reviewWrapTitle"><span class="Strong">${movieInfo.movienm}</span> 에 대한 <span class="Strong ">${reviewNum}</span>개의 관람평이 있어요!</h5>
 			<div class="write">			
 				<c:if test="${count==0}">
-					<span class="material-symbols-outlined open-pop">edit_square</span>
-					<h5 class="open-pop">관람평 작성하기</h5>	
+					<span class="material-symbols-outlined open-pop2">edit_square</span>
+					<h5 class="open-pop2">관람평 작성하기</h5>	
 				</c:if>	
 				<c:if test="${count!=0}">
 					<h5>이미 등록된 관람평이 있습니다.</h5>	
@@ -175,8 +177,8 @@
 						<c:if test="${dto.uuid == uuid}">
 							<span class="material-symbols-outlined optionReviewB" style="cursor:pointer">more_vert</span>
 							<ul class="optionReview">
-								<li class="modify-pop">수정하기</li>
-								<li class="delete-review">삭제하기</li>
+								<li class="modify-pop2">수정하기</li>
+								<li class="delete-review2">삭제하기</li>
 							</ul>
 						</c:if>
 					</div>
@@ -189,39 +191,39 @@
 <script>
 	$(document).ready(function()
 	{
-		$('.open-pop').click(function(){
-			$('.pop.write').css({"display":"flex"});
+		$('.open-pop2').click(function(){
+			$('.pop.write2').css({"display":"flex"});
 		});
 		
-		$('.modify-pop').click(function(){
-			$('.pop.write').css({"display":"flex"});
+		$('.modify-pop2').click(function(){
+			$('.pop.write2').css({"display":"flex"});
 			$('.popTitle').text("관람평 수정하기");
 			$('.optionReview').removeClass("on");
 			
 			$('input.button.submit').removeClass("submit").addClass("modify");
 
 			// onclick 속성 변경
-			$('input.button.modify').attr("onclick", "modifyReview()");
+			$('input.button.modify').attr("onclick", "modifyReview2()");
 
 			// value (버튼 텍스트)도 변경할 수 있습니다 (선택 사항)
 			$('input.button.modify').val("수정");			
 		});
 		
-		$('.delete-review').click(function(){
-			$('.pop.delete').css({"display":"flex"});
+		$('.delete-review2').click(function(){
+			$('.pop.delete2').css({"display":"flex"});
 			$('.popTitle').text("관람평 수정하기");
 			$('.optionReview').removeClass("on");
 			
 			$('input.button.submit').removeClass("submit").addClass("modify");
 
 			// onclick 속성 변경
-			$('input.button.modify').attr("onclick", "modifyReview()");
+			$('input.button.modify').attr("onclick", "modifyReview2()");
 
 			// value (버튼 텍스트)도 변경할 수 있습니다 (선택 사항)
 			$('input.button.modify').val("수정");			
 		});
 		
-		$('.close-pop').click(function(){
+		$('.close-pop2').click(function(){
 			closePop();
 		});		
 
@@ -291,14 +293,28 @@
 		});
 	});
 	
-	function insertReview() 
+	function insertReview2() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var star2 = $("input[name='rating2']:checked").val();
 		var movieno = $("#movieno").val();	
 		console.log("@#@# movieno==>"+movieno);
 		var textArea2 = $("#textArea2").val();
+		
+		
+		// star 또는 textArea가 비어 있을 경우
+		if (!star2) {
+		    alert("별점을 선택해 주세요.");
+		    return;
+		}
+
+		if (!textArea2 || textArea2.trim() === "") {
+		    alert("관람평을 작성해 주세요.");
+		    return;
+		}
+		
 		alert("관람평이 등록되셨습니다.");
+		
 		$.ajax
 		({
 			url: "/movie/insertReview",
@@ -321,7 +337,8 @@
 		});
 	}
 	
-	function modifyReview() 
+
+	function modifyReview2() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var star2 = $("input[name='rating2']:checked").val();
@@ -351,7 +368,8 @@
 		});
 	}	
 
-	function deleteReview() 
+	
+	function deleteReview2() 
 	{
 		const csrfToken = document.getElementById('token').value;
 		var movieno = $("#movieno").val();	
@@ -379,7 +397,7 @@
 	}		
 		
 	// 팝업 닫기
-	function closePop() 
+	function closePop2() 
 	{
 		var star2 = $("input[name='rating2']:checked").val();
 		var textArea2 = $("#textArea2").val();
