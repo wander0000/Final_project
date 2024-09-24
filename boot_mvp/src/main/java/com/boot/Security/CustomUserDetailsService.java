@@ -118,8 +118,34 @@ public class CustomUserDetailsService implements UserDetailsService {
     	}
     	
     }
-
     
-    
+    public String getPhoneFromAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userDetails.getPhone();  // uuid 값을 가져옴
+        } else if(authentication != null && authentication.getPrincipal() instanceof OAuth2User){
+        	log.info("naver로그인 OAuth2User");
+        	
+            OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+            String registrationId = oauthToken.getAuthorizedClientRegistrationId();// 공급자 ID (google, naver 등)
+            String oauthUserId = "";
+            if ("naver".equals(registrationId)) {
+                oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 네이버 기준
+                log.info("naver로그인 oauthUserId"+oauthUserId);
+            }else if("google".equals(registrationId)) {
+            	oauthUserId = oauthToken.getPrincipal().getAttribute("sub");  // 구글 기준
+            }else {
+            	oauthUserId = oauthToken.getPrincipal().getAttribute("id");  // 페이스북 기준
+            }
+            OauthtbDTO user = oauthService.oauthGetUserByuniq(oauthUserId);
+            log.info("user:"+user+"oauthUserId"+oauthUserId);
+            return user.getPhone();
+            
+        } else {
+        
+            // 인증되지 않은 사용자이거나, 사용자 정보가 CustomUserDetails가 아닌 경우
+            throw new IllegalStateException("Authentication is not valid or the user is not logged in.");
+        }
+    }
 }
-

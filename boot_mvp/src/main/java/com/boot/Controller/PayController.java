@@ -27,6 +27,7 @@ import com.boot.Security.CustomUserDetailsService;
 import com.boot.Service.CouponService_2;
 import com.boot.Service.MovieService;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.Movieinfotb_vService_2;
 import com.boot.Service.PointService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
@@ -61,8 +62,11 @@ public class PayController {
 	@Autowired
 	private PricetbService_2 priceService;
 	
+	//@Autowired
+	//private MovieService_2 movieService;
+	
 	@Autowired
-	private MovieService_2 movieservice;
+	private Movieinfotb_vService_2 movieinfotb_vService;
 	
 	@Autowired
 	private TheaterService_2 theaterService;
@@ -78,12 +82,12 @@ public class PayController {
 	
 	/* sms 전송을 위한 세팅 */
 	private DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSEPSQXUWDO2WGS", "BJUJJHURG1BIKIUKNKJLH1XIIQWPIYSL", "https://api.coolsms.co.kr");
-	/*
+	
 	public PayController() {
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
       this.messageService = NurigoApp.INSTANCE.initialize("NCSEPSQXUWDO2WGS", "BJUJJHURG1BIKIUKNKJLH1XIIQWPIYSL", "https://api.coolsms.co.kr");
     }
-    */
+    
     /* sms 전송을 위한 세팅 */
 	
 	/* 카카오페이 */
@@ -202,8 +206,8 @@ public class PayController {
 			
 			/* 문자 전송을 위한 세팅 (금액 문제로 현재는 주석 처리) */
 			//선택한 영화 제목
-			/*
-			String title = movieservice.getTitle(params);
+			
+			String title = movieinfotb_vService.getTitleRating(params).getMovienm();
 			String theaternm = theaterService.gettheaternm(params);
 			if(title.length() > 5) {
 				title = title.substring(0, 5).trim()+"..";
@@ -221,15 +225,14 @@ public class PayController {
 			//log.info("@# SMS: 예매완료\nMVP-"+theaternm+"\n"+title+"("+len+"매)"+"\n예매 번호 : [" + reservenum + "]\n"+formattedDateTime);
 			
 			Message message = new Message();
-			String userid = userDetails.getUserId();
-			String phone = userDetails.getPhone().replaceAll("-", "");
-			log.info("@# userid: " + userid + " // phone: " + phone);
+			String phone = userService.getPhoneFromAuthenticatedUser().replaceAll("-", "");//userDetails.getPhone().replaceAll("-", "");
+			log.info("@# phone: " + phone);
 	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
 	        message.setFrom("01049190758");
 	        message.setTo(phone);
-	        message.setText("예매완료\nMVP-"+theaternm+"\n"+title+"("+len+"매)"+"\n예매 번호 : [" + reservenum + "]\n"+formattedDateTime);
+	        message.setText("예매완료\nMVP-"+theaternm+"\n"+title+"("+len+"매)"+"\n예매 번호 : [" + param.get("reservenum") + "]\n"+formattedDateTime);
 			
-	        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+	        //SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
 	        /* 문자 전송을 위한 세팅 */
 			
 		} catch (Exception e) {

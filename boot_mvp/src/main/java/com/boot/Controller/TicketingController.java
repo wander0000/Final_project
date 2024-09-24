@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.boot.DTO.ReserdtltbDTO;
 import com.boot.Service.AreaService_2;
 import com.boot.Service.MovieService_2;
+import com.boot.Service.Movieinfotb_vService_2;
 import com.boot.Service.PricetbService_2;
 import com.boot.Service.ReserdtltbService_2;
 import com.boot.Service.ScreenService_2;
@@ -51,8 +52,11 @@ public class TicketingController {
 	@Autowired
 	private ScreenService_2 screenService;
 	
+	//@Autowired
+	//private MovieService_2 movieService;
+	
 	@Autowired
-	private MovieService_2 movieService;
+	private Movieinfotb_vService_2 movieinfotb_vService;
 	
 	@Autowired
 	private PricetbService_2 priceService;
@@ -81,7 +85,7 @@ public class TicketingController {
 		
 		model.addAttribute("area", areaservice.selectAll());
 		model.addAttribute("date", areaservice.datedual(""));
-		model.addAttribute("movie", movieService.selectAll());
+		model.addAttribute("movie", movieinfotb_vService.selectAll());
 		model.addAttribute("gubun", "none");
 		
 		return "ticketing/movieselect";
@@ -105,7 +109,7 @@ public class TicketingController {
 		mav.setViewName("ticketing/movie_ajax");
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
-		mav.addObject("movie", movieService.selectAll());
+		mav.addObject("movie", movieinfotb_vService.selectAll());
 		
 		return mav;
 	}
@@ -127,7 +131,7 @@ public class TicketingController {
 	        param.put("viewday", formattedDate);
 		}
 		
-		mav.addObject("minfo", movieService.getTitleRating(param));
+		mav.addObject("minfo", movieinfotb_vService.getTitleRating(param));
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
 		mav.addObject("detailinfo", screenService.selectdtl(param));
@@ -252,7 +256,6 @@ public class TicketingController {
 		model.addAttribute("seats", params.get("seats"));
 		model.addAttribute("calc", params.get("calc"));
 		model.addAttribute("pricetype", params.get("pricetype")); // 가격 타입
-		
 		//이후 컨트롤러 작업은 PayContoller에서 진행
 		return "ticketing/payment";
 	}
@@ -263,7 +266,7 @@ public class TicketingController {
 		
 		model.addAttribute("area", areaservice.selectAll());
 		model.addAttribute("date", areaservice.datedual(""));
-		model.addAttribute("movie", movieService.selectAll());
+		model.addAttribute("movie", movieinfotb_vService.selectAll());
 		model.addAttribute("sel_movino", param.get("movieno"));
 		model.addAttribute("gubun", "mypage");
 		//return "ticketing/movieselected";
