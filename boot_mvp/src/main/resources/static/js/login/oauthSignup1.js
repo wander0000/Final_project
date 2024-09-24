@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 $('form').on('submit', function(event) {
     event.preventDefault();
 
-    // 1. 빈값 확인
-    if ($('#email').val().trim() === '' || $('#userid').val().trim() === '' || $('#phone').val().trim() === '' || $('#birth').val().trim() === '') {
-        alert('모든 필드를 채워 주세요.');
-        return;
-    }
+//    // 1. 빈값 확인
+//    if ($('#email').val().trim() === '' || $('#userid').val().trim() === '' || $('#phone').val().trim() === '' || $('#birth').val().trim() === '') {
+//        alert('모든 값을 확인해주세요.');
+//        return;
+//    }
 
     // 3. 아이디 중복 확인 여부
     if (!userIdCheckedOnce || !isUserIdChecked) {
