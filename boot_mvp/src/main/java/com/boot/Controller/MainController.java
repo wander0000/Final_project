@@ -41,9 +41,7 @@ public class MainController {
 	@Autowired
 	private BoxOfficeService boxofficeService;
 	
-	@Autowired
-	private AttendenceService attendService;
-	
+		
 	@Autowired
     private CustomUserDetailsService userService;
 	
