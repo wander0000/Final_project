@@ -374,7 +374,7 @@ $(document).ready(function()
 	                      content += '<div class="popF">';
 	                      content += '<div class="buttonWrap">';
 	                      content += '<button class="button cancel close-pop" type="cancel">취소</button>';
-	                      content += '<button class="button delete" type="submit" data-movieno="'+dto.movieno+'">>삭제</button>';
+	                      content += '<button class="button delete" type="submit" data-movieno="'+dto.movieno+'">삭제</button>';
 	                      content += '</div>';
 	                      content += '</div>';
 	                      content += '</div>';
