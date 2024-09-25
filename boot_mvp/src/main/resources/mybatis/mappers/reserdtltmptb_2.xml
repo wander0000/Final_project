@@ -3,7 +3,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boot.DAO.ReserdtltmptbDAO_2">
 	<select id="getCnt" resultType="int">
-		select count(*) + 1 as idno
+		select (ifnull(max(idno), 0) + 1) as idno
 		from reserdtltmptb
 		where uuid = #{uuid}
 	</select>
@@ -11,7 +11,7 @@
 	<select id="getCount" resultType="int">
 		select count(*)
 		from reserdtltmptb
-		where uuid = #{uuid} and idno = #{idno}
+		where uuid = #{uuid}
 	</select>
 	
 	<insert id="inserttmp">
@@ -24,9 +24,20 @@
 				values (#{uuid}, #{idno}, #{reserveno}, #{areano}, #{theaterno}, #{movieno}, #{viewday}, #{roomno}, #{starttime}, #{seat})
 	</insert>
 	
+	<select id="getidno" resultType="int">
+		select min(idno) as idno
+		from reserdtltmptb
+		where uuid = #{uuid}
+	</select>
+	
 	<delete id="deletetmp">
 		delete from reserdtltmptb
 		where uuid = #{uuid} and idno = #{idno}
+	</delete>
+	
+	<delete id="deletetmpAll">
+		delete from reserdtltmptb
+		where uuid = #{uuid}
 	</delete>
 </mapper>
 

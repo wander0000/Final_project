@@ -259,8 +259,9 @@ public class PayController {
 		model.addAttribute("disable", param.get("disable"));
 		model.addAttribute("seats", param.get("seats"));
 		
-		//tmp 테이블 삭제
-		reserdtltmptbService.deletetmp(param);
+		//tmp 테이블 삭제 및 상태 false로 변환
+		reserdtltmptbService.deletetmpAll(param);
+		reserdtltmptbService.resetDelStatus();
 		
 		return "ticketing/paycompleted";
 	}

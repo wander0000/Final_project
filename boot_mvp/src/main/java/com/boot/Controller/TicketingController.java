@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -70,6 +73,8 @@ public class TicketingController {
 	
 	@Autowired
 	private CustomUserDetailsService userService;
+	
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	
 	//로그인 유무 체크
     @GetMapping("/logincheck")
@@ -253,6 +258,23 @@ public class TicketingController {
 			params.put("seat", seats[i]);
 			reserdtltmptbService.inserttmp(params);
 		}
+		
+		HashMap<String, String> newParam = new HashMap<>();
+		newParam.put("uuid", params.get("uuid"));
+		newParam.put("idno", params.get("idno"));
+		
+		log.info("@# newParam ==> " + newParam);
+		reserdtltmptbService.resetDelStatus();
+		//10분 해당 임시 데이터 삭제
+		scheduler.schedule(() -> {
+	        try {
+	        	log.info("@# newParam : " + newParam);
+	        	reserdtltmptbService.deletetmp(newParam);
+	        } catch (Exception e) {
+	            log.error("Error during deletion of temporary data", e);
+	        }
+	    }, 10, TimeUnit.MINUTES);
+		
 		
 		session.setAttribute("params", params);
 		session.setMaxInactiveInterval(3600);
