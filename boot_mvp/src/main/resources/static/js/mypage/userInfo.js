@@ -99,7 +99,7 @@ $(document).ready(function()
 			updateInfo('phone', '/api/user/phone', 'phone', 'token');
 			
 		} else {
-			alert("생년월일 값을 형식에 맞춰 입력해주세요.");
+			alert("휴대폰 번호를 형식에 맞춰 입력해주세요.");
 			$('#phone').focus();
 			return; // 함수 종료
 		}

@@ -3,6 +3,9 @@ package com.boot.Controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,8 @@ public class UserRestController {
 	
 	
 	@DeleteMapping
-	public ResponseEntity<Map<String, Object>>  deleteUser() {
+	public ResponseEntity<Map<String, Object>>  deleteUser(HttpServletRequest request) {
+		
 		 int deletedRows = userService.deleteUserInfo();
 	        
 	        Map<String, Object> response = new HashMap<>();
@@ -42,7 +46,8 @@ public class UserRestController {
 	        
 	        if (deletedRows > 0) {
 	            response.put("message", "회원 정보가 성공적으로 삭제되었습니다.");
-	            SecurityContextHolder.clearContext();
+	            SecurityContextHolder.clearContext();//보안,인증 정보 삭제(로그아웃할 때도 시행됨)
+	            request.getSession().invalidate(); // 세션 무효화
 	            return ResponseEntity.ok(response);
 	        } else {
 	            response.put("message", "회원 정보를 찾을 수 없습니다.");
