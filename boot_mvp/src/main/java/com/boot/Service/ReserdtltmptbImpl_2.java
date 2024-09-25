@@ -5,6 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
 	private SqlSession sqlSession;
 	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	
+	private boolean deldata = false;
 	
 	@Override
 	public int getCnt(HashMap<String, String> param) {
@@ -43,6 +47,25 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
 	public void deletetmp(HashMap<String, String> param) {
 		log.info("@# deletetmp");
 		ReserdtltmptbDAO_2 dao = sqlSession.getMapper(ReserdtltmptbDAO_2.class);
-		dao.deletetmp(param);
+		
+		int cnt = dao.getCount(param);
+		log.info("@# cnt: " + cnt);
+		if(cnt > 0) {
+			dao.deletetmp(param);
+			deldata = true;
+		}
+	}
+	
+	public boolean checkDelStatus() {
+        return deldata;
+    }
+
+    public void resetDelStatus() {
+    	deldata = false;
+    }
+	
+	@PreDestroy
+	public void shutdown() {
+	    scheduler.shutdown();
 	}
 }
