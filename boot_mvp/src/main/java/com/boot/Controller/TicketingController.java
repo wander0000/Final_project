@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -290,6 +291,17 @@ public class TicketingController {
 		//return "ticketing/movieselected";
 		return "ticketing/movieselect";
 	}
+	
+	@GetMapping("/check-delete-status")
+    public ResponseEntity<Boolean> checkDeleteStatus() {
+        return ResponseEntity.ok(reserdtltmptbService.checkDelStatus());
+    }
+
+    @PostMapping("/reset-delete-status")
+    public ResponseEntity<Void> resetDeleteStatus() {
+        reserdtltmptbService.resetDelStatus();
+        return ResponseEntity.ok().build();
+    }
 	
 	@RequestMapping("/ticketerrer")
 	public String ticketing_error() {

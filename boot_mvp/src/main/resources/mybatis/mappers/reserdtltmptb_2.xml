@@ -8,6 +8,12 @@
 		where uuid = #{uuid}
 	</select>
 	
+	<select id="getCount" resultType="int">
+		select count(*)
+		from reserdtltmptb
+		where uuid = #{uuid} and idno = #{idno}
+	</select>
+	
 	<insert id="inserttmp">
 		<selectKey keyProperty="reserveno" resultType="int" order="BEFORE">
 			select (ifnull(max(reserveno), 0) + 1) as reserveno

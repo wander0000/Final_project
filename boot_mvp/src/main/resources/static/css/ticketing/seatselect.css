@@ -442,6 +442,7 @@ section
     background-color: rgb(73, 76, 76);
     font-size: 0em;
    	cursor: default;
+   	pointer-events: none; /* 클릭 이벤트를 무시 */
     background: linear-gradient(135deg, #494c4c 49.5%, transparent 49.5%, #0f1015 49.5%, #0f1015 50.5%, transparent 50.5%, #494c4c 50.5%);
 }
 

@@ -9,6 +9,23 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ticketing/payment.css">
 <script src="${pageContext.request.contextPath}/js/ticketing/pay_fn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
+<script>
+	setInterval(() => { //setInterval(): 주어진 함수를 지정한 시간 간격
+	    fetch('/ticketing/check-delete-status') //fetch(): 네트워크 요청을 보내는 방법 -> /ticketing/check-delete-status로 요청
+	    .then(response => response.json()) //fetch 요청 성공시 반환값 json 형태로 받음
+	    .then(isDeleted => { // 반환된 json 값
+	        if (isDeleted) {  //임시 테이블 삭제 성공 시...
+	            alert('결제를 진행하지 않아 초기화면으로 돌아갑니다...');
+	            window.location.href = '/ticketing/movieselect';
+	            // 상태를 초기화
+	            return fetch('/ticketing/reset-delete-status', { method: 'POST' }); // bool 값 다시 false로 변경
+	        }
+	    })
+	    .catch(error => {
+	        console.error('오류 발생:', error);
+	    });
+}, 5000); // 5초마다 상태 확인
+</script>
 </head>
 <body>
 	<div class="container">
