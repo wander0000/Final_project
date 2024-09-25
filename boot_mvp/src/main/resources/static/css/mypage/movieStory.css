@@ -379,9 +379,15 @@
 .rating-result 
 {
     font-size: 18px;
-    color: #99A2b9;
 	display: flex;
+	color: #111;
 	align-items: center;
+}
+
+.rating-result  span
+{
+    font-size: 18px;
+    color: #99A2b9;
 }
 
 .textAreaWrap 
@@ -397,13 +403,10 @@
     border: 1px solid #dadada;
     border-radius: 3px;
 	padding:12px;
-	cursor: text;
+	font-size:0.8vw;
 }
 
-.textAreaWrap textArea::placeholder 
-{
-    padding:12px;
-}
+
 
 .popF 
 {
