@@ -64,11 +64,15 @@ public class LoginController {
 
     @RequestMapping("/")
     public String home(Model model) {
+    	// 현재 사용자의 인증정보 가져오기
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        // 만약 사용자가 인증 되었을 경우 실행  // 인증되지 않는 사용자라면 전체 로직에 접근하지 못함.
         if (!(auth instanceof AnonymousAuthenticationToken)) {
+        	// principal 객체에 인증된 사용자의 정보를 가져옴 // 여기서는 OAuth2User 또는 UserDetails 정보를 가져옴
             Object principal = auth.getPrincipal();
             
+            // oauth user일때 타는 로직
             if (auth instanceof OAuth2AuthenticationToken) {
                 OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) auth;
                 String registrationId = oauthToken.getAuthorizedClientRegistrationId();  // OAuth2 공급자 ID
@@ -77,21 +81,25 @@ public class LoginController {
                 String email = null;
                 
                 // 공급자별 사용자 고유 ID와 이메일 확인
-                if ("google".equals(registrationId)) {
-                    oauthUserId = oauth2User.getAttribute("sub");
-                    email = oauth2User.getAttribute("email");  // 구글 이메일 정보
-                } else if ("naver".equals(registrationId)) {
+//                if ("google".equals(registrationId)) {
+//                    oauthUserId = oauth2User.getAttribute("sub");
+//                    email = oauth2User.getAttribute("email");  // 구글 이메일 정보
+//                } 
+                if ("naver".equals(registrationId)) {
                     oauthUserId = oauth2User.getAttribute("id");
                     email = oauth2User.getAttribute("email");  // 네이버 이메일 정보
-                } else if ("facebook".equals(registrationId)) {
-                    oauthUserId = oauth2User.getAttribute("id");
-                    email = oauth2User.getAttribute("email");  // 페이스북 이메일 정보
-                }
+                } 
+//                else if ("facebook".equals(registrationId)) {
+//                    oauthUserId = oauth2User.getAttribute("id");
+//                    email = oauth2User.getAttribute("email");  // 페이스북 이메일 정보
+//                }
 
 
                 // 기존 회원 여부를 확인
                 boolean isExistingUser = oauthtbService.oauthCheckNewUser(oauthUserId, registrationId);
 
+                // 저장된 데이터가 있는지 여부를 isExistingUser로 판단해 값이 있으면 가입된유저니 main으로 보내고,
+                // 없으면 추가 개인정보를 받기위한 회원가입페이지로 보냄
                 if (isExistingUser) {
                     model.addAttribute("name", oauth2User.getAttribute("name"));
                     model.addAttribute("provider", registrationId);
@@ -107,6 +115,8 @@ public class LoginController {
                     
                     return "login/oauthSignup1";  // 신규 회원은 회원가입 페이지로 이동
                 }
+                
+             // 일반 user 일때 타는 로직
             } else if (principal instanceof UserDetails) {
                 // 폼 로그인 사용자 처리
                 UserDetails userDetails = (UserDetails) principal;
@@ -115,7 +125,7 @@ public class LoginController {
                 return "/main";
             }
         }
-        return "login/main";  // 인증되지 않은 사용자면 로그인 페이지로 이동
+        return "login/loginPage";  // 인증되지 않은 사용자면 로그인 페이지로 이동
     }
 
     
