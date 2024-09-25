@@ -39,7 +39,7 @@ function reviewshow2(movieno, pageNum)
                  a += '<div class="reviewContent">';
 	                 a += '<div class="idWrap">';
 	                 a += '<span class="material-symbols-outlined">account_circle</span>';
-					 if(value.userid.length > 4) 
+					 if(typeof value.userid === 'string' && value.userid.length > 4) 
 					 {
 					     var first = value.userid.substring(0, 4);
 					     var remain = value.userid.length - 4;

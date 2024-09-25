@@ -43,7 +43,7 @@ public class MovieServiceimpl implements MovieService{
     public void insertMovie() {
         List<MovietbDTO> allMovies = new ArrayList<>();
         // Fetch movies from all pages (1-32)
-        for (int page = 1; page <= 300; page++) 
+        for (int page = 1; page <= 80; page++) 
 //    	for (int page = 1; page <= 32; page++) 
         {
             List<MovietbDTO> movieDataList = insertMovie(page);
