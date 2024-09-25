@@ -34,7 +34,7 @@ public class CouponServiceImpl implements CouponService {
 		
 		//1. 오늘 생일인 사람 조회하기
 		UsertbDAO_4 dao = sqlSession.getMapper(UsertbDAO_4.class);
-		List<UsertbDTO> birthdayUsers= dao.getUsersWithTodayBirthday();
+		List<String> birthdayUsers= dao.getUsersWithTodayBirthday();//생일자 uuid 목록
 		
 		//2. 생일 쿠폰 발행
 		CouponDAO dao2 = sqlSession.getMapper(CouponDAO.class);
@@ -47,7 +47,7 @@ public class CouponServiceImpl implements CouponService {
 				coupon.setReason("생일 축하 쿠폰");//지급사유
 				coupon.setRefno(1);//쿠폰 레퍼런스 타입
 				coupon.setAcrec("A");//쿠폰 상탱 A:사용가능
-				coupon.setUuid(birthdayUsers.get(i).getUuid());//사용자 uuid
+				coupon.setUuid(birthdayUsers.get(i));//사용자 uuid
 				
 				// 쿠폰 발급
 				dao2.insertCoupon(coupon);
@@ -114,12 +114,15 @@ public class CouponServiceImpl implements CouponService {
         } else if ("D".equals(status)) {
             throw new RuntimeException("이미 사용완료된 쿠폰/할인권입니다.");
         } else {
-            try {
-                // 미등록 쿠폰을 등록
-                dao.generateCoupon(couponno, uuid);
+        	try {
+                // 미등록 쿠폰을 등록하고 결과값을 받음
+                int result = dao.generateCoupon(couponno, uuid);
+                if (result == 0) {
+                    throw new RuntimeException("본인이 발급 받은 쿠폰만 등록 가능합니다.");
+                }
             } catch (Exception e) {
                 log.error("쿠폰 등록 중 예외 발생: ", e);
-                throw new RuntimeException("쿠폰 등록 중 문제가 발생했습니다.", e);
+                throw new RuntimeException("쿠폰 번호를 확인하세요.", e);
             }
         }
     }
@@ -132,8 +135,8 @@ public class CouponServiceImpl implements CouponService {
 		  try {
 			  CouponDAO dao = sqlSession.getMapper(CouponDAO.class);
 			  dao.insertCoupon(coupon);
-//			  return dao.selectLastCoupon(coupon.getCouponno());
-			  return coupon.getUuid();
+			  return dao.selectLastCoupon(coupon.getUuid());
+					  
           } catch (Exception e) {
              e.getStackTrace();
           }

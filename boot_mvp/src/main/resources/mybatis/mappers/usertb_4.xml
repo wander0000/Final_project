@@ -45,16 +45,38 @@
         WHERE userid = #{userid}
     </update>
     
+    <!-- 환불계좌 수정 -->
+    <update id="updateAccountOauth">
+        UPDATE oauthtb
+        SET account = #{account},
+            mdate = CURRENT_TIMESTAMP
+        WHERE uuid = #{uuid}
+    </update>
+    
     <!-- 오늘 생일인 사용자 목록 조회 -->
-    <select id="getUsersWithTodayBirthday" resultType="com.boot.DTO.UsertbDTO">
-		SELECT * 
-		FROM usertb 
-		WHERE DATE_FORMAT(birth, '%m-%d') = DATE_FORMAT(CURDATE(), '%m-%d');
-    </select>
-  
+	<select id="getUsersWithTodayBirthday" resultType="String">
+	    SELECT uuid 
+	    FROM usertb 
+	    WHERE DATE_FORMAT(birth, '%m-%d') = DATE_FORMAT(CURDATE(), '%m-%d')
+	    UNION
+	    SELECT uuid 
+	    FROM oauthtb 
+	    WHERE DATE_FORMAT(birth, '%m-%d') = DATE_FORMAT(CURDATE(), '%m-%d');
+	</select>  
    <!-- 유저의 전화번호를 가져오는 쿼리 -->
 	<select id="getUserPhoneNumber" parameterType="String" resultType="String">
-	    SELECT phone FROM usertb WHERE uuid= #{uuid}
+	    SELECT phone FROM usertb WHERE uuid = #{uuid}
+		UNION
+		SELECT phone FROM oauthtb WHERE uuid = #{uuid};
 	</select>
+	
+   <!-- 탈퇴 -->
+	<delete id="deleteUserInfo">
+	    DELETE FROM usertb WHERE uuid= #{uuid}
+	</delete>
+	
+	<delete id="deleteUserInfoOauth">
+	     DELETE FROM oauthtb WHERE uuid= #{uuid}
+	</delete>
 
 </mapper>

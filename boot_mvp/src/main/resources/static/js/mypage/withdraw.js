@@ -43,7 +43,7 @@ $(document).ready(function()
 			    },
 			    success: function(response) {
 			        alert("회원 정보가 성공적으로 삭제되었습니다.");
-			        window.location.href = "/login"; // 탈퇴 후 로그인페이지로
+			        window.location.href = "/main"; 
 			    },
 			    error: function(error) {
 			        console.error("에러 발생:", error);

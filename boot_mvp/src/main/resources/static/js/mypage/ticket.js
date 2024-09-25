@@ -137,6 +137,12 @@ $(document).ready(function()
 				      } else {
 				          cancelButtonText = '취소불가';
 				      } 
+					  //통화단위 표시
+					  const formattedPriceKR = new Intl.NumberFormat('ko-KR', {
+					    style: 'currency',
+					    currency: 'KRW',
+					  }).format(dto.tprice);
+					  console.log(formattedPriceKR);
   						 
                       content += '<div class="contentRowBook">';
                       content += '<div class="ticketCon">' + dto.reservenum + '</div>';
@@ -144,7 +150,7 @@ $(document).ready(function()
                       content += '<div class="ticketCon">' + formattedStarttime + '</div>';
                       content += '<div class="ticketCon">' + dto.tmember + '</div>';
                       content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
-					  content += '<div class="ticketCon">' + dto.tprice + '</div>';
+					  content += '<div class="ticketCon">' + formattedPriceKR + '</div>';
                       content += '<div class="ticketCon">';
 					  content += '<button class="submitTab" id="cancelBtn" value="cancel_status" data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
                       content += '</div>';
@@ -238,15 +244,17 @@ $(document).ready(function()
   			         cancelButtonText = '취소가능';
   			     } else {
   			         cancelButtonText = '취소불가';
-					 
   			     }
+				 //통화단위 표시
+ 				  const formattedPriceKR = new Intl.NumberFormat('ko-KR', {
+ 				    style: 'currency', currency: 'KRW', }).format(dto.tprice);
 				  content += '<div class="contentRowBook">';
 				  content += '<div class="ticketCon">' + dto.reservenum + '</div>';
 				  content += '<div class="ticketCon">' + dto.movienm + '</div>';
 				  content += '<div class="ticketCon">' + formattedStarttime + '</div>';
 				  content += '<div class="ticketCon">' + dto.tmember + '</div>';
 				  content += '<div class="ticketCon">' + formattedCancelTime + '</div>';
-				  content += '<div class="ticketCon">' + dto.tprice + '</div>';
+				  content += '<div class="ticketCon">' + formattedPriceKR + '</div>';
 				  content += '<div class="ticketCon">';
 				  content += '<button class="submitTab" id="cancelBtn" value="cancel_status"  data-reservenum="' + dto.reservenum + '">' + cancelButtonText + '</button>';
 				  content += '</div>';
@@ -416,12 +424,14 @@ $(document).ready(function()
 					    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false  // 24시간 형식 사용
 					});
 					var formattedCancelTime = formattedDate + ' ' + formattedTime;  // 날짜와 시간을 공백으로 연결
-					
+					//통화단위 표시
+					const formattedPriceKR = new Intl.NumberFormat('ko-KR', {
+					    style: 'currency', currency: 'KRW', }).format(dto.tprice);
 					content += '<div class="contentRowCancel">';
 					content += '<div class="couponCon">' + formattedCancelTime + '</div>';
 					content += '<div class="couponCon">' + dto.movienm + '</div>';
 					content += '<div class="couponCon">' + formattedStarttime + '</div>';
-					content += '<div class="couponCon">' + dto.tprice + '</div>';
+					content += '<div class="couponCon">' + formattedPriceKR + '</div>';
 					content += '</div>'; 
 
 				  document.getElementById('cancelticketList').innerHTML += content;

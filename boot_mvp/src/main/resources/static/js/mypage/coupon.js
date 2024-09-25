@@ -46,75 +46,52 @@ $(document).ready(function()
         2024-09-151 서연주 
         쿠폰등록
     */
-//	$(".couponForm").on("submit", function(event) {
-//	       event.preventDefault(); // 폼의 기본 제출 동작을 막음
-//
-//	       // 입력값과 CSRF 토큰 가져오기
-//	       const couponno = $("input[name='couponno']").val();
-//	       const csrfToken = $("input[name='_csrf']").val();
-//
-//	       // AJAX 요청
-//	       $.ajax({
-//	           url: '/generateCoupon', // 서버의 매핑된 URL
-//	           type: 'POST', // POST 메서드
-//			   headers: {
-//   	              "Content-Type": "application/json",
-////   	              "X-CSRF-TOKEN": csrfToken
-//   	           },
-//	           data: JSON.stringify({ couponno: couponno, _csrf: csrfToken }), // 서버로 보낼 데이터 (쿠폰 번호)
-//	           success: function(response) {
-//	               alert("쿠폰이 성공적으로 등록되었습니다.");
-//	               loadCouponList('C','A', 1, pageSize);
-//	           },
-//	           error: function(xhr, status, error) {
-//				// HTTP 상태 코드가 200이 아닌 경우에만 오류 처리
-//			     if (xhr.status !== 200) {
-//			         console.error("에러 발생:", error);
-//			         alert("쿠폰 등록에 실패했습니다.");
-//			     }
-//	           }
-//	       });
-//	   });
+		// 버튼 클릭 이벤트로 변경
+		$('.discntBtn, couponBtn').click(function(e) {
+		    e.preventDefault(); // 폼의 기본 제출 동작을 막음
 
-	$('form').submit(function(e) {
-	    e.preventDefault();
-	    var formData = $(this).serialize();
-		// 입력값 가져오기
-	    const couponno = $(this).find('.inputReg').val(); // 입력된 쿠폰 번호
-	    const coupon_type = $(this).data('type'); // 폼의 data-type 값 (쿠폰의 타입 C 또는 D)
-	
-		console.log("couponno:"+couponno.charAt(0)+"coupon_type:"+coupon_type);
-	    // 쿠폰 타입과 입력된 쿠폰 번호의 첫 번째 글자 비교
-	    if (couponno.charAt(0) !== coupon_type) {
-	        // 쿠폰 타입과 일치하지 않으면 경고 메시지 표시 및 입력 필드로 커서 이동
-	        alert("쿠폰 타입을 확인하세요.(쿠폰은 C, 할인권은 D입니다.)");
-	        $("input[name='couponno']").focus(); // 입력 필드에 커서 이동
-	        return; // 폼 제출 중단
-	    }	
-	    
-	    $.ajax({
-	        url: '/generateCoupon',
-	        type: 'POST',
-	        data: formData,
-	        success: function(response) {
-				// couponno의 첫 번째 문자를 확인하여 로직 처리
-		        if (couponno.charAt(0) === 'C') {
-		            alert('쿠폰이 성공적으로 등록되었습니다.');
-		            loadCouponList('C', 'A', 1, pageSize);  // 쿠폰 목록
-		        } else if (couponno.charAt(0) === 'D') {
-		            alert('할인권이 성공적으로 등록되었습니다.');
-		            loadCouponList('D', 'A', 1, pageSize);  // 할인권 목록
-		        } else {
-		            console.error("알 수 없는 쿠폰 형식입니다.");
+		    var form = $(this).closest('form'); // 해당 버튼이 속한 폼을 찾음
+		    var formData = form.serialize(); // 폼 데이터를 직렬화
+		    // 입력값 가져오기
+		    const couponno = form.find('.inputReg').val(); // 입력된 쿠폰 번호
+		    const coupon_type = form.data('type'); // 폼의 data-type 값 (쿠폰의 타입 C 또는 D)
+
+		    console.log("couponno:"+couponno.charAt(0)+"coupon_type:"+coupon_type);
+		    
+		    // 쿠폰 타입과 입력된 쿠폰 번호의 첫 번째 글자 비교
+		    if (couponno.charAt(0) !== coupon_type) {
+		        // 쿠폰 타입과 일치하지 않으면 경고 메시지 표시 및 입력 필드로 커서 이동
+		        alert("쿠폰 타입을 확인하세요.(쿠폰은 C, 할인권은 D입니다.)");
+		        form.find("input[name='couponno']").focus(); // 입력 필드에 커서 이동
+		        return; // 제출 중단
+		    }
+
+		    // Ajax 요청 처리
+		    $.ajax({
+		        url: '/generateCoupon',
+		        type: 'POST',
+		        data: formData,
+		        success: function(response) {
+		            // couponno의 첫 번째 문자를 확인하여 로직 처리
+		            if (couponno.charAt(0) === 'C') {
+		                alert('쿠폰이 성공적으로 등록되었습니다.');
+		                loadCouponList('C', 'A', 1, pageSize);  // 쿠폰 목록
+		            } else if (couponno.charAt(0) === 'D') {
+		                alert('할인권이 성공적으로 등록되었습니다.');
+		                loadCouponList('D', 'A', 1, pageSize);  // 할인권 목록
+		            } else {
+		                console.error("알 수 없는 쿠폰 형식입니다.");
+		            }
+		            form.find('.inputReg').val('');  // 입력 필드 초기화
+		        },
+		        error: function(xhr, status, error) {
+		            alert(xhr.responseText);
 		        }
-				$('.inputReg').val('');  // 입력 필드 초기화
-	        },
-	        error: function(xhr, status, error) {
-	            alert(xhr.responseText);
-	        }
-	    });
-	});
-	
+		    });
+		});
+
+
+
 
     /*
         2024-09-01 서연주 

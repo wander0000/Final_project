@@ -49,7 +49,7 @@
 										<!-- CSRF Token -->
 	                                    <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
 								        <input class="inputReg" type="text" name="couponno" placeholder="쿠폰번호를 등록해주세요" required>
-								        <button class="couponBtn" type="submit">등록하기</button>
+								        <button class="couponBtn">등록하기</button>
 									</div>
 							    </form>
                         	</div>
@@ -102,7 +102,7 @@
 										<!-- CSRF Token -->
 	                                    <input type="hidden" id="token" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
 								        <input class="inputReg" type="text" name="couponno" placeholder="쿠폰번호를 등록해주세요" required>
-								        <button class="discntBtn" type="submit">등록하기</button>
+								        <button class="discntBtn">등록하기</button>
 									</div>
 							    </form>
                             </div>

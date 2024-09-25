@@ -1,8 +1,10 @@
 package com.boot.Controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,22 +30,26 @@ public class UserRestController {
 	@Autowired
 	private UserService_4 userService;
 	
-	@Autowired
-	private  LoginService loginservice;
+	
 	
 	
 	@DeleteMapping
-	public ResponseEntity<String> deleteUser() {
-		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String id = user.getUserId();  // 사용자 ID 가져오기
-		if (id != null) {
-		loginservice.deleteUser(id);
-		}
-		SecurityContextHolder.clearContext();
-		
-		return ResponseEntity.ok("회원 정보가 성공적으로 삭제되었습니다.");
+	public ResponseEntity<Map<String, Object>>  deleteUser() {
+		 int deletedRows = userService.deleteUserInfo();
+	        
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("deletedRows", deletedRows);
+	        
+	        if (deletedRows > 0) {
+	            response.put("message", "회원 정보가 성공적으로 삭제되었습니다.");
+	            SecurityContextHolder.clearContext();
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("message", "회원 정보를 찾을 수 없습니다.");
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	        }
 	}
-	
+    
 	
 			
 	// 이메일 수정

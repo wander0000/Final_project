@@ -11,6 +11,8 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,14 +97,21 @@ public class UserServiceImpl_4 implements UserService_4 {
 	@Override
 	public void updateAccount(UsertbDTO user) {
 		log.info("updateAccount 서비스임플");
-		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
-		String account = user.getAccount();
-        log.info("@# 바꿀 환불계좌=>"+account);
 		UsertbDAO_4 dao = sqlSession.getMapper(UsertbDAO_4.class);
-		
-		dao.updateAccount(account, loginedUserId);
-		
+
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String account = user.getAccount();
+	    log.info("@# 바꿀 환불계좌=>"+account);
+	    String loginedUserId ="";
+	    if (authentication.getPrincipal() instanceof OAuth2User) {//Oauth 로그인 유저
+	    	String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
+	           dao.updateAccountOauth(account, uuid);
+	    }else {//일반 유저
+	    	CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	loginedUserId = userDetails.getUserId();  // 사용자 ID 가져오기
+	    	dao.updateAccount(account, loginedUserId);
+	    }
+	    
 	}
 	
 	
@@ -114,6 +123,7 @@ public class UserServiceImpl_4 implements UserService_4 {
 	public void updateSelectGenre(String genreList) {
 		log.info("updateSelectGenre 서비스임플");
 		log.info("@# 바꿀 장르리스트=>"+genreList);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
     	
@@ -127,7 +137,11 @@ public class UserServiceImpl_4 implements UserService_4 {
                     .map(String::trim)  // 각 문자열의 앞뒤 공백을 제거
                     .toArray(String[]::new);
 	    	for(int i = 0; i<arr.length; i++){
-	    		dao.updateSelectGenre(arr[i], uuid); //새 데이터 입력
+	    		if (authentication.getPrincipal() instanceof OAuth2User) {//Oauth 로그인 유저
+	    			dao.updateSelectGenreOauth(arr[i], uuid); //새 데이터 입력
+	    	    }else {//일반 유저
+	    	    	dao.updateSelectGenre(arr[i], uuid); //새 데이터 입력
+	    	    }
 	    	}	
 	    }
 	}
@@ -169,7 +183,25 @@ public class UserServiceImpl_4 implements UserService_4 {
 		return dao.getUserPhoneNumber(uuid);
 	}
 
-
 	
+	@Override
+	public int deleteUserInfo() {
+		log.info("deleteUserInfo 서비스임플");
+		UsertbDAO_4 dao = sqlSession.getMapper(UsertbDAO_4.class);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String uuid = userService.getUuidFromAuthenticatedUser();  // 사용자 UUID 가져오기
+		
+		int deletedRows = 0;  // 삭제된 행의 수 저장 변수
+	    
+	    if (authentication.getPrincipal() instanceof OAuth2User) { // Oauth 로그인 유저
+	        deletedRows = dao.deleteUserInfoOauth(uuid);
+	    } else { // 일반 유저
+	        deletedRows = dao.deleteUserInfo(uuid);
+	    }
+	    
+	    // 삭제된 행의 수 반환
+	    return deletedRows;
+
+	}
 	
 }

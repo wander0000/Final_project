@@ -1,5 +1,7 @@
 package com.boot.Service;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.boot.DTO.UsertbDTO;
 
 public interface UserService_4 {
@@ -16,4 +18,5 @@ public interface UserService_4 {
 	 public void deleteSelectGenre(String uuid);
 	 public String getSelectGenre();
 	 public String getUserPhoneNumber(String uuid);
+	 public int deleteUserInfo();
 }
