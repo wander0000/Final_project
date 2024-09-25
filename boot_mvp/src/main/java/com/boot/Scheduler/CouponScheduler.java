@@ -45,7 +45,7 @@ public class CouponScheduler {
     
     // 매달 1일 10:00에 만근유저 찾아서 쿠폰발행(출석이벤트)
     @Transactional
-    @Scheduled(cron = "0 00 10 1 * ?") // 매달 1일 10:00에 실행 (cron 표현식 사용)
+    @Scheduled(cron = "0 0 10 1 * ?") // 매달 1일 10:00에 실행 (cron 표현식 사용)
     public void issueMonthlyCoupons() {
         // 만근한 유저들의 UUID 리스트 가져오기
         List<String> uuidList = attService.checkMonthlyAttendance();
@@ -63,12 +63,14 @@ public class CouponScheduler {
 
                 // 쿠폰 발급 후 쿠폰번호 조회
                 String couponno = couponService.issueCoupon(coupon);
+                log.info("SMS couponno: " + couponno);
 
                 // 해당 유저의 전화번호 가져오기
                 String phoneNumber = userService.getUserPhoneNumber(uuid);
+                log.info("SMS phoneNumber: " + phoneNumber);
 
                 // SMS 발송
-                sendSms(phoneNumber, couponno);
+//                sendSms(phoneNumber, couponno);
             }
         } catch (Exception e) {
             log.error("SMS 전송 실패: " + e.getMessage());
@@ -84,9 +86,9 @@ public class CouponScheduler {
         // 발신번호 및 수신번호 설정
         message.setFrom("01098131204");
         message.setTo(formattedPhone);
-        message.setText("[MVP] 출석 이벤트 만근_할인권 제공 안내\n" + 
-                        "\n할인권 번호: " + couponno + 
-                        "\n\nMVP 웹페이지에서 할인권을 등록 후 예매 시 사용 가능합니다.");
+        message.setText("[MVP] 만근 이벤트 할인권 안내\n" + 
+                        "번호:" + couponno + 
+                        "\n웹페이지 등록 후 사용하세요.");
 
         try {
             // 메시지 발송

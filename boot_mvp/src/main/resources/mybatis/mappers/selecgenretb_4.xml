@@ -23,6 +23,11 @@
 	    VALUES (#{uuid}, #{genrenm},'user')
 	</insert>
 	
+    <insert id="updateSelectGenreOauth">
+	    INSERT INTO selecgenretb (uuid, genrenm, origin_table)
+	    VALUES (#{uuid}, #{genrenm},'oauth')
+	</insert>
+	
     <delete id="deleteSelectGenre">
 	     delete from selecgenretb where uuid= #{uuid}
 	</delete>

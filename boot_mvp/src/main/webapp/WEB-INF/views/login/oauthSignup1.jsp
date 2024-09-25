@@ -112,9 +112,6 @@
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                                 <div class="log4">
-									${oauthUserId}
-									${registrationId}
-									${email}
                                     <input type="submit" value="다음으로" class="logbut">
                                 </div>
                             </form>

@@ -15,8 +15,11 @@ public interface UsertbDAO_4 {
 	 public void updatePhone(@Param("phone") String phone, @Param("userid") String userid);
 	 public void updateBirth(@Param("birth") String birth, @Param("userid") String userid);
 	 public void updateAccount(@Param("account") String account, @Param("userid") String userid);
-	 public List<UsertbDTO> getUsersWithTodayBirthday();//오늘 생일자 유저 목록
+	 public void updateAccountOauth(@Param("account") String account, @Param("uuid") String uuid);
+	 public List<String> getUsersWithTodayBirthday();//오늘 생일자 유저의 uuid 리스트
 	 public String getUserPhoneNumber(String uuid);//uuid로 phone 조회
+	 public int deleteUserInfo(@Param("uuid") String uuid);
+	 public int deleteUserInfoOauth(@Param("uuid") String uuid);
 }
 
 

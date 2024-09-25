@@ -209,6 +209,11 @@
     box-sizing: border-box;
 }
 
+.contentRow {
+    font-size: 20px;
+    font-weight: 200;
+}
+
 .ticketCon
 {
 	display: flex;
