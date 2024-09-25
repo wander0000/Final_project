@@ -22,8 +22,6 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-	
 	private boolean deldata = false;
 	
 	@Override
@@ -36,22 +34,16 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
 	public void inserttmp(HashMap<String, String> param) {
 		ReserdtltmptbDAO_2 dao = sqlSession.getMapper(ReserdtltmptbDAO_2.class);
 		dao.inserttmp(param);
-		
-		HashMap<String, String> newParam = new HashMap<>(param);
-		
-		//10분 해당 임시 데이터 삭제
-		scheduler.schedule(() -> deletetmp(newParam), 10, TimeUnit.MINUTES);
 	}
 
 	@Override
 	public void deletetmp(HashMap<String, String> param) {
 		log.info("@# deletetmp");
 		ReserdtltmptbDAO_2 dao = sqlSession.getMapper(ReserdtltmptbDAO_2.class);
+		log.info("@# deletetmp param: " + param);
+		dao.deletetmp(param); //최근에 생성된 임시 좌석 선택 데이터 삭제 
 		
-		int cnt = dao.getCount(param);
-		log.info("@# cnt: " + cnt);
-		if(cnt > 0) {
-			dao.deletetmp(param);
+		if(dao.getCount(param) == 0) {//최종적으로 생성된 데이터까지 모두 삭제 되는 순간
 			deldata = true;
 		}
 	}
@@ -63,9 +55,17 @@ public class ReserdtltmptbImpl_2 implements ReserdtltmptbService_2 {
     public void resetDelStatus() {
     	deldata = false;
     }
-	
+	/*
 	@PreDestroy
 	public void shutdown() {
 	    scheduler.shutdown();
+	}
+	*/
+
+	@Override
+	public void deletetmpAll(HashMap<String, String> param) {
+		log.info("@# deletetmpAll");
+		ReserdtltmptbDAO_2 dao = sqlSession.getMapper(ReserdtltmptbDAO_2.class);
+		dao.deletetmpAll(param);
 	}
 }

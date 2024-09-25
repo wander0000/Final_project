@@ -8,4 +8,5 @@ public interface ReserdtltmptbService_2 {
 	public void deletetmp(HashMap<String, String> param);
 	public boolean checkDelStatus(); // deletetmp() 메소드 관련 - 쿼리 동작 안함
     public void resetDelStatus(); // deletetmp() 메소드 관련 - 쿼리 동작 안함
+    public void deletetmpAll(HashMap<String, String> param);
 }
