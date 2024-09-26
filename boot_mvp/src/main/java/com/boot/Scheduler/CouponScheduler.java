@@ -70,7 +70,7 @@ public class CouponScheduler {
                 log.info("SMS phoneNumber: " + phoneNumber);
 
                 // SMS 발송
-                sendSms(phoneNumber, couponno);
+//                sendSms(phoneNumber, couponno);
             }
         } catch (Exception e) {
             log.error("SMS 전송 실패: " + e.getMessage());
