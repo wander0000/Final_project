@@ -8,4 +8,5 @@ import com.boot.DTO.Movieinfotb_vDTO;
 public interface Movieinfotb_vService_2 {
 	public ArrayList<Movieinfotb_vDTO> selectAll();
 	public Movieinfotb_vDTO getTitleRating(HashMap<String, String> param); //영화 제목, 등급 조회
+	public ArrayList<Movieinfotb_vDTO> select_cnt_All(HashMap<String, String> param);
 }

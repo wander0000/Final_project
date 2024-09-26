@@ -15,10 +15,17 @@
 <body>
 	<input type="hidden" id="areano_m" value="${areano }">
 	<input type="hidden" id="theaterno_m" value="${theaterno }">
+	<input type="hidden" id="viewday_m" value="${viewday }">
 	<c:forEach items="${movie }" var="movie">
+		<c:if test="${movie.cnt > 0 }">
 		<div class="boxtit">
+		</c:if>
+		<c:if test="${movie.cnt == 0 }">
+		<div class="boxtit lightly">
+		</c:if>
 	        <img src="${pageContext.request.contextPath}/images/rating/grade_${movie.ratingno }.png" alt="">
 	        <input type="hidden" id="selected_${movie.movieno}">
+	        <input type="hidden" value="${movie.cnt}">
 	        <a href="#none" onclick="movieevent('${movie.movieno}', '${movie.movienm }');">${movie.movienm }</a>
 		</div>
 	</c:forEach>
