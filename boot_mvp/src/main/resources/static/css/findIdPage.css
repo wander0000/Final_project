@@ -422,3 +422,20 @@ header, footer, .container, section, html
     color: #F3B931; /* 호버 시 색상 변경 */
 }
 
+
+/* Chrome 자동 완성 스타일링 대응 */
+.idpwbox1:-webkit-autofill, .idpwbox2:-webkit-autofill {
+  background-color: rgba(255, 255, 255, 0) !important; /* 배경색 투명 유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s, font-size 5000s ease-in-out 0s; /* 색상과 글씨 크기 전환 방지 */
+}
+
+/* Chrome 자동 완성 상태에서 포커스, 호버, 활성화 상태 대응 */
+.idpwbox1:-webkit-autofill:focus, .idpwbox2:-webkit-autofill:focus,
+.idpwbox1:-webkit-autofill:hover, .idpwbox2:-webkit-autofill:hover,
+.idpwbox1:-webkit-autofill:active,.idpwbox2:-webkit-autofill:active {
+  background-color: rgba(255, 255, 255, 0) !important; /* 배경색 투명 유지 */
+  color: #ffffff !important; /* 텍스트 색상 유지 */
+  font-size: 16px !important; /* 글씨 크기 유지 */
+}
