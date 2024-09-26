@@ -117,11 +117,14 @@ public class TicketingController {
 	@RequestMapping("/movieshow")
 	public ModelAndView movieshow_ajax(@RequestParam HashMap<String, String> param) {
 		log.info("@# movieshow_ajax");
+		log.info("@# param ==> " + param);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ticketing/movie_ajax");
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
-		mav.addObject("movie", movieinfotb_vService.selectAll());
+		mav.addObject("viewday", param.get("viewday"));
+		//mav.addObject("movie", movieinfotb_vService.selectAll());
+		mav.addObject("movie", movieinfotb_vService.select_cnt_All(param));
 		
 		return mav;
 	}
@@ -146,20 +149,24 @@ public class TicketingController {
 		mav.addObject("minfo", movieinfotb_vService.getTitleRating(param));
 		mav.addObject("areano", param.get("areano"));
 		mav.addObject("theaterno", param.get("theaterno"));
+		mav.addObject("viewday", param.get("viewday"));
 		mav.addObject("detailinfo", screenService.selectdtl(param));
 		
 		return mav;
 	}
 	
 	@RequestMapping("/datetxt")
-	public @ResponseBody Map<String, Object> datetxt() {
+	public @ResponseBody Map<String, Object> datetxt(@RequestParam(value = "viewday") String viewday) {
 		log.info("@# datetxt");
 		Map<String, Object> respones = new HashMap<>();
-		
-		String txt = areaservice.datedual("").get(0).getTxt();
-		log.info("@# txt: " + txt);
+		String txt = "";
+		if(viewday.equals("no")) {
+			txt = areaservice.datedual("").get(0).getTxt();
+			log.info("@# txt: " + txt);
+		} else {
+			txt = areaservice.datedual(viewday).get(0).getTxt();
+		}
 		respones.put("date", txt);
-		
 		return respones;
 	}
 	

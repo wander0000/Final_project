@@ -13,6 +13,27 @@
 		from movieinfotb_v
     </select>
     
+    <select id="select_cnt_All" resultType="com.boot.DTO.Movieinfotb_vDTO">
+    	select a.movieno, a.movienm, 
+			   case when a.ratingno = '전체관람가' then 'ALL'
+					when a.ratingno = '12세이상관람가' then '12'
+					when a.ratingno = '15세이상관람가' then '15'
+					when a.ratingno = '청소년관람불가' then '19'
+				end as ratingno,
+				ifnull(count(b.movieno),0) as cnt
+		from movieinfotb_v a
+		left outer join screentb b on (a.movieno = b.movieno and b.areano = #{areano} and b.theaterno = #{theaterno} 
+			<if test="viewday != null">
+           		and b.viewday = #{viewday}
+	        </if>
+	        <if test="viewday == null">
+	            and b.viewday = DATE_FORMAT(NOW(), '%y-%m-%d')
+	        </if>
+        	 and b.starttime > now()
+		)
+		group by a.movieno, a.movienm, ratingno
+    </select>
+    
     <select id="getTitleRating" resultType="com.boot.DTO.Movieinfotb_vDTO">
     	select movienm, 
     		   case when ratingno = '전체관람가' then 'ALL'

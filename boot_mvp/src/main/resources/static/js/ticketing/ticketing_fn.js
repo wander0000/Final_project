@@ -100,10 +100,10 @@ function movieevent(movieno, movienm) {
 	var alink2 = document.getElementById('showdate');
 	var areano = $("#areano_m").val();
 	var theaterno = $("#theaterno_m").val();
-	
+	var viewday = $("#viewday_m").val() == '' ? 'no':$("#viewday_m").val();
 	$.ajax({
 		type: 'post',
-		data: {areano: areano, theaterno: theaterno, movieno: movieno, viewday: 'no'},
+		data: {areano: areano, theaterno: theaterno, movieno: movieno, viewday: viewday},
 		url: '/ticketing/dateshow',
 		headers: {
 			'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
@@ -128,6 +128,7 @@ function movieevent(movieno, movienm) {
 				headers: {
 					'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
 				},
+				data: { viewday: viewday },
 				success: function(res) {
 					alink2.textContent = res.date;
 				}, error: function(status, error) {
@@ -164,6 +165,36 @@ function date_event(viewday) {
 				},
 				success: function(res) {
 					alink.textContent = res.date;
+					$.ajax({
+						type: 'post',
+						url: '/ticketing/movieshow',
+						data: {areano: areano, theaterno: theaterno, movieno: movieno, viewday: viewday},
+						headers: {
+							'X-CSRF-TOKEN': getCsrfToken() // CSRF 토큰 추가
+						}, success: function(result) {
+							/*
+							allDivs.forEach(function(div) {
+						        div.classList.remove('active');
+						    });
+							
+						    // 클릭된 a 태그의 부모 div에 active 클래스 추가
+						    
+							if (parentDiv) {
+						        parentDiv.classList.add('active');
+						    }
+							*/
+							//alink.textContent = movienm;
+							$("#areano_date").val(areano);
+							$("#theaterno_date").val(theaterno);
+							$("#movieno_date").val(movieno);
+							
+							$("#moviebox").html(result);
+							$("#selected_" + movieno).parent().addClass('active');
+							//$("#selected_"+movieno).addClass('active');
+						}, error: function(status, error) {
+							console.error("Ajax 요청 실패:", status, error);
+						}
+					});
 				}, error: function(status, error) {
 					console.error("Ajax 요청 실패:", status, error);
 				}

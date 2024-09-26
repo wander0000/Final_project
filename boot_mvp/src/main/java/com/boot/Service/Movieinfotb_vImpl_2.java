@@ -31,4 +31,10 @@ public class Movieinfotb_vImpl_2 implements Movieinfotb_vService_2 {
 		Movieinfotb_vDAO_2 dao = sqlSession.getMapper(Movieinfotb_vDAO_2.class);
 		return dao.getTitleRating(param);
 	}
+
+	@Override
+	public ArrayList<Movieinfotb_vDTO> select_cnt_All(HashMap<String, String> param) {
+		Movieinfotb_vDAO_2 dao = sqlSession.getMapper(Movieinfotb_vDAO_2.class);
+		return dao.select_cnt_All(param);
+	}
 }

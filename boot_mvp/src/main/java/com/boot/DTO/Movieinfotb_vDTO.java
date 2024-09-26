@@ -28,4 +28,6 @@ public class Movieinfotb_vDTO {
 	private String moviepostimg;
 	private String movieyoutube;
 	private String steelcut;
+	
+	private int cnt;
 }

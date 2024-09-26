@@ -364,6 +364,11 @@ label {
     color: var(--sub-gray);
 }
 
+.boxtit.lightly {
+	color: var(--sub-gray);
+	opacity: 0.5; /* 투명도 조절 */
+}
+
 .boxtit.active, .boxtit.active > a {
     background: var(--main-color);
     color: var(--font-black);
