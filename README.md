@@ -1,5 +1,4 @@
-# Final_project
-MVP(영화중개 웹사이트)
+# MVP(영화중개 웹사이트)
 
 Movie booking intermediary service built with Spring Boot, using Spring Security, Batch, and Scheduler to collect and process movie data from public APIs, provide movie information, and enable ticket reservations
 Author : yeonjuseo712@gmail.com
@@ -17,7 +16,7 @@ Author : yeonjuseo712@gmail.com
 <hr/>
 
 ### 💿서비스 시연 영상
-[![YouTube](https://img.youtube.com/vi/P8uMiN_WF68/mvp_main.jpg)](https://youtu.be/P8uMiN_WF68)
+[![YouTube](https://github.com//wander0000/Final_project/assets/mvp_main.jpg)](https://youtu.be/P8uMiN_WF68)
 
 ### 🎯서비스 핵심기능
 ```
