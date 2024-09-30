@@ -16,7 +16,7 @@ Author : yeonjuseo712@gmail.com
 <hr/>
 
 ### 💿서비스 시연 영상
-[![YouTube](https://github.com/wander0000/Final_project/assets/mvp_main.jpg)](https://youtu.be/P8uMiN_WF68)
+[![YouTube](https://github.com/wander0000/Final_project/raw/develop/assets/mvp_main.jpg)](https://youtu.be/P8uMiN_WF68)
 
 ### 🎯서비스 핵심기능
 ```
