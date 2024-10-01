@@ -32,7 +32,7 @@
 			SELECT count(*) 
 			FROM reservetb r
 			WHERE r.viewday < NOW()  
-			AND r.uuid = #{uuid}
+			AND r.uuid = #{uuid} AND r.status = '예매'
  		]]>
     </select>
     

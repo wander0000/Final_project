@@ -161,7 +161,9 @@ $(document).ready(function()
                   });
               }
               $('#ticketListContent').html(content);  // 데이터를 화면에 업데이트
-				  
+				
+			  setCancelButtonBehavior();//취소불가 커서변경 function호출
+			    
 			  //페이징을 위한 인자 저장
     		  loadMethod = 'period';  // loadTicketList 함수로 로드
     		  loadParams = { days, page, pageSize };  // 인자 저장(배열)
@@ -264,18 +266,19 @@ $(document).ready(function()
 				  content += '</div>'; 
 
 				  document.getElementById('ticketListContent').innerHTML += content;
+				  
+
                   });
               }
               $('#ticketListContent').html(content);  // 데이터를 화면에 업데이트
-				  if (cancelButtonText === '취소불가') {
-			  	        // 커서를 기본 화살표로 변경하고 클릭 동작을 차단
-						$('#cancelBtn').css('cursor', 'default');
-			  	        e.preventDefault();  // 클릭을 막음
-			  		}
+			  
+			  setCancelButtonBehavior();//취소불가 커서변경 function호출
 				  //페이징을 위한 인자 저장
 				  loadMethod = 'monthly';  // monthly 함수로 로드
 				  loadParams = { keyword, year, month, page, pageSize };  // 인자 저장
+				  
                   createPagination(totalCount, pageSize, loadMethod, JSON.stringify(loadParams));  // 페이징 버튼 생성
+					console.log('createPagination 으로 가지고 가는 totalCount:'+totalCount);
 
 	              // 현재 페이지에 active 클래스 추가
 	              $('.pageBtn[data-page="' + currentPage + '"]').addClass('active');
@@ -286,7 +289,22 @@ $(document).ready(function()
 	      });
 	  }
 		  
-		  
+		
+	  // 버튼 동작을 설정하는 함수
+	  function setCancelButtonBehavior() {
+	    // 동적으로 생성된 모든 버튼에 대해 처리
+	    $('.submitTab').each(function() {
+	      // 버튼의 텍스트가 '취소불가'인지 확인
+	      if ($(this).text() === '취소불가') {
+	        // 커서를 기본 화살표 모양으로 설정
+	        $(this).css('cursor', 'default');
+	        // 클릭 이벤트 막기
+	        $(this).on('click', function(e) {
+	          e.preventDefault();  // 클릭을 차단
+	        });
+	      }
+	    });
+	  }  
 	
 	// 페이징 버튼 생성 함수
 	function createPagination(totalCount, pageSize, loadMethod, loadParams) {
