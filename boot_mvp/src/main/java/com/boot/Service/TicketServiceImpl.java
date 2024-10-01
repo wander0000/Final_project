@@ -249,6 +249,7 @@ public class TicketServiceImpl implements TicketService {
                 
                 // 프로시져 호출 (예매정보 취소로, 포인트, 마일리지, garde 업데이트, 좌석반환)
                 dao.Call_deleteTicket(uuid,reservenum);
+                log.error("Call_deleteTicket 호출할 때 가지고 가는 uuid:"+uuid+" reservenum:"+reservenum);
 
             } catch (Exception e) {
                 log.error("DB 처리 중 예외 발생: ", e);

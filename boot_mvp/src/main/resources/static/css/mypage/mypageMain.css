@@ -264,6 +264,7 @@
 	width: 100%;
 	text-align: center;
 	gap: 20px 0;
+	margin-top: 20px;
 }
 
 .day.empty 

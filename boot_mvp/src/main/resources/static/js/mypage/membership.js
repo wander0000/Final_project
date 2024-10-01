@@ -108,7 +108,7 @@ $(document).ready(function()
 	                      content += '<div class="contentRowDe">' + finalFormattedDateTime + '</div>';
 	                      content += '<div class="contentRowDe">' + dto.kind + '</div>';
 	                      content += '<div class="contentRowDe">' + dto.description + ' (' + dto.pthistno + ')</div>';
-	                      content += '<div class="contentRowDe">' + (dto.kind === '적립' ? dto.recqt : dto.issqt) + ' P</div>';
+	                      content += '<div class="contentRowDe">' + (dto.recqt || dto.issqt) + ' P</div>';
 	                      content += '</div>';
 	                  });
 	              }

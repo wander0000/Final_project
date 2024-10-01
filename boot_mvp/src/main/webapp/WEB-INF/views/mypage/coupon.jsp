@@ -56,7 +56,7 @@
                             <div class="couponList">
                                 <div class="filterBtn">
                                     <button class="filter" data-type="C" data-acrec="D" type="submit">사용완료</button>
-                                    <button class="filter" data-type="C" data-acrec="A" type="submit">미사용</button>
+                                    <button class="filter active" data-type="C" data-acrec="A" type="submit">미사용</button>
                                     <!-- <input type="button" value="사용완료"> -->
                                     <!-- <input type="button" value="미사용"> -->
                                 </div>
