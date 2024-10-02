@@ -171,15 +171,17 @@ Developed Features:
 </details>
 <details>
 
-|<small>회원가입(일반/네이버)</small>|<small>비밀번호찾기/변경<small>|<small>아이디찾기</small>|
+|<small>회원가입(일반)</small>|<small>회원가입(네이버)<small>|<small>비밀번호찾기/변경</small>|
 |:-:|:-:|:-:|
-|![003](https://github.com/wander0000/Final_project/raw/develop/assets/generate.gif)|![004](https://github.com/wander0000/Final_project/raw/develop/assets/findpw.gif)|![005](https://github.com/wander0000/Final_project/raw/develop/assets/findid.gif)|
-|<small><b>영화조회</b></small>|<small><b>영화스크랩</b></small>|<small><b>영화예매</b></small>|
-|![006](https://github.com/wander0000/Final_project/raw/develop/assets/getmovie.gif)|![007](https://github.com/wander0000/Final_project/raw/develop/assets/likemovie.gif)|![008](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie.gif)|
+|![003](https://github.com/wander0000/Final_project/raw/develop/assets/generate1.gif)|![004](https://github.com/wander0000/Final_project/raw/develop/assets/generate2.gif)|![005](https://github.com/wander0000/Final_project/raw/develop/assets/findpw.gif)|
+|<small><b>아이디찾기</b></small>|<small><b>영화조회</b></small>|<small><b>영화스크랩</b></small>|
+|![006](https://github.com/wander0000/Final_project/raw/develop/assets/findid.gif)|![007](https://github.com/wander0000/Final_project/raw/develop/assets/getemovie.gif)|![008](https://github.com/wander0000/Final_project/raw/develop/assets/likemovie.gif)|
+|<small><b>영화예매(카카오페이)</b></small>|<small><b>영화예매(토스페이)</b></small>|<small><b>영화예매(이니시스)</b></small>|
+|![009](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_kakao.gif)|![010](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_toss.gif)|![011](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_ini.gif)|
 |<small><b>예매내역조회</b></small>|<small><b>예매취소</b></small>|<small><b>포인트이력조회</b></small>|
-|![009](https://github.com/wander0000/Final_project/raw/develop/assets/booklist.gif)|![010](https://github.com/wander0000/Final_project/raw/develop/assets/cancelmovie.gif)|![011](https://github.com/wander0000/Final_project/raw/develop/assets/pthislist.gif)|
+|![012](https://github.com/wander0000/Final_project/raw/develop/assets/booklist.gif)|![013](https://github.com/wander0000/Final_project/raw/develop/assets/cancelmovie.gif)|![014](https://github.com/wander0000/Final_project/raw/develop/assets/pthist.gif)|
 |<small><b>무비스토리</b></small>|<small><b>출석이벤트 문자API/쿠폰등록</b></small>|<small><b>탈퇴</b></small>|
-|![012](https://github.com/wander0000/Final_project/raw/develop/assets/moviestory.gif)|![013](https://github.com/wander0000/Final_project/raw/develop/assets/attendence.gif)|![014](https://github.com/wander0000/Final_project/raw/develop/assets/unsubscribe.gif)|
+|![012](https://github.com/wander0000/Final_project/raw/develop/assets/cancelmovie.gif)|![013](https://github.com/wander0000/Final_project/raw/develop/assets/attendence.gif)|![014](https://github.com/wander0000/Final_project/raw/develop/assets/unsubscribe.gif)|
 
 
 ### 🛠기술 스택
