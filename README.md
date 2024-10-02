@@ -175,7 +175,7 @@ Developed Features:
 |:-:|:-:|:-:|
 |![003](https://github.com/wander0000/Final_project/raw/develop/assets/generate1.gif)|![004](https://github.com/wander0000/Final_project/raw/develop/assets/generate2.gif)|![005](https://github.com/wander0000/Final_project/raw/develop/assets/findpw.gif)|
 |<small><b>아이디찾기</b></small>|<small><b>영화조회</b></small>|<small><b>영화스크랩</b></small>|
-|![006](https://github.com/wander0000/Final_project/raw/develop/assets/findid.gif)|![007](https://github.com/wander0000/Final_project/raw/develop/assets/getemovie.gif)|![008](https://github.com/wander0000/Final_project/raw/develop/assets/likemovie.gif)|
+|![006](https://github.com/wander0000/Final_project/raw/develop/assets/findid.gif)|![007](https://github.com/wander0000/Final_project/raw/develop/assets/getmovie.gif)|![008](https://github.com/wander0000/Final_project/raw/develop/assets/likemovie.gif)|
 |<small><b>영화예매(카카오페이)</b></small>|<small><b>영화예매(토스페이)</b></small>|<small><b>영화예매(이니시스)</b></small>|
 |![009](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_kakao.gif)|![010](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_toss.gif)|![011](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie_ini.gif)|
 |<small><b>예매내역조회</b></small>|<small><b>예매취소</b></small>|<small><b>포인트이력조회</b></small>|
