@@ -6,14 +6,14 @@ Movie booking intermediary service built with Spring Boot, using Spring Security
 ## Developed by Team
 - **UI/UX Design**: Design of pages and layouts.
 <hr/>  
-Contributor : yeonjuseo712@gmail.com
+Contributor : 🐳yeonjuseo712@gmail.com
 
 Developed Features:
 - **Member Information**: Read, Update, Delete (RUD)
 - **Membership Information**: Create, Read, Update, Delete (CRUD)
 - **Booking Information**: Read, Delete (RD)
 <hr/>
-Contributor : jwlme@naver.com
+Contributor : 🎮jwlme@naver.com
 
 Developed Features:
 - **Public API Data Collection**: Set up database and collect movie data from public API.  
@@ -23,7 +23,7 @@ Developed Features:
 - **Movie Viewing History (Rating + Review)**: Implement functionality for movie viewing history, including ratings and reviews.
 
 <hr/>
-Contributor : aovhff@naver.com
+Contributor : 🥑aovhff@naver.com
 
 Developed Features:
 - **Form-based Login and Registration**: Implement login and registration via forms.  
@@ -31,13 +31,14 @@ Developed Features:
 - **Email Verification and Password Recovery**: Implement email verification, user ID recovery, and password reset features.  
 
 <hr/>
-Contributor : whrhkdfo12@naver.com
+Contributor : ☕whrhkdfo12@naver.com
 
 Developed Features:
 - **Movie Reservation**: Implement movie reservation functionality.  
 - **Payment API**: Implement payment gateway integration.  
 - **SMS Notifications**: Implement SMS notification functionality.  
 
+<hr/>
 💻프로젝트 개요
 💬 SpringBoot Flamework를 사용하여 작성하였으며, MVC 패턴을 따르고 있습니다.Spring Security, Batch, Scheduler를 이용하며 공공API로 데이터를 수집, 가공하여 영화DB를 구성하고 영화정보를 제공하고 예매가 가능하도록 하는 영화 예매 중개 서비스입니다.
 
@@ -176,10 +177,9 @@ Developed Features:
 |<small><b>영화조회</b></small>|<small><b>영화스크랩</b></small>|<small><b>영화예매</b></small>|
 |![006](https://github.com/wander0000/Final_project/raw/develop/assets/getmovie.gif)|![007](https://github.com/wander0000/Final_project/raw/develop/assets/likemovie.gif)|![008](https://github.com/wander0000/Final_project/raw/develop/assets/bookmovie.gif)|
 |<small><b>예매내역조회</b></small>|<small><b>예매취소</b></small>|<small><b>포인트이력조회</b></small>|
-|![009](https://github.com/wander0000/Final_project/raw/develop/assets/booklist.gif)
-|![010](https://github.com/wander0000/Final_project/raw/develop/assets/cancelmovie.gif)|![011](https://github.com/wander0000/Final_project/raw/develop/assets/pthislist.gif)|
-|<small><b>무비스토리</b></small>|<small><b>쿠폰/할인권 등록 및 조회</b></small>|<small><b>탈퇴</b></small>|
-|![012](https://github.com/wander0000/Final_project/raw/develop/assets/moviestory.gif)|![013](https://github.com/wander0000/Final_project/raw/develop/assets/coupon.gif)|![014](https://github.com/wander0000/Final_project/raw/develop/assets/unsubscribe.gif)|
+|![009](https://github.com/wander0000/Final_project/raw/develop/assets/booklist.gif)|![010](https://github.com/wander0000/Final_project/raw/develop/assets/cancelmovie.gif)|![011](https://github.com/wander0000/Final_project/raw/develop/assets/pthislist.gif)|
+|<small><b>무비스토리</b></small>|<small><b>출석이벤트 문자API/쿠폰등록</b></small>|<small><b>탈퇴</b></small>|
+|![012](https://github.com/wander0000/Final_project/raw/develop/assets/moviestory.gif)|![013](https://github.com/wander0000/Final_project/raw/develop/assets/attendence.gif)|![014](https://github.com/wander0000/Final_project/raw/develop/assets/unsubscribe.gif)|
 
 
 ### 🛠기술 스택
