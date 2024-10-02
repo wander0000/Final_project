@@ -347,7 +347,7 @@
                                     <div class="leftFilter">
                                         <div class="filterTitle">기간별 조회</div>
 										<button class="filter" data-days="15">15일</button>
-									   	<button class="filter" data-days="30">1개월</button>
+									   	<button class="filter active" data-days="30">1개월</button>
 									   	<button class="filter" data-days="60">2개월</button>
 									   	<button class="filter" data-days="90">3개월</button>
                                     </div>
