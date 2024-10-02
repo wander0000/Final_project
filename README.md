@@ -2,11 +2,41 @@
 
 Movie booking intermediary service built with Spring Boot, using Spring Security, Batch, and Scheduler to collect and process movie data from public APIs, provide movie information, and enable ticket reservations
 
-Author : yeonjuseo712@gmail.com
+
+## Developed by Team
+- **UI/UX Design**: Design of pages and layouts.
+<hr/>  
+Contributor : yeonjuseo712@gmail.com
+
 Developed Features:
 - **Member Information**: Read, Update, Delete (RUD)
 - **Membership Information**: Create, Read, Update, Delete (CRUD)
 - **Booking Information**: Read, Delete (RD)
+<hr/>
+Contributor : jwlme@naver.com
+
+Developed Features:
+- **Public API Data Collection**: Set up database and collect movie data from public API.  
+- **Spring Batch Scheduler**: Implement scheduling for batch processing.  
+- **Recommended Movies**: Implement movie recommendation functionality.  
+- **Movie Details and Likes**: Implement detailed movie information and "like" feature.  
+- **Movie Viewing History (Rating + Review)**: Implement functionality for movie viewing history, including ratings and reviews.
+
+<hr/>
+Contributor : aovhff@naver.com
+
+Developed Features:
+- **Form-based Login and Registration**: Implement login and registration via forms.  
+- **OAuth2 Login and Registration**: Implement OAuth2-based login and registration.  
+- **Email Verification and Password Recovery**: Implement email verification, user ID recovery, and password reset features.  
+
+<hr/>
+Contributor : whrhkdfo12@naver.com
+
+Developed Features:
+- **Movie Reservation**: Implement movie reservation functionality.  
+- **Payment API**: Implement payment gateway integration.  
+- **SMS Notifications**: Implement SMS notification functionality.  
 
 💻프로젝트 개요
 💬 SpringBoot Flamework를 사용하여 작성하였으며, MVC 패턴을 따르고 있습니다.Spring Security, Batch, Scheduler를 이용하며 공공API로 데이터를 수집, 가공하여 영화DB를 구성하고 영화정보를 제공하고 예매가 가능하도록 하는 영화 예매 중개 서비스입니다.
